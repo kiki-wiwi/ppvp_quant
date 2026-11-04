@@ -356,3 +356,233 @@ def test_metrics10_mutating_run_output_does_not_poison_cache():
     assert again["df1h"].index[-1] + pd.Timedelta(hours=1) == RESEARCH_DATA_END
     assert pipeline.load_market("BTCUSDT")[1].index[-1] == OOS_START      # 资金费含 T = end 的结算
     pipeline.clear_cache()
+
+
+# ============================================================================
+# 第二轮（修复复核）确认问题的回归测试：SM-R1 … SM-R7、EXEC-R2 … EXEC-R9
+# ============================================================================
+def _r1a_bars():
+    return [ABOVE, TOUCH, BRK, BELOW, BELOW, RECLAIM, ABOVE, TOUCH] + [ABOVE] * 6 + [PIN]
+
+
+@pytest.mark.parametrize("reject_broken", [False, True])
+def test_smr1_detour_through_other_zone_cannot_rearm_broken_level(reject_broken):
+    # 100 被放量跌穿 → VAL 103 的新箱体（不同支撑区）→ VAL 100.2 且窗口含跌穿前数据的箱体：必须判为失效
+    boxes = [{"at": 0, "val": 100.0, "ws": -50}, {"at": 4, "val": 103.0, "ws": -10}, {"at": 6, "val": 100.2, "ws": 1}]
+    out = sm(_r1a_bars(), boxes, StrategyConfig(reject_broken_at_activation=reject_broken))
+    assert out["state"][6] == INVALID and (out["state"][6:] == INVALID).all()
+    assert not out["sig"].any()
+
+
+def test_smr1_detour_cannot_carry_onto_broken_level():
+    bars = [ABOVE, TOUCH, BRK, BELOW, (99.2, 102.0, 99.1, 101.9), (102.0, 102.6, 101.8, 102.3),
+            (102.2, 102.3, 101.4, 101.6), (101.9, 102.6, 101.8, 102.4)] + [(101.9, 102.6, 101.8, 102.4)] * 6 \
+        + [(101.5, 101.6, 100.4, 101.55)]
+    boxes = [{"at": 0, "val": 100.0, "ws": -50}, {"at": 4, "val": 101.2, "ws": -10}, {"at": 8, "val": 100.6, "ws": 1}]
+    out = sm(bars, boxes)
+    assert out["state"][6] == TOUCH1 and out["state"][7] == DEPARTED     # 在 101.2 支撑区上完成第 1 次测试
+    assert out["state"][8] == INVALID and not out["sig"].any()          # 回到被跌穿的 100 支撑区：不得 carry
+
+
+def test_smr1_memory_keeps_every_broken_zone():
+    # 100 被放量跌穿 → 价格跌到 95 支撑区并把它也放量跌穿 → 反弹后出现与 100 重叠、仍含首次跌穿前数据的箱体：
+    # 两条记忆互不覆盖，100 支撑区仍被判为失效
+    bars = [ABOVE, TOUCH, BRK, (99.0, 99.2, 96.0, 96.2), (96.2, 96.5, 95.8, 96.0), (96.0, 96.1, 95.2, 95.4),
+            (95.4, 95.5, 93.8, 94.0, 200.0), (94.0, 97.0, 93.9, 96.9), (96.9, 99.0, 96.8, 98.9),
+            (99.5, 101.5, 99.4, 101.3), (101.3, 102.0, 101.0, 101.8), (101.4, 101.5, 100.6, 100.9)] \
+        + [(101.2, 102.0, 101.0, 101.8)] * 6 + [(101.2, 101.3, 100.0, 101.25)]
+    boxes = [{"at": 0, "val": 100.0, "ws": -50}, {"at": 4, "val": 95.0, "ws": -10}, {"at": 9, "val": 100.3, "ws": -5}]
+    out = sm(bars, boxes)
+    assert out["state"][2] == INVALID and out["state"][4] == ARMED and out["state"][5] == TOUCH1
+    assert out["state"][6] == INVALID                                     # 95 支撑区也被放量跌穿
+    assert (out["state"][9:] == INVALID).all() and not out["sig"].any()   # 回到 100 支撑区：仍失效
+
+
+def _exhausted_bars():
+    return [ABOVE, TOUCH] + [ABOVE] * 6 + [TOUCH, ABOVE, BRK, BELOW, BELOW, RECLAIM, ABOVE, TOUCH] + [ABOVE] * 6 + [PIN]
+
+
+def test_smr2_breakdown_while_exhausted_invalidates_zone():
+    cfg = StrategyConfig(roll_failed_second_touch=False)
+    out = sm(_exhausted_bars(), [{"at": 0, "val": 100.0, "ws": -50}, {"at": 12, "val": 100.1, "ws": 5}], cfg)
+    assert out["state"][9] == 6 and out["state"][10] == INVALID          # EXHAUSTED 期间放量跌穿 → INVALID
+    assert (out["state"][10:] == INVALID).all() and not out["sig"].any()
+    fresh = sm(_exhausted_bars(), [{"at": 0, "val": 100.0, "ws": -50}, {"at": 12, "val": 100.1, "ws": 11}], cfg)
+    assert fresh["state"][12] == ARMED and fresh["sig"][22]              # 完全由跌穿后数据构成的箱体：可重新 ARMED
+
+
+def test_smr3_same_zone_box_update_keeps_post_signal_departure_requirement():
+    bars = [ABOVE, TOUCH] + [ABOVE] * 6 + [PIN, TOUCH, TOUCH] + [ABOVE] * 6 + [PIN]
+    out = sm(bars, [{"at": 0, "val": 100.0}, {"at": 10, "val": 100.0}])
+    assert out["sig"][8] and out["state"][10] == ARMED and out["need"][10]
+    assert out["state"][17] == TOUCH1 and out["sig"].sum() == 1
+
+
+def _c_bars():
+    return [(95.0, 95.4, 94.8, 95.0), (95.0, 95.5, 94.5, 95.2), (95.2, 100.4, 95.1, 100.2),
+            (100.2, 100.45, 99.9, 100.3)] + [ABOVE] * 6 + [PIN]
+
+
+def test_smr3_below_band_arm_then_same_zone_update_still_requires_departure():
+    out = sm(_c_bars(), [{"at": 1, "val": 100.0}, {"at": 3, "val": 100.0}])          # C1：已知价格自下方而来
+    assert out["state"][3] == ARMED and out["need"][3]
+    assert out["state"][10] == TOUCH1 and not out["sig"].any()
+
+
+def test_smr7_in_band_activation_counts_first_touch():
+    out = sm(_c_bars(), [{"at": 3, "val": 100.0}])                                    # C2：首次激活时价格在带内
+    assert not out["need"][3] and out["state"][3] == TOUCH1 and out["sig"][10]
+
+
+def test_smr7_activation_threshold_is_band_low():
+    bars = [(100.0, 100.3, 99.7, 99.8), (99.8, 100.2, 99.6, 100.0)]                  # 上一根收盘 99.8 ∈ [99.5, 100.5]
+    out = sm(bars, [{"at": 1, "val": 100.0}])
+    assert not out["need"][1] and out["state"][1] == TOUCH1
+
+
+def test_smr4_value_area_terminates_with_huge_volumes():
+    import signal
+
+    def _timeout(*_):
+        raise TimeoutError("value-area loop did not terminate")
+    old = signal.signal(signal.SIGALRM, _timeout)
+    signal.alarm(10)
+    try:
+        assert _value_area.py_func(np.array([2e9, 0.0, 3e9, 1e9]), 0.7) == (2, 0, 3)
+        assert _value_area.py_func(np.array([2e9, 0.5, 3e9, 1e9]), 0.7) == (2, 0, 3)
+    finally:
+        signal.alarm(0)
+        signal.signal(signal.SIGALRM, old)
+    assert _value_area(np.array([2e9, 0.0, 3e9, 1e9]), 0.7) == (2, 0, 3)
+    # va_pct = 1 且浮点累加略小于总量：两侧都已无桶时必须停止，不得越界回绕到另一端
+    h = np.array([0.1, 0.2, 0.3])
+    assert 0.3 + 0.2 + 0.1 < h.sum()
+    assert _value_area.py_func(h, 1.0) == (2, 0, 2) and _value_area(h, 1.0) == (2, 0, 2)
+
+
+def test_smr5_reject_is_box_level_and_writes_no_breakdown_memory():
+    bars = [BELOW, (99.2, 100.0, 99.1, 99.9), (99.9, 101.2, 99.8, 101.0)] + [ABOVE] * 3 + [TOUCH] + [ABOVE] * 6 + [PIN]
+    boxes = [{"at": 1, "val": 100.0, "ws": -20}, {"at": 5, "val": 100.2, "ws": -10}]
+    out = sm(bars, boxes, StrategyConfig(reject_broken_at_activation=True))
+    assert out["state"][1] == INVALID                                     # 激活时上一根收盘在带下方：否决该箱体
+    assert out["state"][5] == ARMED                                       # 下一个箱体按自身条件判定（无放量跌穿记忆）
+    assert out["sig"][13]
+
+
+def _rebreak_bars(rebreak_close):
+    return [ABOVE, TOUCH, BRK, BELOW, (100.8, 101.5, 100.7, 100.8), (100.8, 100.85, rebreak_close - 0.1, rebreak_close, 200.0),
+            BELOW, BELOW]
+
+
+def test_smr6_rebreakdown_measured_against_broken_level_and_fresh_boundary():
+    boxes = lambda ws7: [{"at": 0, "val": 100.0, "ws": -50}, {"at": 4, "val": 100.9, "ws": -10},
+                         {"at": 7, "val": 100.3, "ws": ws7}]
+    # bar 5 收于 99.9：低于新箱体带下沿 100.4，但高于被跌穿的带下沿 99.5 → 不是对被跌穿位的再次跌穿
+    out = sm(_rebreak_bars(99.9), boxes(4))
+    assert out["brk"][5] and out["state"][4] == INVALID and out["state"][7] == ARMED
+    # bar 5 收于 99.3 < 99.5：同一支撑区再次放量跌穿 → 记忆时刻后移，窗口起于 bar 4 的箱体不再是“全新结构”
+    out = sm(_rebreak_bars(99.3), boxes(4))
+    assert out["state"][7] == INVALID
+    # 全新结构的边界：窗口起点 = 跌穿 K 线开盘（含跌穿 K 线）→ 仍失效；= 其收盘 → 重新 ARMED
+    edge = lambda ws: [{"at": 0, "val": 100.0, "ws": -50}, {"at": 4, "val": 100.0, "ws": ws}]
+    assert sm(_r1a_bars(), edge(2))["state"][4] == INVALID
+    assert sm(_r1a_bars(), edge(3))["state"][4] == ARMED
+
+
+def test_smr7_roll_moves_carry_reference_to_second_test_val():
+    up = (102.0, 102.6, 101.6, 102.3)
+    bars = [ABOVE, TOUCH, ABOVE, up, up, up, up, up, up, (101.8, 101.9, 101.0, 101.2), up,
+            (102.8, 103.3, 102.5, 103.0)]
+    boxes = [{"at": 0, "val": 100.0}, {"at": 3, "val": 100.8}, {"at": 11, "val": 101.7}]
+    out = sm(bars, boxes)
+    assert out["state"][9] == TOUCH2 and out["state"][10] == DEPARTED    # 第 2 次测试（在 100.8 箱体上）无形态 → 滚动
+    assert out["state"][11] == DEPARTED                                    # 101.7 与滚动后基准 100.8 相距 0.9 ATR → carry
+
+
+def test_execr3_cache_isolated_from_array_writes():
+    pipeline.clear_cache()
+    df, fund, _ = pipeline.load_market("BTCUSDT")
+    ref = pipeline.load_market("BTCUSDT")[0]["low"].to_numpy().copy()
+    df["low"].array[:] = df["low"].to_numpy() * 0.5
+    fund["funding_rate"].array[:] = 0.0
+    again, fund2, _ = pipeline.load_market("BTCUSDT")
+    assert np.array_equal(again["low"].to_numpy(), ref) and fund2["funding_rate"].abs().sum() > 0
+    boxes, _ = pipeline.get_boxes("BTCUSDT", StrategyConfig())
+    v0 = boxes["VAL"].to_numpy().copy()
+    boxes["VAL"].array[:] = 0.0
+    assert np.array_equal(pipeline.get_boxes("BTCUSDT", StrategyConfig())[0]["VAL"].to_numpy(), v0)
+    pipeline.clear_cache()
+
+
+def test_execr4_capped_entries_are_flagged():
+    df = _mk_df([[100, 100.5, 99.5, 100.0], [100, 100.2, 79.0, 80.0], [80, 80.5, 79.5, 80.0], [80, 80.5, 79.5, 80.0]])
+    sig = pd.DataFrame({"signal": [True, False, True, False], "sl": [85.0, np.nan, 70.0, np.nan],
+                        "tp": [120.0, np.nan, 100.0, np.nan], "poc_tp": [110.0, np.nan, 90.0, np.nan]}, index=df.index)
+    res = run_backtest(df, sig, BacktestConfig(include_funding=False, compounding=False, fixed_leverage=1.5))
+    assert list(res.trades["capped"]) == [False, True]                    # 亏损后固定名义 150k > 1.5 × 当期净值
+    st = trade_stats(res.trades)
+    assert st["capped_entries"] == 1
+
+
+def test_execr5_funding_grid_coverage():
+    df = _mk_df([[100.0 + k * 0.01, 100.5 + k * 0.01, 99.5 + k * 0.01, 100.0 + k * 0.01] for k in range(24)])
+    sig = pd.DataFrame({"signal": False, "sl": np.nan, "tp": np.nan, "poc_tp": np.nan}, index=df.index)
+    sig.loc[sig.index[15], ["signal", "sl", "tp", "poc_tp"]] = [True, 50.0, 500.0, 400.0]
+    full = pd.DataFrame({"funding_rate": [1e-4] * 4, "funding_interval_hours": 8},
+                        index=pd.DatetimeIndex(["2024-01-01 00:00", "2024-01-01 08:00", "2024-01-01 16:00",
+                                                "2024-01-02 00:00"], tz="UTC"))
+    cfg = BacktestConfig(time_stop_bars=8)                                 # bar 23 收盘(=次日 00:00 结算)时间止损
+    r_full = run_backtest(df, sig, cfg, full)
+    t = r_full.trades.iloc[0]
+    assert t["exit_bar"] == 23 and t["n_funding"] == 1 and t["funding_complete"] and not r_full.funding_end_missing
+    r_miss = run_backtest(df, sig, cfg, full.iloc[:3])                     # 缺少恰在最后收盘时刻的结算
+    assert r_miss.funding_end_missing and not r_miss.trades.iloc[0]["funding_complete"]
+    with pytest.raises(ValueError, match="misses the settlement"):
+        run_backtest(df, sig, cfg, full.drop(full.index[2]))               # 缺少区间内的 16:00 结算
+    with pytest.raises(ValueError, match="duplicate"):
+        run_backtest(df, sig, cfg, pd.concat([full, full.iloc[[1]]]).sort_index())
+    tiny = df.iloc[1:3]                                                    # (01:00, 03:00] 内无结算网格点
+    run_backtest(tiny, sig.iloc[1:3], BacktestConfig(), full.iloc[:0])
+
+
+def test_execr6_empty_and_nonempty_tables_share_dtypes():
+    df = _mk_df([[100, 100.5, 99.5, 100.0]] * 4)
+    base = pd.DataFrame({"signal": False, "sl": np.nan, "tp": np.nan, "poc_tp": np.nan}, index=df.index)
+    one = base.copy()
+    one.loc[one.index[0], ["signal", "sl", "tp", "poc_tp"]] = [True, 90.0, 110.0, 105.0]
+    e = run_backtest(df, base, BacktestConfig(include_funding=False)).trades
+    f = run_backtest(df, one, BacktestConfig(include_funding=False)).trades
+    assert len(e) == 0 and len(f) == 1
+    assert list(e.dtypes.astype(str)) == list(f.dtypes.astype(str))
+
+
+def test_execr7_nan_val_on_signal_bar_is_rejected_for_breakdown_exit():
+    df = _mk_df([[100, 100.5, 99.5, 100.0]] * 4)
+    sig = pd.DataFrame({"signal": [True, False, False, False], "sl": [90.0] + [np.nan] * 3, "tp": [110.0] + [np.nan] * 3,
+                        "poc_tp": [105.0] + [np.nan] * 3, "VAL": np.nan, "brk_bodyvol": False, "k1_atr": 0.5},
+                       index=df.index)
+    with pytest.raises(ValueError, match="finite VAL"):
+        run_backtest(df, sig, BacktestConfig(include_funding=False, exit_on_breakdown=True))
+
+
+@pytest.mark.parametrize("kw", [{"slippage": float("nan")}, {"perp_maker_fee": float("nan")}, {"max_leverage": float("inf")},
+                                {"target_vol": float("inf")}])
+def test_execr8_backtest_config_rejects_non_finite(kw):
+    with pytest.raises(ValueError):
+        BacktestConfig(**kw)
+
+
+@pytest.mark.parametrize("kw", [{"regime_sma_days": 0}, {"regime_slope_days": -3}, {"max_box_width_atr": -1.0},
+                                {"max_box_width_pct": 0.0}, {"crash_cooldown_hours": -5}, {"crash_body_atr4": -1.0},
+                                {"zone_k1": float("nan")}])
+def test_execr8_strategy_config_rejects_invalid(kw):
+    with pytest.raises(ValueError):
+        StrategyConfig(**kw)
+
+
+def test_execr9_metrics_locked_on_results_extending_into_oos():
+    from config import VAL_END, VAL_START
+    res = _mk_res(pd.Timestamp("2024-01-01", tz="UTC"), pd.Timestamp("2025-08-01", tz="UTC"))
+    with pytest.raises(OOSLockedError):
+        segment_metrics(res, VAL_START, VAL_END)                         # 分段本身在 OOS 之前，但结果含 OOS 期间的离场
+    segment_metrics(res, VAL_START, VAL_END, allow_oos=True)

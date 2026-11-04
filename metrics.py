@@ -9,12 +9,15 @@ metrics.py — 绩效指标（日度净值口径）与样本分段统计。
 * Sortino = mean / sqrt(mean(min(r, 0)^2)) * sqrt(365)（目标 0 的总体下行偏差，分母为全部 N 天）。
 * CAGR = (E_end / E_start)^(365 / 自然日数) - 1；Calmar = 分段 CAGR / |分段日度 MaxDD|（非滚动 36 个月）。
 * max_dd 为日收盘净值回撤；max_dd_hourly 为逐小时收盘盯市回撤（不含 K 线内的不利波动，后者见交易表 mae_pct）。
-* compounding=False 的配置以初始资金为固定基数：分段净值按 初始资金 + 段内累计盈亏 重新定基，
-  使 VAL 的收益率/回撤不受 IS 期末净值高低的影响。
+* compounding=False 的配置以初始资金为固定基数：分段净值按 初始资金 + 段内累计盈亏 重新定基。
+  只有当分段内没有入场被净值上限截断（capped_entries == 0）时，VAL 的收益率/回撤才与 IS 期末净值无关；
+  上限截断时（永续 leverage_cap*净值；现货 净值/(1+taker)）仓位由当期净值决定，capped_entries 报告其笔数。
 * 分段边界必须是 UTC 零点；分段净值必须完整覆盖 [start, end)，否则报错（不会把截断数据当作完整分段）。
 * 交易统计按 entry_time ∈ [start, end) 归属分段（跨段交易的全部盈亏计入入场分段，trades_open_at_end 报告其数量）；
   exit_reason='OPEN' 的期末未平仓交易不计入胜率等统计。pnl == 0 计为非盈利；无亏损交易时盈亏比为 inf（全为 0 时为 NaN）。
-* OOS 隔离：任何触及 [OOS_START, ...) 的分段指标或月度收益都必须显式传入 ``allow_oos=True``（仅 Phase 4 锁定参数后使用）。
+* OOS 隔离：任何触及 [OOS_START, ...) 的分段指标或月度收益、以及对净值延伸到 OOS_START 之后的回测结果
+  计算任何分段指标，都必须显式传入 ``allow_oos=True``（仅 Phase 4 锁定参数后使用）。后者防止在全量结果上
+  统计 VAL 时，把 VAL 入场、OOS 期间离场的交易盈亏计入 VAL。
 """
 from __future__ import annotations
 
@@ -72,29 +75,36 @@ def drawdown_series(eq: pd.Series) -> pd.Series:
 
 
 _EMPTY_STATS = {"trades": 0, "win_rate": np.nan, "profit_factor": np.nan, "avg_r": np.nan, "avg_hold_bars": np.nan,
-                "avg_win_pct": np.nan, "avg_loss_pct": np.nan, "fees": 0.0, "funding": 0.0, "exit_reasons": {}}
+                "avg_win_pct": np.nan, "avg_loss_pct": np.nan, "fees": 0.0, "funding": 0.0, "exit_reasons": {},
+                "capped_entries": 0, "funding_incomplete": 0}
 
 
 def trade_stats(tr: pd.DataFrame) -> dict:
+    """已平仓交易的统计；capped_entries / funding_incomplete 按全部入场（含期末未平仓）计数。"""
+    entries = {"capped_entries": int(tr["capped"].sum()) if len(tr) and "capped" in tr.columns else 0,
+               "funding_incomplete": int((~tr["funding_complete"]).sum()) if len(tr) and "funding_complete" in tr.columns else 0}
     closed = tr[tr["exit_reason"] != "OPEN"] if len(tr) else tr
     n = int(len(closed))
     if n == 0:
-        return dict(_EMPTY_STATS, exit_reasons={})
+        return dict(_EMPTY_STATS, exit_reasons={}, **entries)
     pnl = closed["pnl"]
+    ret = closed["ret_on_base"] if "ret_on_base" in closed.columns else closed["ret_on_equity"]
     gw, gl = pnl[pnl > 0].sum(), -pnl[pnl < 0].sum()
     pf = float(gw / gl) if gl > 0 else (float("inf") if gw > 0 else float("nan"))
-    return {
+    out = {
         "trades": n,
         "win_rate": float((pnl > 0).mean()),
         "profit_factor": pf,
         "avg_r": float(closed["r_multiple"].mean()),
         "avg_hold_bars": float(closed["hold_bars"].mean()),
-        "avg_win_pct": float(closed.loc[pnl > 0, "ret_on_equity"].mean()) if (pnl > 0).any() else np.nan,
-        "avg_loss_pct": float(closed.loc[pnl < 0, "ret_on_equity"].mean()) if (pnl < 0).any() else np.nan,
+        "avg_win_pct": float(ret[pnl > 0].mean()) if (pnl > 0).any() else np.nan,
+        "avg_loss_pct": float(ret[pnl < 0].mean()) if (pnl < 0).any() else np.nan,
         "fees": float(closed["fees"].sum()),
         "funding": float(closed["funding"].sum()),
-        "exit_reasons": closed["exit_reason"].value_counts().to_dict(),
+        "exit_reasons": {str(k): int(v) for k, v in closed["exit_reason"].value_counts().items()},
     }
+    out.update(entries)
+    return out
 
 
 def _check_oos(end: pd.Timestamp, allow_oos: bool) -> None:
@@ -105,6 +115,8 @@ def _check_oos(end: pd.Timestamp, allow_oos: bool) -> None:
 def segment_metrics(res: BacktestResult, start: pd.Timestamp, end: pd.Timestamp, allow_oos: bool = False) -> dict:
     """[start, end) 分段（UTC 零点边界）：日度收益、夏普等风险指标 + 该段内入场的交易统计。"""
     _check_oos(end, allow_oos)
+    if not allow_oos and len(res.equity) and res.equity.index[-1] > OOS_START:
+        raise OOSLockedError("this backtest result extends beyond OOS_START; segment metrics on it require allow_oos=True")
     if start != start.floor("D") or end != end.floor("D") or not end > start:
         raise ValueError(f"segment bounds must be UTC midnights with end > start: [{start}, {end})")
     if len(res.equity) == 0 or res.equity.index[-1] < end:

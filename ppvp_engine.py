@@ -166,16 +166,16 @@ def _value_area(hist, va_pct):
     hi = poc
     acc = hist[poc]
     while acc < target:
-        up = hist[hi + 1] if hi + 1 < nb else -1.0
-        dn = hist[lo - 1] if lo - 1 >= 0 else -1.0
-        if up < 0.0 and dn < 0.0:
+        can_up = hi + 1 < nb
+        can_dn = lo - 1 >= 0
+        if not (can_up or can_dn):
             break
-        if up >= dn - tol:
+        if can_up and ((not can_dn) or hist[hi + 1] >= hist[lo - 1] - tol):
             hi += 1
-            acc += up
+            acc += hist[hi]
         else:
             lo -= 1
-            acc += dn
+            acc += hist[lo]
     return poc, lo, hi
 
 
@@ -252,7 +252,7 @@ def build_boxes(df1h: pd.DataFrame, cfg: StrategyConfig, df4h: pd.DataFrame | No
         elif kind == "f":
             data[kk] = np.asarray(cols[kk], dtype=np.float64)
         else:
-            data[kk] = np.asarray(cols[kk], dtype=object)
+            data[kk] = pd.Series(cols[kk], dtype="str")   # 显式字符串 dtype：空表与非空表一致
     boxes = pd.DataFrame(data)                            # 空表也保持完整列与 dtype（截断测试可逐位比较）
     boxes.index.name = "box_id"
     return boxes, df4h

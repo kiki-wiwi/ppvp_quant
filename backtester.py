@@ -18,13 +18,17 @@ backtester.py — 事件驱动回测引擎（1H 粒度，只做多，单品种�
   T 映射到第一根 open_time ≥ T 的 1H K 线（正常即开盘恰为 T 的那根；若该根因维护缺失则顺延到下一根，
   价格取该根开盘价），条件为 入场时刻 < T。收盘市价离场且收盘时刻恰为 T 时，按收盘价承担该次资金费。
   成交被视为发生在 K 线收盘瞬间之后：收盘入场不承担该时刻的资金费。
-  开启资金费时必须传入覆盖整个回测区间的资金费表，否则直接报错（不允许静默按 0 计）。
+  开启资金费时必须传入资金费表，且 (第一根开盘, 最后收盘) 内的每个结算网格点都必须存在，否则直接报错
+  （不允许静默按 0 计）；恰在最后收盘时刻的结算若缺失，只影响在最后一根收盘离场的时间止损/破位离场，
+  这类交易被标记为 funding_complete=False。
   交易表 n_funding 记录每笔交易实际结算的次数；SL/TP/BE/POC 离场的资金费窗口止于 exit_bar_open，
   TIME/BREAKDOWN 止于 exit_time（离场 K 线收盘）。
 * venue='spot'：现货等效模式 = 永续价格触发与成交 + 现货费率 + 无资金费 + 杠杆 ≤ 1.0，
   且名义仓位 ≤ 净值 / (1 + taker)，保证买入后现金不为负（手续费不融资）。
 * 仓位：fixed（净值 * 固定杠杆）/ risk（以损定仓：净值 * 风险比例 / 止损距离）/ inv_vol（目标波动率缩放），
   均受 leverage_cap * 净值 硬上限约束；该上限只在入场时按当时净值执行，持仓期间盯市杠杆会随价格下跌而升高。
+  上限截断了目标名义的交易标记 capped=True（不复利配置下，这意味着当期净值而非初始资金决定了仓位）。
+  ret_on_base = pnl / 仓位基数（复利 = 入场时净值，不复利 = 初始资金）。
 """
 from __future__ import annotations
 
@@ -76,6 +80,9 @@ def _simulate(o, h, l, c, open_ns, close_ns, sig, sl_arr, tp_arr, poc_arr, val_a
     t_partial_px = np.full(m, np.nan)
     t_min_low = np.full(m, np.nan)
     t_max_high = np.full(m, np.nan)
+    t_capped = np.zeros(m, np.bool_)
+    lv_stop = np.full(n, np.nan)          # 逐根：本根开始时生效的止损位（含此前的保本上移；入场 K 线为 NaN）
+    lv_brk = np.full(n, np.nan)           # 逐根：本根生效的破位离场参照位 VAL_entry - k1*ATR_i（仅 exit_on_breakdown）
     nt = 0
 
     wallet = init_cap
@@ -99,6 +106,11 @@ def _simulate(o, h, l, c, open_ns, close_ns, sig, sl_arr, tp_arr, poc_arr, val_a
     k = -1
     for i in range(n):
         if qty > 0.0:
+            # --- 本根生效的离场价位：只计算一次并逐根记录，离场判定只读取记录值（闸门逐位比较这些价位）---
+            lv_stop[i] = sl
+            brk_lvl = val_e - k1atr[i]
+            if exit_on_brk:
+                lv_brk[i] = brk_lvl
             # --- 资金费：结算时点 T 映射到第一根 open ≥ T 的 K 线，且入场早于 T ---
             fr = fund_open[i]
             if funding_on and fr == fr and entry_t < fund_t[i]:
@@ -112,8 +124,8 @@ def _simulate(o, h, l, c, open_ns, close_ns, sig, sl_arr, tp_arr, poc_arr, val_a
                 max_high = h[i]
             reason = 0
             # --- 止损优先（悲观撮合）---
-            if l[i] <= sl:
-                px = min(o[i], sl) * (1.0 - slip)
+            if l[i] <= lv_stop[i]:
+                px = min(o[i], lv_stop[i]) * (1.0 - slip)
                 fee = qty * px * taker
                 g = qty * (px - entry_px)
                 wallet += g - fee
@@ -166,7 +178,7 @@ def _simulate(o, h, l, c, open_ns, close_ns, sig, sl_arr, tp_arr, poc_arr, val_a
             # --- 收盘类离场：时间止损 / 放量跌穿入场箱体支撑带 ---
             if qty > 0.0:
                 ts_hit = time_stop > 0 and (i - entry_bar) >= time_stop
-                bd_hit = exit_on_brk and bodyvol[i] and c[i] < val_e - k1atr[i]
+                bd_hit = exit_on_brk and bodyvol[i] and c[i] < lv_brk[i]
                 if ts_hit or bd_hit:
                     fr2 = fund_close[i]
                     if funding_on and fr2 == fr2:
@@ -217,7 +229,8 @@ def _simulate(o, h, l, c, open_ns, close_ns, sig, sl_arr, tp_arr, poc_arr, val_a
                 cash_cap = eq / (1.0 + taker)
                 if cash_cap < cap:
                     cap = cash_cap
-            if notional > cap:
+            capped = notional > cap
+            if capped:
                 notional = cap
             if notional > 0.0 and eq > 0.0 and efill > sl_arr[i]:
                 k = nt
@@ -250,6 +263,7 @@ def _simulate(o, h, l, c, open_ns, close_ns, sig, sl_arr, tp_arr, poc_arr, val_a
                 t_sl[k] = sl
                 t_tp[k] = tp
                 t_poc[k] = poc
+                t_capped[k] = capped
                 equity[i] = wallet + qty * (c[i] - entry_px)
         pos[i] = qty
     # 期末仍持仓：按最后收盘价盯市，记录为 OPEN
@@ -264,7 +278,7 @@ def _simulate(o, h, l, c, open_ns, close_ns, sig, sl_arr, tp_arr, poc_arr, val_a
         t_max_high[k] = max_high
     return (equity, pos, nt, t_entry_bar, t_exit_bar, t_entry_px, t_exit_px, t_qty, t_notional, t_lev, t_eq,
             t_sl, t_tp, t_poc, t_fees, t_fund, t_nfund, t_gross, t_pnl, t_reason, t_partial_bar, t_partial_px,
-            t_min_low, t_max_high)
+            t_min_low, t_max_high, t_capped, lv_stop, lv_brk)
 
 
 @dataclass
@@ -275,6 +289,8 @@ class BacktestResult:
     config: BacktestConfig
     initial_capital: float
     start_time: pd.Timestamp   # 第一根 1H 开盘时刻（净值起点）
+    funding_end_missing: bool = False   # 资金费表缺少恰在最后收盘时刻的结算（见 check_funding_coverage）
+    levels: pd.DataFrame | None = None  # 逐根持仓离场价位（stop / brk_level），供防未来函数闸门逐位比较
 
 
 def funding_arrays(df1h: pd.DataFrame, funding: pd.DataFrame | None) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
@@ -308,18 +324,43 @@ def funding_arrays(df1h: pd.DataFrame, funding: pd.DataFrame | None) -> tuple[np
     return fo, ft, fc
 
 
-def check_funding_coverage(df1h: pd.DataFrame, funding: pd.DataFrame) -> None:
-    """资金费表必须覆盖 [第一根开盘, 最后收盘]：区间内相邻结算点间隔 ≤ 8h，两端各自 8h 内有结算点。"""
+def check_funding_coverage(df1h: pd.DataFrame, funding: pd.DataFrame) -> bool:
+    """资金费表必须包含 (第一根开盘, 最后收盘) 内的每一个结算网格点，否则报错；返回“恰在最后收盘时刻的网格点是否缺失”。
+
+    结算网格 = 自 UTC 纪元起每 funding_interval_hours 小时（Binance BTC/ETH 为 8h → 00/08/16），窗口内间隔必须唯一。
+    最后收盘时刻的结算只会被“在最后一根收盘离场”的时间止损/破位离场用到；若缺失，回测不报错，
+    而是在交易表中把这类交易标记为 funding_complete=False（显式标记，而非静默按 0 计）。
+    区间内不含任何网格点（极短窗口）时不检查。重复时间戳单独报错。
+    """
+    if funding.index.has_duplicates:
+        raise ValueError("funding table has duplicate settlement timestamps")
     o0 = df1h.index[0]
     cl = df1h.index[-1] + pd.Timedelta(hours=1)
-    t = funding.index[(funding.index >= o0 - FUNDING_MAX_GAP) & (funding.index <= cl + FUNDING_MAX_GAP)]
-    if len(t) == 0 or t[0] > o0 + FUNDING_MAX_GAP or t[-1] < cl - FUNDING_MAX_GAP:
-        raise ValueError(f"funding table does not cover the backtest window [{o0}, {cl}]")
-    gaps = np.diff(to_ns(t))
-    if len(gaps) and gaps.max() > FUNDING_MAX_GAP.value:
-        raise ValueError("funding table has a gap longer than 8h inside the backtest window")
-    if funding["funding_rate"].loc[t].isna().any():
+    hours = 8
+    if "funding_interval_hours" in funding.columns:
+        near = funding.loc[(funding.index > o0 - pd.Timedelta(days=1)) & (funding.index <= cl + pd.Timedelta(days=1)),
+                           "funding_interval_hours"].dropna().unique()
+        if len(near) > 1:
+            raise ValueError("funding interval changes inside the backtest window (unsupported)")
+        if len(near) == 1:
+            hours = int(near[0])
+    step = np.int64(hours) * NS_PER_HOUR
+    o0n, cln = int(to_ns(pd.DatetimeIndex([o0]))[0]), int(to_ns(pd.DatetimeIndex([cl]))[0])
+    first = (o0n // step + 1) * step
+    grid = np.arange(first, cln + 1, step, dtype=np.int64)          # 网格点 ∈ (o0, cl]
+    if len(grid) == 0:
+        return False
+    have = to_ns(funding.index)
+    present = np.isin(grid, have)
+    end_on_grid = grid[-1] == cln
+    inner = present[:-1] if end_on_grid else present
+    if not inner.all():
+        miss = pd.Timestamp(int(grid[:len(inner)][~inner][0]), unit="ns", tz="UTC")
+        raise ValueError(f"funding table misses the settlement at {miss} inside the backtest window [{o0}, {cl}]")
+    rates = funding["funding_rate"].to_numpy(dtype=np.float64)[np.isin(have, grid)]
+    if np.isnan(rates).any():
         raise ValueError("funding table has NaN rates inside the backtest window")
+    return bool(end_on_grid and not present[-1])
 
 
 def annualized_vol(df1h: pd.DataFrame, lookback: int) -> np.ndarray:
@@ -344,11 +385,14 @@ def run_backtest(df1h: pd.DataFrame, signals: pd.DataFrame, cfg: BacktestConfig,
         for col in ("VAL", "brk_bodyvol", "k1_atr"):
             if col not in signals.columns:
                 raise ValueError(f"exit_on_breakdown=True requires signals column '{col}'")
+        if (signals["signal"].to_numpy(dtype=bool) & signals["VAL"].isna().to_numpy()).any():
+            raise ValueError("exit_on_breakdown=True requires a finite VAL on every signal bar")
+    end_missing = False
     if cfg.funding_on:
         if funding is None:
             raise ValueError("include_funding=True on venue='perp' requires the funding table "
                              "(pass funding=..., or set include_funding=False)")
-        check_funding_coverage(df1h, funding)
+        end_missing = check_funding_coverage(df1h, funding)
 
     def col(name, dtype, fill):
         return signals[name].to_numpy(dtype=dtype) if name in signals.columns else np.full(n, fill, dtype=dtype)
@@ -370,7 +414,7 @@ def run_backtest(df1h: pd.DataFrame, signals: pd.DataFrame, cfg: BacktestConfig,
              {"vah": 0, "poc_partial": 1}[cfg.tp_mode], float(cfg.partial_frac), bool(cfg.move_to_breakeven),
              int(cfg.time_stop_bars or -1), bool(cfg.exit_on_breakdown))
     (equity, pos, nt, eb, xb, epx, xpx, qty, notional, lev, eq, sl, tp, poc, fees, fund, nfund, gross, pnl, reason,
-     pbar, ppx, mlow, mhigh) = out
+     pbar, ppx, mlow, mhigh, capped, lv_stop, lv_brk) = out
     eb, xb = eb[:nt], xb[:nt]
 
     def ts(ns_arr):
@@ -387,13 +431,17 @@ def run_backtest(df1h: pd.DataFrame, signals: pd.DataFrame, cfg: BacktestConfig,
         "entry_px": epx[:nt], "exit_px": xpx[:nt], "qty": qty[:nt], "notional": notional[:nt],
         "leverage": lev[:nt], "equity_at_entry": eq[:nt], "sl": sl[:nt], "tp": tp[:nt], "poc": poc[:nt],
         "fees": fees[:nt], "funding": fund[:nt], "n_funding": nfund[:nt], "gross_pnl": gross[:nt], "pnl": pnl[:nt],
-        "exit_reason": np.array([REASONS[int(r)] for r in reason[:nt]], dtype=object),
+        "exit_reason": pd.Series([REASONS[int(r)] for r in reason[:nt]], dtype="str"),   # 显式 dtype：空表一致
         "partial_bar": pbar[:nt], "partial_px": ppx[:nt], "min_low": mlow[:nt], "max_high": mhigh[:nt],
+        "capped": capped[:nt],                                                   # 入场名义被净值上限截断
     })
+    final_close_exit = (xb == n - 1) & np.isin(reason[:nt], (4, 5))
+    trades["funding_complete"] = ~(final_close_exit & end_missing)
     # 派生列：空表也保持完整 schema（截断测试可逐位比较）
     risk = trades["qty"] * (trades["entry_px"] - trades["sl"])
     trades["r_multiple"] = trades["pnl"] / risk
     trades["ret_on_equity"] = trades["pnl"] / trades["equity_at_entry"]
+    trades["ret_on_base"] = trades["pnl"] / (trades["equity_at_entry"] if cfg.compounding else float(cfg.initial_capital))
     trades["hold_bars"] = np.where(closed, xb - eb, n - 1 - eb).astype(np.int64)
     trades["mae_pct"] = trades["min_low"] / trades["entry_px"] - 1
     trades["mfe_pct"] = trades["max_high"] / trades["entry_px"] - 1
@@ -404,4 +452,5 @@ def run_backtest(df1h: pd.DataFrame, signals: pd.DataFrame, cfg: BacktestConfig,
     return BacktestResult(equity=pd.Series(equity, index=idx_close, name="equity"),
                           position=pd.Series(pos, index=idx_close, name="qty"),
                           trades=trades, config=cfg, initial_capital=float(cfg.initial_capital),
-                          start_time=df1h.index[0])
+                          start_time=df1h.index[0], funding_end_missing=bool(end_missing),
+                          levels=pd.DataFrame({"stop": lv_stop, "brk_level": lv_brk}, index=idx_close))

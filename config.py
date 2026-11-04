@@ -11,6 +11,8 @@ from __future__ import annotations
 
 import hashlib
 import json
+import math
+import numbers
 from dataclasses import asdict, dataclass, replace
 
 import pandas as pd
@@ -86,6 +88,10 @@ class StrategyConfig:
     crash_cooldown_hours: int = 48
 
     def __post_init__(self):
+        floats = (self.va_pct, self.zone_k1, self.zone_k2, self.min_bounce_atr, self.break_body_atr, self.break_vol_mult,
+                  self.pin_wick_frac, self.pinbar_ratio, self.pin_close_pos, self.engulf_ratio, self.engulf_gap_tol,
+                  self.sl_buffer_atr, self.min_rr, self.crash_body_atr4, self.crash_vol_mult4)
+        _require(all(_finite(x) for x in floats), "strategy parameters must be finite numbers")
         _require(self.pivot_left >= 0 and self.pivot_right >= 0, "pivot_left / pivot_right must be >= 0")
         _require(self.profile_pivots >= 1, "profile_pivots must be >= 1")
         _require(self.n_bins >= 2, "n_bins must be >= 2")
@@ -100,6 +106,11 @@ class StrategyConfig:
         _require(self.sl_anchor in ("test", "pattern"), "sl_anchor must be 'test' or 'pattern'")
         _require(self.sl_buffer_atr >= 0.0 and self.min_rr >= 0.0, "sl_buffer_atr / min_rr must be >= 0")
         _require(self.regime_filter in (None, "daily_sma", "crash_cooldown"), "regime_filter must be None/'daily_sma'/'crash_cooldown'")
+        _require(self.regime_sma_days >= 1 and self.regime_slope_days >= 1, "regime_sma_days / regime_slope_days must be >= 1")
+        _require(self.crash_body_atr4 >= 0.0 and self.crash_vol_mult4 >= 0.0 and self.crash_cooldown_hours >= 0,
+                 "crash_* parameters must be >= 0")
+        for w in (self.max_box_width_atr, self.max_box_width_pct):
+            _require(w is None or (_finite(w) and w > 0.0), "max_box_width_* must be None or a finite number > 0")
 
     def key(self) -> str:
         return _hash(asdict(self))
@@ -142,6 +153,10 @@ class BacktestConfig:
     exit_on_breakdown: bool = False     # 持仓期间出现放量实体跌穿“入场时箱体”的支撑带下沿 → 收盘市价离场
 
     def __post_init__(self):
+        floats = (self.initial_capital, self.perp_taker_fee, self.perp_maker_fee, self.spot_taker_fee, self.spot_maker_fee,
+                  self.slippage, self.fixed_leverage, self.risk_per_trade, self.target_vol, self.max_leverage,
+                  self.partial_frac)
+        _require(all(_finite(x) for x in floats), "backtest parameters must be finite numbers")
         _require(self.venue in ("perp", "spot"), "venue must be 'perp' or 'spot'")
         _require(self.sizing in ("fixed", "risk", "inv_vol"), "sizing must be 'fixed', 'risk' or 'inv_vol'")
         _require(self.tp_mode in ("vah", "poc_partial"), "tp_mode must be 'vah' or 'poc_partial'")
@@ -175,6 +190,10 @@ class BacktestConfig:
 
     def with_(self, **kw) -> "BacktestConfig":
         return replace(self, **kw)
+
+
+def _finite(x) -> bool:
+    return isinstance(x, numbers.Real) and not isinstance(x, bool) and math.isfinite(float(x))
 
 
 def _require(ok: bool, msg: str) -> None:

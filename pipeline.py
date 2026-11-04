@@ -3,8 +3,8 @@ pipeline.py — 数据 → 4H PPVP 箱体 → 1H 状态机信号 → 回测 → 
 
 ``pipeline.run`` 是 Phase 2/3 唯一受支持的研究入口。研究阶段默认 ``end = RESEARCH_DATA_END (= 2025-07-01)``：
 OOS 区间的 K 线根本不会被送入引擎。只有在 Phase 4 锁定最终参数后，才允许以 ``allow_oos=True`` 运行到 2026-11-01。
-OOS 锁在每个入口（load_market / get_boxes / run）缓存查找之前检查；缓存对象以浅拷贝返回（pandas 3 写时复制），
-调用方就地修改返回的 DataFrame 不会污染缓存。
+OOS 锁在每个入口（load_market / get_boxes / run）缓存查找之前检查；缓存对象以深拷贝返回（每次约 0.5 ms），
+调用方以任何方式就地修改返回的数据（含 ``Series.array`` 写入、pandas 2.x 无写时复制的情形）都不会污染缓存。
 """
 from __future__ import annotations
 
@@ -51,7 +51,7 @@ def load_market(symbol: str, end: pd.Timestamp = RESEARCH_DATA_END, allow_oos: b
         fund = fund[(fund.index >= RESEARCH_START) & (fund.index <= end)]
         _MARKET[key] = (df, fund, spot_daily_warmup(symbol))
     df, fund, spot = _MARKET[key]
-    return df.copy(deep=False), fund.copy(deep=False), spot.copy(deep=False)
+    return df.copy(), fund.copy(), spot.copy()
 
 
 def get_boxes(symbol: str, scfg: StrategyConfig, end: pd.Timestamp = RESEARCH_DATA_END, allow_oos: bool = False):
@@ -61,7 +61,7 @@ def get_boxes(symbol: str, scfg: StrategyConfig, end: pd.Timestamp = RESEARCH_DA
         df1h, _, _ = load_market(symbol, end, allow_oos)
         _BOXES[key] = build_boxes(df1h, scfg)
     boxes, df4h = _BOXES[key]
-    return boxes.copy(deep=False), df4h.copy(deep=False)
+    return boxes.copy(), df4h.copy()
 
 
 def run(symbol: str = "BTCUSDT", scfg: StrategyConfig = BASELINE_STRATEGY, bcfg: BacktestConfig = BASELINE_BACKTEST,

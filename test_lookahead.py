@@ -50,7 +50,12 @@ CONFIGS = {
         StrategyConfig(regime_filter="crash_cooldown", roll_failed_second_touch=False,
                        carry_touches_on_box_update=False, va_pct=0.65, n_bins=40, engulf_ratio=0.8),
         BacktestConfig(sizing="inv_vol", venue="spot", compounding=False)),
+    # 专门覆盖收盘类离场路径（时间止损 / 入场箱体破位 / 结算时刻收盘离场的资金费 / POC 分批）
+    "exits_C": (StrategyConfig(),
+                BacktestConfig(exit_on_breakdown=True, time_stop_bars=12, tp_mode="poc_partial", move_to_breakeven=False)),
 }
+# 这些配置在研究区间内必须真的产生下列离场，否则闸门对这些路径的“通过”就是空洞的
+REQUIRED_EXIT_COVERAGE = {"exits_C": ("TIME", "BREAKDOWN", "settlement_close_exit", "poc_partial")}
 _LOG: dict = {}
 
 
@@ -109,10 +114,19 @@ def _col_array(s: pd.Series) -> np.ndarray:
     return s.to_numpy()
 
 
+def _fail(msg: str) -> None:
+    raise AssertionError(msg)
+
+
 def assert_frames_bitwise(a: pd.DataFrame, b: pd.DataFrame, ctx: str) -> None:
-    assert list(a.columns) == list(b.columns), f"{ctx}: columns differ"
-    assert len(a) == len(b), f"{ctx}: length {len(a)} vs {len(b)}"
-    assert a.index.equals(b.index), f"{ctx}: index differs"
+    if list(a.columns) != list(b.columns):
+        _fail(f"{ctx}: columns differ")
+    if list(a.dtypes.astype(str)) != list(b.dtypes.astype(str)):
+        _fail(f"{ctx}: dtypes differ")
+    if len(a) != len(b):
+        _fail(f"{ctx}: length {len(a)} vs {len(b)}")
+    if not a.index.equals(b.index):
+        _fail(f"{ctx}: index differs")
     for col in a.columns:
         eq = _bitwise_equal(_col_array(a[col]), _col_array(b[col]))
         if not eq.all():
@@ -120,7 +134,17 @@ def assert_frames_bitwise(a: pd.DataFrame, b: pd.DataFrame, ctx: str) -> None:
             raise AssertionError(f"{ctx}: column '{col}' differs at row {j} ({a.index[j]}): {a[col].iloc[j]!r} vs {b[col].iloc[j]!r}")
 
 
-def compare_truncated_vs_full(full_out, trunc_out, df_full, t_cut, ctx) -> dict:
+def compare_truncated_vs_full(full_out, trunc_out, df_full, t_cut, ctx, redact: bool = False) -> dict:
+    """redact=True（OOS 截断点）：任何不一致都只报告“不一致”，不在失败信息中输出任何数值。"""
+    try:
+        return _compare(full_out, trunc_out, t_cut, ctx)
+    except AssertionError:
+        if not redact:
+            raise
+    raise AssertionError(f"{ctx}: mismatch (OOS cut, details redacted)")
+
+
+def _compare(full_out, trunc_out, t_cut, ctx) -> dict:
     boxes_f, sig_f, res_f = full_out
     boxes_t, sig_t, res_t = trunc_out
     last_close = t_cut + pd.Timedelta(hours=1)
@@ -131,8 +155,12 @@ def compare_truncated_vs_full(full_out, trunc_out, df_full, t_cut, ctx) -> dict:
     assert_frames_bitwise(sig_f.loc[sig_f.index <= t_cut], sig_t, f"{ctx} signals")
     # 3) 净值与持仓逐位一致
     n = len(sig_t)
-    assert np.array_equal(res_f.equity.to_numpy()[:n].view(np.int64), res_t.equity.to_numpy().view(np.int64)), f"{ctx} equity"
-    assert np.array_equal(res_f.position.to_numpy()[:n].view(np.int64), res_t.position.to_numpy().view(np.int64)), f"{ctx} position"
+    if not np.array_equal(res_f.equity.to_numpy()[:n].view(np.int64), res_t.equity.to_numpy().view(np.int64)):
+        _fail(f"{ctx} equity")
+    if not np.array_equal(res_f.position.to_numpy()[:n].view(np.int64), res_t.position.to_numpy().view(np.int64)):
+        _fail(f"{ctx} position")
+    # 逐根持仓离场价位（止损 / 破位参照位）：离场阈值中的泄露在任何持仓中的截断点都可见，而不只是恰好改变离场时
+    assert_frames_bitwise(res_f.levels.iloc[:n], res_t.levels, f"{ctx} exit levels")
     # 4) 截断前已平仓交易全部字段一致；截断时仍持仓的交易入场字段一致
     tf, tt = res_f.trades, res_t.trades
     closed_t = tt[(tt["exit_bar"] >= 0)].reset_index(drop=True)
@@ -163,7 +191,8 @@ def recompute_funding(df1h, funding, res, bcfg) -> tuple[np.ndarray, np.ndarray]
 
     窗口：入场时刻 < T ≤ 结束时刻；SL/TP/BE/POC 结束于离场 K 线开盘，TIME/BREAKDOWN 结束于离场 K 线收盘，
     OPEN 结束于最后一根 K 线开盘。价格 = 第一根 open ≥ T 的开盘价（收盘类离场恰在 T 时为离场 K 线收盘价）；
-    数量 = 入场数量，POC 分批之后（结算所在 K 线晚于分批 K 线）乘以 (1 - partial_frac)。
+    数量 = 入场数量；POC 分批在 K 线内成交，因此结算 K 线晚于分批 K 线、或收盘类离场恰在分批 K 线收盘时刻结算时，
+    数量乘以 (1 - partial_frac)。
     """
     tr = res.trades
     out_f, out_n = np.zeros(len(tr)), np.zeros(len(tr), dtype=np.int64)
@@ -186,12 +215,14 @@ def recompute_funding(df1h, funding, res, bcfg) -> tuple[np.ndarray, np.ndarray]
         sel = np.flatnonzero((ft > e_t) & (ft <= end_t))
         for j in sel:
             T = ft[j]
-            if close_exit and T == c_ns[t.exit_bar]:
+            at_close = close_exit and T == c_ns[t.exit_bar]
+            if at_close:
                 bar, px = t.exit_bar, closes[t.exit_bar]
             else:
                 bar = int(np.searchsorted(o_ns, T, side="left"))
                 px = opens[bar]
-            q = t.qty * (1.0 - bcfg.partial_frac) if (t.partial_bar >= 0 and bar > t.partial_bar) else t.qty
+            after = t.partial_bar >= 0 and (bar > t.partial_bar or (at_close and bar == t.partial_bar))
+            q = t.qty * (1.0 - bcfg.partial_frac) if after else t.qty
             out_f[k] += q * px * fr[j]
             out_n[k] += 1
     return out_f, out_n
@@ -203,14 +234,36 @@ def assert_execution_invariants(df1h, funding, sig, res, bcfg, ctx):
         return
     eb = tr["entry_bar"].to_numpy()
     exp = sig["entry_ref"].to_numpy()[eb] * (1.0 + bcfg.slippage)
-    assert np.array_equal(tr["entry_px"].to_numpy().view(np.int64), exp.view(np.int64)), \
-        f"{ctx}: entry fill must equal signal-bar close * (1 + slippage)"
-    assert (sig["signal"].to_numpy()[eb]).all(), f"{ctx}: every entry must sit on a tradable signal bar"
+    # 显式 raise（不用裸 assert）：失败信息只含上下文，不含数值（全量运行含 OOS 数据）
+    if not np.array_equal(tr["entry_px"].to_numpy().view(np.int64), exp.view(np.int64)):
+        _fail(f"{ctx}: entry fill must equal signal-bar close * (1 + slippage)")
+    if not (sig["signal"].to_numpy()[eb]).all():
+        _fail(f"{ctx}: every entry must sit on a tradable signal bar")
     closed = tr["exit_bar"].to_numpy() >= 0
-    assert (tr["exit_bar"].to_numpy()[closed] > eb[closed]).all(), f"{ctx}: exit evaluated on the entry bar"
+    if not (tr["exit_bar"].to_numpy()[closed] > eb[closed]).all():
+        _fail(f"{ctx}: exit evaluated on the entry bar")
     f, nf = recompute_funding(df1h, funding, res, bcfg)
-    assert np.array_equal(nf, tr["n_funding"].to_numpy()), f"{ctx}: funding settlement count mismatch"
-    assert np.allclose(f, tr["funding"].to_numpy(), rtol=1e-12, atol=1e-9), f"{ctx}: funding amount mismatch"
+    if not np.array_equal(nf, tr["n_funding"].to_numpy()):
+        _fail(f"{ctx}: funding settlement count mismatch")
+    if not np.allclose(f, tr["funding"].to_numpy(), rtol=1e-12, atol=1e-9):
+        _fail(f"{ctx}: funding amount mismatch")
+
+
+def assert_exit_coverage(df1h, res, name):
+    """研究区间内必须真的出现所要求的离场类型（只统计计数是否 ≥ 1，不输出任何数值）。"""
+    need = REQUIRED_EXIT_COVERAGE.get(name)
+    if not need:
+        return
+    tr = res.trades
+    tr = tr[(tr["exit_bar"] >= 0) & (tr["exit_time"] <= OOS_START)]
+    close_ex = tr["exit_reason"].isin(["TIME", "BREAKDOWN"])
+    have = {"TIME": bool((tr["exit_reason"] == "TIME").any()),
+            "BREAKDOWN": bool((tr["exit_reason"] == "BREAKDOWN").any()),
+            "settlement_close_exit": bool((close_ex & tr["exit_time"].dt.hour.isin([0, 8, 16])).any()),
+            "poc_partial": bool((tr["partial_bar"] >= 0).any())}
+    missing = [k for k in need if not have[k]]
+    if missing:
+        _fail(f"[{name}] research window lacks required exit paths: {missing}")
 
 
 # ----------------------------------------------------------------------------
@@ -219,24 +272,29 @@ def assert_execution_invariants(df1h, funding, sig, res, bcfg, ctx):
 @pytest.mark.parametrize("symbol", SYMBOLS)
 def test_no_lookahead(markets, symbol):
     df, fund, spot_d = markets[symbol]
-    rng = np.random.default_rng(SEED)
+    seed = SEED + SYMBOLS.index(symbol)
+    rng = np.random.default_rng(seed)
     pool = df.index[(df.index >= pd.Timestamp("2020-01-02", tz="UTC")) & (df.index < pd.Timestamp("2026-10-25", tz="UTC"))]
     picked = np.sort(rng.choice(to_ns(pool), size=5, replace=False))
     cuts = [pd.Timestamp(int(x), unit="ns", tz="UTC") for x in picked]
-    _LOG[f"seeded_cuts:{symbol}"] = {"seed": SEED, "cuts": [str(c) for c in cuts]}
+    _LOG[f"seeded_cuts:{symbol}"] = {"seed": seed, "cuts": [str(c) for c in cuts]}
     for name, (scfg, bcfg) in CONFIGS.items():
         full_out = _pipeline(df, fund, spot_d, scfg, bcfg)
         assert_execution_invariants(df, fund, full_out[1], full_out[2], bcfg, f"[{symbol} {name} full]")
         for t_cut in cuts:
             trunc = df[df.index <= t_cut]
             trunc_out = _pipeline(trunc, fund, spot_d, scfg, bcfg)
-            rec = compare_truncated_vs_full(full_out, trunc_out, df, t_cut, f"[{symbol} {name} @ {t_cut}]")
+            rec = compare_truncated_vs_full(full_out, trunc_out, df, t_cut, f"[{symbol} {name} @ {t_cut}]",
+                                            redact=t_cut >= OOS_START)
             _record(symbol, name, t_cut, rec, "random")
 
 
-def _event_cuts(df, boxes, sig, res, scfg, n_sig=12, n_box=4, n_trade=4, n_flip=4, n_rand=10, seed=SEED):
+def _event_cuts(df, boxes, sig, res, scfg, n_sig=12, n_box=4, n_trade=4, n_flip=4, n_rand=10, n_exit=6, n_brk=6,
+                seed=SEED):
     """研究区间（< OOS_START）内的事件型截断点：信号 K 线及其前一根、箱体确认前 1 小时与确认当时、
-    入场 K 线、持仓中途、宏观状态翻转点及其前一根、一个 4H 未走完的时点，以及额外的随机点。"""
+    入场 K 线、持仓中途、离场 K 线及其前一根（含收盘类离场）、持仓期间满足放量实体条件的 K 线、
+    宏观状态翻转点及其前一根、一个 4H 未走完的时点、零交易的早期时点，以及额外的随机点。
+    （只在实际离场的 K 线截断，查不出“压制离场”的泄露，因此还要在持仓中的放量实体 K 线截断。）"""
     h1 = pd.Timedelta(hours=1)
     lim = OOS_START - h1
     first_ok = df.index[0] + pd.Timedelta(days=2)
@@ -260,6 +318,18 @@ def _event_cuts(df, boxes, sig, res, scfg, n_sig=12, n_box=4, n_trade=4, n_flip=
         eb = int(tr["entry_bar"].iloc[k])
         xb = int(tr["exit_bar"].iloc[k]) if tr["exit_bar"].iloc[k] >= 0 else eb + 2
         cuts += [df.index[eb], df.index[min((eb + max(xb, eb + 1)) // 2, len(df) - 1)]]
+    trc = tr[(tr["exit_bar"] >= 0)]
+    close_first = np.argsort(~trc["exit_reason"].isin(["TIME", "BREAKDOWN"]).to_numpy(), kind="stable")
+    trc = trc.iloc[close_first]                                  # 收盘类离场优先
+    for k in range(min(n_exit, len(trc))):
+        xb = int(trc["exit_bar"].iloc[k])
+        cuts += [df.index[xb - 1], df.index[xb]]
+    pos = res.position.to_numpy() > 0
+    held = np.zeros(len(df), dtype=bool)
+    held[1:] = pos[:-1]                                         # 第 i 根开始时持仓
+    brk_bars = list(df.index[held & sig["brk_bodyvol"].to_numpy()])
+    for t in spaced(brk_bars, n_brk):
+        cuts += [t - h1, t]
     if scfg.regime_filter is not None:
         rr = sig["regime_raw"].to_numpy()
         flips = list(sig.index[1:][rr[1:] != rr[:-1]])
@@ -268,7 +338,7 @@ def _event_cuts(df, boxes, sig, res, scfg, n_sig=12, n_box=4, n_trade=4, n_flip=
     cuts.append(pd.Timestamp("2023-06-14 13:00", tz="UTC"))     # 4H 只走完 2 根 1H
     cuts += [pd.Timestamp("2020-01-05 12:00", tz="UTC"),          # 三套配置均零交易（A 套在 01-05 还零箱体）：空表 schema 必须一致
              pd.Timestamp("2020-01-19 20:00", tz="UTC")]
-    rng = np.random.default_rng(seed + 1)
+    rng = np.random.default_rng(seed + 101)
     pool = df.index[(df.index >= first_ok) & (df.index <= lim)]
     cuts += [pd.Timestamp(int(x), unit="ns", tz="UTC") for x in rng.choice(to_ns(pool), size=n_rand, replace=False)]
     return sorted({t for t in cuts if first_ok <= t <= lim})
@@ -281,9 +351,11 @@ def test_no_lookahead_event_cuts(markets, symbol, name):
     scfg, bcfg = CONFIGS[name]
     full_out = _pipeline(df, fund, spot_d, scfg, bcfg)
     boxes_f, sig_f, res_f = full_out
+    assert_exit_coverage(df, res_f, name)
     big = symbol == "BTCUSDT"
     cuts = _event_cuts(df, boxes_f, sig_f, res_f, scfg, n_sig=12 if big else 6, n_box=4 if big else 2,
-                       n_trade=4 if big else 2, n_flip=4 if big else 2, n_rand=10 if big else 4)
+                       n_trade=4 if big else 2, n_flip=4 if big else 2, n_rand=10 if big else 4,
+                       n_exit=6 if big else 3, n_brk=6 if big else 3, seed=SEED + SYMBOLS.index(symbol))
     for t_cut in cuts:
         trunc_out = _pipeline(df[df.index <= t_cut], fund, spot_d, scfg, bcfg)
         rec = compare_truncated_vs_full(full_out, trunc_out, df, t_cut, f"[event {symbol} {name} @ {t_cut}]")
@@ -514,6 +586,23 @@ def test_funding_table_is_mandatory_and_must_cover_window():
     with pytest.raises(ValueError):
         run_backtest(df, sig, BacktestConfig(), gap)
     run_backtest(df, sig, BacktestConfig(include_funding=False))  # 关闭资金费时不需要
+
+
+def test_funding_recompute_close_exit_on_partial_bar():
+    """收盘类离场与 POC 分批发生在同一根 K 线、且该 K 线收盘恰为结算时刻：分批在 K 线内先成交，只按剩余数量计资金费。
+    同时验证闸门的独立重算（recompute_funding）在这一组合下与引擎一致。"""
+    rows = [[100.0, 100.5, 99.5, 100.0]] * 7 + [[100.0, 102.5, 99.9, 100.2]] + [[100.2, 100.5, 99.9, 100.2]] * 4
+    df = _mk_df(rows)
+    sig = _mk_sig(df, {5: (90.0, 110.0, 102.0)})
+    sig["entry_ref"] = np.where(sig["signal"], df["close"], np.nan)
+    fund = pd.DataFrame({"funding_rate": [0.002, 0.001], "funding_interval_hours": 8},
+                        index=pd.DatetimeIndex(["2024-01-01 08:00", "2024-01-01 16:00"], tz="UTC"))
+    cfg = BacktestConfig(tp_mode="poc_partial", partial_frac=0.5, move_to_breakeven=False, time_stop_bars=2)
+    res = run_backtest(df, sig, cfg, fund)
+    t = res.trades.iloc[0]
+    assert t["exit_reason"] == "TIME" and t["exit_bar"] == 7 and t["partial_bar"] == 7 and t["n_funding"] == 1
+    assert t["funding"] == pytest.approx(t["qty"] * 0.5 * 100.2 * 0.002, rel=1e-12)
+    assert_execution_invariants(df, fund, sig, res, cfg, "[synthetic partial+close exit]")
 
 
 def test_risk_sizing_leverage_cap():
