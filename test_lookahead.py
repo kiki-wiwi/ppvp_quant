@@ -266,6 +266,8 @@ def _event_cuts(df, boxes, sig, res, scfg, n_sig=12, n_box=4, n_trade=4, n_flip=
         for t in spaced(flips, n_flip):
             cuts += [t - h1, t]
     cuts.append(pd.Timestamp("2023-06-14 13:00", tz="UTC"))     # 4H 只走完 2 根 1H
+    cuts += [pd.Timestamp("2020-01-05 12:00", tz="UTC"),          # 三套配置均零交易（A 套在 01-05 还零箱体）：空表 schema 必须一致
+             pd.Timestamp("2020-01-19 20:00", tz="UTC")]
     rng = np.random.default_rng(seed + 1)
     pool = df.index[(df.index >= first_ok) & (df.index <= lim)]
     cuts += [pd.Timestamp(int(x), unit="ns", tz="UTC") for x in rng.choice(to_ns(pool), size=n_rand, replace=False)]
