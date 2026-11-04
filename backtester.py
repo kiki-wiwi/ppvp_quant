@@ -18,9 +18,9 @@ backtester.py — 事件驱动回测引擎（1H 粒度，只做多，单品种�
   T 映射到第一根 open_time ≥ T 的 1H K 线（正常即开盘恰为 T 的那根；若该根因维护缺失则顺延到下一根，
   价格取该根开盘价），条件为 入场时刻 < T。收盘市价离场且收盘时刻恰为 T 时，按收盘价承担该次资金费。
   成交被视为发生在 K 线收盘瞬间之后：收盘入场不承担该时刻的资金费。
-  开启资金费时必须传入资金费表，且 (第一根开盘, 最后收盘) 内的每个结算网格点都必须存在，否则直接报错
-  （不允许静默按 0 计）；恰在最后收盘时刻的结算若缺失，只影响在最后一根收盘离场的时间止损/破位离场，
-  这类交易被标记为 funding_complete=False。
+  开启资金费时必须传入资金费表，且 (第一根开盘, 最后收盘) 内的每个结算网格点都必须存在、窗口内每个时间戳都必须
+  落在网格上且费率非 NaN，否则直接报错（不允许静默按 0 计，见 check_funding_coverage）；恰在最后收盘时刻的结算
+  若缺失，只影响在最后一根收盘离场的时间止损/破位离场，这类交易被标记为 funding_complete=False。
   交易表 n_funding 记录每笔交易实际结算的次数；SL/TP/BE/POC 离场的资金费窗口止于 exit_bar_open，
   TIME/BREAKDOWN 止于 exit_time（离场 K 线收盘）。
 * venue='spot'：现货等效模式 = 永续价格触发与成交 + 现货费率 + 无资金费 + 杠杆 ≤ 1.0，
@@ -43,7 +43,6 @@ from ppvp_engine import to_ns
 
 REASONS = {0: "OPEN", 1: "SL", 2: "TP", 3: "BE", 4: "TIME", 5: "BREAKDOWN", 6: "POC"}
 NS_PER_HOUR = np.int64(3600 * 10**9)
-FUNDING_MAX_GAP = pd.Timedelta(hours=8, minutes=1)
 
 
 @njit(cache=True)
@@ -281,7 +280,7 @@ def _simulate(o, h, l, c, open_ns, close_ns, sig, sl_arr, tp_arr, poc_arr, val_a
             t_min_low, t_max_high, t_capped, lv_stop, lv_brk)
 
 
-@dataclass
+@dataclass(repr=False)
 class BacktestResult:
     equity: pd.Series          # 索引 = 1H 收盘时刻 close_time，值 = 该时刻盯市净值
     position: pd.Series        # 索引 = close_time，值 = 持仓数量
@@ -291,6 +290,11 @@ class BacktestResult:
     start_time: pd.Timestamp   # 第一根 1H 开盘时刻（净值起点）
     funding_end_missing: bool = False   # 资金费表缺少恰在最后收盘时刻的结算（见 check_funding_coverage）
     levels: pd.DataFrame | None = None  # 逐根持仓离场价位（stop / brk_level），供防未来函数闸门逐位比较
+
+    def __repr__(self) -> str:
+        # 只显示规模与时间范围、不显示任何数值：测试失败时 pytest 会渲染局部变量/参数（-l、-vv），不得借此输出 OOS 净值
+        span = f"{self.equity.index[0]} .. {self.equity.index[-1]}" if len(self.equity) else "empty"
+        return f"BacktestResult(bars={len(self.equity)}, span={span}, trades={len(self.trades)})"
 
 
 def funding_arrays(df1h: pd.DataFrame, funding: pd.DataFrame | None) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
@@ -325,41 +329,55 @@ def funding_arrays(df1h: pd.DataFrame, funding: pd.DataFrame | None) -> tuple[np
 
 
 def check_funding_coverage(df1h: pd.DataFrame, funding: pd.DataFrame) -> bool:
-    """资金费表必须包含 (第一根开盘, 最后收盘) 内的每一个结算网格点，否则报错；返回“恰在最后收盘时刻的网格点是否缺失”。
+    """资金费表在回测窗口 (第一根开盘, 最后收盘] 内必须完整、规整，否则报错；返回“恰在最后收盘时刻的网格点是否缺失”。
 
-    结算网格 = 自 UTC 纪元起每 funding_interval_hours 小时（Binance BTC/ETH 为 8h → 00/08/16），窗口内间隔必须唯一。
-    最后收盘时刻的结算只会被“在最后一根收盘离场”的时间止损/破位离场用到；若缺失，回测不报错，
-    而是在交易表中把这类交易标记为 funding_complete=False（显式标记，而非静默按 0 计）。
-    区间内不含任何网格点（极短窗口）时不检查。重复时间戳单独报错。
+    * 结算网格 = 自 UTC 纪元起每 funding_interval_hours 小时（Binance BTC/ETH 为 8h → 00/08/16）。
+      该列必须存在，窗口前后 1 天内的取值必须有限、为正整数且唯一（不支持窗口内改变结算间隔）；
+      窗口前后 1 天内没有任何结算记录时无法确定网格，直接报错。
+    * 窗口内的每个结算时间戳都必须落在网格上、费率不得为 NaN（funding_arrays 会对窗口内每个时间戳收付，
+      不在网格上的时间戳或 NaN 费率都会造成静默错计）；重复时间戳报错。
+    * 窗口内除最后收盘时刻以外的每个网格点都必须存在。恰在最后收盘时刻的结算只会被“在最后一根收盘离场”的
+      时间止损/破位离场用到；若缺失，回测不报错，而是在交易表中把这类交易标记为 funding_complete=False。
+    * 网格用整数纳秒运算生成（np.arange 以 float64 估算长度，窗口超过约 104 天时会丢掉终点）。
     """
     if funding.index.has_duplicates:
         raise ValueError("funding table has duplicate settlement timestamps")
+    if "funding_interval_hours" not in funding.columns:
+        raise ValueError("funding table lacks the funding_interval_hours column (needed to define the settlement grid)")
     o0 = df1h.index[0]
     cl = df1h.index[-1] + pd.Timedelta(hours=1)
-    hours = 8
-    if "funding_interval_hours" in funding.columns:
-        near = funding.loc[(funding.index > o0 - pd.Timedelta(days=1)) & (funding.index <= cl + pd.Timedelta(days=1)),
-                           "funding_interval_hours"].dropna().unique()
-        if len(near) > 1:
-            raise ValueError("funding interval changes inside the backtest window (unsupported)")
-        if len(near) == 1:
-            hours = int(near[0])
-    step = np.int64(hours) * NS_PER_HOUR
+    near = funding.loc[(funding.index > o0 - pd.Timedelta(days=1)) & (funding.index <= cl + pd.Timedelta(days=1)),
+                       "funding_interval_hours"].to_numpy(dtype=np.float64)
+    if len(near) == 0:
+        raise ValueError(f"funding table has no settlement within one day of the backtest window [{o0}, {cl}]")
+    if not np.isfinite(near).all():
+        raise ValueError("funding_interval_hours is missing near the backtest window")
+    vals = np.unique(near)
+    if len(vals) > 1:
+        raise ValueError("funding interval changes inside the backtest window (unsupported)")
+    if not (vals[0] > 0 and float(vals[0]).is_integer()):
+        raise ValueError(f"funding_interval_hours must be a positive integer, got {vals[0]}")
+    step = int(vals[0]) * int(NS_PER_HOUR)
     o0n, cln = int(to_ns(pd.DatetimeIndex([o0]))[0]), int(to_ns(pd.DatetimeIndex([cl]))[0])
-    first = (o0n // step + 1) * step
-    grid = np.arange(first, cln + 1, step, dtype=np.int64)          # 网格点 ∈ (o0, cl]
-    if len(grid) == 0:
-        return False
     have = to_ns(funding.index)
-    present = np.isin(grid, have)
-    end_on_grid = grid[-1] == cln
+    win = (have > o0n) & (have <= cln)
+    off = have[win] % step != 0
+    if off.any():
+        bad = pd.Timestamp(int(have[win][off][0]), unit="ns", tz="UTC")
+        raise ValueError(f"funding settlement at {bad} is off the {int(vals[0])}h settlement grid")
+    if np.isnan(funding["funding_rate"].to_numpy(dtype=np.float64)[win]).any():
+        raise ValueError("funding table has NaN rates inside the backtest window")
+    first = (o0n // step + 1) * step
+    n_pts = max(0, (cln - first) // step + 1)
+    if n_pts == 0:
+        return False
+    grid = np.int64(first) + np.int64(step) * np.arange(n_pts, dtype=np.int64)    # 网格点 ∈ (o0, cl]
+    present = np.isin(grid, have[win])
+    end_on_grid = int(grid[-1]) == cln
     inner = present[:-1] if end_on_grid else present
     if not inner.all():
         miss = pd.Timestamp(int(grid[:len(inner)][~inner][0]), unit="ns", tz="UTC")
         raise ValueError(f"funding table misses the settlement at {miss} inside the backtest window [{o0}, {cl}]")
-    rates = funding["funding_rate"].to_numpy(dtype=np.float64)[np.isin(have, grid)]
-    if np.isnan(rates).any():
-        raise ValueError("funding table has NaN rates inside the backtest window")
     return bool(end_on_grid and not present[-1])
 
 

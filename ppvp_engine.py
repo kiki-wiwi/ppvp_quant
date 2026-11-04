@@ -100,8 +100,9 @@ def wilder_atr(high: np.ndarray, low: np.ndarray, close: np.ndarray, n: int) -> 
 def shift_known_at_open(x: np.ndarray) -> np.ndarray:
     """把“第 i 根收盘时可知”的序列右移一位，得到“第 i 根开盘时可知”的序列。"""
     out = np.empty_like(x, dtype=np.float64)
-    out[0] = np.nan
-    out[1:] = x[:-1]
+    if len(x):                                       # 空输入（如不足一根完整 4H 的截断数据）返回空数组
+        out[0] = np.nan
+        out[1:] = x[:-1]
     return out
 
 

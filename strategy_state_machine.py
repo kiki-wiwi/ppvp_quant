@@ -13,11 +13,18 @@ strategy_state_machine.py — 1H 箱体底部“二次确认 + 看涨 K 线”�
 
 关键规则（含对规格模糊处的显式解释；各条规则的合成回归测试见 test_audit_regressions.py）
 ------------------------------------------------------------------------------------
-* “回落触及”：第 1 次测试必须从上方到来。箱体激活时若上一根收盘已低于带下沿，或刚发出过信号，
-  需先出现一根整根位于带上方的 K 线（low > 带上沿），之后的触及才算第 1 次测试（need_above 标志）。
-  激活时上一根收盘 ≥ 带下沿（价格在带内或带上方），则激活后的首次触及即视为第 1 次测试。
-  ARMED 期间若箱体更新到同一支撑区（新 VAL 与设置该要求时的 VAL 相距 ≤ (k1+k2)*ATR），该要求保留；
-  只有整根位于带上方的 K 线能清除它，换到不同支撑区时按新箱体重新判定。
+* “回落触及”：第 1 次测试必须从上方到来。“须先到带上方”的要求（need_above）按支撑区逐条记录，
+  每条记录一个锚点 VAL（设置要求时所在箱体的 VAL），在两种情况下写入：
+  (a) 箱体激活时上一根收盘已低于新带下沿，且没有与新箱体同区的未完成要求；(b) 刚发出过信号（锚点 = 信号箱体 VAL）。
+  一条要求只会被“整根位于该支撑区的支撑带上方”的 K 线清除（low > 带上沿），在任何状态下（含 INVALID）都检查：
+  被当前箱体认领的要求以当前箱体的带上沿为准，其余要求以自身锚点的带上沿（锚点 VAL + k2*ATR）为准。
+  每次非 carry 的箱体切换（重新 ARMED、被否决、被放量跌穿记忆判为失效）时，新箱体认领与它同区
+  （|新 VAL - 锚点| ≤ (k1+k2)*ATR）的全部未完成要求；只要还有被认领的要求，ARMED 中的触及就不算第 1 次测试。
+  因此同区箱体更新、经过失效箱体的绕行、以及经过其他支撑区再回来（A→B→A），都不会在价格未到带上方时清除要求。
+  有界记忆：未被当前箱体认领（不在当前支撑区）的要求，在出现完全由其写入之后的数据构成的箱体（窗口起点 ≥ 写入时刻，
+  即“全新结构”）时失效；被认领的要求不受此限，直到价格整根位于带上方。写入时刻：激活条件 (a) 为激活 K 线开盘，
+  条件 (b) 为信号 K 线收盘。
+  激活时上一根收盘 ≥ 带下沿、且没有同区未完成要求，则激活后的首次触及即视为第 1 次测试。
 * 第 2 次测试必须与第 1 次测试“分离”：脱离后最高价较当根带上沿反弹 ≥ min_bounce_atr*ATR，
   或当根与第 1 次测试最后一根带内 K 线的索引差 ≥ min_bars_between_touches；否则并入第 1 次测试。
 * 允许插针跌破 VAL / 第 1 次低点（SFP 流动性清扫），“站回有效区”解释为信号 K 线收盘 ≥ 带下沿。
@@ -26,23 +33,26 @@ strategy_state_machine.py — 1H 箱体底部“二次确认 + 看涨 K 线”�
 * 止损 SL = min(第 1 次测试低点, 第 2 次测试锚点低点[, 吞没前一根低点]) - sl_buffer_atr*ATR；
   锚点 sl_anchor='test'（基线）= 第 2 次测试全部 K 线的最低点，'pattern' = 仅确认形态 K 线低点。
 * 止盈 TP = 箱体 VAH（基线）；POC 一并输出供分批止盈变体使用。
-* 一次二次确认只产生一个信号；信号发出后序列被消费（回到 ARMED 且 need_above=True），
+* 一次二次确认只产生一个信号；信号发出后序列被消费（回到 ARMED，并为信号箱体写入一条“须先到带上方”要求），
   必须先脱离到带上方，再出现全新的两次测试才会再次发信号。
   过滤器（min_RR / 箱体宽度 / 宏观状态）只决定该信号是否交易，不改变状态机序列。
 * 箱体更新：每个新确认枢轴都会生成新箱体。若新箱体 VAL 与“本轮第 1 次测试开始时箱体的 VAL”相距
-  ≤ (k1+k2)*ATR（同一支撑区），测试进度保留（carry）；否则重新 ARMED。
+  ≤ (k1+k2)*ATR（同一支撑区），测试进度保留（carry）；否则重新 ARMED。carry 时不做激活否决、不重新认领要求。
 * 失效（INVALID）：箱体失效位 = 支撑带下沿 VAL-k1*ATR；放量实体跌穿 = 阴线、收盘 < 带下沿、
   实体 ≥ break_body_atr*ATR、成交量 ≥ break_vol_mult*均量。
-  放量跌穿记忆：每条记录被放量跌穿的支撑带 VAL 与跌穿 K 线的收盘时刻 t，最多同时保留 MEM_SLOTS 条、互不覆盖。
-  在 ARMED/TOUCH/DEPARTED/EXHAUSTED 中出现放量跌穿时写入一条并进入 INVALID；INVALID 期间若与某条记忆属同一
-  支撑区的箱体再次放量跌穿，只有收盘也低于该条记忆的带下沿（VAL_mem - k1*ATR）才把其 t 后移；
-  若属其他支撑区（如被否决的箱体），则写入新的一条。
-  每次箱体切换（任何状态）时：先使 t ≤ 新箱体窗口起点的记忆失效（窗口起点随箱体单调不减，此后所有箱体都完全由
-  该次跌穿后的数据构成，因此不会死锁）；若新箱体 VAL 与任一有效记忆相距 ≤ (k1+k2)*ATR，则状态变为或保持 INVALID；
-  否则 INVALID 解除、重新 ARMED（或按 carry 保留进度）。这条规则在任何状态下检查：绕道经过其他支撑区再回到被跌穿
-  的支撑位，或期间又有另一个支撑区被跌穿，同样会被判为失效。
-* reject_broken_at_activation：箱体激活时上一根收盘已低于其带下沿 → 仅否决这一个箱体（INVALID 至下一个箱体），
-  不写入放量跌穿记忆；下一个箱体按自身条件重新判定。
+  放量跌穿记忆：每条记录被放量跌穿的支撑带 VAL 与跌穿 K 线的收盘时刻 t；容量不设上限（每根 K 线至多写入一条，
+  数组按 K 线根数分配），因此任何仍然有效的记忆都不会被覆盖。
+  在 ARMED/TOUCH/DEPARTED/EXHAUSTED 中出现放量跌穿时写入一条并进入 INVALID；INVALID 期间若当前箱体与某条记忆
+  属同一支撑区，再次放量跌穿只有在收盘也低于该条记忆的带下沿（VAL_mem - k1*ATR）时才把其 t 后移（所有同区记忆
+  逐条判断），否则不写入任何记忆（即使收盘低于当前箱体的带下沿）；若当前箱体不与任何记忆同区（如被否决的箱体），
+  则写入新的一条。
+  每次箱体切换（任何状态）时：先使 t ≤ 新箱体窗口起点的记忆永久失效（窗口起点随箱体单调不减，由
+  state_machine_args 检查；此后所有箱体都完全由该次跌穿后的数据构成，因此不会死锁）；若新箱体 VAL 与任一有效记忆
+  相距 ≤ (k1+k2)*ATR，则状态变为或保持 INVALID；否则 INVALID 解除、重新 ARMED（或按 carry 保留进度）。
+  这条规则在任何状态下检查：绕道经过其他支撑区再回到被跌穿的支撑位，或期间又有另一个支撑区被跌穿，同样会被判为失效。
+* reject_broken_at_activation：非 carry 的箱体切换时，若上一根收盘已低于新箱体带下沿 → 否决该箱体
+  （INVALID 至下一个箱体），否决本身不写入放量跌穿记忆；但被否决箱体此后若被放量跌穿，按上一条写入记忆。
+  否决时激活条件 (a) 必然成立，因此该支撑区同时带有“须先到带上方”要求。
 * 所有判定只使用第 i 根 1H 收盘时已知的信息：箱体取 available_time ≤ open_time[i]，
   ATR/均量取第 i-1 根收盘值（第 i 根开盘时已知），形态取第 i 根及之前的 OHLC。
 """
@@ -56,7 +66,6 @@ from numba_compat import njit
 from ppvp_engine import build_4h, build_boxes, map_boxes_to_1h, shift_known_at_open, to_ns, wilder_atr
 
 NO_BOX, ARMED, TOUCH1, DEPARTED, TOUCH2, INVALID, EXHAUSTED = range(7)
-MEM_SLOTS = 8   # 放量跌穿记忆容量（同时有效的被跌穿支撑区个数上限；条目在“全新结构”箱体出现后自动失效）
 STATE_NAMES = {0: "NO_BOX", 1: "ARMED", 2: "TOUCH1", 3: "DEPARTED", 4: "TOUCH2", 5: "INVALID", 6: "EXHAUSTED"}
 PAT_PIN, PAT_ENGULF = 1, 2
 
@@ -97,23 +106,6 @@ def bullish_engulfing(o, h, l, c, cfg: StrategyConfig) -> np.ndarray:
 # 状态机核心（Numba JIT；未安装 numba 时同一代码以纯 Python 运行）
 # ----------------------------------------------------------------------------
 @njit(cache=True)
-def _mem_add(hv_vals, hv_ts, val, t):
-    """写入一条放量跌穿记忆：优先使用空槽；槽满时覆盖最早失效（跌穿时刻最早）的条目。"""
-    slot = -1
-    for e in range(hv_ts.shape[0]):
-        if hv_ts[e] == 0:
-            slot = e
-            break
-    if slot < 0:
-        slot = 0
-        for e in range(1, hv_ts.shape[0]):
-            if hv_ts[e] < hv_ts[slot]:
-                slot = e
-    hv_vals[slot] = val
-    hv_ts[slot] = t
-
-
-@njit(cache=True)
 def _run_state_machine(o, h, l, c, v, atr, vsma, open_ns, box_idx, box_val, box_vah, box_wstart,
                        pin, eng, k1, k2, min_bars, min_bounce, carry, roll,
                        brk_body, brk_vol, sl_buf, reject_broken, max_lag, sl_pattern):
@@ -146,10 +138,17 @@ def _run_state_machine(o, h, l, c, v, atr, vsma, open_ns, box_idx, box_val, box_
     t2_start = -1
     seq_val = np.nan          # 本轮第 1 次测试开始时所在箱体的 VAL（carry 的比较基准）
     t2_val = np.nan           # 第 2 次测试开始时所在箱体的 VAL（滚动后成为新的 seq_val）
-    hv_vals = np.full(MEM_SLOTS, np.nan)            # 放量跌穿记忆：被放量跌穿的支撑带 VAL（多条，互不覆盖）
-    hv_ts = np.zeros(MEM_SLOTS, np.int64)          # 对应跌穿 K 线收盘时刻；0 = 空槽或已失效
-    need_above = True         # True：须先出现整根位于带上方的 K 线，触及才算第 1 次测试
-    need_val = np.nan         # 设置 need_above 时所在箱体的 VAL（同一支撑区的箱体更新不清除该要求）
+    # 放量跌穿记忆（紧凑列表 [0, hcnt)）：被跌穿支撑带的 VAL 与跌穿 K 线收盘时刻。每根 K 线至多写入一条，
+    # 容量 n + 1 永远不会溢出，有效记忆不会被覆盖。
+    hv_vals = np.empty(n + 1)
+    hv_ts = np.empty(n + 1, np.int64)
+    hcnt = 0
+    # “须先到带上方”要求（紧凑列表 [0, ncnt)）：锚点 VAL、写入时刻、是否被当前箱体认领。每根 K 线至多写入一条。
+    nd_val = np.empty(n + 1)
+    nd_t = np.empty(n + 1, np.int64)
+    nd_cl = np.zeros(n + 1, np.bool_)
+    ncnt = 0
+    need_above = True         # = 是否存在被当前箱体认领的未完成要求（尚无箱体时无意义，输出为 True）
     for i in range(n):
         b = box_idx[i]
         a = atr[i]
@@ -158,15 +157,20 @@ def _run_state_machine(o, h, l, c, v, atr, vsma, open_ns, box_idx, box_val, box_
                 st = 0
             else:
                 ov = (k1 + k2) * a
+                # 放量跌穿记忆：先使窗口起点 ≥ 跌穿时刻的条目永久失效（窗口起点随箱体单调不减），再检查同区
+                e = hcnt - 1
+                while e >= 0:
+                    if box_wstart[b] >= hv_ts[e]:
+                        hcnt -= 1
+                        hv_vals[e] = hv_vals[hcnt]
+                        hv_ts[e] = hv_ts[hcnt]
+                    e -= 1
                 hv_block = False
-                for e in range(MEM_SLOTS):
-                    if hv_ts[e] > 0:
-                        if box_wstart[b] >= hv_ts[e]:
-                            hv_ts[e] = 0                   # 窗口起点单调不减：此后所有箱体都不含该次跌穿前的数据
-                            hv_vals[e] = np.nan
-                        elif (not np.isnan(a)) and abs(box_val[b] - hv_vals[e]) <= ov:
+                if not np.isnan(a):
+                    for e in range(hcnt):
+                        if abs(box_val[b] - hv_vals[e]) <= ov:
                             hv_block = True
-                was_armed = st == 1
+                            break
                 keep = False
                 if (not hv_block) and carry and cur >= 0 and (st == 2 or st == 3 or st == 4) and not np.isnan(a):
                     if abs(box_val[b] - seq_val) <= ov:
@@ -181,19 +185,35 @@ def _run_state_machine(o, h, l, c, v, atr, vsma, open_ns, box_idx, box_val, box_
                     t2_start = -1
                     seq_val = np.nan
                     t2_val = np.nan
+                    # 新箱体认领同区的全部未完成“须先到带上方”要求（其余要求保留，按各自锚点的带上沿清除）
+                    need_above = False
+                    for e in range(ncnt):
+                        nd_cl[e] = (not np.isnan(a)) and abs(box_val[b] - nd_val[e]) <= ov
+                        if nd_cl[e]:
+                            need_above = True
+                # 未被认领（不在当前支撑区）的要求：出现完全由其写入之后的数据构成的箱体（全新结构）时失效
+                e = ncnt - 1
+                while e >= 0:
+                    if (not nd_cl[e]) and box_wstart[b] >= nd_t[e]:
+                        ncnt -= 1
+                        nd_val[e] = nd_val[ncnt]
+                        nd_t[e] = nd_t[ncnt]
+                        nd_cl[e] = nd_cl[ncnt]
+                    e -= 1
                 if hv_block:
                     st = 5                                 # 回到被放量跌穿、且仍含跌穿前数据的支撑区：失效
                 elif not keep:
                     st = 1
                     zl_new = box_val[b] - k1 * a
                     below = not (i > 0 and c[i - 1] >= zl_new)          # a 为 NaN 时比较为 False → 需先到带上方
-                    if was_armed and need_above and (not np.isnan(a)) and abs(box_val[b] - need_val) <= ov:
-                        need_above = True                  # 同一支撑区的箱体更新不清除未完成的“先到带上方”要求
-                    else:
-                        need_above = below
-                        need_val = box_val[b]
+                    if below and not need_above:
+                        nd_val[ncnt] = box_val[b]
+                        nd_t[ncnt] = open_ns[i]            # 依据第 i-1 根收盘（第 i 根开盘时已知）
+                        nd_cl[ncnt] = True
+                        ncnt += 1
+                        need_above = True
                     if reject_broken and i > 0 and not np.isnan(a) and c[i - 1] < zl_new:
-                        st = 5                             # 仅否决这一个箱体，不写入放量跌穿记忆
+                        st = 5                             # 否决该箱体；否决本身不写入放量跌穿记忆
             cur = b
         s_box[i] = cur
         if st == 0 or np.isnan(a):
@@ -204,34 +224,51 @@ def _run_state_machine(o, h, l, c, v, atr, vsma, open_ns, box_idx, box_val, box_
         zh = box_val[cur] + k2 * a
         zlo[i] = zl
         zhi[i] = zh
+        if ncnt > 0:                                       # 整根位于某支撑区带上方的 K 线清除该区的要求（任何状态）
+            e = ncnt - 1
+            while e >= 0:
+                if l[i] > (zh if nd_cl[e] else nd_val[e] + k2 * a):
+                    ncnt -= 1
+                    nd_val[e] = nd_val[ncnt]
+                    nd_t[e] = nd_t[ncnt]
+                    nd_cl[e] = nd_cl[ncnt]
+                e -= 1
+            need_above = False
+            for e in range(ncnt):
+                if nd_cl[e]:
+                    need_above = True
+                    break
         is_brk = (c[i] < o[i]) and (c[i] < zl) and (o[i] - c[i] >= brk_body * a) and (v[i] >= brk_vol * vsma[i])
         brk[i] = is_brk
         if st == 5 or st == 6:
             if is_brk:
                 same = False
                 if st == 5:
-                    for e in range(MEM_SLOTS):
-                        if hv_ts[e] > 0 and abs(box_val[cur] - hv_vals[e]) <= (k1 + k2) * a:
+                    for e in range(hcnt):
+                        if abs(box_val[cur] - hv_vals[e]) <= (k1 + k2) * a:
                             same = True
                             if c[i] < hv_vals[e] - k1 * a:
                                 hv_ts[e] = open_ns[i] + hour   # 同一支撑区再次放量跌穿被跌穿的带下沿：记忆时刻后移
                 if not same:
-                    _mem_add(hv_vals, hv_ts, box_val[cur], open_ns[i] + hour)   # EXHAUSTED 或其他支撑区被放量跌穿
+                    hv_vals[hcnt] = box_val[cur]               # EXHAUSTED 或其他支撑区被放量跌穿：写入新的一条
+                    hv_ts[hcnt] = open_ns[i] + hour
+                    hcnt += 1
                     st = 5
             state[i] = st
             s_need[i] = need_above
             continue
         if is_brk:
             st = 5
-            _mem_add(hv_vals, hv_ts, box_val[cur], open_ns[i] + hour)
+            hv_vals[hcnt] = box_val[cur]
+            hv_ts[hcnt] = open_ns[i] + hour
+            hcnt += 1
             state[i] = st
             s_need[i] = need_above
             continue
         touched = l[i] <= zh
         if st == 1:
             if need_above:
-                if l[i] > zh:
-                    need_above = False                     # 已到带上方：之后的触及才是“回落”测试
+                pass                                       # 本根未到带上方（到了已在上方清除）：触及不算第 1 次测试
             elif touched:
                 st = 2
                 t1_low = l[i]
@@ -306,8 +343,11 @@ def _run_state_machine(o, h, l, c, v, atr, vsma, open_ns, box_idx, box_val, box_
                 s_t2_bar[i] = t2_bar
                 s_t2_start[i] = t2_start
                 st = 1                                   # 序列被消费：须先脱离到带上方，再出现全新的两次测试
+                nd_val[ncnt] = box_val[cur]
+                nd_t[ncnt] = open_ns[i] + hour
+                nd_cl[ncnt] = True
+                ncnt += 1
                 need_above = True
-                need_val = box_val[cur]
                 t1_low = np.nan
                 t1_bar = -1
                 t1_last = -1
@@ -334,9 +374,11 @@ def daily_closes_with_warmup(df1h: pd.DataFrame, spot_daily: pd.Series | None) -
     d = df1h["close"].resample("1D").last()
     last_close = df1h.index[-1] + pd.Timedelta(hours=1)
     d = d[(d.index + pd.Timedelta(days=1)) <= last_close].dropna()   # 只保留已收盘的日线
-    if spot_daily is not None and len(d):
-        warm = spot_daily[spot_daily.index < d.index[0]]
-        d = pd.concat([warm, d])
+    if spot_daily is not None:
+        # 预热与“是否已有完整永续日线”无关（否则数据首日内的截断运行与全量运行的宏观状态不一致）
+        first_day = d.index[0] if len(d) else df1h.index[0].floor("D")
+        warm = spot_daily[spot_daily.index < first_day]
+        d = pd.concat([warm, d]) if len(d) else warm.copy()
     return d
 
 
@@ -403,6 +445,9 @@ def state_machine_args(df1h: pd.DataFrame, cfg: StrategyConfig, boxes: pd.DataFr
     bval = boxes["VAL"].to_numpy(dtype=np.float64) if nb else np.zeros(0)
     bvah = boxes["VAH"].to_numpy(dtype=np.float64) if nb else np.zeros(0)
     bws = to_ns(boxes["window_start"]) if nb else np.zeros(0, dtype=np.int64)
+    if nb > 1 and (np.diff(bws) < 0).any():
+        # 放量跌穿记忆的永久失效依赖“窗口起点随箱体单调不减”（build_boxes 构造上严格递增）
+        raise ValueError("box window_start must be non-decreasing across boxes")
     return (ind["o"], ind["h"], ind["l"], ind["c"], ind["v"], ind["atr_prev"], ind["vsma_prev"], to_ns(df1h.index),
             box_idx, bval, bvah, bws, ind["pin"], ind["eng"]) + state_machine_params(cfg)
 

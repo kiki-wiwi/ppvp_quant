@@ -37,7 +37,8 @@ class StrategyConfig:
     # ---- 4H 枢轴点与成交量分布（PPVP）----
     pivot_left: int = 5                 # 枢轴左侧 K 线数 L
     pivot_right: int = 5                # 枢轴右侧 K 线数 R（确认滞后 = R 根 4H）
-    profile_pivots: int = 2             # 箱体窗口覆盖的相邻已确认枢轴个数（2 = 最近一段摆动）
+    profile_pivots: int = 2             # 箱体窗口覆盖的最近 P 个已确认枢轴（高低点类型不要求交替：
+                                        # P=2 时研究区间约 18-20% 的箱体两端同为高点或同为低点，并非完整摆动）
     n_bins: int = 50                    # 价格分桶数
     va_pct: float = 0.70                # Value Area 成交量占比
 
