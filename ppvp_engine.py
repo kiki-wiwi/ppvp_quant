@@ -10,9 +10,14 @@ ppvp_engine.py — 4H 枢轴点成交量分布（Pivot Points Volume Profile, PP
    （``confirm_time = available_time[i+R]``）才被视为已知。
 3. 箱体 = 最近 ``profile_pivots`` 个已确认枢轴之间的窗口 [open(4H_a), available(4H_b))，
    用窗口内已收盘的 1H K 线把成交量按 [low, high] 均匀分配到 ``n_bins`` 个价格桶，
-   最大桶中心为 POC，自 POC 向两侧逐桶扩展至累计 ``va_pct`` 得到 VAL / VAH。
-   箱体 ``available_time`` = 其最后一个枢轴的确认时间。
+   最大桶中心为 POC（多个桶在 1e-9 相对容差内并列最大时取价格最低的桶），
+   自 POC 向两侧逐桶扩展（量较大的一侧优先，并列向上）至累计 ``va_pct`` 得到 VAL / VAH。
+   箱体 ``available_time`` = 其最后一个枢轴的确认时间 = close(4H_{b+R})。
+   注意：窗口止于 close(4H_b)，枢轴 b 之后、确认之前的 R*4 根 1H 不计入分布（“相邻已确认枢轴之间”的字面解释）。
+   若将来把窗口终点做成可调参数，其上限必须是箱体的 available_time，否则即为未来函数。
 4. 1H K 线 i 只使用 ``available_time <= open_time_1h[i]`` 的箱体（即该 1H K 线开始前已经确认的箱体）。
+   这比因果性要求更保守：在 close_time[i] = available_time 时刻确认的箱体，要到第 i+1 根才开始使用。
+   任何放宽都不得早于 close_time[i]（= open_time[i] + 1h），并须在测试中钉住新边界。
 """
 from __future__ import annotations
 
@@ -25,6 +30,12 @@ from data_loader import resample_ohlcv
 from numba_compat import njit
 
 H4 = pd.Timedelta(hours=4)
+# 箱体表列定义（t = UTC 时间，i = 整数，f = 浮点，s = 字符串）
+BOX_COLUMNS = {
+    "available_time": "t", "pivot_a_idx": "i", "pivot_b_idx": "i", "pivot_a_type": "s", "pivot_b_type": "s",
+    "pivot_a_time": "t", "pivot_b_time": "t", "window_start": "t", "window_end": "t", "n_1h": "i",
+    "VAL": "f", "POC": "f", "VAH": "f", "P_low": "f", "P_high": "f", "total_volume": "f",
+}
 
 
 # ----------------------------------------------------------------------------
@@ -125,14 +136,28 @@ def detect_pivots(high: np.ndarray, low: np.ndarray, left: int, right: int) -> t
 # ----------------------------------------------------------------------------
 # 成交量分布（1H → 价格分桶）
 # ----------------------------------------------------------------------------
+TIE_RTOL = 1e-9   # 直方图“并列”的相对容差：精确算术下相等的桶会被浮点求和顺序拉开 ~1e-12 量级
+
+
 @njit(cache=True)
 def _value_area(hist, va_pct):
-    """自 POC 桶起逐桶向量较大的一侧扩展（平局向上），直到累计量 ≥ va_pct * 总量。返回 (poc, lo, hi) 桶号。"""
+    """返回 (poc, lo, hi) 桶号。
+
+    POC：与最大桶量相差不超过 TIE_RTOL * 最大值的桶视为并列，取其中价格最低的桶（显式、可复现的平局规则；
+    完全覆盖多个桶的 K 线会在精确算术下制造并列，浮点求和噪声不得决定 POC）。
+    VA：自 POC 起逐桶向量较大的一侧扩展（在同一容差内视为平局，平局向上），直到累计量 ≥ va_pct * 总量。
+    """
     nb = hist.shape[0]
-    poc = 0
+    hmax = hist[0]
     for j in range(1, nb):
-        if hist[j] > hist[poc]:
+        if hist[j] > hmax:
+            hmax = hist[j]
+    tol = TIE_RTOL * hmax
+    poc = 0
+    for j in range(nb):
+        if hist[j] >= hmax - tol:
             poc = j
+            break
     total = 0.0
     for j in range(nb):
         total += hist[j]
@@ -145,7 +170,7 @@ def _value_area(hist, va_pct):
         dn = hist[lo - 1] if lo - 1 >= 0 else -1.0
         if up < 0.0 and dn < 0.0:
             break
-        if up >= dn:
+        if up >= dn - tol:
             hi += 1
             acc += up
         else:
@@ -198,7 +223,8 @@ def build_boxes(df1h: pd.DataFrame, cfg: StrategyConfig, df4h: pd.DataFrame | No
     open1 = to_ns(df1h.index)
     lo1, hi1, v1 = (df1h[c].to_numpy(dtype=np.float64) for c in ("low", "high", "volume"))
 
-    rows = []
+    cols = {k: [] for k in BOX_COLUMNS}
+    typ = lambda j: ("HL" if (is_ph[j] and is_pl[j]) else "H" if is_ph[j] else "L")
     for k in range(P - 1, len(piv)):
         a, b = int(piv[k - P + 1]), int(piv[k])
         t0, t1 = open4[a], avail4[b]                      # 窗口 [4H_a 开盘, 4H_b 收盘)
@@ -207,25 +233,37 @@ def build_boxes(df1h: pd.DataFrame, cfg: StrategyConfig, df4h: pd.DataFrame | No
         if e - s < 1:
             continue
         prof = volume_profile(lo1[s:e], hi1[s:e], v1[s:e], cfg.n_bins, cfg.va_pct)
-        typ = lambda j: ("HL" if (is_ph[j] and is_pl[j]) else "H" if is_ph[j] else "L")
-        rows.append({
+        row = {
             "available_time": avail4[b + R],              # 第 b+R 根 4H 收盘 = 枢轴 b 确认时刻
             "pivot_a_idx": a, "pivot_b_idx": b, "pivot_a_type": typ(a), "pivot_b_type": typ(b),
             "pivot_a_time": open4[a], "pivot_b_time": open4[b],
             "window_start": t0, "window_end": t1, "n_1h": e - s,
             "VAL": prof["val"], "POC": prof["poc"], "VAH": prof["vah"],
             "P_low": prof["p_low"], "P_high": prof["p_high"], "total_volume": float(v1[s:e].sum()),
-        })
-    boxes = pd.DataFrame(rows)
-    if len(boxes):
-        for c in ("available_time", "pivot_a_time", "pivot_b_time", "window_start", "window_end"):
-            boxes[c] = pd.to_datetime(boxes[c].to_numpy(dtype=np.int64), unit="ns", utc=True)
-        boxes.index.name = "box_id"
+        }
+        for kk in BOX_COLUMNS:
+            cols[kk].append(row[kk])
+    data = {}
+    for kk, kind in BOX_COLUMNS.items():
+        if kind == "t":
+            data[kk] = pd.DatetimeIndex(np.asarray(cols[kk], dtype=np.int64).view("datetime64[ns]")).tz_localize("UTC")
+        elif kind == "i":
+            data[kk] = np.asarray(cols[kk], dtype=np.int64)
+        elif kind == "f":
+            data[kk] = np.asarray(cols[kk], dtype=np.float64)
+        else:
+            data[kk] = np.asarray(cols[kk], dtype=object)
+    boxes = pd.DataFrame(data)                            # 空表也保持完整列与 dtype（截断测试可逐位比较）
+    boxes.index.name = "box_id"
     return boxes, df4h
 
 
 def map_boxes_to_1h(df1h: pd.DataFrame, boxes: pd.DataFrame) -> np.ndarray:
-    """返回每根 1H 可用的最新箱体编号（-1 = 尚无箱体）：available_time ≤ 该 1H 的 open_time。"""
+    """返回每根 1H 可用的最新箱体编号（-1 = 尚无箱体）：available_time ≤ 该 1H 的 open_time。
+
+    边界（由 test_1h_reads_only_closed_4h 钉住）：箱体自 open_time ≥ available_time 的第一根 1H 起可用；
+    这比因果性所需晚一根（在 close_time = available_time 的那根 K 线收盘决策时尚未使用），是有意的保守选择。
+    """
     if len(boxes) == 0:
         return np.full(len(df1h), -1, dtype=np.int64)
     avail = to_ns(boxes["available_time"])

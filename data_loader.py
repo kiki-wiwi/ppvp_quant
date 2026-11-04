@@ -576,8 +576,11 @@ def _ensure_cache(name: str) -> Path:
 
 
 def load_klines(symbol: str = "BTCUSDT", interval: str = "1h", market: str = "perp") -> pd.DataFrame:
-    """读取缓存 K 线（索引 = UTC open_time，含 close_time 列）。
+    """读取缓存 K 线（索引 = UTC open_time，含 close_time 列），返回 2020-2026 全量数据、不做 OOS 截断。
 
+    研究阶段请通过 ``pipeline.load_market`` / ``pipeline.run`` 读取（带 OOS 锁）；直接调用本函数仅限
+    数据 QA、防未来函数闸门与 Phase 4。缓存构建中的全部清洗步骤（占位 K 线剔除、缺口填补的量能比例）
+    都是逐根或严格向后看的，任何新增的数据层变换也必须满足这一点，否则截断测试无法发现由此引入的未来信息。
     interval='4h' 时由 1H 本地聚合（与官方 4H 已在 QA 中逐根比对一致），保证两个周期数据同源。
     """
     if interval == "1h":

@@ -1,10 +1,20 @@
 """
 metrics.py — 绩效指标（日度净值口径）与样本分段统计。
 
-* 净值先重采样为 UTC 每日收盘净值（日 D 的收盘 = D+1 00:00 时刻的盯市净值；空仓日自然为 0 收益），
-  ``Sharpe = mean(daily_ret) / std(daily_ret, ddof=1) * sqrt(365)``，无风险利率 0。严禁按每笔交易收益算夏普。
-* Sortino 使用下行偏差 sqrt(mean(min(r, 0)^2))；Calmar = CAGR / |MaxDD|（日度净值口径）。
-* OOS 隔离：请求 'OOS' 分段必须显式传入 ``allow_oos=True``（仅 Phase 4 锁定参数后使用）。
+口径（均为显式约定，由 test_audit_regressions.py 钉住）
+------------------------------------------------------
+* 日度净值：日 D 的收盘净值 = D+1 00:00 时刻的盯市净值（按 ``(close_time - 1ns).floor('D')`` 归属）；
+  起点锚 = 初始资金，标注在 ``start_time.floor('D') - 1 天``。空仓日自然为 0 收益。
+* ``Sharpe = mean(daily_ret) / std(daily_ret, ddof=1) * sqrt(365)``，无风险利率 0。严禁按每笔交易收益算夏普。
+* Sortino = mean / sqrt(mean(min(r, 0)^2)) * sqrt(365)（目标 0 的总体下行偏差，分母为全部 N 天）。
+* CAGR = (E_end / E_start)^(365 / 自然日数) - 1；Calmar = 分段 CAGR / |分段日度 MaxDD|（非滚动 36 个月）。
+* max_dd 为日收盘净值回撤；max_dd_hourly 为逐小时收盘盯市回撤（不含 K 线内的不利波动，后者见交易表 mae_pct）。
+* compounding=False 的配置以初始资金为固定基数：分段净值按 初始资金 + 段内累计盈亏 重新定基，
+  使 VAL 的收益率/回撤不受 IS 期末净值高低的影响。
+* 分段边界必须是 UTC 零点；分段净值必须完整覆盖 [start, end)，否则报错（不会把截断数据当作完整分段）。
+* 交易统计按 entry_time ∈ [start, end) 归属分段（跨段交易的全部盈亏计入入场分段，trades_open_at_end 报告其数量）；
+  exit_reason='OPEN' 的期末未平仓交易不计入胜率等统计。pnl == 0 计为非盈利；无亏损交易时盈亏比为 inf（全为 0 时为 NaN）。
+* OOS 隔离：任何触及 [OOS_START, ...) 的分段指标或月度收益都必须显式传入 ``allow_oos=True``（仅 Phase 4 锁定参数后使用）。
 """
 from __future__ import annotations
 
@@ -12,9 +22,10 @@ import numpy as np
 import pandas as pd
 
 from backtester import BacktestResult
-from config import SEGMENTS
+from config import OOS_START, SEGMENTS
 
 ANN = 365.0
+DAY = pd.Timedelta(days=1)
 
 
 class OOSLockedError(RuntimeError):
@@ -22,14 +33,18 @@ class OOSLockedError(RuntimeError):
 
 
 def daily_equity(res: BacktestResult) -> pd.Series:
-    """UTC 日度收盘净值，索引为日期 D（值 = D+1 00:00 的净值）；首行为起始日前一天的初始资金。
+    """UTC 日度收盘净值，索引为日期 D（值 = D+1 00:00 的净值）；首行为起始日前一天的初始资金锚。
 
     显式按 ``(close_time - 1ns).floor('D')`` 归属日期后取当日最后一个净值，
     不使用 ``resample(closed='right')``（pandas 3 会在末尾多生成一个空桶，ffill 后形成虚假的 0 收益日）。
+    锚点标注在 ``start_time.floor('D') - 1 天``：午夜起点与此前一致；非午夜起点不会被当日收盘覆盖。
     """
-    s = pd.concat([pd.Series([res.initial_capital], index=[res.start_time]), res.equity])
-    lab = (s.index - pd.Timedelta(1, "ns")).floor("D")
-    d = s.groupby(lab).last()
+    eq = res.equity
+    lab = (eq.index - pd.Timedelta(1, "ns")).floor("D")
+    d = eq.groupby(lab).last()
+    anchor = pd.Series([res.initial_capital], index=[res.start_time.floor("D") - DAY])
+    d = pd.concat([anchor, d])
+    d = d[~d.index.duplicated(keep="last")]
     full = pd.date_range(d.index[0], d.index[-1], freq="D")
     return d.reindex(full).ffill()
 
@@ -56,20 +71,24 @@ def drawdown_series(eq: pd.Series) -> pd.Series:
     return eq / eq.cummax() - 1.0
 
 
+_EMPTY_STATS = {"trades": 0, "win_rate": np.nan, "profit_factor": np.nan, "avg_r": np.nan, "avg_hold_bars": np.nan,
+                "avg_win_pct": np.nan, "avg_loss_pct": np.nan, "fees": 0.0, "funding": 0.0, "exit_reasons": {}}
+
+
 def trade_stats(tr: pd.DataFrame) -> dict:
     closed = tr[tr["exit_reason"] != "OPEN"] if len(tr) else tr
     n = int(len(closed))
     if n == 0:
-        return {"trades": 0, "win_rate": np.nan, "profit_factor": np.nan, "avg_r": np.nan, "avg_hold_h": np.nan,
-                "avg_win_pct": np.nan, "avg_loss_pct": np.nan, "fees": 0.0, "funding": 0.0}
+        return dict(_EMPTY_STATS, exit_reasons={})
     pnl = closed["pnl"]
     gw, gl = pnl[pnl > 0].sum(), -pnl[pnl < 0].sum()
+    pf = float(gw / gl) if gl > 0 else (float("inf") if gw > 0 else float("nan"))
     return {
         "trades": n,
         "win_rate": float((pnl > 0).mean()),
-        "profit_factor": float(gw / gl) if gl > 0 else float("inf"),
+        "profit_factor": pf,
         "avg_r": float(closed["r_multiple"].mean()),
-        "avg_hold_h": float(closed["hold_bars"].mean()),
+        "avg_hold_bars": float(closed["hold_bars"].mean()),
         "avg_win_pct": float(closed.loc[pnl > 0, "ret_on_equity"].mean()) if (pnl > 0).any() else np.nan,
         "avg_loss_pct": float(closed.loc[pnl < 0, "ret_on_equity"].mean()) if (pnl < 0).any() else np.nan,
         "fees": float(closed["fees"].sum()),
@@ -78,30 +97,46 @@ def trade_stats(tr: pd.DataFrame) -> dict:
     }
 
 
-def segment_metrics(res: BacktestResult, start: pd.Timestamp, end: pd.Timestamp) -> dict:
-    """[start, end) 分段：日度收益、夏普等风险指标 + 该段内入场的交易统计。"""
+def _check_oos(end: pd.Timestamp, allow_oos: bool) -> None:
+    if end > OOS_START and not allow_oos:
+        raise OOSLockedError("metrics on or after OOS_START are locked until final parameters are frozen (Phase 4).")
+
+
+def segment_metrics(res: BacktestResult, start: pd.Timestamp, end: pd.Timestamp, allow_oos: bool = False) -> dict:
+    """[start, end) 分段（UTC 零点边界）：日度收益、夏普等风险指标 + 该段内入场的交易统计。"""
+    _check_oos(end, allow_oos)
+    if start != start.floor("D") or end != end.floor("D") or not end > start:
+        raise ValueError(f"segment bounds must be UTC midnights with end > start: [{start}, {end})")
+    if len(res.equity) == 0 or res.equity.index[-1] < end:
+        raise ValueError(f"segment [{start}, {end}) not covered: equity ends before {end}")
     d_eq = daily_equity(res)
-    base_day = start - pd.Timedelta(days=1)
-    seg = d_eq[(d_eq.index >= base_day) & (d_eq.index < end)]
-    if len(seg) < 2 or seg.index[0] != base_day:
+    base_day, last_day = start - DAY, end - DAY
+    seg = d_eq[(d_eq.index >= base_day) & (d_eq.index <= last_day)]
+    if len(seg) < 2 or seg.index[0] != base_day or seg.index[-1] != last_day:
         raise ValueError(f"segment [{start}, {end}) not covered by backtest equity")
+    hourly = res.equity[(res.equity.index > start) & (res.equity.index <= end)]
+    if not res.config.compounding:                     # 固定资金基数：按段内累计盈亏重新定基
+        shift = res.initial_capital - seg.iloc[0]
+        seg = seg + shift
+        hourly = hourly + shift
     r = daily_returns(seg)
     days = len(r)
     total = seg.iloc[-1] / seg.iloc[0] - 1.0
     cagr = (seg.iloc[-1] / seg.iloc[0]) ** (ANN / days) - 1.0
     mdd = max_drawdown(seg)
-    hourly = res.equity[(res.equity.index > start) & (res.equity.index <= end)]
     pos = res.position[(res.position.index > start) & (res.position.index <= end)]
     tr = res.trades
     if len(tr):
         tr = tr[(tr["entry_time"] >= start) & (tr["entry_time"] < end)]
+    open_at_end = int(((tr["exit_reason"] == "OPEN") | (tr["exit_time"] > end)).sum()) if len(tr) else 0
     out = {
-        "start": str(start.date()), "end": str((end - pd.Timedelta(days=1)).date()), "days": days,
+        "start": str(seg.index[1].date()), "end": str(seg.index[-1].date()), "days": days,
         "sharpe": sharpe(r), "sortino": sortino(r), "cagr": float(cagr), "total_return": float(total),
         "max_dd": mdd, "max_dd_hourly": max_drawdown(pd.concat([seg.iloc[:1], hourly])) if len(hourly) else mdd,
         "calmar": float(cagr / abs(mdd)) if mdd < 0 else float("nan"),
         "exposure": float((pos > 0).mean()) if len(pos) else float("nan"),
         "ann_vol": float(r.std(ddof=1) * np.sqrt(ANN)),
+        "trades_open_at_end": open_at_end,
     }
     out.update(trade_stats(tr))
     return out
@@ -110,14 +145,15 @@ def segment_metrics(res: BacktestResult, start: pd.Timestamp, end: pd.Timestamp)
 def segment_report(res: BacktestResult, segments=("IS", "VAL"), allow_oos: bool = False) -> dict:
     if "OOS" in segments and not allow_oos:
         raise OOSLockedError("OOS metrics are locked until final parameters are frozen (Phase 4).")
-    return {name: segment_metrics(res, *SEGMENTS[name]) for name in segments}
+    return {name: segment_metrics(res, *SEGMENTS[name], allow_oos=allow_oos) for name in segments}
 
 
-def monthly_returns(d_eq: pd.Series) -> pd.DataFrame:
-    m = d_eq.resample("ME").last()
-    first = d_eq.iloc[:1]
-    m = pd.concat([first, m])
+def monthly_returns(d_eq: pd.Series, allow_oos: bool = False) -> pd.DataFrame:
+    """月度收益表（行 = 年，列 = 月）。首个月份为起点锚之后的第一个真实月份。"""
+    if len(d_eq) and d_eq.index[-1] >= OOS_START and not allow_oos:
+        raise OOSLockedError("monthly returns reaching OOS are locked until final parameters are frozen (Phase 4).")
+    m = pd.concat([d_eq.iloc[:1], d_eq.resample("ME").last()])
+    m = m[~m.index.duplicated(keep="first")]
     r = m.pct_change().iloc[1:]
-    r = r[~r.index.duplicated(keep="last")]
     tbl = pd.DataFrame({"year": r.index.year, "month": r.index.month, "ret": r.to_numpy()})
     return tbl.pivot(index="year", columns="month", values="ret")

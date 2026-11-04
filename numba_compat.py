@@ -17,9 +17,19 @@ if os.environ.get("PPVP_DISABLE_NUMBA", "0") != "1":
         HAVE_NUMBA = False
 
 
+def _with_py_func(fn):
+    """numba 在 NUMBA_DISABLE_JIT=1 时返回原函数（无 py_func 属性）；统一补上，保证两条路径的调用方式一致。"""
+    if not hasattr(fn, "py_func"):
+        fn.py_func = fn
+    return fn
+
+
 def njit(*args, **kwargs):
     if HAVE_NUMBA:
-        return _numba_njit(*args, **kwargs)
+        if args and callable(args[0]):
+            return _with_py_func(_numba_njit(*args, **kwargs))
+        deco_nb = _numba_njit(*args, **kwargs)
+        return lambda fn: _with_py_func(deco_nb(fn))
     if args and callable(args[0]):
         fn = args[0]
         fn.py_func = fn

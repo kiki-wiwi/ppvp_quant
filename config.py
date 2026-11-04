@@ -24,7 +24,9 @@ VAL_START, VAL_END = IS_END, pd.Timestamp("2025-07-01", tz="UTC")             # 
 OOS_START, OOS_END = VAL_END, pd.Timestamp("2026-11-01", tz="UTC")            # 盲测集 2025-07-01 ~ 2026-10-31
 SEGMENTS = {"IS": (IS_START, IS_END), "VAL": (VAL_START, VAL_END), "OOS": (OOS_START, OOS_END)}
 
-# 研究阶段（Phase 2/3）默认只把数据截断到 VAL_END 之前送入引擎，OOS K 线在优化期间根本不参与计算。
+# 研究阶段（Phase 2/3）默认只把数据截断到 VAL_END 之前送入引擎（pipeline.run 是唯一受支持的研究入口），
+# OOS K 线不参与任何绩效计算。唯一例外是 Phase 1 的防未来函数闸门（test_lookahead.py）：它按用户规格在
+# 2020-2026 全量数据上做“截断 vs 全量”逐位相等检验与运行耗时基准，只输出通过/失败，不输出任何 OOS 统计量。
 RESEARCH_DATA_END = VAL_END
 
 
@@ -46,7 +48,7 @@ class StrategyConfig:
     zone_k2: float = 0.5                # 支撑带上沿 = VAL + k2 * ATR_1H
     min_bars_between_touches: int = 6   # 两次测试最少间隔（1H 根数）
     min_bounce_atr: float = 1.0         # 或：第 1 次测试后最小反弹幅度（相对带上沿，ATR 倍数）
-    carry_touches_on_box_update: bool = True   # 新箱体支撑带与旧带重叠时保留测试进度
+    carry_touches_on_box_update: bool = True   # 新箱体 VAL 与“本轮第 1 次测试所在箱体的 VAL”相距 ≤ (k1+k2)*ATR 时保留测试进度
     roll_failed_second_touch: bool = True      # 第 2 次测试无形态即离开时，将其滚动为新的“第 1 次测试”
 
     # ---- 箱体失效（放量实体跌穿）----
@@ -57,13 +59,17 @@ class StrategyConfig:
     use_pinbar: bool = True
     pin_wick_frac: float = 0.60         # 下影线 ≥ 振幅 * x
     pinbar_ratio: float = 2.0           # 下影线 ≥ 实体 * x
-    pin_close_pos: float = 0.50         # 收盘位置 (close-low)/range ≥ x
+    pin_close_pos: float = 0.50         # 收盘位置 (close-low)/range ≥ x（注意：x ≤ pin_wick_frac 时由下影线条件蕴含，不起约束作用）
+    pin_require_bull_close: bool = False  # True：Pinbar 还须收阳（close > open）；规格未要求实体颜色，基线关闭
     use_engulfing: bool = True
     engulf_ratio: float = 1.0           # 阳线实体覆盖前一根阴线实体的比例（1.0 = 完全吞没）
     engulf_gap_tol: float = 0.0002      # 连续市场开盘价与前收盘价的 2bp 容差
 
+    max_pattern_lag_bars: int | None = None  # 确认形态距第 2 次测试首根 K 线的最大根数（0 = 必须是重新进入支撑带的那一根；None = 第 2 次测试连续在带内期间任意一根）
+
     # ---- 止损 / 止盈价位 ----
-    sl_buffer_atr: float = 0.2          # SL = min(第1次测试低点, 第2次形态低点) - x * ATR
+    sl_buffer_atr: float = 0.2          # SL = min(第1次测试低点, 第2次测试锚点低点[, 吞没前一根低点]) - x * ATR
+    sl_anchor: str = "test"             # 'test'：第 2 次测试全部 K 线的最低点（基线，不把止损放在本轮已打出的低点之上）；'pattern'：仅确认形态 K 线的低点（规格字面）
     min_rr: float = 0.0                 # 最小初始盈亏比 (VAH-Entry)/(Entry-SL)；基线仅要求 VAH > Entry
 
     # ---- 可选：箱体有效性过滤（基线关闭）----
@@ -78,6 +84,22 @@ class StrategyConfig:
     crash_body_atr4: float = 2.0        # 4H 阴线实体 ≥ x * ATR_4H
     crash_vol_mult4: float = 2.0        # 且 4H 成交量 ≥ x * 均量
     crash_cooldown_hours: int = 48
+
+    def __post_init__(self):
+        _require(self.pivot_left >= 0 and self.pivot_right >= 0, "pivot_left / pivot_right must be >= 0")
+        _require(self.profile_pivots >= 1, "profile_pivots must be >= 1")
+        _require(self.n_bins >= 2, "n_bins must be >= 2")
+        _require(0.0 < self.va_pct <= 1.0, "va_pct must be in (0, 1]")
+        _require(self.atr_len >= 1 and self.vol_sma_len >= 1, "atr_len / vol_sma_len must be >= 1")
+        _require(self.zone_k1 >= 0.0 and self.zone_k2 >= 0.0, "zone_k1 / zone_k2 must be >= 0")
+        _require(self.min_bars_between_touches >= 0 and self.min_bounce_atr >= 0.0, "touch separation must be >= 0")
+        _require(self.break_body_atr >= 0.0 and self.break_vol_mult >= 0.0, "breakdown thresholds must be >= 0")
+        _require(0.0 <= self.pin_wick_frac <= 1.0 and 0.0 <= self.pin_close_pos <= 1.0, "pinbar fractions must be in [0, 1]")
+        _require(self.pinbar_ratio >= 0.0 and self.engulf_ratio > 0.0 and self.engulf_gap_tol >= 0.0, "pattern thresholds")
+        _require(self.max_pattern_lag_bars is None or self.max_pattern_lag_bars >= 0, "max_pattern_lag_bars must be None or >= 0")
+        _require(self.sl_anchor in ("test", "pattern"), "sl_anchor must be 'test' or 'pattern'")
+        _require(self.sl_buffer_atr >= 0.0 and self.min_rr >= 0.0, "sl_buffer_atr / min_rr must be >= 0")
+        _require(self.regime_filter in (None, "daily_sma", "crash_cooldown"), "regime_filter must be None/'daily_sma'/'crash_cooldown'")
 
     def key(self) -> str:
         return _hash(asdict(self))
@@ -114,10 +136,23 @@ class BacktestConfig:
 
     # ---- 出场管理 ----
     tp_mode: str = "vah"                # 'vah'：VAH 全平；'poc_partial'：POC 分批 + 保本 + VAH 尾仓
-    partial_frac: float = 0.5           # POC 平仓比例
+    partial_frac: float = 0.5           # POC 平仓比例（1.0 = 全部在 POC 平仓，离场原因记为 'POC'）
     move_to_breakeven: bool = True      # POC 成交后剩余仓位止损上移至入场价
     time_stop_bars: int | None = None   # 持仓满 N 根 1H 仍未离场 → 收盘市价离场
-    exit_on_breakdown: bool = False     # 持仓期间出现放量实体跌穿支撑带 → 收盘市价离场
+    exit_on_breakdown: bool = False     # 持仓期间出现放量实体跌穿“入场时箱体”的支撑带下沿 → 收盘市价离场
+
+    def __post_init__(self):
+        _require(self.venue in ("perp", "spot"), "venue must be 'perp' or 'spot'")
+        _require(self.sizing in ("fixed", "risk", "inv_vol"), "sizing must be 'fixed', 'risk' or 'inv_vol'")
+        _require(self.tp_mode in ("vah", "poc_partial"), "tp_mode must be 'vah' or 'poc_partial'")
+        _require(0.0 < self.partial_frac <= 1.0, "partial_frac must be in (0, 1]")
+        _require(self.initial_capital > 0.0, "initial_capital must be > 0")
+        _require(min(self.perp_taker_fee, self.perp_maker_fee, self.spot_taker_fee, self.spot_maker_fee, self.slippage) >= 0.0,
+                 "fees and slippage must be >= 0")
+        _require(self.fixed_leverage > 0.0 and self.max_leverage > 0.0, "leverage parameters must be > 0")
+        _require(self.risk_per_trade > 0.0 and self.target_vol > 0.0, "risk_per_trade / target_vol must be > 0")
+        _require(self.vol_lookback_bars >= 2, "vol_lookback_bars must be >= 2")
+        _require(self.time_stop_bars is None or self.time_stop_bars >= 1, "time_stop_bars must be None or >= 1")
 
     @property
     def taker_fee(self) -> float:
@@ -140,6 +175,11 @@ class BacktestConfig:
 
     def with_(self, **kw) -> "BacktestConfig":
         return replace(self, **kw)
+
+
+def _require(ok: bool, msg: str) -> None:
+    if not ok:
+        raise ValueError(msg)
 
 
 def _hash(d: dict) -> str:

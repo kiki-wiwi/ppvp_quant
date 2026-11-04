@@ -4,22 +4,37 @@ strategy_state_machine.py — 1H 箱体底部“二次确认 + 看涨 K 线”�
 状态定义（逐根 1H 收盘后更新）
 ------------------------------
 0 NO_BOX     尚无已确认箱体
-1 ARMED      State 1：箱体激活，等待第 1 次回落触及支撑带 [VAL-k1*ATR, VAL+k2*ATR]
+1 ARMED      State 1：箱体激活，等待第 1 次“回落”触及支撑带 [VAL-k1*ATR, VAL+k2*ATR]
 2 TOUCH1     State 2a：第 1 次测试进行中（记录测试低点）
-3 DEPARTED   State 2b：价格整根 K 线回到支撑带上方（已脱离），等待第 2 次回踩
-4 TOUCH2     State 3：第 2 次回踩进行中；当根 K 线触及支撑带、收盘 ≥ 带下沿、且为看涨 Pinbar/吞没 → 入场信号
-5 INVALID    出现“放量实体跌穿支撑带下沿” → 箱体失效，直至新箱体
+3 DEPARTED   State 2b：价格整根 K 线回到支撑带上方（low > 带上沿，已脱离），等待第 2 次回踩
+4 TOUCH2     State 3：第 2 次回踩进行中；触及支撑带、收盘 ≥ 带下沿、且为看涨 Pinbar/吞没 → 入场信号
+5 INVALID    出现“放量实体跌穿支撑带下沿” → 该支撑区失效（解除条件见下）
 6 EXHAUSTED  （仅 roll_failed_second_touch=False）第 2 次测试失败后不再接受信号，直至新箱体
 
-关键规则
---------
-* 第 2 次测试必须与第 1 次测试“分离”：脱离后最高价较带上沿反弹 ≥ min_bounce_atr*ATR，
-  或与第 1 次测试最后一根在带内 K 线相隔 ≥ min_bars_between_touches 根；否则并入第 1 次测试。
-* 允许插针跌破 VAL / 第 1 次低点（SFP 流动性清扫），但信号 K 线收盘必须 ≥ 带下沿。
-* 止损 SL = min(第 1 次测试低点, 第 2 次测试至信号 K 线的最低点[, 吞没前一根低点]) - sl_buffer_atr*ATR。
+关键规则（含对规格模糊处的显式解释，均由 test_audit_regressions.py 钉住）
+----------------------------------------------------------------------
+* “回落触及”：第 1 次测试必须从上方到来。箱体激活时若上一根收盘已低于带下沿，或刚发出过信号，
+  需先出现一根整根位于带上方的 K 线（low > 带上沿），之后的触及才算第 1 次测试（need_above 标志）。
+  激活时价格恰在带内，则激活后的首次触及即视为第 1 次测试。
+* 第 2 次测试必须与第 1 次测试“分离”：脱离后最高价较当根带上沿反弹 ≥ min_bounce_atr*ATR，
+  或当根与第 1 次测试最后一根带内 K 线的索引差 ≥ min_bars_between_touches；否则并入第 1 次测试。
+* 允许插针跌破 VAL / 第 1 次低点（SFP 流动性清扫），“站回有效区”解释为信号 K 线收盘 ≥ 带下沿。
+* 确认形态可出现在第 2 次测试连续在带内的任意一根（max_pattern_lag_bars=None，基线）；
+  设为 0 则只接受重新进入支撑带的那一根（规格“当根”的严格解释）。
+* 止损 SL = min(第 1 次测试低点, 第 2 次测试锚点低点[, 吞没前一根低点]) - sl_buffer_atr*ATR；
+  锚点 sl_anchor='test'（基线）= 第 2 次测试全部 K 线的最低点，'pattern' = 仅确认形态 K 线低点。
 * 止盈 TP = 箱体 VAH（基线）；POC 一并输出供分批止盈变体使用。
-* 一次二次确认只产生一个信号，信号发出后序列被消费（回到 ARMED），需要全新的两次测试才会再次发信号；
+* 一次二次确认只产生一个信号；信号发出后序列被消费（回到 ARMED 且 need_above=True），
+  必须先脱离到带上方，再出现全新的两次测试才会再次发信号。
   过滤器（min_RR / 箱体宽度 / 宏观状态）只决定该信号是否交易，不改变状态机序列。
+* 箱体更新：每个新确认枢轴都会生成新箱体。若新箱体 VAL 与“本轮第 1 次测试开始时箱体的 VAL”相距
+  ≤ (k1+k2)*ATR（同一支撑区），测试进度保留（carry）；否则重新 ARMED。
+* 失效（INVALID）：箱体失效位 = 支撑带下沿 VAL-k1*ATR；放量实体跌穿 = 阴线、收盘 < 带下沿、
+  实体 ≥ break_body_atr*ATR、成交量 ≥ break_vol_mult*均量。失效后，只有满足以下之一的新箱体才会重新 ARMED：
+  (a) 新箱体 VAL 与被跌穿的 VAL 相距 > (k1+k2)*ATR（不同支撑区）；
+  (b) 新箱体的成交量分布窗口完全位于最近一次跌穿 K 线收盘之后（window_start ≥ 该收盘时刻，即全新结构；
+      失效期间若再次出现放量跌穿，该时刻随之后移）。
+  重叠且仍含跌穿前数据的新箱体不解除失效（否则“刚被放量跌穿的同一支撑位”会被立刻当作新箱体抄底）。
 * 所有判定只使用第 i 根 1H 收盘时已知的信息：箱体取 available_time ≤ open_time[i]，
   ATR/均量取第 i-1 根收盘值（第 i 根开盘时已知），形态取第 i 根及之前的 OHLC。
 """
@@ -41,12 +56,19 @@ PAT_PIN, PAT_ENGULF = 1, 2
 # 看涨 K 线形态（向量化，只用当根与前一根）
 # ----------------------------------------------------------------------------
 def bullish_pinbar(o, h, l, c, cfg: StrategyConfig) -> np.ndarray:
+    """下影线 ≥ pin_wick_frac*振幅、下影线 ≥ pinbar_ratio*实体、收盘位置 ≥ pin_close_pos。
+
+    由于 (c-l) ≥ 下影线，pin_close_pos ≤ pin_wick_frac 时收盘位置条件被下影线条件蕴含、不起约束作用
+    （此时不应把它列入参数平原/扰动表）。规格未要求实体颜色；pin_require_bull_close=True 时额外要求收阳。
+    """
     rng = h - l
     body = np.abs(c - o)
     lower = np.minimum(o, c) - l
     with np.errstate(invalid="ignore"):
         ok = (rng > 0) & (lower >= cfg.pin_wick_frac * rng) & (lower >= cfg.pinbar_ratio * body) \
             & ((c - l) >= cfg.pin_close_pos * rng)
+        if cfg.pin_require_bull_close:
+            ok &= c > o
     return ok & cfg.use_pinbar
 
 
@@ -66,9 +88,9 @@ def bullish_engulfing(o, h, l, c, cfg: StrategyConfig) -> np.ndarray:
 # 状态机核心（Numba JIT；未安装 numba 时同一代码以纯 Python 运行）
 # ----------------------------------------------------------------------------
 @njit(cache=True)
-def _run_state_machine(o, h, l, c, v, atr, vsma, box_idx, box_val, box_vah,
+def _run_state_machine(o, h, l, c, v, atr, vsma, open_ns, box_idx, box_val, box_vah, box_wstart,
                        pin, eng, k1, k2, min_bars, min_bounce, carry, roll,
-                       brk_body, brk_vol, sl_buf, reject_broken):
+                       brk_body, brk_vol, sl_buf, reject_broken, max_lag, sl_pattern):
     n = o.shape[0]
     state = np.zeros(n, np.int8)
     zlo = np.full(n, np.nan)
@@ -82,8 +104,11 @@ def _run_state_machine(o, h, l, c, v, atr, vsma, box_idx, box_val, box_vah,
     s_t1_bar = np.full(n, -1, np.int64)
     s_t2_low = np.full(n, np.nan)
     s_t2_bar = np.full(n, -1, np.int64)
+    s_t2_start = np.full(n, -1, np.int64)
     s_box = np.full(n, -1, np.int64)
+    s_need = np.zeros(n, np.bool_)
 
+    hour = np.int64(3600) * np.int64(1000000000)
     st = 0
     cur = -1
     t1_low = np.nan
@@ -92,6 +117,12 @@ def _run_state_machine(o, h, l, c, v, atr, vsma, box_idx, box_val, box_vah,
     max_high = np.nan
     t2_low = np.nan
     t2_bar = -1
+    t2_start = -1
+    seq_val = np.nan          # 本轮第 1 次测试开始时所在箱体的 VAL（carry 的比较基准）
+    t2_val = np.nan           # 第 2 次测试开始时所在箱体的 VAL（滚动后成为新的 seq_val）
+    inv_val = np.nan          # 被跌穿箱体的 VAL
+    inv_t = np.int64(0)       # 跌穿 K 线收盘时刻（窗口起点不早于此的新箱体视为全新结构）
+    need_above = True         # True：须先出现整根位于带上方的 K 线，触及才算第 1 次测试
     for i in range(n):
         b = box_idx[i]
         a = atr[i]
@@ -99,11 +130,15 @@ def _run_state_machine(o, h, l, c, v, atr, vsma, box_idx, box_val, box_vah,
             if b < 0:
                 st = 0
             else:
-                keep = False
-                if carry and cur >= 0 and (st == 2 or st == 3 or st == 4) and not np.isnan(a):
-                    if abs(box_val[b] - box_val[cur]) <= (k1 + k2) * a:
-                        keep = True
-                if not keep:
+                rearm = True
+                if st == 5:
+                    overlap = (not np.isnan(a)) and abs(box_val[b] - inv_val) <= (k1 + k2) * a
+                    fresh = box_wstart[b] >= inv_t
+                    rearm = (not overlap) or fresh
+                elif carry and cur >= 0 and (st == 2 or st == 3 or st == 4) and not np.isnan(a):
+                    if abs(box_val[b] - seq_val) <= (k1 + k2) * a:
+                        rearm = False                      # 同一支撑区：保留测试进度
+                if rearm:
                     st = 1
                     t1_low = np.nan
                     t1_bar = -1
@@ -111,12 +146,20 @@ def _run_state_machine(o, h, l, c, v, atr, vsma, box_idx, box_val, box_vah,
                     max_high = np.nan
                     t2_low = np.nan
                     t2_bar = -1
-                    if reject_broken and i > 0 and not np.isnan(a) and c[i - 1] < box_val[b] - k1 * a:
+                    t2_start = -1
+                    seq_val = np.nan
+                    t2_val = np.nan
+                    zl_new = box_val[b] - k1 * a
+                    need_above = not (i > 0 and c[i - 1] >= zl_new)   # a 为 NaN 时比较为 False → 需先到带上方
+                    if reject_broken and i > 0 and not np.isnan(a) and c[i - 1] < zl_new:
                         st = 5
+                        inv_val = box_val[b]
+                        inv_t = open_ns[i]
             cur = b
         s_box[i] = cur
         if st == 0 or np.isnan(a):
             state[i] = st
+            s_need[i] = need_above
             continue
         zl = box_val[cur] - k1 * a
         zh = box_val[cur] + k2 * a
@@ -125,19 +168,29 @@ def _run_state_machine(o, h, l, c, v, atr, vsma, box_idx, box_val, box_vah,
         is_brk = (c[i] < o[i]) and (c[i] < zl) and (o[i] - c[i] >= brk_body * a) and (v[i] >= brk_vol * vsma[i])
         brk[i] = is_brk
         if st == 5 or st == 6:
+            if st == 5 and is_brk:
+                inv_t = open_ns[i] + hour                  # 失效期间再次放量跌穿：“全新结构”须晚于最近一次跌穿
             state[i] = st
+            s_need[i] = need_above
             continue
         if is_brk:
             st = 5
+            inv_val = box_val[cur]
+            inv_t = open_ns[i] + hour
             state[i] = st
+            s_need[i] = need_above
             continue
         touched = l[i] <= zh
         if st == 1:
-            if touched:
+            if need_above:
+                if l[i] > zh:
+                    need_above = False                     # 已到带上方：之后的触及才是“回落”测试
+            elif touched:
                 st = 2
                 t1_low = l[i]
                 t1_bar = i
                 t1_last = i
+                seq_val = box_val[cur]
         elif st == 2:
             if touched:
                 if l[i] < t1_low:
@@ -153,6 +206,8 @@ def _run_state_machine(o, h, l, c, v, atr, vsma, box_idx, box_val, box_vah,
                     st = 4
                     t2_low = l[i]
                     t2_bar = i
+                    t2_start = i
+                    t2_val = box_val[cur]
                 else:
                     st = 2
                     if l[i] < t1_low:
@@ -166,25 +221,32 @@ def _run_state_machine(o, h, l, c, v, atr, vsma, box_idx, box_val, box_vah,
             if touched:
                 if l[i] < t2_low:
                     t2_low = l[i]
+                    t2_bar = i
             else:
                 if roll:
                     st = 3
                     t1_low = t2_low
                     t1_bar = t2_bar
                     t1_last = i - 1
+                    seq_val = t2_val
                     max_high = h[i]
                     t2_low = np.nan
                     t2_bar = -1
+                    t2_start = -1
+                    t2_val = np.nan
                 else:
                     st = 6
-        if st == 4 and touched and c[i] >= zl:
+        if st == 4 and touched and c[i] >= zl and (max_lag < 0 or i - t2_start <= max_lag):
             p = 0
             if pin[i]:
                 p |= 1
             if eng[i]:
                 p |= 2
             if p > 0:
-                lowest = min(t1_low, t2_low)
+                if sl_pattern:
+                    lowest = min(t1_low, l[i])
+                else:
+                    lowest = min(t1_low, t2_low)
                 if (p & 2) and i > 0 and l[i - 1] < lowest:
                     lowest = l[i - 1]
                 sig[i] = True
@@ -195,15 +257,22 @@ def _run_state_machine(o, h, l, c, v, atr, vsma, box_idx, box_val, box_vah,
                 s_t1_bar[i] = t1_bar
                 s_t2_low[i] = t2_low
                 s_t2_bar[i] = t2_bar
-                st = 1                                   # 序列被消费：需要全新的两次测试
+                s_t2_start[i] = t2_start
+                st = 1                                   # 序列被消费：须先脱离到带上方，再出现全新的两次测试
+                need_above = True
                 t1_low = np.nan
                 t1_bar = -1
                 t1_last = -1
                 max_high = np.nan
                 t2_low = np.nan
                 t2_bar = -1
+                t2_start = -1
+                seq_val = np.nan
+                t2_val = np.nan
         state[i] = st
-    return state, zlo, zhi, brk, sig, pat, sl, tp, s_t1_low, s_t1_bar, s_t2_low, s_t2_bar, s_box
+        s_need[i] = need_above
+    return (state, zlo, zhi, brk, sig, pat, sl, tp, s_t1_low, s_t1_bar, s_t2_low, s_t2_bar, s_t2_start,
+            s_box, s_need)
 
 
 # ----------------------------------------------------------------------------
@@ -259,35 +328,53 @@ def regime_block_mask(df1h: pd.DataFrame, df4h: pd.DataFrame, cfg: StrategyConfi
 # ----------------------------------------------------------------------------
 # 对外接口
 # ----------------------------------------------------------------------------
-def state_machine_args(df1h: pd.DataFrame, cfg: StrategyConfig, boxes: pd.DataFrame) -> tuple:
-    """组装状态机核心的全部输入（向量化预计算部分）。"""
+def indicator_arrays(df1h: pd.DataFrame, cfg: StrategyConfig) -> dict:
+    """状态机与回测共用的逐根指标（全部为第 i 根收盘决策时已知的量）。"""
     o, h, l, c, v = (df1h[k].to_numpy(dtype=np.float64) for k in ("open", "high", "low", "close", "volume"))
     atr_prev = shift_known_at_open(wilder_atr(h, l, c, cfg.atr_len))
     vsma_prev = shift_known_at_open(pd.Series(v).rolling(cfg.vol_sma_len, min_periods=cfg.vol_sma_len).mean().to_numpy())
+    return {"o": o, "h": h, "l": l, "c": c, "v": v, "atr_prev": atr_prev, "vsma_prev": vsma_prev,
+            "pin": bullish_pinbar(o, h, l, c, cfg), "eng": bullish_engulfing(o, h, l, c, cfg)}
+
+
+def state_machine_params(cfg: StrategyConfig) -> tuple:
+    """状态机核心的标量参数（顺序与 _run_state_machine 签名一致）。"""
+    return (float(cfg.zone_k1), float(cfg.zone_k2), int(cfg.min_bars_between_touches), float(cfg.min_bounce_atr),
+            bool(cfg.carry_touches_on_box_update), bool(cfg.roll_failed_second_touch),
+            float(cfg.break_body_atr), float(cfg.break_vol_mult), float(cfg.sl_buffer_atr),
+            bool(cfg.reject_broken_at_activation),
+            int(-1 if cfg.max_pattern_lag_bars is None else cfg.max_pattern_lag_bars),
+            bool(cfg.sl_anchor == "pattern"))
+
+
+def state_machine_args(df1h: pd.DataFrame, cfg: StrategyConfig, boxes: pd.DataFrame, ind: dict | None = None) -> tuple:
+    """组装状态机核心的全部输入（向量化预计算部分）。"""
+    ind = ind if ind is not None else indicator_arrays(df1h, cfg)
     box_idx = map_boxes_to_1h(df1h, boxes)
     nb = len(boxes)
     bval = boxes["VAL"].to_numpy(dtype=np.float64) if nb else np.zeros(0)
     bvah = boxes["VAH"].to_numpy(dtype=np.float64) if nb else np.zeros(0)
-    pin = bullish_pinbar(o, h, l, c, cfg)
-    eng = bullish_engulfing(o, h, l, c, cfg)
-    return (o, h, l, c, v, atr_prev, vsma_prev, box_idx, bval, bvah, pin, eng,
-            float(cfg.zone_k1), float(cfg.zone_k2), int(cfg.min_bars_between_touches), float(cfg.min_bounce_atr),
-            bool(cfg.carry_touches_on_box_update), bool(cfg.roll_failed_second_touch),
-            float(cfg.break_body_atr), float(cfg.break_vol_mult), float(cfg.sl_buffer_atr),
-            bool(cfg.reject_broken_at_activation))
+    bws = to_ns(boxes["window_start"]) if nb else np.zeros(0, dtype=np.int64)
+    return (ind["o"], ind["h"], ind["l"], ind["c"], ind["v"], ind["atr_prev"], ind["vsma_prev"], to_ns(df1h.index),
+            box_idx, bval, bvah, bws, ind["pin"], ind["eng"]) + state_machine_params(cfg)
 
 
 def generate_signals(df1h: pd.DataFrame, cfg: StrategyConfig, boxes: pd.DataFrame | None = None,
                      df4h: pd.DataFrame | None = None, spot_daily: pd.Series | None = None,
                      use_jit: bool = True) -> pd.DataFrame:
-    """对 1H 数据逐根运行状态机，返回逐根诊断与信号 DataFrame（索引 = 1H open_time）。"""
+    """对 1H 数据逐根运行状态机，返回逐根诊断与信号 DataFrame（索引 = 1H open_time）。
+
+    除信号与价位外，还输出全部中间量（pin/eng/vsma/regime_raw/brk_bodyvol/k1_atr/need_above），
+    使防未来函数闸门在每个截断点都能逐位比较它们，而不只是在恰好落在信号 K 线上的截断点。
+    """
     if boxes is None or df4h is None:
         boxes, df4h = build_boxes(df1h, cfg, df4h)
-    args = state_machine_args(df1h, cfg, boxes)
-    o, h, l, c, v, atr_prev = args[:6]
+    ind = indicator_arrays(df1h, cfg)
+    args = state_machine_args(df1h, cfg, boxes, ind)
+    o, c, v, atr_prev, vsma_prev = ind["o"], ind["c"], ind["v"], ind["atr_prev"], ind["vsma_prev"]
     nb = len(boxes)
     fn = _run_state_machine if use_jit else _run_state_machine.py_func
-    (state, zlo, zhi, brk, sig_raw, pat, sl, tp, t1_low, t1_bar, t2_low, t2_bar, sbox) = fn(*args)
+    (state, zlo, zhi, brk, sig_raw, pat, sl, tp, t1_low, t1_bar, t2_low, t2_bar, t2_start, sbox, need) = fn(*args)
 
     def box_col(name):
         out = np.full(len(df1h), np.nan)
@@ -306,15 +393,20 @@ def generate_signals(df1h: pd.DataFrame, cfg: StrategyConfig, boxes: pd.DataFram
             block_width |= sig_raw & (width / atr_prev > cfg.max_box_width_atr)
         if cfg.max_box_width_pct is not None:
             block_width |= sig_raw & (width / val > cfg.max_box_width_pct)
-    block_regime = sig_raw & regime_block_mask(df1h, df4h, cfg, spot_daily)
+        # 持仓期“跌穿支撑带”离场所需的、与箱体无关的部分（回测器用入场时箱体的 VAL 冻结参照位）
+        brk_bodyvol = (c < o) & (o - c >= cfg.break_body_atr * atr_prev) & (v >= cfg.break_vol_mult * vsma_prev)
+    regime_raw = regime_block_mask(df1h, df4h, cfg, spot_daily)
+    block_regime = sig_raw & regime_raw
     signal = sig_raw & ~block_rr & ~block_width & ~block_regime
 
     out = pd.DataFrame({
         "box_id": sbox, "VAL": val, "POC": poc, "VAH": vah, "P_low": plow, "P_high": phigh,
-        "atr": atr_prev, "zone_lo": zlo, "zone_hi": zhi, "state": state, "breakdown": brk,
+        "atr": atr_prev, "vsma": vsma_prev, "zone_lo": zlo, "zone_hi": zhi, "state": state, "need_above": need,
+        "breakdown": brk, "brk_bodyvol": brk_bodyvol, "k1_atr": cfg.zone_k1 * atr_prev,
+        "pin": ind["pin"], "eng": ind["eng"], "regime_raw": regime_raw,
         "sig_raw": sig_raw, "signal": signal, "pattern": pat, "entry_ref": np.where(sig_raw, c, np.nan),
         "sl": sl, "tp": tp, "poc_tp": np.where(sig_raw, poc, np.nan), "rr": rr,
-        "t1_low": t1_low, "t1_bar": t1_bar, "t2_low": t2_low, "t2_bar": t2_bar,
+        "t1_low": t1_low, "t1_bar": t1_bar, "t2_low": t2_low, "t2_bar": t2_bar, "t2_start": t2_start,
         "block_rr": block_rr, "block_width": block_width, "block_regime": block_regime,
     }, index=df1h.index)
     return out
