@@ -1,8 +1,10 @@
 """
 test_audit_regressions.py — Phase 1 对抗式审计确认问题的回归测试（合成数据，结果可手算）。
 
-每个测试对应审计报告中的一条发现（编号见 docs/phase_logs/PHASE1_engine.md 第 6 节），
-先在审计时的代码（commit ee26506）上复现失败，再在修复后的代码上通过。
+每个测试对应一条审计或复核发现（编号见 docs/phase_logs/PHASE1_engine.md 第 6 至 9 节）。修复类测试先在修复前的代码上
+复现失败、再在修复后的代码上通过；第三、四轮的“钉住”类测试约束此前没有测试覆盖、但实现正确的既有行为，在修复前的代码上
+同样通过，作用是让对应的突变体（tools/mutation_test.py）失败。reference_state_machine 是按文档规则独立编写的参考实现，
+与 Numba 内核在随机合成场景上逐位对拍。
 
 合成状态机场景统一采用：VAL = 100，ATR = 1，k1 = k2 = 0.5 → 支撑带 [99.5, 100.5]；均量 100，放量阈值 150。
 """
@@ -15,7 +17,8 @@ import pytest
 import pipeline
 from backtester import BacktestResult, run_backtest
 from config import OOS_END, OOS_START, RESEARCH_DATA_END, BacktestConfig, StrategyConfig
-from metrics import (OOSLockedError, daily_equity, daily_returns, monthly_returns, segment_metrics, trade_stats)
+from metrics import (OOSLockedError, daily_equity, daily_returns, drawdown_series, max_drawdown, monthly_returns,
+                     segment_metrics, sharpe, sortino, trade_stats)
 from ppvp_engine import _value_area
 from strategy_state_machine import (ARMED, DEPARTED, INVALID, TOUCH1, TOUCH2, _run_state_machine, bullish_engulfing,
                                     bullish_pinbar, state_machine_params)
@@ -962,3 +965,443 @@ def test_ex3_7_backtest_result_repr_shows_no_values():
     res = run_backtest(df, sig, BacktestConfig(include_funding=False))
     text = repr(res)
     assert text.startswith("BacktestResult(bars=5") and "100" not in text.replace("bars=5", "")
+    assert "trades" not in text                                           # 全量结果的交易笔数也是 OOS 信息（第四轮 EX4-3）
+
+
+# ============================================================================
+# 第四轮复核：独立参考实现对拍、清除阈值与簿记细节（SM4-1 … SM4-6）
+# ============================================================================
+def reference_state_machine(o, h, l, c, v, atr, vsma, open_ns, box_idx, box_val, box_vah, box_wstart, pin, eng,
+                            k1, k2, min_bars, min_bounce, carry, roll, brk_body, brk_vol, sl_buf, reject_broken,
+                            max_lag, sl_pattern, events=None):
+    """按 strategy_state_machine 文档规则独立编写的参考实现，只用于对拍测试。
+
+    与 Numba 内核的区别只在数据结构：放量跌穿记忆与“须先到带上方”要求都是保持顺序的 Python 列表，
+    失效与清除用列表推导整体重建，不做交换删除。浮点表达式与内核逐项相同，因此输出必须逐位一致。
+    events（可选 dict）累计各类事件的次数，供测试检查对拍是否真的覆盖了这些路径。"""
+    n = len(o)
+    ev = events if events is not None else {}
+
+    def bump(key):
+        ev[key] = ev.get(key, 0) + 1
+
+    state = np.zeros(n, np.int8)
+    zlo, zhi, sl, tp = (np.full(n, np.nan) for _ in range(4))
+    brk, sig = np.zeros(n, np.bool_), np.zeros(n, np.bool_)
+    pat = np.zeros(n, np.int8)
+    o_t1_low, o_t2_low = np.full(n, np.nan), np.full(n, np.nan)
+    o_t1_bar, o_t2_bar, o_t2_start, o_box = (np.full(n, -1, np.int64) for _ in range(4))
+    o_need = np.zeros(n, np.bool_)
+    hour = np.int64(3600) * np.int64(1000000000)
+    st, cur = 0, -1
+    seq = dict(t1_low=np.nan, t1_bar=-1, t1_last=-1, max_high=np.nan, t2_low=np.nan, t2_bar=-1, t2_start=-1,
+               seq_val=np.nan, t2_val=np.nan)
+    fresh_seq = dict(seq)
+    memory = []                       # [VAL, 跌穿收盘时刻]
+    reqs = []                         # {"val": 锚点, "t": 写入时刻, "claimed": 是否被当前箱体认领}
+    need = True
+    for i in range(n):
+        b, a = box_idx[i], atr[i]
+        if b != cur:
+            if b < 0:
+                st = 0
+            else:
+                ov = (k1 + k2) * a
+                kept = [m for m in memory if not box_wstart[b] >= m[1]]
+                if len(kept) < len(memory):
+                    bump("memory_expired")
+                memory = kept
+                blocked = (not np.isnan(a)) and any(abs(box_val[b] - m[0]) <= ov for m in memory)
+                keep = ((not blocked) and carry and cur >= 0 and st in (2, 3, 4) and not np.isnan(a)
+                        and abs(box_val[b] - seq["seq_val"]) <= ov)
+                if not keep:
+                    seq = dict(fresh_seq)
+                    for r in reqs:
+                        r["claimed"] = bool((not np.isnan(a)) and abs(box_val[b] - r["val"]) <= ov)
+                    need = any(r["claimed"] for r in reqs)
+                    if need:
+                        bump("claimed_at_switch")
+                else:
+                    bump("carry")
+                kept = [r for r in reqs if r["claimed"] or not box_wstart[b] >= r["t"]]
+                if len(kept) < len(reqs):
+                    bump("requirement_expired")
+                reqs = kept
+                if blocked:
+                    st = 5
+                    bump("memory_block")
+                elif not keep:
+                    st = 1
+                    zl_new = box_val[b] - k1 * a
+                    below = not (i > 0 and c[i - 1] >= zl_new)
+                    if below and not need:
+                        reqs.append({"val": box_val[b], "t": open_ns[i], "claimed": True})
+                        need = True
+                        bump("write_a")
+                    if reject_broken and i > 0 and not np.isnan(a) and c[i - 1] < zl_new:
+                        st = 5
+                        bump("reject")
+            cur = b
+        o_box[i] = cur
+        if st == 0 or np.isnan(a):
+            state[i], o_need[i] = st, need
+            continue
+        zl, zh = box_val[cur] - k1 * a, box_val[cur] + k2 * a
+        zlo[i], zhi[i] = zl, zh
+        if reqs:
+            kept = [r for r in reqs if not l[i] > (zh if r["claimed"] else r["val"] + k2 * a)]
+            if len(kept) < len(reqs):
+                bump("cleared_in_state_%d" % st)
+                if any(not r["claimed"] for r in reqs if r not in kept):
+                    bump("cleared_unclaimed")
+            reqs = kept
+            need = any(r["claimed"] for r in reqs)
+        is_brk = (c[i] < o[i]) and (c[i] < zl) and (o[i] - c[i] >= brk_body * a) and (v[i] >= brk_vol * vsma[i])
+        brk[i] = is_brk
+        if st in (5, 6):
+            if is_brk:
+                same = False
+                if st == 5:
+                    for m in memory:
+                        if abs(box_val[cur] - m[0]) <= (k1 + k2) * a:
+                            same = True
+                            if c[i] < m[0] - k1 * a:
+                                m[1] = open_ns[i] + hour
+                                bump("memory_moved")
+                if not same:
+                    memory.append([box_val[cur], open_ns[i] + hour])
+                    st = 5
+                    bump("memory_write_inactive")
+            state[i], o_need[i] = st, need
+            continue
+        if is_brk:
+            st = 5
+            memory.append([box_val[cur], open_ns[i] + hour])
+            bump("memory_write_active")
+            state[i], o_need[i] = st, need
+            continue
+        touched = l[i] <= zh
+        if st == 1:
+            if (not need) and touched:
+                st = 2
+                seq.update(t1_low=l[i], t1_bar=i, t1_last=i, seq_val=box_val[cur])
+        elif st == 2:
+            if touched:
+                if l[i] < seq["t1_low"]:
+                    seq.update(t1_low=l[i], t1_bar=i)
+                seq["t1_last"] = i
+            else:
+                st = 3
+                seq["max_high"] = h[i]
+        elif st == 3:
+            if touched:
+                if (seq["max_high"] - zh >= min_bounce * a) or (i - seq["t1_last"] >= min_bars):
+                    st = 4
+                    seq.update(t2_low=l[i], t2_bar=i, t2_start=i, t2_val=box_val[cur])
+                else:
+                    st = 2
+                    if l[i] < seq["t1_low"]:
+                        seq.update(t1_low=l[i], t1_bar=i)
+                    seq["t1_last"] = i
+            elif h[i] > seq["max_high"]:
+                seq["max_high"] = h[i]
+        elif st == 4:
+            if touched:
+                if l[i] < seq["t2_low"]:
+                    seq.update(t2_low=l[i], t2_bar=i)
+            elif roll:
+                st = 3
+                seq.update(t1_low=seq["t2_low"], t1_bar=seq["t2_bar"], t1_last=i - 1, seq_val=seq["t2_val"],
+                           max_high=h[i], t2_low=np.nan, t2_bar=-1, t2_start=-1, t2_val=np.nan)
+                bump("roll")
+            else:
+                st = 6
+                bump("exhausted")
+        if st == 4 and touched and c[i] >= zl and (max_lag < 0 or i - seq["t2_start"] <= max_lag):
+            p = (1 if pin[i] else 0) | (2 if eng[i] else 0)
+            if p > 0:
+                lowest = min(seq["t1_low"], l[i]) if sl_pattern else min(seq["t1_low"], seq["t2_low"])
+                if (p & 2) and i > 0 and l[i - 1] < lowest:
+                    lowest = l[i - 1]
+                sig[i], pat[i] = True, p
+                sl[i], tp[i] = lowest - sl_buf * a, box_vah[cur]
+                o_t1_low[i], o_t1_bar[i] = seq["t1_low"], seq["t1_bar"]
+                o_t2_low[i], o_t2_bar[i], o_t2_start[i] = seq["t2_low"], seq["t2_bar"], seq["t2_start"]
+                st = 1
+                reqs.append({"val": box_val[cur], "t": open_ns[i] + hour, "claimed": True})
+                need = True
+                seq = dict(fresh_seq)
+                bump("signal")
+        state[i], o_need[i] = st, need
+    return (state, zlo, zhi, brk, sig, pat, sl, tp, o_t1_low, o_t1_bar, o_t2_low, o_t2_bar, o_t2_start, o_box, o_need)
+
+
+def _fuzz_case(rng):
+    """随机合成行情与箱体序列：价格在若干支撑区之间游走，含放量跌穿、Pinbar、带内震荡、同区/异区箱体切换、
+    窗口起点早于或晚于近期事件的箱体、ATR 起伏与开头的 NaN ATR。"""
+    n = int(rng.integers(150, 260))
+    o, h, l, c = (np.empty(n) for _ in range(4))
+    v = np.full(n, 100.0)
+    px = 100.0
+    for i in range(n):
+        op = px + rng.normal(0.0, 0.15)
+        r = rng.random()
+        if r < 0.08:                                         # 放量实体阴线
+            cl = op - rng.uniform(0.8, 2.0)
+            v[i] = rng.uniform(160.0, 260.0)
+        elif r < 0.18:                                       # 看涨 Pinbar
+            cl = op + rng.uniform(0.0, 0.08)
+        else:
+            cl = op + rng.normal(0.0, 0.55)
+        hi = max(op, cl) + abs(rng.normal(0.0, 0.25))
+        lo = min(op, cl) - (rng.uniform(0.9, 1.6) if r >= 0.08 and r < 0.18 else abs(rng.normal(0.0, 0.25)))
+        if rng.random() < 0.05:
+            v[i] = rng.uniform(150.0, 200.0)
+        o[i], h[i], l[i], c[i] = op, hi, lo, cl
+        px = cl + (100.0 - cl) * 0.03                          # 弱均值回归，价格反复回到若干支撑区
+    atr = 1.0 + 0.35 * np.sin(np.arange(n) / rng.uniform(5.0, 25.0) + rng.uniform(0.0, 6.0))
+    if rng.random() < 0.3:
+        atr[: int(rng.integers(1, 8))] = np.nan
+    vsma = np.full(n, 100.0)
+    open_ns = BASE + np.arange(n, dtype=np.int64) * HOUR
+    box_idx = np.full(n, -1, dtype=np.int64)
+    vals, vahs, wss = [], [], []
+    at = int(rng.integers(0, 12))
+    ws = -60
+    while at < n:
+        k = len(vals)
+        box_idx[at:] = k
+        ref = c[at - 1] if at > 0 else c[0]
+        val = round(ref + rng.uniform(-2.6, 1.6), 1) if rng.random() < 0.7 else (vals[-1] + rng.choice([-1.0, 0.0, 1.0]) if vals else 100.0)
+        vals.append(val)
+        vahs.append(val + rng.uniform(1.0, 6.0))
+        ws = max(ws, at - int(rng.integers(0, 40)))
+        wss.append(BASE + np.int64(ws) * HOUR)
+        at += int(rng.integers(4, 28))
+    cfg = StrategyConfig(zone_k1=float(rng.choice([0.3, 0.5, 0.7])), zone_k2=float(rng.choice([0.3, 0.5, 0.7])),
+                         min_bars_between_touches=int(rng.choice([3, 6])), min_bounce_atr=float(rng.choice([0.5, 1.0])),
+                         carry_touches_on_box_update=bool(rng.random() < 0.7), roll_failed_second_touch=bool(rng.random() < 0.6),
+                         reject_broken_at_activation=bool(rng.random() < 0.4),
+                         max_pattern_lag_bars=[None, 0, 2][int(rng.integers(0, 3))],
+                         sl_anchor=["test", "pattern"][int(rng.integers(0, 2))])
+    pin, eng = bullish_pinbar(o, h, l, c, cfg), bullish_engulfing(o, h, l, c, cfg)
+    args = (o, h, l, c, v, atr, vsma, open_ns, box_idx, np.array(vals), np.array(vahs), np.array(wss, dtype=np.int64),
+            pin, eng) + state_machine_params(cfg)
+    return args
+
+
+def test_sm4_kernel_matches_independent_reference_on_random_markets():
+    """SM4-1/2/3：用独立编写、保持顺序的参考实现与 Numba 内核对拍 600 个随机合成场景，15 个输出逐位一致；
+    同时要求对拍真的覆盖了各类事件（否则“一致”可能是空洞的）。交换删除、认领、失效、清除的任何簿记错误都会在这里暴露。"""
+    rng = np.random.default_rng(20261104)
+    events = {}
+    for case in range(600):
+        args = _fuzz_case(rng)
+        got = _run_state_machine(*args)
+        exp = reference_state_machine(*args, events=events)
+        for name, x, y in zip(SM_OUT, got, exp):
+            if not np.array_equal(np.asarray(x).view(np.uint8), np.asarray(y).view(np.uint8)):
+                raise AssertionError(f"case {case}: kernel output '{name}' differs from the reference implementation")
+    for key in ("write_a", "signal", "claimed_at_switch", "requirement_expired", "cleared_unclaimed", "memory_block",
+                "memory_expired", "memory_moved", "memory_write_inactive", "memory_write_active", "reject", "carry",
+                "roll", "exhausted", "cleared_in_state_5"):
+        assert events.get(key, 0) >= 5, f"random cases exercised '{key}' only {events.get(key, 0)} times"
+
+
+SIG8 = [ABOVE, TOUCH] + [ABOVE] * 6 + [PIN]          # signal at bar 8 on a VAL-100 box -> requirement anchored at 100
+
+
+def test_sm4_claimed_requirement_cleared_at_current_box_band_top():
+    # N1: a claimed requirement is measured against the CLAIMING box's band top, not its anchor's band top.
+    # (i) higher claiming box 100.8 (band top 101.3): low 100.6 > anchor top 100.5 must NOT clear it
+    out = sm(SIG8 + [IN, (100.9, 101.2, 100.6, 101.0)], [{"at": 0, "val": 100.0}, {"at": 10, "val": 100.8}])
+    assert out["sig"][8] and out["need"][10] and out["state"][10] == ARMED
+    # (ii) lower claiming box 99.2 (band top 99.7): low 99.8 clears it; the next touch is a first test
+    out = sm(SIG8 + [IN, (100.0, 100.2, 99.8, 100.1), (100.0, 100.1, 99.6, 99.9)],
+             [{"at": 0, "val": 100.0}, {"at": 10, "val": 99.2}])
+    assert not out["need"][10] and out["state"][11] == TOUCH1
+
+
+def test_sm4_unclaimed_requirement_cleared_at_anchor_band_top_in_any_state():
+    # N2 / N3 / N21: while box B (101.2, other zone) is current, the A-zone requirement (anchor 100) is unclaimed and
+    # is cleared by a bar with low > 100.5 even though that bar is inside B's band and the state is TOUCH1
+    bars = SIG8 + [(100.9, 101.1, 100.4, 101.0), (101.0, 101.2, 100.4, 101.1), (101.4, 101.6, 100.9, 101.3),
+                   (100.6, 100.7, 100.3, 100.5)]
+    out = sm(bars, [{"at": 0, "val": 100.0}, {"at": 10, "val": 101.2}, {"at": 12, "val": 100.0}])
+    assert out["state"][10] == TOUCH1 and out["state"][11] == TOUCH1
+    assert not out["need"][12] and out["state"][12] == TOUCH1          # back in zone A: nothing left to claim
+
+
+@pytest.mark.parametrize("ws_b, need_at_return", [(2, True), (3, False)])
+def test_sm4_activation_requirement_write_time_is_activation_open(ws_b, need_at_return):
+    # N12 / N13: (a) requirement of box A (activated at bar 3 from below) carries t = open of bar 3. A box with
+    # window start = bar 3 is fresh structure for it (expires while unclaimed); window start = bar 2 is not.
+    bars = [(98.0, 98.4, 97.8, 98.2), (98.2, 98.6, 98.0, 98.4), (98.5, 99.2, 98.4, 99.0)] + [IN] * 5 \
+        + [(100.4, 100.5, 100.0, 100.3)]
+    out = sm(bars, [{"at": 3, "val": 100.0, "ws": -10}, {"at": 6, "val": 102.0, "ws": ws_b},
+                    {"at": 8, "val": 100.0, "ws": ws_b}])
+    assert out["need"][3] and out["state"][3] == ARMED
+    assert out["need"][8] == need_at_return and out["state"][8] == (ARMED if need_at_return else TOUCH1)
+
+
+def test_sm4_requirement_cleared_on_the_activation_bar():
+    # N40: activation from below writes a requirement; the activation bar itself is entirely above the band -> cleared
+    out = sm([BELOW, (100.8, 101.5, 100.7, 101.2), TOUCH], [{"at": 1, "val": 100.0}])
+    assert not out["need"][1] and out["state"][2] == TOUCH1
+
+
+def test_sm4_rejected_box_writes_activation_requirement():
+    # N18: a rejected box (prev close below its band low) carries an (a) requirement that the next same-zone box claims
+    bars = [IN, IN_LOW, IN, TOUCH]
+    out = sm(bars, [{"at": 2, "val": 100.3}, {"at": 3, "val": 100.0}], StrategyConfig(reject_broken_at_activation=True))
+    assert out["state"][2] == INVALID and out["need"][3] and out["state"][3] == ARMED
+
+
+def test_sm4_memory_swap_remove_keeps_surviving_entry_time():
+    # N25: memory [100 @ close of bar 2, 95 @ close of bar 6]; box 97.5 with window start bar 3 expires only 100.
+    # The surviving 95 entry must keep its own time: box 95.2 with window start bar 4 still contains pre-breakdown data
+    bars = [ABOVE, TOUCH, BRK, (99.0, 99.2, 96.0, 96.2), (96.2, 96.5, 95.8, 96.0), (96.0, 96.1, 95.2, 95.4),
+            (95.4, 95.5, 93.8, 94.0, 200.0), (94.0, 97.0, 93.9, 96.9), (96.9, 98.0, 96.8, 97.9), (97.9, 98.0, 97.0, 97.5),
+            (97.0, 97.2, 95.6, 96.0)]
+    boxes = [{"at": 0, "val": 100.0, "ws": -50}, {"at": 4, "val": 95.0, "ws": -10}, {"at": 8, "val": 97.5, "ws": 3},
+             {"at": 10, "val": 95.2, "ws": 4}]
+    out = sm(bars, boxes)
+    assert out["state"][2] == INVALID and out["state"][6] == INVALID and out["state"][8] == ARMED
+    assert out["state"][10] == INVALID
+
+
+def test_sm4_requirement_swap_remove_keeps_claim_flag_on_clear():
+    # N27: requirements [98.8 (signal, unclaimed after the switch), 100 ((a) at box 100, claimed)]; bar 10 clears only
+    # the unclaimed 98.8 entry (low 99.6 > 99.3). The claimed 100 entry must stay claimed -> no first test at bar 10
+    up = (99.8, 100.6, 99.6, 100.3)
+    bars = [up, (99.8, 100.0, 99.0, 99.4)] + [up] * 6 + [(99.7, 99.8, 98.5, 99.75), (99.7, 99.9, 99.0, 99.2),
+                                                         (99.3, 100.2, 99.6, 100.0)]
+    out = sm(bars, [{"at": 0, "val": 98.8}, {"at": 10, "val": 100.0}])
+    assert out["sig"][8] and out["need"][10] and out["state"][10] == ARMED
+
+
+def test_sm4_requirement_swap_remove_keeps_claim_flag_on_expiry():
+    # N28: same two requirements; box 100.1 (window start bar 9) expires the unclaimed 98.8 entry (fresh structure)
+    # and claims the 100 entry, which must stay claimed
+    up = (99.8, 100.6, 99.6, 100.3)
+    bars = [up, (99.8, 100.0, 99.0, 99.4)] + [up] * 6 + [(99.7, 99.8, 98.5, 99.75), (99.7, 99.9, 99.0, 99.2),
+                                                         (99.3, 100.2, 99.2, 100.0), (100.0, 100.3, 99.2, 99.9),
+                                                         (99.9, 100.3, 99.7, 100.1)]
+    out = sm(bars, [{"at": 0, "val": 98.8}, {"at": 10, "val": 100.0}, {"at": 12, "val": 100.1, "ws": 9}])
+    assert out["sig"][8] and out["need"][12] and out["state"][12] == ARMED
+
+
+def test_sm4_memory_expiry_checks_every_entry_after_swap():
+    # N32: memory in array order [100 @ bar 3, 95 @ bar 15 (moved by a re-breakdown), 90 @ bar 11]; box 90.3 with window
+    # start bar 12 must expire both 100 and 90 (only 95 survives) and therefore re-arm
+    bars = [ABOVE, TOUCH, BRK, (99.0, 99.2, 96.0, 96.2), (96.2, 96.5, 95.8, 96.0), (96.0, 96.1, 95.2, 95.4),
+            (95.4, 95.5, 93.8, 94.0, 200.0), (94.0, 94.2, 91.0, 91.2), (91.2, 91.5, 90.8, 91.0), (91.0, 91.1, 90.2, 90.4),
+            (90.4, 90.5, 88.8, 89.0, 200.0), (89.0, 96.0, 88.9, 95.8), (95.8, 96.0, 95.4, 95.6),
+            (95.6, 95.7, 95.0, 95.3), (95.3, 95.4, 93.9, 94.1, 200.0), (94.1, 94.2, 90.4, 90.6), (90.6, 90.9, 90.5, 90.8)]
+    boxes = [{"at": 0, "val": 100.0, "ws": -50}, {"at": 4, "val": 95.0, "ws": -40}, {"at": 8, "val": 90.0, "ws": -30},
+             {"at": 12, "val": 95.2, "ws": -20}, {"at": 16, "val": 90.3, "ws": 12}]
+    out = sm(bars, boxes)
+    assert out["state"][10] == INVALID and out["state"][12] == INVALID and out["brk"][14]
+    assert out["state"][16] != INVALID                                  # re-armed (first touch on the same bar)
+
+
+@pytest.mark.parametrize("ws_a", [8, 9])
+def test_sm4_return_box_claims_before_expiry(ws_a):
+    # N9: A(100) -> B(101.2, window start bar 8: not fresh) -> A'(100, window start 8 or 9). Claims are computed
+    # before expiry, so A' claims the outstanding A requirement even when A' itself is fresh structure (ws 9)
+    boxes = [{"at": 0, "val": 100.0}, {"at": 12, "val": 101.2, "ws": 8}, {"at": 13, "val": 100.0, "ws": ws_a}]
+    out = sm(_post_signal_chop(), boxes)
+    assert out["need"][13] and list(np.flatnonzero(out["sig"])) == [8]
+
+
+def test_sm4_unclaimed_requirement_expires_at_carry_switch():
+    # N10: signal at bar 8 (anchor 100); box 98.8 (other zone, not fresh) gets a first test; the sequence is carried to
+    # box 99.0 whose window starts at the signal close (fresh) -> the unclaimed 100 requirement expires there, even
+    # though the switch is a carry. After the 99.0 signal and a departure above 99.5, box 100 re-arms with nothing to claim
+    bars = SIG8 + [IN, (100.0, 100.1, 99.2, 99.4), (99.5, 100.2, 99.4, 100.0)] + [(100.0, 100.4, 99.6, 100.1)] * 5 \
+        + [(99.9, 100.0, 98.8, 99.95), (100.0, 100.3, 99.7, 100.1), TOUCH]
+    boxes = [{"at": 0, "val": 100.0}, {"at": 10, "val": 98.8}, {"at": 17, "val": 99.0, "ws": 9},
+             {"at": 19, "val": 100.0, "ws": 9}]
+    out = sm(bars, boxes)
+    assert out["state"][10] == TOUCH1 and out["state"][16] == 3 and list(np.flatnonzero(out["sig"])) == [8, 17]
+    assert not out["need"][19] and out["state"][19] == TOUCH1
+
+
+def test_sm4_requirement_boundaries_are_strict_and_inclusive():
+    # 清除：low 恰等于带上沿（100.5）不算“整根位于带上方”，要求保留（N5）
+    out = sm(SIG8 + [(100.8, 101.2, 100.5, 101.0), TOUCH], [{"at": 0, "val": 100.0}])
+    assert out["need"][9] and out["state"][10] == ARMED
+    # 认领：新箱体 VAL 与锚点恰好相距 (k1+k2)*ATR = 1.0 仍属同区（N7）；上一根收盘不在带下沿之下，不触发激活条件 (a)
+    out = sm(SIG8 + [(100.4, 100.9, 100.3, 100.7), (100.9, 101.3, 100.8, 101.1)],
+             [{"at": 0, "val": 100.0}, {"at": 10, "val": 101.0}])
+    assert out["need"][10] and out["state"][10] == ARMED
+
+
+def test_sm4_signal_anchor_is_the_box_current_at_the_signal():
+    # 第 2 次测试从 VAL 100 的箱体开始（t2_val = 100），K 线 9 carry 到 VAL 100.8 的箱体并在其上发出信号：
+    # 要求的锚点是 100.8（信号时的箱体），因此与 100.8 同区、与 100 不同区的 VAL 101.7 箱体必须认领它（N15）
+    bars = [ABOVE, TOUCH] + [ABOVE] * 6 + [(101.0, 101.2, 100.3, 100.6), (101.3, 101.4, 100.4, 101.35),
+                                           (101.3, 101.5, 101.0, 101.3), (101.3, 101.6, 101.1, 101.4)]
+    out = sm(bars, [{"at": 0, "val": 100.0}, {"at": 9, "val": 100.8}, {"at": 11, "val": 101.7}])
+    assert out["state"][8] == TOUCH2 and out["sig"][9] and out["need"][11] and out["state"][11] == ARMED
+
+
+def test_sm4_carry_switch_does_not_claim_requirements():
+    # 已记录的设计选择（SM4-5）：carry 切换不重新认领。信号（K 线 8，锚点 100）后，第 1 次测试在不同区的 98.8 箱体上，
+    # 序列 carry 到与 100 同区的 99.6 箱体并在 K 线 17 发出信号；100 区的要求在此期间保持未认领，
+    # 按锚点带上沿 100.5 判断，K 线 18（low 100.2）只清除 99.6 区的要求，回到 VAL 100 的箱体时仍须先到带上方（N24）
+    bars = SIG8 + [IN, (100.0, 100.1, 99.2, 99.4), (99.5, 100.2, 99.4, 100.0)] + [(100.0, 100.4, 99.6, 100.1)] * 5 \
+        + [(100.0, 100.05, 99.5, 100.0), (100.3, 100.6, 100.2, 100.4), TOUCH]
+    out = sm(bars, [{"at": 0, "val": 100.0}, {"at": 10, "val": 98.8}, {"at": 17, "val": 99.6}, {"at": 19, "val": 100.0}])
+    assert list(np.flatnonzero(out["sig"])) == [8, 17] and not out["need"][16]
+    assert not out["need"][18] and out["need"][19] and out["state"][19] == ARMED
+
+
+def test_sm4_invalid_boxes_claim_requirements():
+    # 被否决的箱体（N23）与被放量跌穿记忆阻断的箱体（N22）也认领同区的未完成要求（INVALID 期间按它的带上沿清除）
+    out = sm(_post_signal_chop(), [{"at": 0, "val": 100.0}, {"at": 12, "val": 100.3}, {"at": 13, "val": 100.0}],
+             StrategyConfig(reject_broken_at_activation=True))
+    assert out["state"][12] == INVALID and out["need"][12]
+    pre = [(99.6, 99.8, 99.2, 99.4), (99.4, 99.5, 97.9, 98.0, 200.0), (98.0, 101.2, 97.9, 101.0)]
+    out = sm(pre + _post_signal_chop(), [{"at": 0, "val": 98.8, "ws": -50}, {"at": 2, "val": 100.0, "ws": -40},
+                                         {"at": 15, "val": 99.5, "ws": -30}, {"at": 16, "val": 100.0, "ws": -20}])
+    assert out["state"][15] == INVALID and out["need"][15]
+
+
+
+# ============================================================================
+# 第四轮复核：执行 / 指标 / 管道（EX4-4、EX4-7）
+# ============================================================================
+def test_ex4_4_cache_isolated_from_box_rangeindex_writes():
+    # RangeIndex.copy(deep=True) 与原对象共享已物化的整数数组：经 boxes.index.array 的写入曾污染缓存
+    pipeline.clear_cache()
+    boxes, _ = pipeline.get_boxes("BTCUSDT", StrategyConfig())
+    try:
+        boxes.index.array[0] = 12345
+    except (TypeError, ValueError):
+        pass                                                              # 不可写同样满足隔离
+    fresh = pipeline.get_boxes("BTCUSDT", StrategyConfig())[0]
+    assert fresh.index.to_numpy()[0] == 0 and fresh.reset_index()["box_id"].iloc[0] == 0
+    pipeline.clear_cache()
+
+
+def test_ex4_7_series_helpers_are_locked_past_oos_start():
+    res = _mk_res(pd.Timestamp("2024-01-01", tz="UTC"), pd.Timestamp("2025-08-01", tz="UTC"))
+    for fn in (max_drawdown, drawdown_series):
+        with pytest.raises(OOSLockedError):
+            fn(res.equity)
+        fn(res.equity, allow_oos=True)
+    d = daily_equity(res, allow_oos=True)
+    with pytest.raises(OOSLockedError):
+        daily_returns(d)
+    r = daily_returns(d, allow_oos=True)
+    for fn in (sharpe, sortino):
+        with pytest.raises(OOSLockedError):
+            fn(r)
+        fn(r, allow_oos=True)
+    # 研究结果不被锁：逐小时净值恰好止于 OOS_START，日度标签止于 2025-06-30
+    ok = _mk_res(pd.Timestamp("2024-01-01", tz="UTC"), OOS_START)
+    assert daily_equity(ok).index[-1] == pd.Timestamp("2025-06-30", tz="UTC")
+    sharpe(daily_returns(daily_equity(ok)))
+    max_drawdown(ok.equity)
+    drawdown_series(ok.equity)

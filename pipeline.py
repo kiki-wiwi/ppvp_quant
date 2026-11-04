@@ -25,9 +25,12 @@ _BOXES: dict = {}
 
 
 def _detached(x):
-    """深拷贝 DataFrame / Series，连同行索引（与 DataFrame 的列索引）一起复制，与缓存对象不共享任何缓冲区。"""
+    """深拷贝 DataFrame / Series，连同行索引（与 DataFrame 的列索引）一起复制，与缓存对象不共享任何缓冲区。
+    RangeIndex.copy(deep=True) 与原对象共享已物化的整数数组（index.array 可写），因此按 start/stop/step 重建。"""
     y = x.copy(deep=True)
-    y.index = x.index.copy(deep=True)
+    idx = x.index
+    y.index = pd.RangeIndex(idx.start, idx.stop, idx.step, name=idx.name) if isinstance(idx, pd.RangeIndex) \
+        else idx.copy(deep=True)
     if isinstance(x, pd.DataFrame):
         y.columns = x.columns.copy(deep=True)
     return y

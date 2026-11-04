@@ -19,8 +19,9 @@ metrics.py — 绩效指标（日度净值口径）与样本分段统计。
 * OOS 隔离：任何触及 [OOS_START, ...) 的分段指标或月度收益；对净值或交易延伸到 OOS_START 之后的回测结果
   计算日度净值（daily_equity）、交易统计（trade_stats）或任何分段指标，都必须显式传入 ``allow_oos=True``
   （仅 Phase 4 锁定参数后使用）。这防止在全量结果上统计 VAL 时，把 VAL 入场、OOS 期间离场的交易盈亏计入 VAL。
-  sharpe/sortino/max_drawdown 只接收已派生的序列，不做检查；锁的范围是本模块与 pipeline 的入口，
-  data_loader 的原始数据读取不加锁（约定见 README）。
+  daily_returns / sharpe / sortino / max_drawdown / drawdown_series 检查所收序列的时间索引：延伸到 OOS_START 之后
+  同样须 allow_oos=True（日度序列的标签 D 表示 D+1 00:00 的净值，研究结果的最后标签为 2025-06-30）。
+  锁的范围是本模块与 pipeline 的入口；data_loader 的原始数据读取不加锁（约定见 README）。
 """
 from __future__ import annotations
 
@@ -77,25 +78,38 @@ def daily_equity(res: BacktestResult, allow_oos: bool = False) -> pd.Series:
     return d.reindex(full).ffill()
 
 
-def daily_returns(d_eq: pd.Series) -> pd.Series:
+def _check_series_extent(x: pd.Series, allow_oos: bool) -> None:
+    """带时间索引的序列延伸到 OOS_START 之后时，必须显式 allow_oos=True（无时间索引的序列不检查）。"""
+    if allow_oos or len(x) == 0 or not isinstance(x.index, pd.DatetimeIndex):
+        return
+    if x.index.max() > OOS_START:
+        raise OOSLockedError("this series extends beyond OOS_START; metrics on it require allow_oos=True")
+
+
+def daily_returns(d_eq: pd.Series, allow_oos: bool = False) -> pd.Series:
+    _check_series_extent(d_eq, allow_oos)
     return d_eq.pct_change().iloc[1:]
 
 
-def sharpe(r: pd.Series) -> float:
+def sharpe(r: pd.Series, allow_oos: bool = False) -> float:
+    _check_series_extent(r, allow_oos)
     sd = r.std(ddof=1)
     return float(r.mean() / sd * np.sqrt(ANN)) if sd and sd > 0 else float("nan")
 
 
-def sortino(r: pd.Series) -> float:
+def sortino(r: pd.Series, allow_oos: bool = False) -> float:
+    _check_series_extent(r, allow_oos)
     dd = np.sqrt(np.mean(np.minimum(r.to_numpy(), 0.0) ** 2))
     return float(r.mean() / dd * np.sqrt(ANN)) if dd > 0 else float("nan")
 
 
-def max_drawdown(eq: pd.Series) -> float:
+def max_drawdown(eq: pd.Series, allow_oos: bool = False) -> float:
+    _check_series_extent(eq, allow_oos)
     return float((eq / eq.cummax() - 1.0).min())
 
 
-def drawdown_series(eq: pd.Series) -> pd.Series:
+def drawdown_series(eq: pd.Series, allow_oos: bool = False) -> pd.Series:
+    _check_series_extent(eq, allow_oos)
     return eq / eq.cummax() - 1.0
 
 
@@ -159,11 +173,11 @@ def segment_metrics(res: BacktestResult, start: pd.Timestamp, end: pd.Timestamp,
         shift = res.initial_capital - seg.iloc[0]
         seg = seg + shift
         hourly = hourly + shift
-    r = daily_returns(seg)
+    r = daily_returns(seg, allow_oos)
     days = len(r)
     total = seg.iloc[-1] / seg.iloc[0] - 1.0
     cagr = (seg.iloc[-1] / seg.iloc[0]) ** (ANN / days) - 1.0
-    mdd = max_drawdown(seg)
+    mdd = max_drawdown(seg, allow_oos)
     pos = res.position[(res.position.index > start) & (res.position.index <= end)]
     tr_all = res.trades
     tr = tr_all
@@ -176,8 +190,8 @@ def segment_metrics(res: BacktestResult, start: pd.Timestamp, end: pd.Timestamp,
     open_at_end = int(((tr["exit_reason"] == "OPEN") | (tr["exit_time"] > end)).sum()) if len(tr) else 0
     out = {
         "start": str(seg.index[1].date()), "end": str(seg.index[-1].date()), "days": days,
-        "sharpe": sharpe(r), "sortino": sortino(r), "cagr": float(cagr), "total_return": float(total),
-        "max_dd": mdd, "max_dd_hourly": max_drawdown(pd.concat([seg.iloc[:1], hourly])) if len(hourly) else mdd,
+        "sharpe": sharpe(r, allow_oos), "sortino": sortino(r, allow_oos), "cagr": float(cagr), "total_return": float(total),
+        "max_dd": mdd, "max_dd_hourly": max_drawdown(pd.concat([seg.iloc[:1], hourly]), allow_oos) if len(hourly) else mdd,
         "calmar": float(cagr / abs(mdd)) if mdd < 0 else float("nan"),
         "exposure": float((pos > 0).mean()) if len(pos) else float("nan"),
         "ann_vol": float(r.std(ddof=1) * np.sqrt(ANN)),

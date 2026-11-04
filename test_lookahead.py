@@ -4,19 +4,23 @@ test_lookahead.py — 防未来函数与撮合真实性单元测试（pytest）�
 核心测试 ``test_no_lookahead``：随机选取 5 个历史截断时点 T_cut，分别在“仅含 open_time ≤ T_cut 的截断数据”
 与“2020-2026 全量数据”上运行 4H PPVP 箱体、1H 状态机信号与回测，断言 t ≤ T_cut 的全部
 VAL/POC/VAH/支撑带/状态/中间量（形态、均量、宏观状态掩码、破位条件）/信号/止损止盈价位、
-净值曲线、逐根持仓离场价位与已平仓交易逐位（bitwise）一致。覆盖 BTC 与 ETH、基线配置与三套开启可选模块的配置。
+净值曲线、逐根持仓离场价位与已平仓交易逐位（bitwise）一致。覆盖 BTC 与 ETH、基线配置与四套开启可选模块的配置。
 ``test_no_lookahead_event_cuts`` 在最容易泄露的时点（信号 K 线及其前一根、箱体确认前 1 小时/确认当时、
 入场 K 线、持仓中途、按类别抽取的离场 K 线及其前一根（TIME / BREAKDOWN / 结算时刻收盘离场 / 分批 K 线上的收盘离场 /
-SL / TP / BE / POC）、POC 分批 K 线、持仓期放量实体 K 线、宏观状态翻转、4H 未走完、数据首日）追加截断，
-并在全量结果上校验执行不变量：入场价 = 信号 K 线收盘 × (1+滑点)；资金费可由结算事件独立重算；
-逐根离场价位等于其文档定义的来源（入场止损 / 保本价 / VAL_入场 - k1*ATR_i）；每笔交易的离场 K 线、原因与分批 K 线
-可由记录的价位与当根 OHLC 独立重推；箱体满足 P_low ≤ VAL ≤ POC ≤ VAH ≤ P_high。
-截断比较看不见“第 i 根的价位读取了第 i 根自身的数据”这类泄露（截断到 i 时两次运行都含第 i 根），
-``test_exit_levels_ignore_their_own_bar`` 把截断点最后一根的高低收改为开盘价、成交量改为 0，要求该根价位不变。
+SL / TP / BE / POC）、POC 分批 K 线、持仓期放量实体 K 线、宏观状态翻转、4H 未走完、数据开头的若干时点）追加截断，
+并在全量结果上校验执行不变量：入场价 = 信号 K 线收盘 × (1+滑点)；交易表的止损/止盈/POC = 信号表在入场 K 线上的值；
+资金费可由结算事件独立重算；逐根离场价位等于其文档定义的来源（信号止损 / 保本价 / VAL_入场 - k1*ATR_i）；
+每笔交易的离场 K 线、原因与分批 K 线可由记录的价位与当根 OHLC 独立重推；箱体满足 P_low ≤ VAL ≤ POC ≤ VAH ≤ P_high。
+截断比较看不见“第 i 根的价位读取了第 i 根自身的数据”（截断到 i 时两次运行都含第 i 根）：价位来源不变量在每根持仓 K 线上
+覆盖这一类，``test_exit_levels_ignore_their_own_bar`` 再在抽样的持仓 K 线上把最后一根的高低收改为开盘价、成交量改为 0，
+做与实现无关的交叉检验。只在箱体切换 K 线上做出的状态机决策，由 ``test_state_machine_prefix_at_every_box_switch``
+在每个切换 K 线及其后一根上做内核级截断。
 
 OOS 隔离：截断点落在 OOS（≥ 2025-07-01）时只输出“通过/失败”，不输出任何计数；事件型截断点只取自研究区间。
-所有接触全量数据的测试在失败时只抛出不含局部变量的 GateFailure（pytest 的 -l / -vv 无法渲染含 OOS 净值的帧），
-行情 fixture 与 BacktestResult 的 repr 不显示数值。本文件不计算任何绩效指标。
+所有接收全量数据（含 OOS）的测试都经 ``_sealed`` 封装：失败时只抛出经过清理的 GateFailure（无局部变量与参数、
+无断言展开、非断言异常不带消息），Ctrl-C 以不带回溯的新异常重新抛出，因此 pytest 的 -l / -vv / -vvv / --tb=long /
+--fulltrace 都无法渲染持有 OOS 信号、交易、净值或原始行情的帧；行情 fixture 与 BacktestResult 的 repr 不显示数值。
+本文件不计算任何绩效指标。
 
 运行：``python -m pytest test_lookahead.py -v -s``
 """
@@ -61,10 +65,15 @@ CONFIGS = {
     # 专门覆盖收盘类离场路径（时间止损 / 入场箱体破位 / 结算时刻收盘离场的资金费 / POC 分批）
     "exits_C": (StrategyConfig(),
                 BacktestConfig(exit_on_breakdown=True, time_stop_bars=12, tp_mode="poc_partial", move_to_breakeven=False)),
+    # 全部仓位在 POC 平仓（partial_frac = 1，离场原因 POC）
+    "exits_D": (StrategyConfig(),
+                BacktestConfig(exit_on_breakdown=True, time_stop_bars=12, tp_mode="poc_partial", partial_frac=1.0)),
 }
 # 这些配置在研究区间内必须真的产生下列离场，且事件型截断必须在每类离场的 K 线及其前一根上各截断至少一次，
 # 否则闸门对这些路径的“通过”就是空洞的
-REQUIRED_EXIT_COVERAGE = {"exits_C": ("TIME", "BREAKDOWN", "settlement_close_exit", "poc_partial")}
+REQUIRED_EXIT_COVERAGE = {"exits_C": ("TIME", "BREAKDOWN", "settlement_close_exit", "poc_partial"),
+                          "exits_D": ("POC", "TIME", "BREAKDOWN", "settlement_close_exit"),
+                          "all_features_A": ("BE", "poc_partial")}
 EXIT_CATEGORIES = ("TIME", "BREAKDOWN", "settlement_close_exit", "close_exit_on_partial_bar", "SL", "TP", "BE", "POC",
                    "poc_partial")
 _LOG: dict = {}
@@ -74,16 +83,41 @@ class GateFailure(AssertionError):
     """闸门失败：只携带消息与不含局部变量的回溯文本。"""
 
 
+def _sanitized(exc: BaseException) -> str:
+    """失败文本：异常类型 + 无局部变量的回溯（只有源码行）+ 经过清理的消息。
+    AssertionError 只保留 pytest 断言展开之前的部分（_fail 的上下文消息完整保留；裸 assert 对全量数组的展开会被去掉）；
+    其他异常（pandas/numpy 报错可能含数据值）只保留类型，不保留消息。"""
+    frames = "".join(traceback.format_tb(exc.__traceback__))
+    if isinstance(exc, AssertionError):
+        msg = str(exc).split("\nassert ")[0]
+        msg = "" if msg.startswith("assert ") else msg
+    else:
+        msg = "(message suppressed: non-assertion error inside a full-data test)"
+    return f"[{type(exc).__name__}] {msg}\n{frames}"
+
+
 def _sealed(fn):
-    """接触全量（含 OOS）数据的测试：任何失败都改为抛出 GateFailure(消息 + 无局部变量的回溯)，
-    使 pytest 的 -l / -vv / --tb=long 无法渲染持有 OOS 信号、交易或净值的帧。研究区间截断点的失败消息仍含细节。"""
+    """接触全量（含 OOS）数据的测试：任何失败都改为抛出 GateFailure(经过清理的文本)，并在包装器之外重新抛出，
+    使 pytest 的 -l / -vv / -vvv / --tb=long / --fulltrace 都无法渲染持有 OOS 信号、交易或净值的帧。
+    pytest 的 skip / xfail 原样抛出；Ctrl-C 与 SystemExit 以不带回溯的新异常重新抛出。"""
     @functools.wraps(fn)
     def wrapper(*args, **kwargs):
+        kind, text = None, ""
         try:
             return fn(*args, **kwargs)
-        except Exception as exc:                       # noqa: BLE001 — 统一封装
-            text = "".join(traceback.format_exception(type(exc), exc, exc.__traceback__, chain=False))
+        except (pytest.skip.Exception, pytest.xfail.Exception):
+            raise
+        except KeyboardInterrupt:
+            kind = "interrupt"
+        except SystemExit as exc:
+            kind, text = "exit", str(exc.code)
+        except BaseException as exc:                   # noqa: BLE001 — 含 pytest 的 Failed
+            kind, text = "fail", _sanitized(exc)
         args = kwargs = None                           # noqa: F841 — 不让本帧持有 fixture（全量行情）
+        if kind == "interrupt":
+            raise KeyboardInterrupt()
+        if kind == "exit":
+            raise SystemExit(text)
         raise GateFailure(text)
     return wrapper
 
@@ -92,6 +126,12 @@ class _SealedMarkets(dict):
     """全量行情（含 OOS）：repr 不显示内容。"""
     def __repr__(self) -> str:
         return f"<sealed market data: {sorted(self)}>"
+
+
+class _SealedTuple(tuple):
+    """单个品种的 (1H 行情, 资金费, 现货日线) 三元组：repr 不显示内容（--fulltrace 时 pytest 会渲染 fixture 值）。"""
+    def __repr__(self) -> str:
+        return "<sealed market data>"
 
 
 # ----------------------------------------------------------------------------
@@ -103,7 +143,7 @@ def markets():
     for sym in SYMBOLS:
         df = load_klines(sym, "1h", "perp")
         df = df[df.index < FULL_END]
-        out[sym] = (df, load_funding(sym), spot_daily_warmup(sym))
+        out[sym] = _SealedTuple((df, load_funding(sym), spot_daily_warmup(sym)))
     return out
 
 
@@ -280,6 +320,12 @@ def assert_execution_invariants(df1h, funding, sig, res, bcfg, ctx):
         _fail(f"{ctx}: entry fill must equal signal-bar close * (1 + slippage)")
     if not (sig["signal"].to_numpy()[eb]).all():
         _fail(f"{ctx}: every entry must sit on a tradable signal bar")
+    # 入场时冻结的止损 / 止盈 / POC 必须逐位等于信号表在入场 K 线上的值：否则用未来数据改写这些价位的泄露
+    # 会被交易表“自洽地”带进价位来源与离场决策两条不变量
+    for col_t, col_s in (("sl", "sl"), ("tp", "tp"), ("poc", "poc_tp")):
+        exp_v = sig[col_s].to_numpy(dtype=np.float64)[eb]
+        if not np.array_equal(tr[col_t].to_numpy(dtype=np.float64).view(np.int64), exp_v.view(np.int64)):
+            _fail(f"{ctx}: trade '{col_t}' must equal the signal table's '{col_s}' on the entry bar")
     closed = tr["exit_bar"].to_numpy() >= 0
     if not (tr["exit_bar"].to_numpy()[closed] > eb[closed]).all():
         _fail(f"{ctx}: exit evaluated on the entry bar")
@@ -298,13 +344,14 @@ def expected_levels(sig, res, bcfg) -> tuple[np.ndarray, np.ndarray]:
     本根开始时空仓的 K 线为 NaN。持仓期间允许的价位变化只有这两种，新增动态（如移动止损）必须同时更新本函数。"""
     n = len(sig)
     stop, brk = np.full(n, np.nan), np.full(n, np.nan)
+    sl_sig = sig["sl"].to_numpy(dtype=np.float64)
     if bcfg.exit_on_breakdown:
         val, k1 = sig["VAL"].to_numpy(), sig["k1_atr"].to_numpy()
     for t in res.trades.itertuples(index=False):
         e, p = int(t.entry_bar), int(t.partial_bar)
         last = int(t.exit_bar) if t.exit_bar >= 0 else n - 1
         for i in range(e + 1, last + 1):
-            stop[i] = t.entry_px if (bcfg.move_to_breakeven and 0 <= p < i) else t.sl
+            stop[i] = t.entry_px if (bcfg.move_to_breakeven and 0 <= p < i) else sl_sig[e]
             if bcfg.exit_on_breakdown:
                 brk[i] = val[e] - k1[i]
     return stop, brk
@@ -327,15 +374,17 @@ def assert_exit_decisions(df1h, sig, res, bcfg, ctx):
     bv = sig["brk_bodyvol"].to_numpy(dtype=bool) if "brk_bodyvol" in sig.columns else np.zeros(n, dtype=bool)
     ts = bcfg.time_stop_bars or -1
     poc_mode = bcfg.tp_mode == "poc_partial"
+    tp_sig, poc_sig = sig["tp"].to_numpy(dtype=np.float64), sig["poc_tp"].to_numpy(dtype=np.float64)
     for t in res.trades.itertuples(index=False):
         e = int(t.entry_bar)
+        tp_e, poc_e = tp_sig[e], poc_sig[e]
         partial, got = -1, (-1, "OPEN")
-        poc_ok = poc_mode and t.poc > t.entry_px and t.poc < t.tp
+        poc_ok = poc_mode and poc_e > t.entry_px and poc_e < tp_e
         for i in range(e + 1, n):
             if l[i] <= st[i]:
                 got = (i, "BE" if (partial >= 0 and bcfg.move_to_breakeven) else "SL")
                 break
-            if poc_ok and partial < 0 and h[i] >= t.poc:
+            if poc_ok and partial < 0 and h[i] >= poc_e:
                 partial = i
                 if bcfg.partial_frac >= 1.0:
                     got = (i, "POC")
@@ -343,7 +392,7 @@ def assert_exit_decisions(df1h, sig, res, bcfg, ctx):
                 if bcfg.move_to_breakeven and l[i] <= t.entry_px:
                     got = (i, "BE")
                     break
-            if h[i] >= t.tp:
+            if h[i] >= tp_e:
                 got = (i, "TP")
                 break
             ts_hit = ts > 0 and (i - e) >= ts
@@ -521,10 +570,12 @@ def test_research_pipeline_matches_full_period():
 
 @pytest.mark.parametrize("symbol", SYMBOLS)
 @pytest.mark.parametrize("name", ["all_features_A", "exits_C"])
+@_sealed
 def test_exit_levels_ignore_their_own_bar(markets, symbol, name):
     """第 i 根的离场价位在第 i 根开盘时记录，不得依赖第 i 根自身的 OHLCV：在持仓中的截断点 j，把第 j 根的
     高/低/收改为开盘价、成交量改为 0 后重跑，第 j 根的价位必须与原值逐位一致。截断点取自研究区间：
-    最高价触及 POC 的持仓 K 线（保本上移的触发点）、POC 分批 K 线、放量实体 K 线与均匀抽取的持仓 K 线。只用研究区间数据。"""
+    最高价触及 POC 的持仓 K 线（保本上移的触发点）、POC 分批 K 线、放量实体 K 线、入场后第一根与均匀抽取的持仓 K 线。
+    这是抽样检查：入场时冻结的止盈 / POC 不在逐根价位中，由全量运行上“交易表价位 = 信号表价位”的不变量覆盖。只用研究区间数据。"""
     df_all, fund_all, spot_d = markets[symbol]
     df = df_all[df_all.index < OOS_START]
     fund = fund_all[fund_all.index <= OOS_START]
@@ -539,10 +590,12 @@ def test_exit_levels_ignore_their_own_bar(markets, symbol, name):
         for i in range(int(t.entry_bar) + 1, last + 1):
             poc_touch[i] |= hi[i] >= t.poc
     pb = res.trades["partial_bar"].to_numpy()
+    first_held = res.trades["entry_bar"].to_numpy() + 1                 # 入场后第一根：入场时冻结价位的泄露在这里出现
     groups = (np.flatnonzero(held & poc_touch), pb[pb >= 0],
-              np.flatnonzero(held & sig["brk_bodyvol"].to_numpy(dtype=bool)), np.flatnonzero(held))
+              np.flatnonzero(held & sig["brk_bodyvol"].to_numpy(dtype=bool)), np.flatnonzero(held),
+              first_held[first_held < n])
     cuts = set()
-    for g, k in zip(groups, (10, 6, 6, 8)):
+    for g, k in zip(groups, (10, 6, 6, 8, 8)):
         g = np.asarray(sorted(int(x) for x in g if x > 48))
         if len(g):
             cuts |= {int(x) for x in g[np.unique(np.linspace(0, len(g) - 1, num=min(k, len(g))).round().astype(int))]}
@@ -562,9 +615,46 @@ def test_exit_levels_ignore_their_own_bar(markets, symbol, name):
     print(f"PASS masked-last-bar {symbol} {name}: {len(cuts)} in-position cuts")
 
 
+@pytest.mark.parametrize("symbol", SYMBOLS)
+@pytest.mark.parametrize("name", ["baseline", "all_features_A", "all_features_B"])
+@_sealed
+def test_state_machine_prefix_at_every_box_switch(markets, symbol, name):
+    """只在箱体切换时做出的决策（认领与失效“须先到带上方”要求、激活条件 (a)、放量跌穿记忆的阻断与失效、carry、否决）
+    只有截断在切换 K 线或其后一根时才可能暴露泄露，抽样截断点几乎不会落在那里。这里在研究区间的每一个切换 K 线 t
+    及 t+1 上做状态机内核级截断：逐根输入截到 t、箱体只保留第 t 根收盘时已确认的，15 个输出必须与全长运行逐位一致。"""
+    df_all, _, _ = markets[symbol]
+    df = df_all[df_all.index < OOS_START]
+    scfg, _ = CONFIGS[name]
+    boxes, _ = build_boxes(df, scfg)
+    args = list(state_machine_args(df, scfg, boxes))
+    full = _run_state_machine(*args)
+    n = len(df)
+    open_ns, bidx = args[7], args[8]
+    avail = to_ns(boxes["available_time"])
+    per_bar = (0, 1, 2, 3, 4, 5, 6, 7, 8, 12, 13)                 # o h l c v atr vsma open_ns box_idx pin eng
+    per_box = (9, 10, 11)                                          # VAL VAH window_start
+    switches = np.flatnonzero(np.diff(bidx) != 0) + 1
+    cuts = sorted({int(x) for s in switches for x in (s, s + 1) if x < n - 1})
+    assert len(cuts) > 1000, "too few box switches to make the check meaningful"
+    for t in cuts:
+        nb_t = int(np.searchsorted(avail, open_ns[t] + np.int64(3600 * 10**9), side="right"))
+        a = list(args)
+        for k in per_bar:
+            a[k] = args[k][: t + 1]
+        for k in per_box:
+            a[k] = args[k][:nb_t]
+        part = _run_state_machine(*a)
+        for x, y in zip(full, part):
+            if not np.array_equal(np.asarray(x)[: t + 1].view(np.uint8), np.asarray(y).view(np.uint8)):
+                _fail(f"[{symbol} {name}] state-machine output at the box switch {df.index[t]} depends on later data")
+    _LOG.setdefault(f"switch_prefix_cuts:{symbol}", {})[name] = len(cuts)
+    print(f"PASS switch-prefix {symbol} {name}: {len(cuts)} kernel-level cuts")
+
+
 # ----------------------------------------------------------------------------
 # 2. 时间对齐：4H 绝对 UTC 边界、维护缺口、可见时间
 # ----------------------------------------------------------------------------
+@_sealed
 def test_4h_utc_boundaries_and_gap_bar(market):
     df, _, _ = market
     df4 = build_4h(df)
@@ -592,6 +682,7 @@ def test_4h_utc_boundaries_and_gap_bar(market):
     assert (ref.index == df4.index).all()
 
 
+@_sealed
 def test_pivot_right_bar_confirmation_lag(market):
     df, _, _ = market
     scfg = StrategyConfig()
@@ -799,6 +890,7 @@ def test_risk_sizing_leverage_cap():
 # 4. JIT 与纯 Python 路径逐位一致；日度夏普口径
 # ----------------------------------------------------------------------------
 @pytest.mark.skipif(not HAVE_NUMBA, reason="numba not installed")
+@_sealed
 def test_numba_and_python_paths_identical(market):
     df, fund, spot_d = market
     sub = df[df.index < pd.Timestamp("2021-07-01", tz="UTC")]
@@ -815,6 +907,52 @@ def test_numba_and_python_paths_identical(market):
         r2 = run_backtest(sub, sig, bcfg, fund, use_jit=False)
         assert np.array_equal(r1.equity.to_numpy().view(np.int64), r2.equity.to_numpy().view(np.int64)), name
         assert_frames_bitwise(r1.trades, r2.trades, f"{name} trades jit vs python")
+
+
+def test_sealed_failures_carry_no_frames_or_values():
+    """第四轮 EX4-3 / EX4-5：被封装的测试失败时，抛出的异常不含内层帧、局部变量、断言展开或非断言异常的消息；
+    Ctrl-C 以不带回溯的新异常重新抛出；pytest.skip 原样通过。"""
+    def frames_of(tb):
+        names = []
+        while tb is not None:
+            names.append(tb.tb_frame.f_code.co_name)
+            tb = tb.tb_next
+        return names
+
+    @_sealed
+    def bare_assert(arg):
+        secret = np.arange(5) + 123456
+        assert secret.sum() < 0, "context only"
+
+    with pytest.raises(GateFailure) as ei:
+        bare_assert(_SealedTuple((1, 2)))
+    text = str(ei.value)
+    assert text.startswith("[AssertionError] context only") and "123456" not in text and "bare_assert" not in frames_of(ei.tb)
+
+    @_sealed
+    def value_error():
+        raise ValueError("2026-07-01 00:00 value " + str(40 + 2.123))     # 数值只出现在运行时消息里，不在源码行里
+
+    with pytest.raises(GateFailure) as ei:
+        value_error()
+    assert str(ei.value).startswith("[ValueError]") and "42.123" not in str(ei.value)
+
+    @_sealed
+    def interrupted():
+        secret = np.arange(3) + 777                                        # noqa: F841
+        raise KeyboardInterrupt
+
+    with pytest.raises(KeyboardInterrupt) as ei:
+        interrupted()
+    assert ei.value.__context__ is None and "interrupted" not in frames_of(ei.tb)
+
+    @_sealed
+    def skipped():
+        pytest.skip("not applicable")
+
+    with pytest.raises(pytest.skip.Exception):
+        skipped()
+    assert repr(_SealedTuple((1, 2))) == "<sealed market data>"
 
 
 def test_daily_sharpe_counts_flat_days():

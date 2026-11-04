@@ -177,6 +177,48 @@
       "config": "exits_C",
       "passed": true,
       "counts": "redacted (OOS)"
+    },
+    {
+      "t_cut": "2021-12-28 23:00:00+00:00",
+      "boxes_compared": 563,
+      "bars_compared": 17472,
+      "signals_compared": 63,
+      "closed_trades_compared": 62,
+      "entries_compared": 62,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2024-10-30 17:00:00+00:00",
+      "boxes_compared": 1396,
+      "bars_compared": 42353,
+      "signals_compared": 142,
+      "closed_trades_compared": 138,
+      "entries_compared": 138,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2025-03-25 06:00:00+00:00",
+      "boxes_compared": 1503,
+      "bars_compared": 45846,
+      "signals_compared": 147,
+      "closed_trades_compared": 143,
+      "entries_compared": 143,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2026-01-15 03:00:00+00:00",
+      "config": "exits_D",
+      "passed": true,
+      "counts": "redacted (OOS)"
+    },
+    {
+      "t_cut": "2026-07-27 20:00:00+00:00",
+      "config": "exits_D",
+      "passed": true,
+      "counts": "redacted (OOS)"
     }
   ],
   "seeded_cuts:ETHUSDT": {
@@ -357,6 +399,48 @@
       "config": "exits_C",
       "passed": true,
       "counts": "redacted (OOS)"
+    },
+    {
+      "t_cut": "2024-01-02 01:00:00+00:00",
+      "boxes_compared": 1124,
+      "bars_compared": 35090,
+      "signals_compared": 116,
+      "closed_trades_compared": 115,
+      "entries_compared": 115,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2025-03-12 11:00:00+00:00",
+      "boxes_compared": 1464,
+      "bars_compared": 45539,
+      "signals_compared": 158,
+      "closed_trades_compared": 153,
+      "entries_compared": 153,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2025-06-05 02:00:00+00:00",
+      "boxes_compared": 1539,
+      "bars_compared": 47570,
+      "signals_compared": 164,
+      "closed_trades_compared": 159,
+      "entries_compared": 159,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2026-04-29 21:00:00+00:00",
+      "config": "exits_D",
+      "passed": true,
+      "counts": "redacted (OOS)"
+    },
+    {
+      "t_cut": "2026-07-17 04:00:00+00:00",
+      "config": "exits_D",
+      "passed": true,
+      "counts": "redacted (OOS)"
     }
   ],
   "event_exit_coverage:BTCUSDT": {
@@ -506,6 +590,44 @@
       "POC": [
         0,
         0
+      ],
+      "poc_partial": [
+        2,
+        2
+      ]
+    },
+    "exits_D": {
+      "TIME": [
+        2,
+        2
+      ],
+      "BREAKDOWN": [
+        2,
+        2
+      ],
+      "settlement_close_exit": [
+        2,
+        2
+      ],
+      "close_exit_on_partial_bar": [
+        0,
+        0
+      ],
+      "SL": [
+        2,
+        2
+      ],
+      "TP": [
+        2,
+        2
+      ],
+      "BE": [
+        0,
+        0
+      ],
+      "POC": [
+        2,
+        2
       ],
       "poc_partial": [
         2,
@@ -3853,6 +3975,896 @@
       "entries_compared": 147,
       "config": "exits_C",
       "passed": true
+    },
+    {
+      "t_cut": "2020-01-01 00:00:00+00:00",
+      "boxes_compared": 0,
+      "bars_compared": 1,
+      "signals_compared": 0,
+      "closed_trades_compared": 0,
+      "entries_compared": 0,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2020-01-01 02:00:00+00:00",
+      "boxes_compared": 0,
+      "bars_compared": 3,
+      "signals_compared": 0,
+      "closed_trades_compared": 0,
+      "entries_compared": 0,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2020-01-01 03:00:00+00:00",
+      "boxes_compared": 0,
+      "bars_compared": 4,
+      "signals_compared": 0,
+      "closed_trades_compared": 0,
+      "entries_compared": 0,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2020-01-01 05:00:00+00:00",
+      "boxes_compared": 0,
+      "bars_compared": 6,
+      "signals_compared": 0,
+      "closed_trades_compared": 0,
+      "entries_compared": 0,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2020-01-01 22:00:00+00:00",
+      "boxes_compared": 0,
+      "bars_compared": 23,
+      "signals_compared": 0,
+      "closed_trades_compared": 0,
+      "entries_compared": 0,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2020-01-01 23:00:00+00:00",
+      "boxes_compared": 0,
+      "bars_compared": 24,
+      "signals_compared": 0,
+      "closed_trades_compared": 0,
+      "entries_compared": 0,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2020-01-02 02:00:00+00:00",
+      "boxes_compared": 0,
+      "bars_compared": 27,
+      "signals_compared": 0,
+      "closed_trades_compared": 0,
+      "entries_compared": 0,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2020-01-04 15:00:00+00:00",
+      "boxes_compared": 1,
+      "bars_compared": 88,
+      "signals_compared": 0,
+      "closed_trades_compared": 0,
+      "entries_compared": 0,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2020-01-04 16:00:00+00:00",
+      "boxes_compared": 1,
+      "bars_compared": 89,
+      "signals_compared": 0,
+      "closed_trades_compared": 0,
+      "entries_compared": 0,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2020-01-05 12:00:00+00:00",
+      "boxes_compared": 1,
+      "bars_compared": 109,
+      "signals_compared": 0,
+      "closed_trades_compared": 0,
+      "entries_compared": 0,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2020-01-19 20:00:00+00:00",
+      "boxes_compared": 10,
+      "bars_compared": 453,
+      "signals_compared": 0,
+      "closed_trades_compared": 0,
+      "entries_compared": 0,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2020-01-22 18:00:00+00:00",
+      "boxes_compared": 14,
+      "bars_compared": 523,
+      "signals_compared": 0,
+      "closed_trades_compared": 0,
+      "entries_compared": 0,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2020-01-22 19:00:00+00:00",
+      "boxes_compared": 14,
+      "bars_compared": 524,
+      "signals_compared": 1,
+      "closed_trades_compared": 0,
+      "entries_compared": 1,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2020-01-22 21:00:00+00:00",
+      "boxes_compared": 14,
+      "bars_compared": 526,
+      "signals_compared": 1,
+      "closed_trades_compared": 0,
+      "entries_compared": 1,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2020-01-22 22:00:00+00:00",
+      "boxes_compared": 14,
+      "bars_compared": 527,
+      "signals_compared": 1,
+      "closed_trades_compared": 0,
+      "entries_compared": 1,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2020-01-22 23:00:00+00:00",
+      "boxes_compared": 14,
+      "bars_compared": 528,
+      "signals_compared": 1,
+      "closed_trades_compared": 1,
+      "entries_compared": 1,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2020-02-03 22:00:00+00:00",
+      "boxes_compared": 22,
+      "bars_compared": 815,
+      "signals_compared": 2,
+      "closed_trades_compared": 1,
+      "entries_compared": 2,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2020-02-03 23:00:00+00:00",
+      "boxes_compared": 23,
+      "bars_compared": 816,
+      "signals_compared": 2,
+      "closed_trades_compared": 2,
+      "entries_compared": 2,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2020-02-25 10:00:00+00:00",
+      "boxes_compared": 39,
+      "bars_compared": 1331,
+      "signals_compared": 5,
+      "closed_trades_compared": 3,
+      "entries_compared": 4,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2020-02-25 11:00:00+00:00",
+      "boxes_compared": 39,
+      "bars_compared": 1332,
+      "signals_compared": 5,
+      "closed_trades_compared": 4,
+      "entries_compared": 4,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2020-03-01 11:00:00+00:00",
+      "boxes_compared": 42,
+      "bars_compared": 1452,
+      "signals_compared": 6,
+      "closed_trades_compared": 4,
+      "entries_compared": 5,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2020-03-01 12:00:00+00:00",
+      "boxes_compared": 42,
+      "bars_compared": 1453,
+      "signals_compared": 6,
+      "closed_trades_compared": 4,
+      "entries_compared": 5,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2020-03-01 15:00:00+00:00",
+      "boxes_compared": 42,
+      "bars_compared": 1456,
+      "signals_compared": 6,
+      "closed_trades_compared": 4,
+      "entries_compared": 5,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2020-03-01 16:00:00+00:00",
+      "boxes_compared": 42,
+      "bars_compared": 1457,
+      "signals_compared": 6,
+      "closed_trades_compared": 5,
+      "entries_compared": 5,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2020-05-26 11:00:00+00:00",
+      "boxes_compared": 109,
+      "bars_compared": 3516,
+      "signals_compared": 12,
+      "closed_trades_compared": 10,
+      "entries_compared": 11,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2020-05-26 12:00:00+00:00",
+      "boxes_compared": 109,
+      "bars_compared": 3517,
+      "signals_compared": 12,
+      "closed_trades_compared": 11,
+      "entries_compared": 11,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2020-06-06 23:00:00+00:00",
+      "boxes_compared": 120,
+      "bars_compared": 3792,
+      "signals_compared": 14,
+      "closed_trades_compared": 13,
+      "entries_compared": 13,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2020-06-07 00:00:00+00:00",
+      "boxes_compared": 120,
+      "bars_compared": 3793,
+      "signals_compared": 15,
+      "closed_trades_compared": 13,
+      "entries_compared": 14,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2020-07-05 08:00:00+00:00",
+      "boxes_compared": 146,
+      "bars_compared": 4473,
+      "signals_compared": 17,
+      "closed_trades_compared": 15,
+      "entries_compared": 16,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2020-07-05 09:00:00+00:00",
+      "boxes_compared": 146,
+      "bars_compared": 4474,
+      "signals_compared": 17,
+      "closed_trades_compared": 16,
+      "entries_compared": 16,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2020-10-14 13:00:00+00:00",
+      "boxes_compared": 229,
+      "bars_compared": 6902,
+      "signals_compared": 27,
+      "closed_trades_compared": 25,
+      "entries_compared": 26,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2020-10-14 14:00:00+00:00",
+      "boxes_compared": 229,
+      "bars_compared": 6903,
+      "signals_compared": 27,
+      "closed_trades_compared": 25,
+      "entries_compared": 26,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2020-10-14 17:00:00+00:00",
+      "boxes_compared": 229,
+      "bars_compared": 6906,
+      "signals_compared": 27,
+      "closed_trades_compared": 26,
+      "entries_compared": 26,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2020-10-14 18:00:00+00:00",
+      "boxes_compared": 229,
+      "bars_compared": 6907,
+      "signals_compared": 28,
+      "closed_trades_compared": 26,
+      "entries_compared": 27,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2020-12-18 20:00:00+00:00",
+      "boxes_compared": 271,
+      "bars_compared": 8469,
+      "signals_compared": 33,
+      "closed_trades_compared": 32,
+      "entries_compared": 32,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2021-03-16 11:00:00+00:00",
+      "boxes_compared": 337,
+      "bars_compared": 10572,
+      "signals_compared": 41,
+      "closed_trades_compared": 40,
+      "entries_compared": 40,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2021-04-03 17:00:00+00:00",
+      "boxes_compared": 353,
+      "bars_compared": 11010,
+      "signals_compared": 41,
+      "closed_trades_compared": 40,
+      "entries_compared": 40,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2021-04-03 18:00:00+00:00",
+      "boxes_compared": 353,
+      "bars_compared": 11011,
+      "signals_compared": 42,
+      "closed_trades_compared": 40,
+      "entries_compared": 41,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2021-06-29 14:00:00+00:00",
+      "boxes_compared": 421,
+      "bars_compared": 13095,
+      "signals_compared": 49,
+      "closed_trades_compared": 48,
+      "entries_compared": 48,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2021-07-01 05:00:00+00:00",
+      "boxes_compared": 422,
+      "bars_compared": 13134,
+      "signals_compared": 50,
+      "closed_trades_compared": 48,
+      "entries_compared": 49,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2021-07-01 06:00:00+00:00",
+      "boxes_compared": 422,
+      "bars_compared": 13135,
+      "signals_compared": 50,
+      "closed_trades_compared": 49,
+      "entries_compared": 49,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2021-07-18 00:00:00+00:00",
+      "boxes_compared": 436,
+      "bars_compared": 13537,
+      "signals_compared": 51,
+      "closed_trades_compared": 49,
+      "entries_compared": 50,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2021-09-19 17:00:00+00:00",
+      "boxes_compared": 484,
+      "bars_compared": 15066,
+      "signals_compared": 55,
+      "closed_trades_compared": 54,
+      "entries_compared": 54,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2021-09-19 18:00:00+00:00",
+      "boxes_compared": 484,
+      "bars_compared": 15067,
+      "signals_compared": 56,
+      "closed_trades_compared": 54,
+      "entries_compared": 55,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2021-10-04 17:00:00+00:00",
+      "boxes_compared": 493,
+      "bars_compared": 15426,
+      "signals_compared": 57,
+      "closed_trades_compared": 56,
+      "entries_compared": 56,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2021-11-16 07:00:00+00:00",
+      "boxes_compared": 527,
+      "bars_compared": 16448,
+      "signals_compared": 61,
+      "closed_trades_compared": 60,
+      "entries_compared": 60,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2021-11-16 08:00:00+00:00",
+      "boxes_compared": 527,
+      "bars_compared": 16449,
+      "signals_compared": 61,
+      "closed_trades_compared": 60,
+      "entries_compared": 60,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2022-03-09 15:00:00+00:00",
+      "boxes_compared": 615,
+      "bars_compared": 19168,
+      "signals_compared": 64,
+      "closed_trades_compared": 63,
+      "entries_compared": 63,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2022-05-27 05:00:00+00:00",
+      "boxes_compared": 677,
+      "bars_compared": 21054,
+      "signals_compared": 69,
+      "closed_trades_compared": 68,
+      "entries_compared": 68,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2022-05-27 06:00:00+00:00",
+      "boxes_compared": 677,
+      "bars_compared": 21055,
+      "signals_compared": 70,
+      "closed_trades_compared": 68,
+      "entries_compared": 69,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2022-06-13 10:00:00+00:00",
+      "boxes_compared": 688,
+      "bars_compared": 21467,
+      "signals_compared": 71,
+      "closed_trades_compared": 70,
+      "entries_compared": 70,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2022-08-15 04:00:00+00:00",
+      "boxes_compared": 729,
+      "bars_compared": 22973,
+      "signals_compared": 73,
+      "closed_trades_compared": 72,
+      "entries_compared": 72,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2022-10-02 22:00:00+00:00",
+      "boxes_compared": 771,
+      "bars_compared": 24143,
+      "signals_compared": 81,
+      "closed_trades_compared": 78,
+      "entries_compared": 79,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2022-10-02 23:00:00+00:00",
+      "boxes_compared": 771,
+      "bars_compared": 24144,
+      "signals_compared": 81,
+      "closed_trades_compared": 79,
+      "entries_compared": 79,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2022-11-02 07:00:00+00:00",
+      "boxes_compared": 795,
+      "bars_compared": 24872,
+      "signals_compared": 82,
+      "closed_trades_compared": 80,
+      "entries_compared": 80,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2022-11-02 08:00:00+00:00",
+      "boxes_compared": 795,
+      "bars_compared": 24873,
+      "signals_compared": 83,
+      "closed_trades_compared": 80,
+      "entries_compared": 81,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2023-04-09 07:00:00+00:00",
+      "boxes_compared": 917,
+      "bars_compared": 28664,
+      "signals_compared": 96,
+      "closed_trades_compared": 93,
+      "entries_compared": 93,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2023-04-09 08:00:00+00:00",
+      "boxes_compared": 917,
+      "bars_compared": 28665,
+      "signals_compared": 97,
+      "closed_trades_compared": 93,
+      "entries_compared": 94,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2023-05-30 22:00:00+00:00",
+      "boxes_compared": 962,
+      "bars_compared": 29903,
+      "signals_compared": 102,
+      "closed_trades_compared": 98,
+      "entries_compared": 99,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2023-05-31 01:00:00+00:00",
+      "boxes_compared": 962,
+      "bars_compared": 29906,
+      "signals_compared": 102,
+      "closed_trades_compared": 98,
+      "entries_compared": 99,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2023-06-14 13:00:00+00:00",
+      "boxes_compared": 978,
+      "bars_compared": 30254,
+      "signals_compared": 104,
+      "closed_trades_compared": 101,
+      "entries_compared": 101,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2023-08-28 21:00:00+00:00",
+      "boxes_compared": 1046,
+      "bars_compared": 32062,
+      "signals_compared": 110,
+      "closed_trades_compared": 107,
+      "entries_compared": 107,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2023-08-28 22:00:00+00:00",
+      "boxes_compared": 1046,
+      "bars_compared": 32063,
+      "signals_compared": 111,
+      "closed_trades_compared": 107,
+      "entries_compared": 108,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2023-09-02 15:00:00+00:00",
+      "boxes_compared": 1052,
+      "bars_compared": 32176,
+      "signals_compared": 111,
+      "closed_trades_compared": 108,
+      "entries_compared": 108,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2023-09-02 16:00:00+00:00",
+      "boxes_compared": 1052,
+      "bars_compared": 32177,
+      "signals_compared": 111,
+      "closed_trades_compared": 108,
+      "entries_compared": 108,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2023-12-24 09:00:00+00:00",
+      "boxes_compared": 1142,
+      "bars_compared": 34882,
+      "signals_compared": 119,
+      "closed_trades_compared": 115,
+      "entries_compared": 116,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2023-12-24 10:00:00+00:00",
+      "boxes_compared": 1142,
+      "bars_compared": 34883,
+      "signals_compared": 119,
+      "closed_trades_compared": 115,
+      "entries_compared": 116,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2024-02-02 17:00:00+00:00",
+      "boxes_compared": 1178,
+      "bars_compared": 35850,
+      "signals_compared": 124,
+      "closed_trades_compared": 121,
+      "entries_compared": 121,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2024-02-02 18:00:00+00:00",
+      "boxes_compared": 1178,
+      "bars_compared": 35851,
+      "signals_compared": 125,
+      "closed_trades_compared": 121,
+      "entries_compared": 122,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2024-07-19 06:00:00+00:00",
+      "boxes_compared": 1311,
+      "bars_compared": 39871,
+      "signals_compared": 135,
+      "closed_trades_compared": 131,
+      "entries_compared": 132,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2024-07-19 07:00:00+00:00",
+      "boxes_compared": 1311,
+      "bars_compared": 39872,
+      "signals_compared": 135,
+      "closed_trades_compared": 132,
+      "entries_compared": 132,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2024-08-13 13:00:00+00:00",
+      "boxes_compared": 1333,
+      "bars_compared": 40478,
+      "signals_compared": 135,
+      "closed_trades_compared": 132,
+      "entries_compared": 132,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2024-09-06 05:00:00+00:00",
+      "boxes_compared": 1352,
+      "bars_compared": 41046,
+      "signals_compared": 137,
+      "closed_trades_compared": 134,
+      "entries_compared": 134,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2024-09-06 06:00:00+00:00",
+      "boxes_compared": 1352,
+      "bars_compared": 41047,
+      "signals_compared": 138,
+      "closed_trades_compared": 134,
+      "entries_compared": 135,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2025-04-21 15:00:00+00:00",
+      "boxes_compared": 1526,
+      "bars_compared": 46503,
+      "signals_compared": 147,
+      "closed_trades_compared": 143,
+      "entries_compared": 143,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2025-05-18 20:00:00+00:00",
+      "boxes_compared": 1548,
+      "bars_compared": 47156,
+      "signals_compared": 149,
+      "closed_trades_compared": 144,
+      "entries_compared": 145,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2025-05-18 21:00:00+00:00",
+      "boxes_compared": 1548,
+      "bars_compared": 47157,
+      "signals_compared": 149,
+      "closed_trades_compared": 145,
+      "entries_compared": 145,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2025-05-25 14:00:00+00:00",
+      "boxes_compared": 1553,
+      "bars_compared": 47318,
+      "signals_compared": 150,
+      "closed_trades_compared": 145,
+      "entries_compared": 146,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2025-05-25 15:00:00+00:00",
+      "boxes_compared": 1553,
+      "bars_compared": 47319,
+      "signals_compared": 150,
+      "closed_trades_compared": 146,
+      "entries_compared": 146,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2025-06-05 01:00:00+00:00",
+      "boxes_compared": 1560,
+      "bars_compared": 47569,
+      "signals_compared": 151,
+      "closed_trades_compared": 146,
+      "entries_compared": 147,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2025-06-05 02:00:00+00:00",
+      "boxes_compared": 1560,
+      "bars_compared": 47570,
+      "signals_compared": 151,
+      "closed_trades_compared": 147,
+      "entries_compared": 147,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2025-06-09 00:00:00+00:00",
+      "boxes_compared": 1563,
+      "bars_compared": 47664,
+      "signals_compared": 151,
+      "closed_trades_compared": 147,
+      "entries_compared": 147,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2025-06-19 16:00:00+00:00",
+      "boxes_compared": 1573,
+      "bars_compared": 47920,
+      "signals_compared": 151,
+      "closed_trades_compared": 147,
+      "entries_compared": 147,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2025-06-19 17:00:00+00:00",
+      "boxes_compared": 1573,
+      "bars_compared": 47921,
+      "signals_compared": 152,
+      "closed_trades_compared": 147,
+      "entries_compared": 148,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2025-06-19 23:00:00+00:00",
+      "boxes_compared": 1573,
+      "bars_compared": 47927,
+      "signals_compared": 152,
+      "closed_trades_compared": 147,
+      "entries_compared": 148,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2025-06-20 04:00:00+00:00",
+      "boxes_compared": 1573,
+      "bars_compared": 47932,
+      "signals_compared": 152,
+      "closed_trades_compared": 147,
+      "entries_compared": 148,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2025-06-20 05:00:00+00:00",
+      "boxes_compared": 1573,
+      "bars_compared": 47933,
+      "signals_compared": 152,
+      "closed_trades_compared": 148,
+      "entries_compared": 148,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2025-06-28 11:00:00+00:00",
+      "boxes_compared": 1578,
+      "bars_compared": 48131,
+      "signals_compared": 152,
+      "closed_trades_compared": 148,
+      "entries_compared": 148,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2025-06-28 12:00:00+00:00",
+      "boxes_compared": 1578,
+      "bars_compared": 48132,
+      "signals_compared": 152,
+      "closed_trades_compared": 148,
+      "entries_compared": 148,
+      "config": "exits_D",
+      "passed": true
     }
   ],
   "event_exit_coverage:ETHUSDT": {
@@ -4002,6 +5014,44 @@
       "POC": [
         0,
         0
+      ],
+      "poc_partial": [
+        2,
+        2
+      ]
+    },
+    "exits_D": {
+      "TIME": [
+        2,
+        2
+      ],
+      "BREAKDOWN": [
+        2,
+        2
+      ],
+      "settlement_close_exit": [
+        2,
+        2
+      ],
+      "close_exit_on_partial_bar": [
+        0,
+        0
+      ],
+      "SL": [
+        2,
+        2
+      ],
+      "TP": [
+        2,
+        2
+      ],
+      "BE": [
+        0,
+        0
+      ],
+      "POC": [
+        2,
+        2
       ],
       "poc_partial": [
         2,
@@ -6029,14 +7079,624 @@
       "entries_compared": 162,
       "config": "exits_C",
       "passed": true
+    },
+    {
+      "t_cut": "2020-01-01 00:00:00+00:00",
+      "boxes_compared": 0,
+      "bars_compared": 1,
+      "signals_compared": 0,
+      "closed_trades_compared": 0,
+      "entries_compared": 0,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2020-01-01 02:00:00+00:00",
+      "boxes_compared": 0,
+      "bars_compared": 3,
+      "signals_compared": 0,
+      "closed_trades_compared": 0,
+      "entries_compared": 0,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2020-01-01 03:00:00+00:00",
+      "boxes_compared": 0,
+      "bars_compared": 4,
+      "signals_compared": 0,
+      "closed_trades_compared": 0,
+      "entries_compared": 0,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2020-01-01 05:00:00+00:00",
+      "boxes_compared": 0,
+      "bars_compared": 6,
+      "signals_compared": 0,
+      "closed_trades_compared": 0,
+      "entries_compared": 0,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2020-01-01 22:00:00+00:00",
+      "boxes_compared": 0,
+      "bars_compared": 23,
+      "signals_compared": 0,
+      "closed_trades_compared": 0,
+      "entries_compared": 0,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2020-01-01 23:00:00+00:00",
+      "boxes_compared": 0,
+      "bars_compared": 24,
+      "signals_compared": 0,
+      "closed_trades_compared": 0,
+      "entries_compared": 0,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2020-01-02 02:00:00+00:00",
+      "boxes_compared": 0,
+      "bars_compared": 27,
+      "signals_compared": 0,
+      "closed_trades_compared": 0,
+      "entries_compared": 0,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2020-01-05 12:00:00+00:00",
+      "boxes_compared": 0,
+      "bars_compared": 109,
+      "signals_compared": 0,
+      "closed_trades_compared": 0,
+      "entries_compared": 0,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2020-01-07 23:00:00+00:00",
+      "boxes_compared": 1,
+      "bars_compared": 168,
+      "signals_compared": 0,
+      "closed_trades_compared": 0,
+      "entries_compared": 0,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2020-01-08 00:00:00+00:00",
+      "boxes_compared": 1,
+      "bars_compared": 169,
+      "signals_compared": 0,
+      "closed_trades_compared": 0,
+      "entries_compared": 0,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2020-01-19 20:00:00+00:00",
+      "boxes_compared": 13,
+      "bars_compared": 453,
+      "signals_compared": 0,
+      "closed_trades_compared": 0,
+      "entries_compared": 0,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2020-01-22 18:00:00+00:00",
+      "boxes_compared": 17,
+      "bars_compared": 523,
+      "signals_compared": 0,
+      "closed_trades_compared": 0,
+      "entries_compared": 0,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2020-01-22 19:00:00+00:00",
+      "boxes_compared": 17,
+      "bars_compared": 524,
+      "signals_compared": 1,
+      "closed_trades_compared": 0,
+      "entries_compared": 1,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2020-01-22 22:00:00+00:00",
+      "boxes_compared": 17,
+      "bars_compared": 527,
+      "signals_compared": 1,
+      "closed_trades_compared": 0,
+      "entries_compared": 1,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2020-01-23 00:00:00+00:00",
+      "boxes_compared": 17,
+      "bars_compared": 529,
+      "signals_compared": 1,
+      "closed_trades_compared": 0,
+      "entries_compared": 1,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2020-01-23 01:00:00+00:00",
+      "boxes_compared": 17,
+      "bars_compared": 530,
+      "signals_compared": 1,
+      "closed_trades_compared": 1,
+      "entries_compared": 1,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2020-02-20 09:00:00+00:00",
+      "boxes_compared": 34,
+      "bars_compared": 1210,
+      "signals_compared": 3,
+      "closed_trades_compared": 2,
+      "entries_compared": 3,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2020-02-20 10:00:00+00:00",
+      "boxes_compared": 34,
+      "bars_compared": 1211,
+      "signals_compared": 3,
+      "closed_trades_compared": 3,
+      "entries_compared": 3,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2020-06-03 08:00:00+00:00",
+      "boxes_compared": 116,
+      "bars_compared": 3705,
+      "signals_compared": 8,
+      "closed_trades_compared": 7,
+      "entries_compared": 8,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2020-06-03 09:00:00+00:00",
+      "boxes_compared": 116,
+      "bars_compared": 3706,
+      "signals_compared": 8,
+      "closed_trades_compared": 8,
+      "entries_compared": 8,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2021-04-23 09:00:00+00:00",
+      "boxes_compared": 356,
+      "bars_compared": 11482,
+      "signals_compared": 26,
+      "closed_trades_compared": 25,
+      "entries_compared": 26,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2021-04-23 10:00:00+00:00",
+      "boxes_compared": 356,
+      "bars_compared": 11483,
+      "signals_compared": 26,
+      "closed_trades_compared": 26,
+      "entries_compared": 26,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2021-05-16 17:00:00+00:00",
+      "boxes_compared": 368,
+      "bars_compared": 12042,
+      "signals_compared": 28,
+      "closed_trades_compared": 27,
+      "entries_compared": 28,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2021-05-16 18:00:00+00:00",
+      "boxes_compared": 368,
+      "bars_compared": 12043,
+      "signals_compared": 28,
+      "closed_trades_compared": 28,
+      "entries_compared": 28,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2021-06-04 02:00:00+00:00",
+      "boxes_compared": 382,
+      "bars_compared": 12483,
+      "signals_compared": 32,
+      "closed_trades_compared": 32,
+      "entries_compared": 32,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2021-06-08 00:00:00+00:00",
+      "boxes_compared": 386,
+      "bars_compared": 12577,
+      "signals_compared": 33,
+      "closed_trades_compared": 33,
+      "entries_compared": 33,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2021-06-08 01:00:00+00:00",
+      "boxes_compared": 386,
+      "bars_compared": 12578,
+      "signals_compared": 34,
+      "closed_trades_compared": 33,
+      "entries_compared": 34,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2021-06-17 15:00:00+00:00",
+      "boxes_compared": 392,
+      "bars_compared": 12808,
+      "signals_compared": 36,
+      "closed_trades_compared": 35,
+      "entries_compared": 36,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2021-06-17 16:00:00+00:00",
+      "boxes_compared": 392,
+      "bars_compared": 12809,
+      "signals_compared": 36,
+      "closed_trades_compared": 36,
+      "entries_compared": 36,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2022-02-03 09:00:00+00:00",
+      "boxes_compared": 559,
+      "bars_compared": 18346,
+      "signals_compared": 57,
+      "closed_trades_compared": 57,
+      "entries_compared": 57,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2022-06-09 23:00:00+00:00",
+      "boxes_compared": 651,
+      "bars_compared": 21384,
+      "signals_compared": 67,
+      "closed_trades_compared": 67,
+      "entries_compared": 67,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2022-06-10 00:00:00+00:00",
+      "boxes_compared": 651,
+      "bars_compared": 21385,
+      "signals_compared": 68,
+      "closed_trades_compared": 67,
+      "entries_compared": 68,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2022-09-06 23:00:00+00:00",
+      "boxes_compared": 711,
+      "bars_compared": 23520,
+      "signals_compared": 73,
+      "closed_trades_compared": 72,
+      "entries_compared": 73,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2022-09-07 00:00:00+00:00",
+      "boxes_compared": 711,
+      "bars_compared": 23521,
+      "signals_compared": 73,
+      "closed_trades_compared": 73,
+      "entries_compared": 73,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2023-06-14 13:00:00+00:00",
+      "boxes_compared": 942,
+      "bars_compared": 30254,
+      "signals_compared": 98,
+      "closed_trades_compared": 98,
+      "entries_compared": 98,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2023-07-10 21:00:00+00:00",
+      "boxes_compared": 964,
+      "bars_compared": 30886,
+      "signals_compared": 100,
+      "closed_trades_compared": 100,
+      "entries_compared": 100,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2023-07-10 22:00:00+00:00",
+      "boxes_compared": 964,
+      "bars_compared": 30887,
+      "signals_compared": 101,
+      "closed_trades_compared": 100,
+      "entries_compared": 100,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2023-07-22 06:00:00+00:00",
+      "boxes_compared": 977,
+      "bars_compared": 31159,
+      "signals_compared": 103,
+      "closed_trades_compared": 101,
+      "entries_compared": 102,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2023-07-22 07:00:00+00:00",
+      "boxes_compared": 977,
+      "bars_compared": 31160,
+      "signals_compared": 103,
+      "closed_trades_compared": 102,
+      "entries_compared": 102,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2024-04-24 16:00:00+00:00",
+      "boxes_compared": 1212,
+      "bars_compared": 37817,
+      "signals_compared": 129,
+      "closed_trades_compared": 127,
+      "entries_compared": 127,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2024-06-03 20:00:00+00:00",
+      "boxes_compared": 1243,
+      "bars_compared": 38781,
+      "signals_compared": 134,
+      "closed_trades_compared": 130,
+      "entries_compared": 130,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2024-06-03 21:00:00+00:00",
+      "boxes_compared": 1243,
+      "bars_compared": 38782,
+      "signals_compared": 135,
+      "closed_trades_compared": 130,
+      "entries_compared": 131,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2024-09-07 08:00:00+00:00",
+      "boxes_compared": 1319,
+      "bars_compared": 41073,
+      "signals_compared": 140,
+      "closed_trades_compared": 135,
+      "entries_compared": 135,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2024-10-05 14:00:00+00:00",
+      "boxes_compared": 1342,
+      "bars_compared": 41751,
+      "signals_compared": 143,
+      "closed_trades_compared": 137,
+      "entries_compared": 138,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2024-10-05 15:00:00+00:00",
+      "boxes_compared": 1343,
+      "bars_compared": 41752,
+      "signals_compared": 143,
+      "closed_trades_compared": 138,
+      "entries_compared": 138,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2025-04-20 23:00:00+00:00",
+      "boxes_compared": 1495,
+      "bars_compared": 46487,
+      "signals_compared": 160,
+      "closed_trades_compared": 154,
+      "entries_compared": 155,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2025-04-21 00:00:00+00:00",
+      "boxes_compared": 1495,
+      "bars_compared": 46488,
+      "signals_compared": 160,
+      "closed_trades_compared": 155,
+      "entries_compared": 155,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2025-04-28 18:00:00+00:00",
+      "boxes_compared": 1501,
+      "bars_compared": 46674,
+      "signals_compared": 161,
+      "closed_trades_compared": 155,
+      "entries_compared": 156,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2025-04-28 19:00:00+00:00",
+      "boxes_compared": 1501,
+      "bars_compared": 46675,
+      "signals_compared": 161,
+      "closed_trades_compared": 156,
+      "entries_compared": 156,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2025-05-23 23:00:00+00:00",
+      "boxes_compared": 1528,
+      "bars_compared": 47279,
+      "signals_compared": 163,
+      "closed_trades_compared": 157,
+      "entries_compared": 158,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2025-05-24 00:00:00+00:00",
+      "boxes_compared": 1528,
+      "bars_compared": 47280,
+      "signals_compared": 163,
+      "closed_trades_compared": 158,
+      "entries_compared": 158,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2025-05-29 23:00:00+00:00",
+      "boxes_compared": 1535,
+      "bars_compared": 47423,
+      "signals_compared": 164,
+      "closed_trades_compared": 158,
+      "entries_compared": 159,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2025-05-30 00:00:00+00:00",
+      "boxes_compared": 1535,
+      "bars_compared": 47424,
+      "signals_compared": 164,
+      "closed_trades_compared": 159,
+      "entries_compared": 159,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2025-06-29 15:00:00+00:00",
+      "boxes_compared": 1557,
+      "bars_compared": 48159,
+      "signals_compared": 167,
+      "closed_trades_compared": 161,
+      "entries_compared": 161,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2025-06-29 16:00:00+00:00",
+      "boxes_compared": 1557,
+      "bars_compared": 48160,
+      "signals_compared": 168,
+      "closed_trades_compared": 161,
+      "entries_compared": 162,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2025-06-29 18:00:00+00:00",
+      "boxes_compared": 1557,
+      "bars_compared": 48162,
+      "signals_compared": 168,
+      "closed_trades_compared": 161,
+      "entries_compared": 162,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2025-06-29 20:00:00+00:00",
+      "boxes_compared": 1557,
+      "bars_compared": 48164,
+      "signals_compared": 168,
+      "closed_trades_compared": 161,
+      "entries_compared": 162,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2025-06-29 21:00:00+00:00",
+      "boxes_compared": 1557,
+      "bars_compared": 48165,
+      "signals_compared": 168,
+      "closed_trades_compared": 162,
+      "entries_compared": 162,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2025-06-30 19:00:00+00:00",
+      "boxes_compared": 1558,
+      "bars_compared": 48187,
+      "signals_compared": 168,
+      "closed_trades_compared": 162,
+      "entries_compared": 162,
+      "config": "exits_D",
+      "passed": true
+    },
+    {
+      "t_cut": "2025-06-30 20:00:00+00:00",
+      "boxes_compared": 1558,
+      "bars_compared": 48188,
+      "signals_compared": 168,
+      "closed_trades_compared": 162,
+      "entries_compared": 162,
+      "config": "exits_D",
+      "passed": true
     }
   ],
   "masked_last_bar:BTCUSDT": {
-    "all_features_A": 25,
-    "exits_C": 26
+    "all_features_A": 31,
+    "exits_C": 33
   },
   "masked_last_bar:ETHUSDT": {
-    "all_features_A": 25,
-    "exits_C": 28
+    "all_features_A": 30,
+    "exits_C": 35
+  },
+  "switch_prefix_cuts:BTCUSDT": {
+    "baseline": 3156,
+    "all_features_A": 2888,
+    "all_features_B": 3156
+  },
+  "switch_prefix_cuts:ETHUSDT": {
+    "baseline": 3116,
+    "all_features_A": 2834,
+    "all_features_B": 3116
   }
 }

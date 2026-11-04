@@ -292,9 +292,10 @@ class BacktestResult:
     levels: pd.DataFrame | None = None  # 逐根持仓离场价位（stop / brk_level），供防未来函数闸门逐位比较
 
     def __repr__(self) -> str:
-        # 只显示规模与时间范围、不显示任何数值：测试失败时 pytest 会渲染局部变量/参数（-l、-vv），不得借此输出 OOS 净值
+        # 只显示 K 线根数与时间范围，不显示任何数值或交易笔数（全量结果的交易笔数也是 OOS 信息）：
+        # 测试失败时 pytest 会渲染局部变量与参数（-l、-vv、--fulltrace），不得借此输出 OOS 信息
         span = f"{self.equity.index[0]} .. {self.equity.index[-1]}" if len(self.equity) else "empty"
-        return f"BacktestResult(bars={len(self.equity)}, span={span}, trades={len(self.trades)})"
+        return f"BacktestResult(bars={len(self.equity)}, span={span})"
 
 
 def funding_arrays(df1h: pd.DataFrame, funding: pd.DataFrame | None) -> tuple[np.ndarray, np.ndarray, np.ndarray]:

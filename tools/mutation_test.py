@@ -8,11 +8,13 @@ tools/mutation_test.py — 突变测试：证明测试套件对已知缺陷类�
 对照组（control，不做修改）必须两套测试全部通过。
 
 用法（在仓库根目录）：
-    python tools/mutation_test.py                 # 全部突变体（约 30 分钟）
+    python tools/mutation_test.py                 # 全部突变体（参考机器上约 25 分钟，见结果文件中 seconds 之和）
     python tools/mutation_test.py --check         # 只检查每个修改点在当前代码中唯一存在
     python tools/mutation_test.py L1 S3 ...       # 指定突变体（只打印结果）
     python tools/mutation_test.py --merge S15 ... # 重跑指定突变体并合并进已有的结果文件（测试文件只改了一部分时使用）
-结果写入 reports/mutation_results.json（只记录是否被拦截与首个失败测试的节点名，不记录任何失败消息）。
+结果写入 reports/mutation_results.json（只记录是否被拦截、首个失败测试的节点名与失败类型，不记录任何失败消息）。
+只有断言类失败（AssertionError、pytest.raises 的 DID NOT RAISE，或封装了它们的 GateFailure）才算“拦截”；
+编译错误、其他异常、超时与收集错误记为“无法判定”（inconclusive），说明突变体本身有问题而不是被测试发现。
 副本建在系统临时目录（或 --workdir），data/ 以符号链接接入，每个突变体使用独立的 Numba 缓存目录。
 """
 from __future__ import annotations
@@ -57,7 +59,7 @@ MUTANTS: dict[str, tuple[str, list[tuple[str, str, str]], list[str]]] = {
     "L9": ("破位离场读取下一根的形态与收盘",
            [(BT, "bd_hit = exit_on_brk and bodyvol[i] and c[i] < lv_brk[i]",
              "bd_hit = exit_on_brk and i + 1 < n and bodyvol[i + 1] and c[i + 1] < lv_brk[i]")], GATE),
-    "L10": ("破位阈值读取下一根的 ATR（记录的价位随之改变）",
+    "L10": ("破位阈值改用本根收盘后才知道的 ATR（价位契约违规：第 i 根的价位须在开盘时确定；判定本身未读未来）",
             [(BT, "brk_lvl = val_e - k1atr[i]", "brk_lvl = val_e - k1atr[min(i + 1, n - 1)]")], GATE),
     "L11": ("结算时刻收盘离场漏计资金费",
             [(BT, "fr2 = fund_close[i]", "fr2 = np.nan")], GATE),
@@ -93,6 +95,19 @@ MUTANTS: dict[str, tuple[str, list[tuple[str, str, str]], list[str]]] = {
             [(BT, "fr2 = fund_close[i]", "fr2 = fund_open[min(i + 1, n - 1)]")], GATE),
     "L22": ("数据首日尚无完整永续日线时不做现货预热（截断与全量的宏观状态不一致，第三轮 EX3-8）",
             [(SM, "    if spot_daily is not None:\n        # 预热", "    if spot_daily is not None and len(d):\n        # 预热")], GATE),
+    "L23": ("认领“先到带上方”要求时的容差使用下一根收盘后才知道的 ATR（第四轮 LA3b，只在箱体切换 K 线可见）",
+            [(SM, "nd_cl[e] = (not np.isnan(a)) and abs(box_val[b] - nd_val[e]) <= ov",
+              "nd_cl[e] = (not np.isnan(a)) and abs(box_val[b] - nd_val[e]) <= (k1 + k2) * atr[min(i + 2, n - 1)]")], GATE),
+    "L24": ("全仓 POC 离场只在下一根收盘不高于 POC 时执行（第四轮 X8）",
+            [(BT, "poc < tp and h[i] >= poc:", "poc < tp and h[i] >= poc and (partial_frac < 1.0 or c[min(i + 1, n - 1)] <= poc):")], GATE),
+    "L25": ("入场时按下一根的影线把止损挪到其下方，交易表记录挪动后的止损（第四轮 X1c）",
+            [(BT, "                sl = sl_arr[i]\n",
+              "                sl = sl_arr[i]\n                if i + 1 < n and l[i + 1] <= sl and l[i + 1] > sl - 0.15 * (efill - sl):\n"
+              "                    sl = l[i + 1] - 0.05 * (efill - sl)\n")], GATE),
+    "L26": ("入场时按下一根最高价下调止盈，交易表记录下调后的止盈（第四轮 X2c）",
+            [(BT, "                tp = tp_arr[i]\n",
+              "                tp = tp_arr[i]\n                if i + 1 < n and h[i + 1] < tp and h[i + 1] > tp - 0.1 * (tp - efill):\n"
+              "                    tp = h[i + 1]\n")], GATE),
     # ------------------------------------------------------------------ 状态机规则回退（回归测试）
     "S1": ("放量跌穿记忆只在 INVALID 状态下检查（SM-R1 回退）",
            [(SM, "                hv_block = False\n                if not np.isnan(a):",
@@ -129,7 +144,7 @@ MUTANTS: dict[str, tuple[str, list[tuple[str, str, str]], list[str]]] = {
             [(BT, "brk_lvl = val_e - k1atr[i]", "brk_lvl = val_arr[i] - k1atr[i]")], REG),
     "S14": ("放量跌穿记忆退化为单条（新写入覆盖旧记忆）",
             [(SM, "            st = 5\n            hv_vals[hcnt] = box_val[cur]\n", "            st = 5\n            hcnt = 0\n            hv_vals[hcnt] = box_val[cur]\n")], REG),
-    "S15": ("放量跌穿记忆容量 8 条、满时覆盖最后一条（第三轮 SM3-2 回退）",
+    "S15": ("放量跌穿记忆容量 8 条、满时覆盖最近写入的一条（容量上限的另一种溢出策略）",
             [(SM, "            hv_vals[hcnt] = box_val[cur]\n            hv_ts[hcnt] = open_ns[i] + hour\n            hcnt += 1\n            state[i] = st",
               "            hcnt = min(hcnt, 7)\n            hv_vals[hcnt] = box_val[cur]\n            hv_ts[hcnt] = open_ns[i] + hour\n"
               "            hcnt += 1\n            state[i] = st")], REG),
@@ -158,6 +173,64 @@ MUTANTS: dict[str, tuple[str, list[tuple[str, str, str]], list[str]]] = {
             [(ENG, "if can_up and ((not can_dn) or hist[hi + 1] >= hist[lo - 1] - tol):", "if can_up and (hist[hi + 1] >= hist[lo - 1] - tol):")], REG),
     "S26": ("不检查箱体窗口起点单调（第三轮 SM3-6）",
             [(SM, "    if nb > 1 and (np.diff(bws) < 0).any():", "    if False:")], REG),
+    "S27": ("放量跌穿记忆交换删除时不搬移时刻（第四轮 N25）",
+            [(SM, "                        hv_vals[e] = hv_vals[hcnt]\n                        hv_ts[e] = hv_ts[hcnt]\n",
+              "                        hv_vals[e] = hv_vals[hcnt]\n")], REG),
+    "S28": ("放量跌穿记忆失效检查向上遍历（交换进来的条目被跳过，第四轮 N32）",
+            [(SM, "                e = hcnt - 1\n                while e >= 0:\n                    if box_wstart[b] >= hv_ts[e]:\n"
+                  "                        hcnt -= 1\n                        hv_vals[e] = hv_vals[hcnt]\n"
+                  "                        hv_ts[e] = hv_ts[hcnt]\n                    e -= 1\n",
+              "                e = 0\n                while e < hcnt:\n                    if box_wstart[b] >= hv_ts[e]:\n"
+              "                        hcnt -= 1\n                        hv_vals[e] = hv_vals[hcnt]\n"
+              "                        hv_ts[e] = hv_ts[hcnt]\n                    e += 1\n")], REG),
+    "S29": ("被认领的要求按锚点（而非当前箱体）的带上沿清除（第四轮 N1）",
+            [(SM, "if l[i] > (zh if nd_cl[e] else nd_val[e] + k2 * a):", "if l[i] > nd_val[e] + k2 * a:")], REG),
+    "S30": ("被否决的箱体不写入激活条件 (a) 的要求（第四轮 N18）",
+            [(SM, "                    if below and not need_above:\n",
+              "                    if below and not need_above and not (reject_broken and i > 0 and not np.isnan(a) and c[i - 1] < zl_new):\n")], REG),
+    "S31": ("清除要求的交换删除不搬移认领标记（第四轮 N27）",
+            [(SM, "                    nd_t[e] = nd_t[ncnt]\n                    nd_cl[e] = nd_cl[ncnt]\n                e -= 1\n",
+              "                    nd_t[e] = nd_t[ncnt]\n                e -= 1\n")], REG),
+    "S32": ("要求的清除阈值用 ≥ 而非 >（第四轮 N5）",
+            [(SM, "if l[i] > (zh if nd_cl[e] else nd_val[e] + k2 * a):", "if l[i] >= (zh if nd_cl[e] else nd_val[e] + k2 * a):")], REG),
+    "S33": ("认领容差用 < 而非 ≤（第四轮 N7）",
+            [(SM, "abs(box_val[b] - nd_val[e]) <= ov", "abs(box_val[b] - nd_val[e]) < ov")], REG),
+    "S34": ("信号写入的要求锚定在第 2 次测试开始时的箱体（第四轮 N15）",
+            [(SM, "                nd_val[ncnt] = box_val[cur]\n                nd_t[ncnt] = open_ns[i] + hour\n",
+              "                nd_val[ncnt] = t2_val\n                nd_t[ncnt] = open_ns[i] + hour\n")], REG),
+    "S35": ("carry 切换也重新认领要求（第四轮 N24）",
+            [(SM, "                # 未被认领（不在当前支撑区）的要求",
+              "                if keep:\n                    need_above = False\n                    for e in range(ncnt):\n"
+              "                        nd_cl[e] = (not np.isnan(a)) and abs(box_val[b] - nd_val[e]) <= ov\n"
+              "                        if nd_cl[e]:\n                            need_above = True\n"
+              "                # 未被认领（不在当前支撑区）的要求")], REG),
+    "S36": ("箱体切换的那根 K 线不检查要求是否被清除（第四轮 N40）",
+            [(SM, "        if ncnt > 0:                                       # 整根",
+              "        if ncnt > 0 and box_idx[i] == box_idx[max(i - 1, 0)]:          # 整根")], REG),
+    "S37": ("放量跌穿记忆容量 8 条、满时覆盖跌穿时刻最早的一条（b2fbdb7 的真实策略，第三轮 SM3-2 回退）",
+            [(SM, "            st = 5\n            hv_vals[hcnt] = box_val[cur]\n            hv_ts[hcnt] = open_ns[i] + hour\n"
+                  "            hcnt += 1\n            state[i] = st",
+              "            st = 5\n            if hcnt >= 8:\n                slot = 0\n                for e in range(1, hcnt):\n"
+              "                    if hv_ts[e] < hv_ts[slot]:\n                        slot = e\n"
+              "                hv_vals[slot] = box_val[cur]\n                hv_ts[slot] = open_ns[i] + hour\n"
+              "            else:\n                hv_vals[hcnt] = box_val[cur]\n                hv_ts[hcnt] = open_ns[i] + hour\n"
+              "                hcnt += 1\n            state[i] = st")], REG),
+    "S38": ("失效期间再次跌穿时，记忆时刻后移到跌穿 K 线开盘而非收盘（第三轮 M12）",
+            [(SM, "                                hv_ts[e] = open_ns[i] + hour   # 同一支撑区",
+              "                                hv_ts[e] = open_ns[i]          # 同一支撑区")], REG),
+    "S39": ("认领时把要求的锚点改成新箱体的 VAL（锚点随箱体漂移，第三轮 M23/M24）",
+            [(SM, "                        if nd_cl[e]:\n                            need_above = True\n",
+              "                        if nd_cl[e]:\n                            need_above = True\n"
+              "                            nd_val[e] = box_val[b]\n")], REG),
+    "S40": ("非 carry 切换时认领全部要求、不判断是否同区（第三轮 M22）",
+            [(SM, "nd_cl[e] = (not np.isnan(a)) and abs(box_val[b] - nd_val[e]) <= ov", "nd_cl[e] = not np.isnan(a)")], REG),
+    "S41": ("激活条件 (a) 的写入时刻取切换 K 线收盘（晚一根，第四轮 N12 / DOC4-1）",
+            [(SM, "nd_t[ncnt] = open_ns[i]            # 依据", "nd_t[ncnt] = open_ns[i] + hour     # 依据")], REG),
+    "S42": ("carry 切换时未认领的要求不按全新结构失效（第四轮 N10 / DOC4-1）",
+            [(SM, "                    if (not nd_cl[e]) and box_wstart[b] >= nd_t[e]:\n",
+              "                    if (not nd_cl[e]) and (not keep) and box_wstart[b] >= nd_t[e]:\n")], REG),
+    "S43": ("未认领的要求按当前箱体（而非锚点）的带上沿清除（第四轮 N2 / DOC4-1）",
+            [(SM, "if l[i] > (zh if nd_cl[e] else nd_val[e] + k2 * a):", "if l[i] > zh:")], REG),
     # ------------------------------------------------------------------ 执行 / 指标 / 管道规则回退（回归测试）
     "E1": ("资金费网格用 np.arange 浮点估长（长窗口丢掉终点，第三轮 DOC3-1 回退）",
            [(BT, "    grid = np.int64(first) + np.int64(step) * np.arange(n_pts, dtype=np.int64)",
@@ -170,11 +243,32 @@ MUTANTS: dict[str, tuple[str, list[tuple[str, str, str]], list[str]]] = {
            [(MET, "            capped_open_at_start = int((straddle & tr_all[\"capped\"]).sum())",
              "            capped_open_at_start = 0")], REG),
     "E5": ("缓存返回值与缓存共享行索引（第三轮 DOC3-6 回退）",
-           [(PIPE, "    y.index = x.index.copy(deep=True)\n", "    y.index = x.index\n")], REG),
+           [(PIPE, "\n        else idx.copy(deep=True)\n", "\n        else idx\n")], REG),
     "E6": ("BacktestResult 的 repr 显示数值（第三轮 EX3-7 回退）",
            [(BT, "@dataclass(repr=False)\nclass BacktestResult:", "@dataclass\nclass BacktestResult:"),
             (BT, "    def __repr__(self) -> str:\n        # 只显示", "    def _repr_unused(self) -> str:\n        # 只显示")], REG),
+    "E7": ("缓存返回的箱体表与缓存共享 RangeIndex 的整数数组（第四轮 EX4-4 回退）",
+           [(PIPE, "pd.RangeIndex(idx.start, idx.stop, idx.step, name=idx.name) if isinstance(idx, pd.RangeIndex) \\\n        else idx.copy(deep=True)",
+             "idx.copy(deep=True)")], REG),
+    "E8": ("夏普等序列指标不检查 OOS（第四轮 EX4-7 回退）",
+           [(MET, "def sharpe(r: pd.Series, allow_oos: bool = False) -> float:\n    _check_series_extent(r, allow_oos)\n",
+             "def sharpe(r: pd.Series, allow_oos: bool = False) -> float:\n")], REG),
 }
+
+
+GENUINE = {"AssertionError", "Failed"}            # 断言失败；pytest.raises 的 DID NOT RAISE 表现为 Failed
+
+
+def _failure_type(line: str) -> str:
+    """从 -rf 摘要行解析失败类型；GateFailure 取其封装的内层类型（“[类型] ...”）。"""
+    rest = line.split(" - ", 1)[1] if " - " in line else ""
+    if rest.startswith("assert "):                  # 裸 assert：摘要行直接是断言展开
+        return "AssertionError"
+    head = rest.split(":", 1)[0].strip()
+    kind = head.rsplit(".", 1)[-1]
+    if kind == "GateFailure" and "[" in rest and "]" in rest:
+        kind = rest.split("[", 1)[1].split("]", 1)[0]
+    return kind or "unknown"
 
 
 def _apply(work: Path, edits) -> str | None:
@@ -207,7 +301,7 @@ def run(names, workdir: Path, check_only: bool) -> dict:
             print(f"{name:8s} {'OK' if err is None else 'PATTERN ERROR: ' + err}", flush=True)
             shutil.rmtree(work, ignore_errors=True)
             continue
-        env = dict(os.environ, NUMBA_CACHE_DIR=str(work / ".numba_cache"), PYTHONDONTWRITEBYTECODE="1")
+        env = dict(os.environ, NUMBA_CACHE_DIR=str(work / ".numba_cache"), PYTHONDONTWRITEBYTECODE="1", COLUMNS="4000")
         cmd = [sys.executable, "-m", "pytest", "-q", "-p", "no:cacheprovider", "-rf"] + ([] if name == "control" else ["-x"])
         t0 = time.time()
         try:
@@ -215,12 +309,17 @@ def run(names, workdir: Path, check_only: bool) -> dict:
             out, code = r.stdout, r.returncode
         except subprocess.TimeoutExpired:
             out, code = "", -1
-        failed = [ln.split(" ")[1] for ln in out.splitlines() if ln.startswith("FAILED ")]
+        failed_lines = [ln for ln in out.splitlines() if ln.startswith("FAILED ")]
+        failed = [ln.split(" ")[1] for ln in failed_lines]
         summary = next((ln for ln in reversed(out.splitlines()) if (" passed" in ln or " failed" in ln)), "")
-        results[name] = {"description": desc, "applied": True, "tests": tests,
-                         "detected": code != 0, "first_failing_test": failed[0] if failed else None,
+        ftype = _failure_type(failed_lines[0]) if failed_lines else None
+        verdict = "passed" if code == 0 else ("detected" if ftype in GENUINE else "inconclusive")
+        results[name] = {"description": desc, "applied": True, "tests": tests, "verdict": verdict,
+                         "detected": verdict == "detected", "failure_type": ftype,
+                         "first_failing_test": failed[0] if failed else None,
                          "summary": summary.strip("= ").split(" in ")[0], "seconds": round(time.time() - t0, 1)}
-        print(f"{name:8s} {'KILLED ' if code != 0 else 'SURVIVED'} {results[name]['first_failing_test'] or ''} "
+        label = {"passed": "SURVIVED", "detected": "KILLED ", "inconclusive": "INCONCLUSIVE"}[verdict]
+        print(f"{name:8s} {label} {results[name]['first_failing_test'] or ''} ({ftype}) "
               f"[{results[name]['summary']}]", flush=True)
         shutil.rmtree(work, ignore_errors=True)
     return results

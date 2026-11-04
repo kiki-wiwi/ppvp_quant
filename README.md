@@ -9,7 +9,7 @@
 | 阶段 | 内容 | 记录 |
 |---|---|---|
 | Phase 0 | 数据工程：官方归档下载、SHA256 校验、清洗补缺、交叉校验、Parquet 缓存 | [docs/phase_logs/PHASE0_data_engineering.md](docs/phase_logs/PHASE0_data_engineering.md) |
-| Phase 1 | PPVP 引擎、1H 状态机、事件驱动回测器、日度指标、OOS 锁；防未来函数闸门（BTC/ETH 截断逐位比对、执行不变量、突变测试）与三轮对抗式审计修复 | [docs/phase_logs/PHASE1_engine.md](docs/phase_logs/PHASE1_engine.md) |
+| Phase 1 | PPVP 引擎、1H 状态机、事件驱动回测器、日度指标、OOS 锁；防未来函数闸门（BTC/ETH 截断逐位比对、执行不变量、切换点内核截断、突变测试）与四轮对抗式审计修复 | [docs/phase_logs/PHASE1_engine.md](docs/phase_logs/PHASE1_engine.md) |
 
 ## 快速开始
 
@@ -29,4 +29,4 @@ python -m pytest test_lookahead.py test_audit_regressions.py -v -s
 python tools/mutation_test.py
 ```
 
-研究阶段请只通过 `pipeline.run()` 运行回测：它默认把数据截断在 2025-07-01 之前。`pipeline` 的入口与 `metrics` 的日度净值、交易统计、分段指标在参数锁定（Phase 4）之前拒绝读取或统计 OOS 区间。`data_loader` 读取原始数据不加锁，研究代码不得绕过 `pipeline` 直接使用它。
+研究阶段请只通过 `pipeline.run()` 运行回测：它默认把数据截断在 2025-07-01 之前。`pipeline` 的入口与 `metrics` 的全部指标函数在未显式传入 `allow_oos=True` 时拒绝读取或统计 OOS 区间；这个参数只是约定，只应在 Phase 4 参数锁定后使用。`data_loader` 的原始数据读取与引擎函数（`build_boxes`、`generate_signals`、`run_backtest`）不加锁，研究代码不得绕过 `pipeline` 直接用它们取数。

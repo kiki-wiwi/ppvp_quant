@@ -2,7 +2,7 @@
 platform linux -- Python 3.13.18, pytest-9.2.0, pluggy-1.7.0 -- /usr/local/bin/python
 rootdir: /home/user/ppvp_quant
 plugins: anyio-4.15.1
-collecting ... collected 150 items
+collecting ... collected 179 items
 
 test_lookahead.py::test_no_lookahead[BTCUSDT] PASS BTCUSDT baseline        T_cut=2021-12-28 23:00:00+00:00  boxes=  563 bars= 17472 signals=  63 closed_trades=  60
 PASS BTCUSDT baseline        T_cut=2024-10-30 17:00:00+00:00  boxes= 1396 bars= 42353 signals= 142 closed_trades= 129
@@ -24,6 +24,11 @@ PASS BTCUSDT exits_C         T_cut=2024-10-30 17:00:00+00:00  boxes= 1396 bars= 
 PASS BTCUSDT exits_C         T_cut=2025-03-25 06:00:00+00:00  boxes= 1503 bars= 45846 signals= 147 closed_trades= 142
 PASS BTCUSDT exits_C         T_cut=2026-01-15 03:00:00+00:00  (OOS cut: counts redacted)
 PASS BTCUSDT exits_C         T_cut=2026-07-27 20:00:00+00:00  (OOS cut: counts redacted)
+PASS BTCUSDT exits_D         T_cut=2021-12-28 23:00:00+00:00  boxes=  563 bars= 17472 signals=  63 closed_trades=  62
+PASS BTCUSDT exits_D         T_cut=2024-10-30 17:00:00+00:00  boxes= 1396 bars= 42353 signals= 142 closed_trades= 138
+PASS BTCUSDT exits_D         T_cut=2025-03-25 06:00:00+00:00  boxes= 1503 bars= 45846 signals= 147 closed_trades= 143
+PASS BTCUSDT exits_D         T_cut=2026-01-15 03:00:00+00:00  (OOS cut: counts redacted)
+PASS BTCUSDT exits_D         T_cut=2026-07-27 20:00:00+00:00  (OOS cut: counts redacted)
 PASSED
 test_lookahead.py::test_no_lookahead[ETHUSDT] PASS ETHUSDT baseline        T_cut=2024-01-02 01:00:00+00:00  boxes= 1124 bars= 35090 signals= 116 closed_trades= 110
 PASS ETHUSDT baseline        T_cut=2025-03-12 11:00:00+00:00  boxes= 1464 bars= 45539 signals= 158 closed_trades= 146
@@ -45,6 +50,11 @@ PASS ETHUSDT exits_C         T_cut=2025-03-12 11:00:00+00:00  boxes= 1464 bars= 
 PASS ETHUSDT exits_C         T_cut=2025-06-05 02:00:00+00:00  boxes= 1539 bars= 47570 signals= 164 closed_trades= 159
 PASS ETHUSDT exits_C         T_cut=2026-04-29 21:00:00+00:00  (OOS cut: counts redacted)
 PASS ETHUSDT exits_C         T_cut=2026-07-17 04:00:00+00:00  (OOS cut: counts redacted)
+PASS ETHUSDT exits_D         T_cut=2024-01-02 01:00:00+00:00  boxes= 1124 bars= 35090 signals= 116 closed_trades= 115
+PASS ETHUSDT exits_D         T_cut=2025-03-12 11:00:00+00:00  boxes= 1464 bars= 45539 signals= 158 closed_trades= 153
+PASS ETHUSDT exits_D         T_cut=2025-06-05 02:00:00+00:00  boxes= 1539 bars= 47570 signals= 164 closed_trades= 159
+PASS ETHUSDT exits_D         T_cut=2026-04-29 21:00:00+00:00  (OOS cut: counts redacted)
+PASS ETHUSDT exits_D         T_cut=2026-07-17 04:00:00+00:00  (OOS cut: counts redacted)
 PASSED
 test_lookahead.py::test_no_lookahead_event_cuts[baseline-BTCUSDT] PASS BTCUSDT baseline        T_cut=2020-01-01 00:00:00+00:00  boxes=    0 bars=     1 signals=   0 closed_trades=   0
 PASS BTCUSDT baseline        T_cut=2020-01-01 02:00:00+00:00  boxes=    0 bars=     3 signals=   0 closed_trades=   0
@@ -598,18 +608,183 @@ PASS ETHUSDT exits_C         T_cut=2025-06-30 19:00:00+00:00  boxes= 1558 bars= 
 PASS ETHUSDT exits_C         T_cut=2025-06-30 20:00:00+00:00  boxes= 1558 bars= 48188 signals= 168 closed_trades= 162
 PASS event cuts ETHUSDT exits_C: 61 cuts
 PASSED
+test_lookahead.py::test_no_lookahead_event_cuts[exits_D-BTCUSDT] PASS BTCUSDT exits_D         T_cut=2020-01-01 00:00:00+00:00  boxes=    0 bars=     1 signals=   0 closed_trades=   0
+PASS BTCUSDT exits_D         T_cut=2020-01-01 02:00:00+00:00  boxes=    0 bars=     3 signals=   0 closed_trades=   0
+PASS BTCUSDT exits_D         T_cut=2020-01-01 03:00:00+00:00  boxes=    0 bars=     4 signals=   0 closed_trades=   0
+PASS BTCUSDT exits_D         T_cut=2020-01-01 05:00:00+00:00  boxes=    0 bars=     6 signals=   0 closed_trades=   0
+PASS BTCUSDT exits_D         T_cut=2020-01-01 22:00:00+00:00  boxes=    0 bars=    23 signals=   0 closed_trades=   0
+PASS BTCUSDT exits_D         T_cut=2020-01-01 23:00:00+00:00  boxes=    0 bars=    24 signals=   0 closed_trades=   0
+PASS BTCUSDT exits_D         T_cut=2020-01-02 02:00:00+00:00  boxes=    0 bars=    27 signals=   0 closed_trades=   0
+PASS BTCUSDT exits_D         T_cut=2020-01-04 15:00:00+00:00  boxes=    1 bars=    88 signals=   0 closed_trades=   0
+PASS BTCUSDT exits_D         T_cut=2020-01-04 16:00:00+00:00  boxes=    1 bars=    89 signals=   0 closed_trades=   0
+PASS BTCUSDT exits_D         T_cut=2020-01-05 12:00:00+00:00  boxes=    1 bars=   109 signals=   0 closed_trades=   0
+PASS BTCUSDT exits_D         T_cut=2020-01-19 20:00:00+00:00  boxes=   10 bars=   453 signals=   0 closed_trades=   0
+PASS BTCUSDT exits_D         T_cut=2020-01-22 18:00:00+00:00  boxes=   14 bars=   523 signals=   0 closed_trades=   0
+PASS BTCUSDT exits_D         T_cut=2020-01-22 19:00:00+00:00  boxes=   14 bars=   524 signals=   1 closed_trades=   0
+PASS BTCUSDT exits_D         T_cut=2020-01-22 21:00:00+00:00  boxes=   14 bars=   526 signals=   1 closed_trades=   0
+PASS BTCUSDT exits_D         T_cut=2020-01-22 22:00:00+00:00  boxes=   14 bars=   527 signals=   1 closed_trades=   0
+PASS BTCUSDT exits_D         T_cut=2020-01-22 23:00:00+00:00  boxes=   14 bars=   528 signals=   1 closed_trades=   1
+PASS BTCUSDT exits_D         T_cut=2020-02-03 22:00:00+00:00  boxes=   22 bars=   815 signals=   2 closed_trades=   1
+PASS BTCUSDT exits_D         T_cut=2020-02-03 23:00:00+00:00  boxes=   23 bars=   816 signals=   2 closed_trades=   2
+PASS BTCUSDT exits_D         T_cut=2020-02-25 10:00:00+00:00  boxes=   39 bars=  1331 signals=   5 closed_trades=   3
+PASS BTCUSDT exits_D         T_cut=2020-02-25 11:00:00+00:00  boxes=   39 bars=  1332 signals=   5 closed_trades=   4
+PASS BTCUSDT exits_D         T_cut=2020-03-01 11:00:00+00:00  boxes=   42 bars=  1452 signals=   6 closed_trades=   4
+PASS BTCUSDT exits_D         T_cut=2020-03-01 12:00:00+00:00  boxes=   42 bars=  1453 signals=   6 closed_trades=   4
+PASS BTCUSDT exits_D         T_cut=2020-03-01 15:00:00+00:00  boxes=   42 bars=  1456 signals=   6 closed_trades=   4
+PASS BTCUSDT exits_D         T_cut=2020-03-01 16:00:00+00:00  boxes=   42 bars=  1457 signals=   6 closed_trades=   5
+PASS BTCUSDT exits_D         T_cut=2020-05-26 11:00:00+00:00  boxes=  109 bars=  3516 signals=  12 closed_trades=  10
+PASS BTCUSDT exits_D         T_cut=2020-05-26 12:00:00+00:00  boxes=  109 bars=  3517 signals=  12 closed_trades=  11
+PASS BTCUSDT exits_D         T_cut=2020-06-06 23:00:00+00:00  boxes=  120 bars=  3792 signals=  14 closed_trades=  13
+PASS BTCUSDT exits_D         T_cut=2020-06-07 00:00:00+00:00  boxes=  120 bars=  3793 signals=  15 closed_trades=  13
+PASS BTCUSDT exits_D         T_cut=2020-07-05 08:00:00+00:00  boxes=  146 bars=  4473 signals=  17 closed_trades=  15
+PASS BTCUSDT exits_D         T_cut=2020-07-05 09:00:00+00:00  boxes=  146 bars=  4474 signals=  17 closed_trades=  16
+PASS BTCUSDT exits_D         T_cut=2020-10-14 13:00:00+00:00  boxes=  229 bars=  6902 signals=  27 closed_trades=  25
+PASS BTCUSDT exits_D         T_cut=2020-10-14 14:00:00+00:00  boxes=  229 bars=  6903 signals=  27 closed_trades=  25
+PASS BTCUSDT exits_D         T_cut=2020-10-14 17:00:00+00:00  boxes=  229 bars=  6906 signals=  27 closed_trades=  26
+PASS BTCUSDT exits_D         T_cut=2020-10-14 18:00:00+00:00  boxes=  229 bars=  6907 signals=  28 closed_trades=  26
+PASS BTCUSDT exits_D         T_cut=2020-12-18 20:00:00+00:00  boxes=  271 bars=  8469 signals=  33 closed_trades=  32
+PASS BTCUSDT exits_D         T_cut=2021-03-16 11:00:00+00:00  boxes=  337 bars= 10572 signals=  41 closed_trades=  40
+PASS BTCUSDT exits_D         T_cut=2021-04-03 17:00:00+00:00  boxes=  353 bars= 11010 signals=  41 closed_trades=  40
+PASS BTCUSDT exits_D         T_cut=2021-04-03 18:00:00+00:00  boxes=  353 bars= 11011 signals=  42 closed_trades=  40
+PASS BTCUSDT exits_D         T_cut=2021-06-29 14:00:00+00:00  boxes=  421 bars= 13095 signals=  49 closed_trades=  48
+PASS BTCUSDT exits_D         T_cut=2021-07-01 05:00:00+00:00  boxes=  422 bars= 13134 signals=  50 closed_trades=  48
+PASS BTCUSDT exits_D         T_cut=2021-07-01 06:00:00+00:00  boxes=  422 bars= 13135 signals=  50 closed_trades=  49
+PASS BTCUSDT exits_D         T_cut=2021-07-18 00:00:00+00:00  boxes=  436 bars= 13537 signals=  51 closed_trades=  49
+PASS BTCUSDT exits_D         T_cut=2021-09-19 17:00:00+00:00  boxes=  484 bars= 15066 signals=  55 closed_trades=  54
+PASS BTCUSDT exits_D         T_cut=2021-09-19 18:00:00+00:00  boxes=  484 bars= 15067 signals=  56 closed_trades=  54
+PASS BTCUSDT exits_D         T_cut=2021-10-04 17:00:00+00:00  boxes=  493 bars= 15426 signals=  57 closed_trades=  56
+PASS BTCUSDT exits_D         T_cut=2021-11-16 07:00:00+00:00  boxes=  527 bars= 16448 signals=  61 closed_trades=  60
+PASS BTCUSDT exits_D         T_cut=2021-11-16 08:00:00+00:00  boxes=  527 bars= 16449 signals=  61 closed_trades=  60
+PASS BTCUSDT exits_D         T_cut=2022-03-09 15:00:00+00:00  boxes=  615 bars= 19168 signals=  64 closed_trades=  63
+PASS BTCUSDT exits_D         T_cut=2022-05-27 05:00:00+00:00  boxes=  677 bars= 21054 signals=  69 closed_trades=  68
+PASS BTCUSDT exits_D         T_cut=2022-05-27 06:00:00+00:00  boxes=  677 bars= 21055 signals=  70 closed_trades=  68
+PASS BTCUSDT exits_D         T_cut=2022-06-13 10:00:00+00:00  boxes=  688 bars= 21467 signals=  71 closed_trades=  70
+PASS BTCUSDT exits_D         T_cut=2022-08-15 04:00:00+00:00  boxes=  729 bars= 22973 signals=  73 closed_trades=  72
+PASS BTCUSDT exits_D         T_cut=2022-10-02 22:00:00+00:00  boxes=  771 bars= 24143 signals=  81 closed_trades=  78
+PASS BTCUSDT exits_D         T_cut=2022-10-02 23:00:00+00:00  boxes=  771 bars= 24144 signals=  81 closed_trades=  79
+PASS BTCUSDT exits_D         T_cut=2022-11-02 07:00:00+00:00  boxes=  795 bars= 24872 signals=  82 closed_trades=  80
+PASS BTCUSDT exits_D         T_cut=2022-11-02 08:00:00+00:00  boxes=  795 bars= 24873 signals=  83 closed_trades=  80
+PASS BTCUSDT exits_D         T_cut=2023-04-09 07:00:00+00:00  boxes=  917 bars= 28664 signals=  96 closed_trades=  93
+PASS BTCUSDT exits_D         T_cut=2023-04-09 08:00:00+00:00  boxes=  917 bars= 28665 signals=  97 closed_trades=  93
+PASS BTCUSDT exits_D         T_cut=2023-05-30 22:00:00+00:00  boxes=  962 bars= 29903 signals= 102 closed_trades=  98
+PASS BTCUSDT exits_D         T_cut=2023-05-31 01:00:00+00:00  boxes=  962 bars= 29906 signals= 102 closed_trades=  98
+PASS BTCUSDT exits_D         T_cut=2023-06-14 13:00:00+00:00  boxes=  978 bars= 30254 signals= 104 closed_trades= 101
+PASS BTCUSDT exits_D         T_cut=2023-08-28 21:00:00+00:00  boxes= 1046 bars= 32062 signals= 110 closed_trades= 107
+PASS BTCUSDT exits_D         T_cut=2023-08-28 22:00:00+00:00  boxes= 1046 bars= 32063 signals= 111 closed_trades= 107
+PASS BTCUSDT exits_D         T_cut=2023-09-02 15:00:00+00:00  boxes= 1052 bars= 32176 signals= 111 closed_trades= 108
+PASS BTCUSDT exits_D         T_cut=2023-09-02 16:00:00+00:00  boxes= 1052 bars= 32177 signals= 111 closed_trades= 108
+PASS BTCUSDT exits_D         T_cut=2023-12-24 09:00:00+00:00  boxes= 1142 bars= 34882 signals= 119 closed_trades= 115
+PASS BTCUSDT exits_D         T_cut=2023-12-24 10:00:00+00:00  boxes= 1142 bars= 34883 signals= 119 closed_trades= 115
+PASS BTCUSDT exits_D         T_cut=2024-02-02 17:00:00+00:00  boxes= 1178 bars= 35850 signals= 124 closed_trades= 121
+PASS BTCUSDT exits_D         T_cut=2024-02-02 18:00:00+00:00  boxes= 1178 bars= 35851 signals= 125 closed_trades= 121
+PASS BTCUSDT exits_D         T_cut=2024-07-19 06:00:00+00:00  boxes= 1311 bars= 39871 signals= 135 closed_trades= 131
+PASS BTCUSDT exits_D         T_cut=2024-07-19 07:00:00+00:00  boxes= 1311 bars= 39872 signals= 135 closed_trades= 132
+PASS BTCUSDT exits_D         T_cut=2024-08-13 13:00:00+00:00  boxes= 1333 bars= 40478 signals= 135 closed_trades= 132
+PASS BTCUSDT exits_D         T_cut=2024-09-06 05:00:00+00:00  boxes= 1352 bars= 41046 signals= 137 closed_trades= 134
+PASS BTCUSDT exits_D         T_cut=2024-09-06 06:00:00+00:00  boxes= 1352 bars= 41047 signals= 138 closed_trades= 134
+PASS BTCUSDT exits_D         T_cut=2025-04-21 15:00:00+00:00  boxes= 1526 bars= 46503 signals= 147 closed_trades= 143
+PASS BTCUSDT exits_D         T_cut=2025-05-18 20:00:00+00:00  boxes= 1548 bars= 47156 signals= 149 closed_trades= 144
+PASS BTCUSDT exits_D         T_cut=2025-05-18 21:00:00+00:00  boxes= 1548 bars= 47157 signals= 149 closed_trades= 145
+PASS BTCUSDT exits_D         T_cut=2025-05-25 14:00:00+00:00  boxes= 1553 bars= 47318 signals= 150 closed_trades= 145
+PASS BTCUSDT exits_D         T_cut=2025-05-25 15:00:00+00:00  boxes= 1553 bars= 47319 signals= 150 closed_trades= 146
+PASS BTCUSDT exits_D         T_cut=2025-06-05 01:00:00+00:00  boxes= 1560 bars= 47569 signals= 151 closed_trades= 146
+PASS BTCUSDT exits_D         T_cut=2025-06-05 02:00:00+00:00  boxes= 1560 bars= 47570 signals= 151 closed_trades= 147
+PASS BTCUSDT exits_D         T_cut=2025-06-09 00:00:00+00:00  boxes= 1563 bars= 47664 signals= 151 closed_trades= 147
+PASS BTCUSDT exits_D         T_cut=2025-06-19 16:00:00+00:00  boxes= 1573 bars= 47920 signals= 151 closed_trades= 147
+PASS BTCUSDT exits_D         T_cut=2025-06-19 17:00:00+00:00  boxes= 1573 bars= 47921 signals= 152 closed_trades= 147
+PASS BTCUSDT exits_D         T_cut=2025-06-19 23:00:00+00:00  boxes= 1573 bars= 47927 signals= 152 closed_trades= 147
+PASS BTCUSDT exits_D         T_cut=2025-06-20 04:00:00+00:00  boxes= 1573 bars= 47932 signals= 152 closed_trades= 147
+PASS BTCUSDT exits_D         T_cut=2025-06-20 05:00:00+00:00  boxes= 1573 bars= 47933 signals= 152 closed_trades= 148
+PASS BTCUSDT exits_D         T_cut=2025-06-28 11:00:00+00:00  boxes= 1578 bars= 48131 signals= 152 closed_trades= 148
+PASS BTCUSDT exits_D         T_cut=2025-06-28 12:00:00+00:00  boxes= 1578 bars= 48132 signals= 152 closed_trades= 148
+PASS event cuts BTCUSDT exits_D: 89 cuts
+PASSED
+test_lookahead.py::test_no_lookahead_event_cuts[exits_D-ETHUSDT] PASS ETHUSDT exits_D         T_cut=2020-01-01 00:00:00+00:00  boxes=    0 bars=     1 signals=   0 closed_trades=   0
+PASS ETHUSDT exits_D         T_cut=2020-01-01 02:00:00+00:00  boxes=    0 bars=     3 signals=   0 closed_trades=   0
+PASS ETHUSDT exits_D         T_cut=2020-01-01 03:00:00+00:00  boxes=    0 bars=     4 signals=   0 closed_trades=   0
+PASS ETHUSDT exits_D         T_cut=2020-01-01 05:00:00+00:00  boxes=    0 bars=     6 signals=   0 closed_trades=   0
+PASS ETHUSDT exits_D         T_cut=2020-01-01 22:00:00+00:00  boxes=    0 bars=    23 signals=   0 closed_trades=   0
+PASS ETHUSDT exits_D         T_cut=2020-01-01 23:00:00+00:00  boxes=    0 bars=    24 signals=   0 closed_trades=   0
+PASS ETHUSDT exits_D         T_cut=2020-01-02 02:00:00+00:00  boxes=    0 bars=    27 signals=   0 closed_trades=   0
+PASS ETHUSDT exits_D         T_cut=2020-01-05 12:00:00+00:00  boxes=    0 bars=   109 signals=   0 closed_trades=   0
+PASS ETHUSDT exits_D         T_cut=2020-01-07 23:00:00+00:00  boxes=    1 bars=   168 signals=   0 closed_trades=   0
+PASS ETHUSDT exits_D         T_cut=2020-01-08 00:00:00+00:00  boxes=    1 bars=   169 signals=   0 closed_trades=   0
+PASS ETHUSDT exits_D         T_cut=2020-01-19 20:00:00+00:00  boxes=   13 bars=   453 signals=   0 closed_trades=   0
+PASS ETHUSDT exits_D         T_cut=2020-01-22 18:00:00+00:00  boxes=   17 bars=   523 signals=   0 closed_trades=   0
+PASS ETHUSDT exits_D         T_cut=2020-01-22 19:00:00+00:00  boxes=   17 bars=   524 signals=   1 closed_trades=   0
+PASS ETHUSDT exits_D         T_cut=2020-01-22 22:00:00+00:00  boxes=   17 bars=   527 signals=   1 closed_trades=   0
+PASS ETHUSDT exits_D         T_cut=2020-01-23 00:00:00+00:00  boxes=   17 bars=   529 signals=   1 closed_trades=   0
+PASS ETHUSDT exits_D         T_cut=2020-01-23 01:00:00+00:00  boxes=   17 bars=   530 signals=   1 closed_trades=   1
+PASS ETHUSDT exits_D         T_cut=2020-02-20 09:00:00+00:00  boxes=   34 bars=  1210 signals=   3 closed_trades=   2
+PASS ETHUSDT exits_D         T_cut=2020-02-20 10:00:00+00:00  boxes=   34 bars=  1211 signals=   3 closed_trades=   3
+PASS ETHUSDT exits_D         T_cut=2020-06-03 08:00:00+00:00  boxes=  116 bars=  3705 signals=   8 closed_trades=   7
+PASS ETHUSDT exits_D         T_cut=2020-06-03 09:00:00+00:00  boxes=  116 bars=  3706 signals=   8 closed_trades=   8
+PASS ETHUSDT exits_D         T_cut=2021-04-23 09:00:00+00:00  boxes=  356 bars= 11482 signals=  26 closed_trades=  25
+PASS ETHUSDT exits_D         T_cut=2021-04-23 10:00:00+00:00  boxes=  356 bars= 11483 signals=  26 closed_trades=  26
+PASS ETHUSDT exits_D         T_cut=2021-05-16 17:00:00+00:00  boxes=  368 bars= 12042 signals=  28 closed_trades=  27
+PASS ETHUSDT exits_D         T_cut=2021-05-16 18:00:00+00:00  boxes=  368 bars= 12043 signals=  28 closed_trades=  28
+PASS ETHUSDT exits_D         T_cut=2021-06-04 02:00:00+00:00  boxes=  382 bars= 12483 signals=  32 closed_trades=  32
+PASS ETHUSDT exits_D         T_cut=2021-06-08 00:00:00+00:00  boxes=  386 bars= 12577 signals=  33 closed_trades=  33
+PASS ETHUSDT exits_D         T_cut=2021-06-08 01:00:00+00:00  boxes=  386 bars= 12578 signals=  34 closed_trades=  33
+PASS ETHUSDT exits_D         T_cut=2021-06-17 15:00:00+00:00  boxes=  392 bars= 12808 signals=  36 closed_trades=  35
+PASS ETHUSDT exits_D         T_cut=2021-06-17 16:00:00+00:00  boxes=  392 bars= 12809 signals=  36 closed_trades=  36
+PASS ETHUSDT exits_D         T_cut=2022-02-03 09:00:00+00:00  boxes=  559 bars= 18346 signals=  57 closed_trades=  57
+PASS ETHUSDT exits_D         T_cut=2022-06-09 23:00:00+00:00  boxes=  651 bars= 21384 signals=  67 closed_trades=  67
+PASS ETHUSDT exits_D         T_cut=2022-06-10 00:00:00+00:00  boxes=  651 bars= 21385 signals=  68 closed_trades=  67
+PASS ETHUSDT exits_D         T_cut=2022-09-06 23:00:00+00:00  boxes=  711 bars= 23520 signals=  73 closed_trades=  72
+PASS ETHUSDT exits_D         T_cut=2022-09-07 00:00:00+00:00  boxes=  711 bars= 23521 signals=  73 closed_trades=  73
+PASS ETHUSDT exits_D         T_cut=2023-06-14 13:00:00+00:00  boxes=  942 bars= 30254 signals=  98 closed_trades=  98
+PASS ETHUSDT exits_D         T_cut=2023-07-10 21:00:00+00:00  boxes=  964 bars= 30886 signals= 100 closed_trades= 100
+PASS ETHUSDT exits_D         T_cut=2023-07-10 22:00:00+00:00  boxes=  964 bars= 30887 signals= 101 closed_trades= 100
+PASS ETHUSDT exits_D         T_cut=2023-07-22 06:00:00+00:00  boxes=  977 bars= 31159 signals= 103 closed_trades= 101
+PASS ETHUSDT exits_D         T_cut=2023-07-22 07:00:00+00:00  boxes=  977 bars= 31160 signals= 103 closed_trades= 102
+PASS ETHUSDT exits_D         T_cut=2024-04-24 16:00:00+00:00  boxes= 1212 bars= 37817 signals= 129 closed_trades= 127
+PASS ETHUSDT exits_D         T_cut=2024-06-03 20:00:00+00:00  boxes= 1243 bars= 38781 signals= 134 closed_trades= 130
+PASS ETHUSDT exits_D         T_cut=2024-06-03 21:00:00+00:00  boxes= 1243 bars= 38782 signals= 135 closed_trades= 130
+PASS ETHUSDT exits_D         T_cut=2024-09-07 08:00:00+00:00  boxes= 1319 bars= 41073 signals= 140 closed_trades= 135
+PASS ETHUSDT exits_D         T_cut=2024-10-05 14:00:00+00:00  boxes= 1342 bars= 41751 signals= 143 closed_trades= 137
+PASS ETHUSDT exits_D         T_cut=2024-10-05 15:00:00+00:00  boxes= 1343 bars= 41752 signals= 143 closed_trades= 138
+PASS ETHUSDT exits_D         T_cut=2025-04-20 23:00:00+00:00  boxes= 1495 bars= 46487 signals= 160 closed_trades= 154
+PASS ETHUSDT exits_D         T_cut=2025-04-21 00:00:00+00:00  boxes= 1495 bars= 46488 signals= 160 closed_trades= 155
+PASS ETHUSDT exits_D         T_cut=2025-04-28 18:00:00+00:00  boxes= 1501 bars= 46674 signals= 161 closed_trades= 155
+PASS ETHUSDT exits_D         T_cut=2025-04-28 19:00:00+00:00  boxes= 1501 bars= 46675 signals= 161 closed_trades= 156
+PASS ETHUSDT exits_D         T_cut=2025-05-23 23:00:00+00:00  boxes= 1528 bars= 47279 signals= 163 closed_trades= 157
+PASS ETHUSDT exits_D         T_cut=2025-05-24 00:00:00+00:00  boxes= 1528 bars= 47280 signals= 163 closed_trades= 158
+PASS ETHUSDT exits_D         T_cut=2025-05-29 23:00:00+00:00  boxes= 1535 bars= 47423 signals= 164 closed_trades= 158
+PASS ETHUSDT exits_D         T_cut=2025-05-30 00:00:00+00:00  boxes= 1535 bars= 47424 signals= 164 closed_trades= 159
+PASS ETHUSDT exits_D         T_cut=2025-06-29 15:00:00+00:00  boxes= 1557 bars= 48159 signals= 167 closed_trades= 161
+PASS ETHUSDT exits_D         T_cut=2025-06-29 16:00:00+00:00  boxes= 1557 bars= 48160 signals= 168 closed_trades= 161
+PASS ETHUSDT exits_D         T_cut=2025-06-29 18:00:00+00:00  boxes= 1557 bars= 48162 signals= 168 closed_trades= 161
+PASS ETHUSDT exits_D         T_cut=2025-06-29 20:00:00+00:00  boxes= 1557 bars= 48164 signals= 168 closed_trades= 161
+PASS ETHUSDT exits_D         T_cut=2025-06-29 21:00:00+00:00  boxes= 1557 bars= 48165 signals= 168 closed_trades= 162
+PASS ETHUSDT exits_D         T_cut=2025-06-30 19:00:00+00:00  boxes= 1558 bars= 48187 signals= 168 closed_trades= 162
+PASS ETHUSDT exits_D         T_cut=2025-06-30 20:00:00+00:00  boxes= 1558 bars= 48188 signals= 168 closed_trades= 162
+PASS event cuts ETHUSDT exits_D: 60 cuts
+PASSED
 test_lookahead.py::test_research_pipeline_matches_full_period PASS pipeline research-vs-full BTCUSDT baseline
 PASS pipeline research-vs-full BTCUSDT all_features_A
 PASS pipeline research-vs-full ETHUSDT baseline
 PASS pipeline research-vs-full ETHUSDT all_features_A
 PASSED
-test_lookahead.py::test_exit_levels_ignore_their_own_bar[all_features_A-BTCUSDT] PASS masked-last-bar BTCUSDT all_features_A: 25 in-position cuts
+test_lookahead.py::test_exit_levels_ignore_their_own_bar[all_features_A-BTCUSDT] PASS masked-last-bar BTCUSDT all_features_A: 31 in-position cuts
 PASSED
-test_lookahead.py::test_exit_levels_ignore_their_own_bar[all_features_A-ETHUSDT] PASS masked-last-bar ETHUSDT all_features_A: 25 in-position cuts
+test_lookahead.py::test_exit_levels_ignore_their_own_bar[all_features_A-ETHUSDT] PASS masked-last-bar ETHUSDT all_features_A: 30 in-position cuts
 PASSED
-test_lookahead.py::test_exit_levels_ignore_their_own_bar[exits_C-BTCUSDT] PASS masked-last-bar BTCUSDT exits_C: 26 in-position cuts
+test_lookahead.py::test_exit_levels_ignore_their_own_bar[exits_C-BTCUSDT] PASS masked-last-bar BTCUSDT exits_C: 33 in-position cuts
 PASSED
-test_lookahead.py::test_exit_levels_ignore_their_own_bar[exits_C-ETHUSDT] PASS masked-last-bar ETHUSDT exits_C: 28 in-position cuts
+test_lookahead.py::test_exit_levels_ignore_their_own_bar[exits_C-ETHUSDT] PASS masked-last-bar ETHUSDT exits_C: 35 in-position cuts
+PASSED
+test_lookahead.py::test_state_machine_prefix_at_every_box_switch[baseline-BTCUSDT] PASS switch-prefix BTCUSDT baseline: 3156 kernel-level cuts
+PASSED
+test_lookahead.py::test_state_machine_prefix_at_every_box_switch[baseline-ETHUSDT] PASS switch-prefix ETHUSDT baseline: 3116 kernel-level cuts
+PASSED
+test_lookahead.py::test_state_machine_prefix_at_every_box_switch[all_features_A-BTCUSDT] PASS switch-prefix BTCUSDT all_features_A: 2888 kernel-level cuts
+PASSED
+test_lookahead.py::test_state_machine_prefix_at_every_box_switch[all_features_A-ETHUSDT] PASS switch-prefix ETHUSDT all_features_A: 2834 kernel-level cuts
+PASSED
+test_lookahead.py::test_state_machine_prefix_at_every_box_switch[all_features_B-BTCUSDT] PASS switch-prefix BTCUSDT all_features_B: 3156 kernel-level cuts
+PASSED
+test_lookahead.py::test_state_machine_prefix_at_every_box_switch[all_features_B-ETHUSDT] PASS switch-prefix ETHUSDT all_features_B: 3116 kernel-level cuts
 PASSED
 test_lookahead.py::test_4h_utc_boundaries_and_gap_bar PASSED
 test_lookahead.py::test_pivot_right_bar_confirmation_lag PASSED
@@ -628,8 +803,9 @@ test_lookahead.py::test_funding_table_is_mandatory_and_must_cover_window PASSED
 test_lookahead.py::test_funding_recompute_close_exit_on_partial_bar PASSED
 test_lookahead.py::test_risk_sizing_leverage_cap PASSED
 test_lookahead.py::test_numba_and_python_paths_identical PASSED
+test_lookahead.py::test_sealed_failures_carry_no_frames_or_values PASSED
 test_lookahead.py::test_daily_sharpe_counts_flat_days PASSED
-test_lookahead.py::test_full_period_runtime_benchmark full-period 1H bars=59903 boxes=1956 best total=0.167s numba=True
+test_lookahead.py::test_full_period_runtime_benchmark full-period 1H bars=59903 boxes=1956 best total=0.187s numba=True
 PASSED
 test_audit_regressions.py::test_spec1_invalid_persists_on_overlapping_box[False-False] PASSED
 test_audit_regressions.py::test_spec1_invalid_persists_on_overlapping_box[False-True] PASSED
@@ -747,5 +923,25 @@ test_audit_regressions.py::test_ex3_6_capped_position_straddling_segment_start_i
 test_audit_regressions.py::test_ex3_8_first_day_regime_and_short_4h_inputs PASSED
 test_audit_regressions.py::test_doc3_6_cache_isolated_from_index_writes PASSED
 test_audit_regressions.py::test_ex3_7_backtest_result_repr_shows_no_values PASSED
+test_audit_regressions.py::test_sm4_kernel_matches_independent_reference_on_random_markets PASSED
+test_audit_regressions.py::test_sm4_claimed_requirement_cleared_at_current_box_band_top PASSED
+test_audit_regressions.py::test_sm4_unclaimed_requirement_cleared_at_anchor_band_top_in_any_state PASSED
+test_audit_regressions.py::test_sm4_activation_requirement_write_time_is_activation_open[2-True] PASSED
+test_audit_regressions.py::test_sm4_activation_requirement_write_time_is_activation_open[3-False] PASSED
+test_audit_regressions.py::test_sm4_requirement_cleared_on_the_activation_bar PASSED
+test_audit_regressions.py::test_sm4_rejected_box_writes_activation_requirement PASSED
+test_audit_regressions.py::test_sm4_memory_swap_remove_keeps_surviving_entry_time PASSED
+test_audit_regressions.py::test_sm4_requirement_swap_remove_keeps_claim_flag_on_clear PASSED
+test_audit_regressions.py::test_sm4_requirement_swap_remove_keeps_claim_flag_on_expiry PASSED
+test_audit_regressions.py::test_sm4_memory_expiry_checks_every_entry_after_swap PASSED
+test_audit_regressions.py::test_sm4_return_box_claims_before_expiry[8] PASSED
+test_audit_regressions.py::test_sm4_return_box_claims_before_expiry[9] PASSED
+test_audit_regressions.py::test_sm4_unclaimed_requirement_expires_at_carry_switch PASSED
+test_audit_regressions.py::test_sm4_requirement_boundaries_are_strict_and_inclusive PASSED
+test_audit_regressions.py::test_sm4_signal_anchor_is_the_box_current_at_the_signal PASSED
+test_audit_regressions.py::test_sm4_carry_switch_does_not_claim_requirements PASSED
+test_audit_regressions.py::test_sm4_invalid_boxes_claim_requirements PASSED
+test_audit_regressions.py::test_ex4_4_cache_isolated_from_box_rangeindex_writes PASSED
+test_audit_regressions.py::test_ex4_7_series_helpers_are_locked_past_oos_start PASSED
 
-======================== 150 passed in 79.46s (0:01:19) ========================
+======================= 179 passed in 126.04s (0:02:06) ========================
