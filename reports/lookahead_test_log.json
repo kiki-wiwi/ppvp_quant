@@ -1,0 +1,147 @@
+{
+  "seed": 20261104,
+  "cuts": [
+    "2022-02-08 17:00:00+00:00",
+    "2024-11-16 21:00:00+00:00",
+    "2025-04-08 00:00:00+00:00",
+    "2026-01-21 20:00:00+00:00",
+    "2026-07-29 23:00:00+00:00"
+  ],
+  "results": [
+    {
+      "t_cut": "2022-02-08 17:00:00+00:00",
+      "boxes_compared": 592,
+      "bars_compared": 18474,
+      "signals_compared": 85,
+      "closed_trades_compared": 74,
+      "entries_compared": 74,
+      "config": "baseline"
+    },
+    {
+      "t_cut": "2024-11-16 21:00:00+00:00",
+      "boxes_compared": 1409,
+      "bars_compared": 42765,
+      "signals_compared": 181,
+      "closed_trades_compared": 156,
+      "entries_compared": 156,
+      "config": "baseline"
+    },
+    {
+      "t_cut": "2025-04-08 00:00:00+00:00",
+      "boxes_compared": 1513,
+      "bars_compared": 46176,
+      "signals_compared": 187,
+      "closed_trades_compared": 162,
+      "entries_compared": 162,
+      "config": "baseline"
+    },
+    {
+      "t_cut": "2026-01-21 20:00:00+00:00",
+      "boxes_compared": 1735,
+      "bars_compared": 53108,
+      "signals_compared": 205,
+      "closed_trades_compared": 180,
+      "entries_compared": 180,
+      "config": "baseline"
+    },
+    {
+      "t_cut": "2026-07-29 23:00:00+00:00",
+      "boxes_compared": 1877,
+      "bars_compared": 57647,
+      "signals_compared": 222,
+      "closed_trades_compared": 196,
+      "entries_compared": 196,
+      "config": "baseline"
+    },
+    {
+      "t_cut": "2022-02-08 17:00:00+00:00",
+      "boxes_compared": 537,
+      "bars_compared": 18474,
+      "signals_compared": 62,
+      "closed_trades_compared": 24,
+      "entries_compared": 24,
+      "config": "all_features_A"
+    },
+    {
+      "t_cut": "2024-11-16 21:00:00+00:00",
+      "boxes_compared": 1282,
+      "bars_compared": 42765,
+      "signals_compared": 157,
+      "closed_trades_compared": 59,
+      "entries_compared": 59,
+      "config": "all_features_A"
+    },
+    {
+      "t_cut": "2025-04-08 00:00:00+00:00",
+      "boxes_compared": 1386,
+      "bars_compared": 46176,
+      "signals_compared": 168,
+      "closed_trades_compared": 64,
+      "entries_compared": 64,
+      "config": "all_features_A"
+    },
+    {
+      "t_cut": "2026-01-21 20:00:00+00:00",
+      "boxes_compared": 1596,
+      "bars_compared": 53108,
+      "signals_compared": 189,
+      "closed_trades_compared": 74,
+      "entries_compared": 74,
+      "config": "all_features_A"
+    },
+    {
+      "t_cut": "2026-07-29 23:00:00+00:00",
+      "boxes_compared": 1729,
+      "bars_compared": 57647,
+      "signals_compared": 199,
+      "closed_trades_compared": 74,
+      "entries_compared": 74,
+      "config": "all_features_A"
+    },
+    {
+      "t_cut": "2022-02-08 17:00:00+00:00",
+      "boxes_compared": 592,
+      "bars_compared": 18474,
+      "signals_compared": 55,
+      "closed_trades_compared": 44,
+      "entries_compared": 44,
+      "config": "all_features_B"
+    },
+    {
+      "t_cut": "2024-11-16 21:00:00+00:00",
+      "boxes_compared": 1409,
+      "bars_compared": 42765,
+      "signals_compared": 135,
+      "closed_trades_compared": 109,
+      "entries_compared": 109,
+      "config": "all_features_B"
+    },
+    {
+      "t_cut": "2025-04-08 00:00:00+00:00",
+      "boxes_compared": 1513,
+      "bars_compared": 46176,
+      "signals_compared": 142,
+      "closed_trades_compared": 115,
+      "entries_compared": 115,
+      "config": "all_features_B"
+    },
+    {
+      "t_cut": "2026-01-21 20:00:00+00:00",
+      "boxes_compared": 1735,
+      "bars_compared": 53108,
+      "signals_compared": 156,
+      "closed_trades_compared": 127,
+      "entries_compared": 127,
+      "config": "all_features_B"
+    },
+    {
+      "t_cut": "2026-07-29 23:00:00+00:00",
+      "boxes_compared": 1877,
+      "bars_compared": 57647,
+      "signals_compared": 169,
+      "closed_trades_compared": 138,
+      "entries_compared": 138,
+      "config": "all_features_B"
+    }
+  ]
+}
