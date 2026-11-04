@@ -3,6 +3,7 @@ pipeline.py — 数据 → 4H PPVP 箱体 → 1H 状态机信号 → 回测 → 
 
 ``pipeline.run`` 是 Phase 2/3 唯一受支持的研究入口。研究阶段默认 ``end = RESEARCH_DATA_END (= 2025-07-01)``：
 OOS 区间的 K 线根本不会被送入引擎。只有在 Phase 4 锁定最终参数后，才允许以 ``allow_oos=True`` 运行到 2026-11-01。
+跨品种验证标的（config.HOLDOUT_SYMBOLS，即 ETH）在参数锁定前只允许 ``segments=()`` 的结构性运行，不出分段绩效。
 OOS 锁在每个入口（load_market / get_boxes / run）缓存查找之前检查；缓存对象以深拷贝返回（每次约 1 ms），
 列数据与行/列索引都复制（DatetimeIndex.asi8 是可写视图，只复制列数据时经索引的就地写入仍会污染缓存），
 因此调用方通过公开 API 就地修改返回的数据（含 ``Series.array``、``index.asi8`` 写入、pandas 2.x 无写时复制的情形）
@@ -13,7 +14,7 @@ from __future__ import annotations
 import pandas as pd
 
 from backtester import run_backtest
-from config import (BASELINE_BACKTEST, BASELINE_STRATEGY, OOS_END, RESEARCH_DATA_END, RESEARCH_START,
+from config import (BASELINE_BACKTEST, BASELINE_STRATEGY, HOLDOUT_SYMBOLS, OOS_END, RESEARCH_DATA_END, RESEARCH_START,
                     BacktestConfig, StrategyConfig)
 from data_loader import load_funding, load_klines
 from metrics import OOSLockedError, segment_report
@@ -80,6 +81,9 @@ def get_boxes(symbol: str, scfg: StrategyConfig, end: pd.Timestamp = RESEARCH_DA
 
 def run(symbol: str = "BTCUSDT", scfg: StrategyConfig = BASELINE_STRATEGY, bcfg: BacktestConfig = BASELINE_BACKTEST,
         end: pd.Timestamp = RESEARCH_DATA_END, segments=("IS", "VAL"), allow_oos: bool = False) -> dict:
+    if symbol in HOLDOUT_SYMBOLS and segments and not allow_oos:
+        # ETH 是跨品种零改参验证集：参数锁定前只允许结构性运行（segments=()），不出分段绩效
+        raise OOSLockedError(f"{symbol} is the cross-asset holdout; segment metrics are locked until Phase 4")
     df1h, fund, spot_d = load_market(symbol, end, allow_oos)
     boxes, df4h = get_boxes(symbol, scfg, end, allow_oos)
     sig = generate_signals(df1h, scfg, boxes, df4h, spot_d)

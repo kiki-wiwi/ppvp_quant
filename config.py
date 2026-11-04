@@ -31,6 +31,11 @@ SEGMENTS = {"IS": (IS_START, IS_END), "VAL": (VAL_START, VAL_END), "OOS": (OOS_S
 # 2020-2026 全量数据上做“截断 vs 全量”逐位相等检验与运行耗时基准，只输出通过/失败，不输出任何 OOS 统计量。
 RESEARCH_DATA_END = VAL_END
 
+# 跨品种验证标的：规格要求把 BTC 最终锁定的参数零修改迁移到 ETH（2020-2026 全区间）检验普适性，
+# 因此 ETH 的任何绩效统计（含 IS/VAL 区间）在参数锁定前同样封存；结构性计数（信号、箱体）不受限制。
+RESEARCH_SYMBOL = "BTCUSDT"
+HOLDOUT_SYMBOLS = ("ETHUSDT",)
+
 
 @dataclass(frozen=True)
 class StrategyConfig:
