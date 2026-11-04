@@ -55,6 +55,13 @@ VARIANTS = {
     "frictionless": {"include_funding": False, "slippage": 0.0, "perp_taker_fee": 0.0, "perp_maker_fee": 0.0},
     "spot_10bp": {"venue": "spot"},
 }
+# Phase 1 记录承诺：carry 与 roll 是规格之外的状态机扩展，Phase 2 同时报告二者开、关时的基线（只报告总体指标）
+STRUCT_VARIANTS = {
+    "carry_on_roll_on (baseline)": {},
+    "carry_off": {"carry_touches_on_box_update": False},
+    "roll_off": {"roll_failed_second_touch": False},
+    "carry_off_roll_off": {"carry_touches_on_box_update": False, "roll_failed_second_touch": False},
+}
 BUCKETS = {                                   # 左闭右开，事先选定
     "rr_fill": [0.0, 0.5, 1.0, 2.0, np.inf],
     "width_atr": [0.0, 2.5, 4.0, np.inf],
@@ -433,6 +440,16 @@ def main() -> None:
                                      for seg in ("IS", "VAL")}
         if vname == "frictionless":
             d_free = daily_equity(o["result"])
+
+    # ---- 2b. 基线定义的敏感性：carry / roll 开关（同一执行配置，只报告总体指标）----
+    R["struct_variants"] = {}
+    for vname, kw in STRUCT_VARIANTS.items():
+        o = out if not kw else pipeline.run(SYMBOL, scfg.with_(**kw), bcfg)
+        bud = signal_budget(o["signals"], o["result"].trades)
+        R["struct_variants"][vname] = {seg: {"raw_signals": bud[seg]["raw_signals"], "entries": bud[seg]["entries"],
+                                             **{k: o["report"][seg][k] for k in ("sharpe", "cagr", "total_return", "max_dd",
+                                                                                  "profit_factor", "win_rate", "avg_r")}}
+                                       for seg in ("IS", "VAL")}
 
     # ---- 3. IS 交易级归因 ----
     tf = A.trade_frame(res, df1h, out["boxes"], scfg)

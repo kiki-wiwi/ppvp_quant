@@ -1,7 +1,7 @@
 {
  "meta": {
   "symbol": "BTCUSDT",
-  "git_head": "d1bc53c",
+  "git_head": "a59f783",
   "strategy_key": "6feffb8a3fb0c7fa",
   "backtest_key": "5bc37091ab0d16cb",
   "data_first_bar": "2020-01-01T00:00:00+00:00",
@@ -10,7 +10,7 @@
   "n_boot": 5000,
   "seed": 20261104,
   "policy": "IS-only trade-level attribution; VAL headline only; no OOS; no ETH performance",
-  "runtime_s": 2.834277
+  "runtime_s": 3.424797
  },
  "headline": {
   "IS": {
@@ -261,6 +261,104 @@
     "win_rate": 0.366667,
     "avg_r": -0.350319,
     "trades": 30
+   }
+  }
+ },
+ "struct_variants": {
+  "carry_on_roll_on (baseline)": {
+   "IS": {
+    "raw_signals": 120,
+    "entries": 109,
+    "sharpe": -1.174067,
+    "cagr": -0.141229,
+    "total_return": -0.456338,
+    "max_dd": -0.467488,
+    "profit_factor": 0.450116,
+    "win_rate": 0.366972,
+    "avg_r": -0.340008
+   },
+   "VAL": {
+    "raw_signals": 32,
+    "entries": 30,
+    "sharpe": -0.525464,
+    "cagr": -0.046739,
+    "total_return": -0.069222,
+    "max_dd": -0.135857,
+    "profit_factor": 0.69825,
+    "win_rate": 0.4,
+    "avg_r": -0.25486
+   }
+  },
+  "carry_off": {
+   "IS": {
+    "raw_signals": 98,
+    "entries": 91,
+    "sharpe": -1.043521,
+    "cagr": -0.126215,
+    "total_return": -0.417283,
+    "max_dd": -0.441796,
+    "profit_factor": 0.462886,
+    "win_rate": 0.318681,
+    "avg_r": -0.409663
+   },
+   "VAL": {
+    "raw_signals": 25,
+    "entries": 24,
+    "sharpe": -0.676053,
+    "cagr": -0.056365,
+    "total_return": -0.083273,
+    "max_dd": -0.137744,
+    "profit_factor": 0.590109,
+    "win_rate": 0.291667,
+    "avg_r": -0.372005
+   }
+  },
+  "roll_off": {
+   "IS": {
+    "raw_signals": 104,
+    "entries": 95,
+    "sharpe": -0.961126,
+    "cagr": -0.116911,
+    "total_return": -0.392046,
+    "max_dd": -0.405484,
+    "profit_factor": 0.50232,
+    "win_rate": 0.389474,
+    "avg_r": -0.297275
+   },
+   "VAL": {
+    "raw_signals": 29,
+    "entries": 27,
+    "sharpe": -0.334752,
+    "cagr": -0.030338,
+    "total_return": -0.04512,
+    "max_dd": -0.113481,
+    "profit_factor": 0.775945,
+    "win_rate": 0.407407,
+    "avg_r": -0.213145
+   }
+  },
+  "carry_off_roll_off": {
+   "IS": {
+    "raw_signals": 90,
+    "entries": 85,
+    "sharpe": -0.910608,
+    "cagr": -0.111325,
+    "total_return": -0.376507,
+    "max_dd": -0.402736,
+    "profit_factor": 0.497393,
+    "win_rate": 0.341176,
+    "avg_r": -0.357329
+   },
+   "VAL": {
+    "raw_signals": 24,
+    "entries": 23,
+    "sharpe": -0.529929,
+    "cagr": -0.044355,
+    "total_return": -0.06573,
+    "max_dd": -0.121244,
+    "profit_factor": 0.645878,
+    "win_rate": 0.304348,
+    "avg_r": -0.341765
    }
   }
  },
