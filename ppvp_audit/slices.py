@@ -105,8 +105,10 @@ def low_rr_decomposition(tl: pd.DataFrame) -> dict:
             "share_entry_above_band_top": float(s["entry_above_band"].mean()),
             "share_entry_above_poc": float((s["entry_px"] > s["POC"]).mean()),
             "median_confirmation_range_atr": float(s["confirmation_range_atr"].median()) if "confirmation_range_atr" in s else None,
-            "share_profile_changed_between_tests": float(s["profile_changed_between_tests"].mean())
-            if "profile_changed_between_tests" in s else None,
+            "share_profile_changed_since_first_test_start": float(s["profile_changed_since_first_test_start"].mean())
+            if "profile_changed_since_first_test_start" in s else None,
+            "share_profile_changed_since_chain_start": float(s["profile_changed_since_chain_start"].mean())
+            if "profile_changed_since_chain_start" in s else None,
             "median_pattern_lag_bars": float(s["pattern_lag_bars"].median()),
             "share_tp_exit": float((s["exit_reason"] == "TP").mean()), "mean_net_R": float(s["r_multiple"].mean()),
         }
@@ -125,8 +127,9 @@ def plot_slice(r: pd.Series, df1h: pd.DataFrame, df4h: pd.DataFrame, sig: pd.Dat
     sig_t = pd.Timestamp(r["entry_time"])                 # 信号 K 线收盘 = 下单与成交时刻（基线按收盘价市价成交）
     exit_t = pd.Timestamp(r["exit_time"])
     box = boxes.loc[int(r["box_id"])]
-    t1 = df1h.index[int(r["t1_bar"])]
-    t0_1h = min(t1, df1h.index[int(r["t2_start"])]) - 36 * H
+    t1 = df1h.index[int(r["t1_bar"])]                     # 第 1 次测试最低点所在的 K 线
+    t_fs = pd.Timestamp(r["first_test_start_time"]) if "first_test_start_time" in r else t1
+    t0_1h = min(t1, t_fs, df1h.index[int(r["t2_start"])]) - 36 * H
     t9_1h = exit_t + 18 * H
     t0_4h = pd.Timestamp(box["window_start"]) - 8 * 4 * H
     fig, (ax4, ax1) = plt.subplots(2, 1, figsize=(10.5, 9.0), gridspec_kw={"height_ratios": [1, 1.25]})
@@ -160,11 +163,14 @@ def plot_slice(r: pd.Series, df1h: pd.DataFrame, df4h: pd.DataFrame, sig: pd.Dat
     ax1.fill_between(s1.index + H / 2, s1["zone_lo"], s1["zone_hi"], step="mid", color=C1, alpha=0.12, linewidth=0,
                      label="支撑带 [VAL−0.5ATR, VAL+0.5ATR]（决策时已知）")
     ax1.axvline(t1 + H / 2, color=C1, linestyle="--", linewidth=1.1, label="第 1 次测试低点所在 K 线")
-    b1 = int(r.get("profile_id_at_t1", r["box_id"]))
+    if t_fs != t1:
+        ax1.axvline(t_fs + H / 2, color=C1, linestyle=(0, (1, 3)), linewidth=1.1,
+                    label=f"第 1 次测试开始（roll {int(r.get('n_rolls', 0))} 次）")
+    b1 = int(r.get("profile_id_at_first_test_start", r["box_id"]))
     if b1 != int(r["box_id"]):
         v1 = float(boxes.loc[b1, "VAL"])
-        ax1.hlines(v1, t1, sig_t, color=C1, linestyle="--", linewidth=1.0,
-                   label=f"第 1 次测试时的箱体 {b1} 的 VAL（两次测试跨了箱体版本）")
+        ax1.hlines(v1, t_fs, sig_t, color=C1, linestyle="--", linewidth=1.0,
+                   label=f"第 1 次测试开始时的箱体 {b1} 的 VAL（跨了箱体版本）")
     if int(r.get("departure_bar", -1)) >= 0:
         ax1.axvline(df1h.index[int(r["departure_bar"])] + H / 2, color=C3, linestyle=":", linewidth=1.1,
                     label=f"脱离：整根 K 线高于带上沿（反弹 {r['departure_height_atr']:.2f} ATR）")

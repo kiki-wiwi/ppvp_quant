@@ -121,9 +121,11 @@ def fig5_numbers(out: dict, tf: pd.DataFrame) -> tuple[dict, pd.Series, pd.Serie
     in_w5 = tf["entry_time"].dt.strftime("%Y-%m").isin(months)
     # 同一 5 个月：按“这 13 笔交易本身”的对数收益占比（与按月净值的口径不同，二者都报告）
     trade_share = float(np.log1p(tf.loc[in_w5, "ret_on_base"]).sum() / np.log1p(tf["ret_on_base"]).sum())
-    costs = {"gross_pnl_at_fill": float(res.trades["gross_pnl"].sum()), "fees": float(res.trades["fees"].sum()),
-             "funding": float(res.trades["funding"].sum()), "slippage": float(tf["slip_usd"].sum()),
-             "net_pnl": float(res.trades["pnl"].sum())}
+    costs = {"gross_pnl_ref": float(tf["pre_cost_pnl"].sum()),
+             "slippage_impact_included_in_fill_prices": float(tf["slip_usd"].sum()),
+             "gross_pnl_at_fill": float(res.trades["gross_pnl"].sum()), "fees": float(res.trades["fees"].sum()),
+             "funding": float(res.trades["funding"].sum()), "net_pnl": float(res.trades["pnl"].sum()),
+             "identities": "gross_ref - slippage - fees - funding = net = gross_at_fill - fees - funding"}
     num = {
         "start_equity": float(d_is.iloc[0]), "final_equity": float(d_is.iloc[-1]),
         "total_return": float(d_is.iloc[-1] / d_is.iloc[0] - 1), "sharpe": sharpe(daily_returns(d_is)),

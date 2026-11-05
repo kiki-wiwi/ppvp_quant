@@ -48,13 +48,34 @@ def departure_diagnostics(sig: pd.DataFrame, df1h: pd.DataFrame, bars: np.ndarra
     return pd.DataFrame(rows)
 
 
-def box_lifecycle(boxes: pd.DataFrame, df1h: pd.DataFrame) -> pd.DataFrame:
-    """每个箱体（profile 版本）的确认、首次可被 1H 使用与被下一个箱体取代的时刻。"""
+def box_lifecycle(boxes: pd.DataFrame, df1h: pd.DataFrame, sig: pd.DataFrame | None = None) -> pd.DataFrame:
+    """每个箱体（profile 版本）的生命周期（审计 P-7）：与数据起点无关的键（两个枢轴所在 4H 的开盘时间）、确认 = 可用时刻、
+    首次可被 1H 使用的时刻、首次决策时刻（= 可用时刻 + 1h，即第一根使用它的 1H 收盘）、被下一个箱体取代的时刻，
+    以及作为当前箱体期间首次处于 INVALID 的时刻（区分激活即继承跌穿记忆与自身被放量跌穿）。"""
     b = boxes.copy()
-    first_use = np.searchsorted(df1h.index.asi8 if False else df1h.index.as_unit("ns").asi8,
-                                pd.DatetimeIndex(b["available_time"]).as_unit("ns").asi8, side="left")
+    first_use = np.searchsorted(df1h.index.as_unit("ns").asi8, pd.DatetimeIndex(b["available_time"]).as_unit("ns").asi8,
+                                side="left")
+    b["box_key"] = (pd.DatetimeIndex(b["pivot_a_time"]).strftime("%Y-%m-%dT%H:%M") + "|"
+                    + pd.DatetimeIndex(b["pivot_b_time"]).strftime("%Y-%m-%dT%H:%M"))
     b["available_at_1h"] = [df1h.index[i] if i < len(df1h) else pd.NaT for i in first_use]
+    b["first_decision_time"] = pd.DatetimeIndex(b["available_time"]) + NS_H
     b["superseded_at"] = list(pd.DatetimeIndex(b["available_time"])[1:]) + [pd.NaT]
+    if sig is not None:
+        st = sig["state"].to_numpy()
+        bid = sig["box_id"].to_numpy()
+        brk = sig["breakdown"].to_numpy()
+        inv_at, inv_act = [pd.NaT] * len(b), [False] * len(b)
+        for k in range(len(b)):
+            idx = np.flatnonzero(bid == k)
+            if len(idx) == 0:
+                continue
+            bad = idx[st[idx] == 5]
+            if len(bad):
+                inv_at[k] = df1h.index[bad[0]] + NS_H
+                # 激活即失效且该根本身没有放量跌穿 = 继承了此前的跌穿记忆；激活那一根自己放量跌穿算作“自身被跌穿”
+                inv_act[k] = bool(bad[0] == idx[0] and not brk[idx[0]])
+        b["invalidated_at"] = inv_at
+        b["invalid_from_activation"] = inv_act
     return b
 
 
@@ -65,9 +86,14 @@ def opportunities(out: dict, scfg: StrategyConfig, bcfg: BacktestConfig, version
     bars = np.flatnonzero(sig["sig_raw"].to_numpy())
     o, h, l, c = (df1h[k].to_numpy(dtype=np.float64) for k in ("open", "high", "low", "close"))
     slip = float(bcfg.slippage)
-    bx = box_lifecycle(boxes, df1h)
+    bx = box_lifecycle(boxes, df1h, sig)
     sbox = sig["box_id"].to_numpy(dtype=np.int64)
     t1b = sig["t1_bar"].to_numpy(dtype=np.int64)
+    from .sm_trace import trace
+    tr_ = trace(df1h, scfg, boxes)
+    sq, ch, nr = (tr_[k][bars].astype(np.int64) for k in ("seq_start", "chain_start", "n_rolls"))
+    if not np.array_equal(tr_["core"][4], sig["sig_raw"].to_numpy()):
+        raise RuntimeError("state-machine trace does not reproduce the signals")
     t2s = sig["t2_start"].to_numpy(dtype=np.int64)
     entry_ref = c[bars]
     entry_exp = entry_ref * (1.0 + slip)
@@ -87,8 +113,14 @@ def opportunities(out: dict, scfg: StrategyConfig, bcfg: BacktestConfig, version
         "pivot_pair": (bx["pivot_a_type"].astype(str) + bx["pivot_b_type"].astype(str)).to_numpy()[sbox[bars]],
         "window_start": pd.DatetimeIndex(bx["window_start"].to_numpy()[sbox[bars]]),
         "window_end": pd.DatetimeIndex(bx["window_end"].to_numpy()[sbox[bars]]),
-        "t1_bar": t1b[bars], "t1_time": df1h.index[t1b[bars]], "t1_low": sig["t1_low"].to_numpy()[bars],
-        "profile_id_at_t1": sbox[t1b[bars]],
+        "box_key": bx["box_key"].to_numpy()[sbox[bars]],
+        "profile_first_decision_time": pd.DatetimeIndex(bx["first_decision_time"].to_numpy()[sbox[bars]]),
+        "profile_invalidated_at": pd.DatetimeIndex(bx["invalidated_at"].to_numpy()[sbox[bars]]),
+        # 第 1 次测试：t1_low_* 是其最低点所在的 K 线（状态机的 t1_bar），first_test_start_* 是它开始的 K 线（审计 P-6）
+        "first_test_start_bar": sq, "first_test_start_time": df1h.index[sq], "profile_id_at_first_test_start": sbox[sq],
+        "chain_start_bar": ch, "chain_start_time": df1h.index[ch], "profile_id_at_chain_start": sbox[ch], "n_rolls": nr,
+        "t1_low_bar": t1b[bars], "t1_low_time": df1h.index[t1b[bars]], "t1_low": sig["t1_low"].to_numpy()[bars],
+        "profile_id_at_t1_low": sbox[t1b[bars]],
         "t2_start_bar": t2s[bars], "t2_start_time": df1h.index[t2s[bars]], "t2_low": sig["t2_low"].to_numpy()[bars],
         "profile_id_at_t2_start": sbox[t2s[bars]],
         "pattern": sig["pattern"].to_numpy()[bars],
@@ -106,11 +138,22 @@ def opportunities(out: dict, scfg: StrategyConfig, bcfg: BacktestConfig, version
         "next_open": np.where(bars + 1 < len(df1h), o[np.minimum(bars + 1, len(df1h) - 1)], np.nan),
     })
     df["next_open_vs_close_bp"] = (df["next_open"] / df["entry_ref_close"] - 1.0) * 1e4
-    df["profile_changed_between_tests"] = (df["profile_id_at_t1"] != df["profile_id"]) | (df["profile_id_at_t2_start"] != df["profile_id"])
+    n_sw = lambda a, b: np.array([len(np.unique(sbox[x:y + 1])) - 1 for x, y in zip(a, b)])  # noqa: E731
+    df["n_profile_switches_since_first_test_start"] = n_sw(sq, bars)
+    df["n_profile_switches_since_chain_start"] = n_sw(ch, bars)
+    df["profile_changed_since_first_test_start"] = df["n_profile_switches_since_first_test_start"] > 0
+    df["profile_changed_since_chain_start"] = df["n_profile_switches_since_chain_start"] > 0
+    df["signal_at_profile_supersede_instant"] = df["signal_time"] == df["profile_superseded_at"]
     df = pd.concat([df, departure_diagnostics(sig, df1h, bars, scfg)], axis=1)
     reg = A.regime_features(df1h, out["df4h"], spot, bars)
     reg.columns = [f"regime_{k}" if k != "daily_label" else "regime_asof_daily_label" for k in reg.columns]
     df = pd.concat([df, reg], axis=1)
+    # 来源标记（审计 D-3、D-6、D-10）：信号箱体分布窗口内的缺失 / 补数 / 疑似部分小时数；市场状态特征是否用到现货预热
+    from . import provenance as P
+    bf = P.box_flags(boxes, P.bar_flags(df1h))
+    for col in bf.columns:
+        df[f"profile_{col}"] = bf[col].to_numpy()[sbox[bars]]
+    df = pd.concat([df, P.spot_warmup_dependence(df["signal_time"]).reset_index(drop=True)], axis=1)
     # 去向
     tradable = sig["signal"].to_numpy()[bars]
     status = np.where(sig["block_rr"].to_numpy()[bars], "blocked_rr_vah_not_above_close",
@@ -144,12 +187,14 @@ def trade_ledger(out: dict, scfg: StrategyConfig, bcfg: BacktestConfig, version:
     tf["net_pnl"] = tf["pnl"]
     assert np.allclose(tf["gross_pnl"] - tf["commission"] - tf["funding_cashflow"], tf["net_pnl"], rtol=0, atol=1e-6)
     tf["initial_risk_usd"] = q * (ep - tf["sl"].to_numpy())
-    tf["gross_R_ref"] = tf["gross_pnl_ref"] / tf["initial_risk_usd"]
+    tf["gross_R_ref"] = tf["gross_pnl_ref"] / tf["initial_risk_usd"]          # 参考价毛盈亏 / 按成交价计算的初始风险
     tf["net_R"] = tf["net_pnl"] / tf["initial_risk_usd"]
     tf["risk_pct_of_equity"] = tf["initial_risk_usd"] / tf["equity_at_entry"]
     tf["return_on_notional"] = tf["net_pnl"] / tf["notional"]
     tf["return_on_equity"] = tf["net_pnl"] / tf["equity_at_entry"]
-    tf["hold_hours"] = tf["hold_bars"]
+    # 离场 K 线收盘记账：止损 / 止盈实际发生在离场那根之内，真实持有时间在 (h − 1, h] 之间（审计 D-13）
+    tf["hours_to_exit_bar_close"] = tf["hold_bars"]
+    tf["gross_R_ref_over_ref_risk"] = tf["gross_pnl_ref"] / (q * (tf["entry_ref"] - tf["sl"]))
     h = df1h["high"].to_numpy(dtype=np.float64)
     xb = tf["exit_bar"].to_numpy(dtype=np.int64)
     sl_exit = (tf["exit_reason"] == "SL").to_numpy()

@@ -24,14 +24,21 @@ def build(version: str, scfg=BASELINE_STRATEGY, bcfg=BASELINE_BACKTEST, out: dic
     op = L.opportunities(out, scfg, bcfg, version)
     tl = L.trade_ledger(out, scfg, bcfg, version)
     add = op[op["status"] == "filled"].set_index("signal_bar")
-    keep = ["profile_id_at_t1", "profile_id_at_t2_start", "profile_changed_between_tests", "departure_bar",
-            "departure_height_atr", "second_test_qualified_by", "touch_gap_bars_from_t1_last", "confirmation_range_atr",
-            "normalized_entry_position", "next_open_vs_close_bp", "pivot_a_time", "pivot_b_time",
-            "profile_available_time", "profile_superseded_at"] + [c for c in op.columns if c.startswith("regime_")]
+    keep = ["box_key", "first_test_start_bar", "first_test_start_time", "profile_id_at_first_test_start",
+            "chain_start_bar", "chain_start_time", "profile_id_at_chain_start", "n_rolls", "profile_id_at_t1_low",
+            "profile_id_at_t2_start", "n_profile_switches_since_first_test_start", "n_profile_switches_since_chain_start",
+            "profile_changed_since_first_test_start", "profile_changed_since_chain_start",
+            "signal_at_profile_supersede_instant", "departure_bar", "departure_height_atr", "second_test_qualified_by",
+            "touch_gap_bars_from_t1_last", "confirmation_range_atr", "normalized_entry_position", "next_open_vs_close_bp",
+            "pivot_a_time", "pivot_b_time", "profile_available_time", "profile_first_decision_time",
+            "profile_superseded_at", "profile_invalidated_at", "profile_window_n_missing", "profile_window_n_imputed",
+            "profile_window_n_partial"] + [c for c in op.columns if c.startswith("regime_")]
     tl = tl.join(add[keep], on="entry_bar")
     tl["above_sma200"] = tl["regime_above_sma200"]
     rc = L.reconciliation(tl)
     sfx = "" if version == "B_audited" else f"_{version}"
+    bl = L.box_lifecycle(out["boxes"], out["df1h"], out["signals"])
+    bl.to_csv(OUT / f"box_lifecycle{sfx}.csv", index=True, index_label="profile_id", float_format="%.10g")
     op.to_csv(OUT / f"signal_opportunities{sfx}.csv", index=False, float_format="%.10g")
     tl.to_csv(OUT / f"trades{sfx}.csv", index=False, float_format="%.10g")
     rc.to_csv(OUT / f"trade_reconciliation{sfx}.csv", index=False, float_format="%.10g")
@@ -46,7 +53,8 @@ def build(version: str, scfg=BASELINE_STRATEGY, bcfg=BASELINE_BACKTEST, out: dic
     months = [f"{int(y)}-{int(m):02d}" for y, m in w5[["year", "month"]].to_numpy()]
     worst = tl[tl["entry_time"].dt.strftime("%Y-%m").isin(months)].copy()
     cols = ["entry_time", "exit_time", "exit_reason", "rr_fill", "d_sl", "d_tp", "width_atr", "sl_atr",
-            "departure_height_atr", "profile_changed_between_tests", "pattern_name", "sfp", "regime_above_sma200",
+            "departure_height_atr", "profile_changed_since_first_test_start", "profile_changed_since_chain_start",
+            "n_rolls", "pattern_name", "sfp", "regime_above_sma200",
             "regime_mom20d", "regime_ret24h", "regime_hours_since_crash", "net_pnl", "return_on_equity", "net_R",
             "ambiguous_exit_sl_and_tp", "ambiguous_exit_sl_and_poc"]
     worst[cols].to_csv(OUT / f"worst_month_trades{sfx}.csv", index=False, float_format="%.10g")
@@ -65,10 +73,19 @@ def build(version: str, scfg=BASELINE_STRATEGY, bcfg=BASELINE_BACKTEST, out: dic
         "opportunities": int(len(op)), "status_counts": op["status"].value_counts().to_dict(),
         "second_test_qualified_by_all": op["second_test_qualified_by"].value_counts().to_dict(),
         "second_test_qualified_by_filled": op.loc[op["status"] == "filled", "second_test_qualified_by"].value_counts().to_dict(),
-        "filled_profile_changed_between_tests": int(op.loc[op["status"] == "filled", "profile_changed_between_tests"].sum()),
+        "filled_profile_changed_since_first_test_start": int(op.loc[op["status"] == "filled", "profile_changed_since_first_test_start"].sum()),
+        "filled_profile_changed_since_chain_start": int(op.loc[op["status"] == "filled", "profile_changed_since_chain_start"].sum()),
+        "filled_n_rolls": op.loc[op["status"] == "filled", "n_rolls"].value_counts().sort_index().to_dict(),
+        "filled_signal_at_profile_supersede_instant": int(op.loc[op["status"] == "filled", "signal_at_profile_supersede_instant"].sum()),
+        "filled_regime_sma200_uses_spot_warmup": int(op.loc[op["status"] == "filled", "regime_sma200_uses_spot_warmup"].sum()),
+        "filled_profile_window_with_partial_hour": int((op.loc[op["status"] == "filled", "profile_window_n_partial"] > 0).sum()),
         "filled_departure_height_atr_quantiles": op.loc[op["status"] == "filled", "departure_height_atr"].quantile(
             [0, 0.1, 0.25, 0.5, 0.75, 0.9, 1]).to_dict(),
         "next_open_vs_close_bp_filled": op.loc[op["status"] == "filled", "next_open_vs_close_bp"].describe().to_dict(),
+        "boxes": {"n": int(len(bl)), "ever_invalid_while_current": int(bl["invalidated_at"].notna().sum()),
+                  "invalid_from_activation": int(bl["invalid_from_activation"].sum()),
+                  "own_breakdown_while_current": int((bl["invalidated_at"].notna() & ~bl["invalid_from_activation"]).sum()),
+                  "same_type_pivot_pairs": int((bl["pivot_a_type"] == bl["pivot_b_type"]).sum())},
         "trades": int(len(tl)),
         "intrabar_path_ambiguity": {
             "exit_bar_touches_sl_and_tp": int(tl["ambiguous_exit_sl_and_tp"].sum()),

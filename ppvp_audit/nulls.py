@@ -195,3 +195,50 @@ if __name__ == "__main__":
     import json
     r = run()
     print(json.dumps(r, default=str, ensure_ascii=False, indent=1))
+
+
+def null_tests_ledger() -> pd.DataFrame:
+    """第 5 节：全部尝试过的随机入场基准（Phase 2 的 14 个 + 本轮 2 个匹配对照），名义 p 与 Holm / BH 校正后的 p。
+    Phase 2 的结果只读取 reports/phase2_baseline.json 中的 IS 字段（is_null、is_null_common_shift），不读取其他字段。"""
+    import json
+
+    from .common import OUT, ROOT
+    p2 = json.loads((ROOT / "reports" / "phase2_baseline.json").read_text())
+    rows = []
+    for k, v in p2["is_null"].items():
+        rows.append({"test": f"phase2:{k}", "phase": "Phase 2 (a59f783..04724f0)", "level": "event",
+                     "null_mean_r": v["null_mean_r_mean"], "actual_mean_r": p2["is_null_actual_mean_r_ex_funding"],
+                     "p_nominal_lower": v["p_mean_r_le"], "n_rep": v["n_rep"],
+                     "post_hoc": k not in ("global",), "fair": k not in ("local_3d", "before_3d")})
+    cs = p2["is_null_common_shift"]
+    rows.append({"test": "phase2:common_shift_25_360", "phase": "Phase 2", "level": "event", "null_mean_r": cs["null_mean_r_mean"],
+                 "actual_mean_r": cs["actual_mean_r_ex_funding"], "p_nominal_lower": cs["p_mean_r_le"],
+                 "n_rep": cs["n_shifts"], "post_hoc": True, "fair": True})
+    rb = json.loads((OUT / "random_baseline_review.json").read_text())
+    me, mp = rb["matched_event"], rb["matched_portfolio"]
+    rows.append({"test": "round:matched_event_30d_sma200_voltercile_flat", "phase": "this round", "level": "event",
+                 "null_mean_r": me["null_mean_r_mean"], "actual_mean_r": me["actual_mean_r"], "p_nominal_lower": me["p_lower"],
+                 "n_rep": me["n_rep"], "post_hoc": True, "fair": True})
+    rows.append({"test": "round:matched_portfolio_sharpe", "phase": "this round", "level": "portfolio (exclusive positions, all costs)",
+                 "null_mean_r": mp["null_avg_r_mean"], "actual_mean_r": mp["real"]["avg_r"], "p_nominal_lower": mp["p_sharpe_lower"],
+                 "n_rep": mp["n_rep"], "post_hoc": True, "fair": True})
+    df = pd.DataFrame(rows)
+    p = df["p_nominal_lower"].to_numpy()
+    order = np.argsort(p)
+    m = len(p)
+    holm = np.empty(m)
+    run_ = 0.0
+    for r, i in enumerate(order):
+        run_ = max(run_, min(1.0, (m - r) * p[i]))
+        holm[i] = run_
+    bh = np.empty(m)
+    prev = 1.0
+    for r in range(m - 1, -1, -1):
+        i = order[r]
+        prev = min(prev, p[i] * m / (r + 1))
+        bh[i] = prev
+    df["p_holm_all"] = holm
+    df["p_bh_all"] = bh
+    df["p_two_sided_nominal"] = np.minimum(1.0, 2 * p)
+    df.to_csv(OUT / "null_tests_ledger.csv", index=False, float_format="%.6g")
+    return df

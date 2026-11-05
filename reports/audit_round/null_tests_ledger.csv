@@ -1,0 +1,17 @@
+test,phase,level,null_mean_r,actual_mean_r,p_nominal_lower,n_rep,post_hoc,fair,p_holm_all,p_bh_all,p_two_sided_nominal
+phase2:global,Phase 2 (a59f783..04724f0),event,-0.085149,-0.330003,0.021196,5000,False,True,0.275548,0.0526423,0.042392
+phase2:local_60d,Phase 2 (a59f783..04724f0),event,-0.080402,-0.330003,0.022595,5000,True,True,0.275548,0.0526423,0.04519
+phase2:local_15d,Phase 2 (a59f783..04724f0),event,-0.12989,-0.330003,0.045591,5000,True,True,0.28394,0.0526423,0.091182
+phase2:local_15d_x24,Phase 2 (a59f783..04724f0),event,-0.116723,-0.330003,0.032394,5000,True,True,0.28394,0.0526423,0.064788
+phase2:local_3d,Phase 2 (a59f783..04724f0),event,-0.220022,-0.330003,0.162767,5000,True,False,0.325534,0.173618,0.325534
+phase2:before_3d,Phase 2 (a59f783..04724f0),event,-0.320726,-0.330003,0.476105,5000,True,False,0.476105,0.476105,0.95221
+phase2:after_3d,Phase 2 (a59f783..04724f0),event,-0.112765,-0.330003,0.018796,5000,True,True,0.263144,0.0526423,0.037592
+phase2:after_3d_x24,Phase 2 (a59f783..04724f0),event,-0.091555,-0.330003,0.010798,5000,True,True,0.172768,0.0526423,0.021596
+phase2:enterable_global,Phase 2 (a59f783..04724f0),event,-0.071621,-0.330003,0.012597,5000,True,True,0.188955,0.0526423,0.025194
+phase2:enterable_15d,Phase 2 (a59f783..04724f0),event,-0.153168,-0.330003,0.045191,5000,True,True,0.28394,0.0526423,0.090382
+phase2:atr_global,Phase 2 (a59f783..04724f0),event,-0.087888,-0.330003,0.024195,5000,True,True,0.275548,0.0526423,0.04839
+phase2:atr_15d_x24,Phase 2 (a59f783..04724f0),event,-0.106829,-0.330003,0.028394,5000,True,True,0.28394,0.0526423,0.056788
+phase2:enterable_15d_xown,Phase 2 (a59f783..04724f0),event,-0.140443,-0.330003,0.029794,5000,True,True,0.28394,0.0526423,0.059588
+phase2:common_shift_25_360,Phase 2,event,-0.11366,-0.330003,0.046062,672,True,True,0.28394,0.0526423,0.092124
+round:matched_event_30d_sma200_voltercile_flat,this round,event,-0.116329,-0.330003,0.0375925,5000,True,True,0.28394,0.0526423,0.075185
+round:matched_portfolio_sharpe,this round,"portfolio (exclusive positions, all costs)",-0.13167,-0.340008,0.036963,1000,True,True,0.28394,0.0526423,0.0739261

@@ -1,0 +1,175 @@
+{
+ "name": "B_audited",
+ "definition": "current working tree code (only proven implementation-error fixes relative to B_original, listed below) with the B_original configs; BTCUSDT perp IS [2020-01-01, 2024-01-01)",
+ "b_original_commit": "9f3e1e4031b1500d219f61bcbf995468446059d8",
+ "b_audited_git": {
+  "commit": "b871c0a6d089c906da0a5e3167d10539b8fb141c",
+  "describe": "b871c0a-dirty",
+  "branch": "claude/sharp-darwin-k34sz1",
+  "status_porcelain": "M data_loader.py\n M ppvp_audit/engine_path.py\n M ppvp_audit/experiments.py\n M ppvp_audit/ledgers.py\n M ppvp_audit/manifest.py\n M ppvp_audit/nulls.py\n M ppvp_audit/repro_figures.py\n M ppvp_audit/run_ledgers.py\n M ppvp_audit/slices.py\n M test_audit_round.py\n?? ppvp_audit/b_audited.py\n?? ppvp_audit/provenance.py\n?? ppvp_audit/sm_trace.py\n?? reports/audit_round/null_tests_ledger.csv",
+  "diff_stat_vs_head": "data_loader.py              | 27 +++++++++++---\n ppvp_audit/engine_path.py   | 39 +++++++++++++-------\n ppvp_audit/experiments.py   |  2 +-\n ppvp_audit/ledgers.py       | 63 ++++++++++++++++++++++++++------\n ppvp_audit/manifest.py      | 16 +++++----\n ppvp_audit/nulls.py         | 47 ++++++++++++++++++++++++\n ppvp_audit/repro_figures.py |  8 +++--\n ppvp_audit/run_ledgers.py   | 23 ++++++++----\n ppvp_audit/slices.py        | 20 +++++++----\n test_audit_round.py         | 88 +++++++++++++++++++++++++++++++++++++++++++++\n 10 files changed, 282 insertions(+), 51 deletions(-)"
+ },
+ "diff_stat_vs_b_original_commit": " data_loader.py                             |  27 +-\n ppvp_audit/engine_path.py                  |  39 ++-\n ppvp_audit/event_sim.py                    | 131 ++++++++\n ppvp_audit/experiments.py                  | 522 +++++++++++++++++++++++++++++\n ppvp_audit/ledgers.py                      |  63 +++-\n ppvp_audit/manifest.py                     |  16 +-\n ppvp_audit/nulls.py                        |  47 +++\n ppvp_audit/repro_figures.py                |   8 +-\n ppvp_audit/run_ledgers.py                  |  23 +-\n ppvp_audit/slices.py                       |  20 +-\n ppvp_audit/variants.py                     | 177 ++++++++++\n reports/audit_round/baseline_manifest.json |  27 +-\n reports/audit_round/experiment_plan.md     |  65 ++++\n test_audit_round.py                        | 369 ++++++++++++++++++++\n 14 files changed, 1461 insertions(+), 73 deletions(-)\n",
+ "fixes": [
+  {
+   "id": "D-1",
+   "file": "data_loader.py",
+   "kind": "implementation error (latent; IS unaffected)",
+   "what": "缺口补齐会把清洗阶段剔除的维护占位小时当作归档遗漏，用 OKX 数据补回，违反“维护期保持缺失”的成文规则",
+   "fix": "占位小时不进入补齐候选（fill_archive_gaps(..., placeholders=...)）",
+   "test": "test_audit_round.py::test_gap_fill_keeps_placeholder_maintenance_missing"
+  },
+  {
+   "id": "D-5",
+   "file": "data_loader.py",
+   "kind": "implementation error (latent; IS unaffected)",
+   "what": "缺口位于数据开头时成交量缩放比例样本为空，补出的成交量为 NaN，进而使箱体的成交量分布全为 NaN",
+   "fix": "重叠样本少于 MIN_SCALE_HOURS=24 小时或比例非有限时直接报错",
+   "test": "test_audit_round.py::test_gap_fill_refuses_without_pre_gap_overlap"
+  },
+  {
+   "id": "D-8",
+   "file": "data_loader.py",
+   "kind": "process safeguard (section 9 constraint)",
+   "what": "缓存缺失时静默联网重建全部缓存（含 1m 日度归档的裁决）",
+   "fix": "缓存缺失时报 FileNotFoundError，只有显式 python data_loader.py --build 才联网",
+   "test": "test_audit_round.py::test_missing_cache_raises_instead_of_rebuilding"
+  },
+  {
+   "id": "E-1",
+   "file": "ppvp_audit/engine_path.py",
+   "kind": "implementation error (latent; IS unaffected)",
+   "what": "路径撮合器按子 K 线下标而不是“入场时刻早于结算时刻”判断资金费，数据缺口内的结算会被漏收",
+   "fix": "按时间戳判断（entry_t < fundingTime），两次结算映射到同一根 K 线时报错",
+   "test": "test_audit_round.py::test_engine_path_charges_funding_inside_a_gap_like_the_backtester"
+  },
+  {
+   "id": "E-2",
+   "file": "ppvp_audit/engine_path.py",
+   "kind": "implementation error (latent; IS unaffected)",
+   "what": "路径撮合器静默忽略它不支持的回测参数（现货场所、不复利、以损定仓、时间止损、破位离场、关闭资金费）",
+   "fix": "不支持的配置直接报错；include_funding=False 时按配置不计资金费",
+   "test": "test_audit_round.py::test_engine_path_rejects_unsupported_configs_and_honours_funding_switch"
+  }
+ ],
+ "configs_identical": true,
+ "strategy_key": "6feffb8a3fb0c7fa",
+ "backtest_key": "5bc37091ab0d16cb",
+ "comparison": {
+  "df1h": {
+   "identical": true,
+   "rows": [
+    35064,
+    35064
+   ],
+   "index_identical": true,
+   "columns_only_in_B_original": [],
+   "columns_only_in_B_audited": [],
+   "columns_differing": []
+  },
+  "df4h": {
+   "identical": true,
+   "rows": [
+    8766,
+    8766
+   ],
+   "index_identical": true,
+   "columns_only_in_B_original": [],
+   "columns_only_in_B_audited": [],
+   "columns_differing": []
+  },
+  "boxes": {
+   "identical": true,
+   "rows": [
+    1149,
+    1149
+   ],
+   "index_identical": true,
+   "columns_only_in_B_original": [],
+   "columns_only_in_B_audited": [],
+   "columns_differing": []
+  },
+  "signals": {
+   "identical": true,
+   "rows": [
+    35064,
+    35064
+   ],
+   "index_identical": true,
+   "columns_only_in_B_original": [],
+   "columns_only_in_B_audited": [],
+   "columns_differing": []
+  },
+  "trades": {
+   "identical": true,
+   "rows": [
+    109,
+    109
+   ],
+   "index_identical": true,
+   "columns_only_in_B_original": [],
+   "columns_only_in_B_audited": [],
+   "columns_differing": []
+  },
+  "equity": {
+   "identical": true,
+   "rows": [
+    35064,
+    35064
+   ],
+   "index_identical": true,
+   "columns_only_in_B_original": [],
+   "columns_only_in_B_audited": [],
+   "columns_differing": []
+  },
+  "position": {
+   "identical": true,
+   "rows": [
+    35064,
+    35064
+   ],
+   "index_identical": true,
+   "columns_only_in_B_original": [],
+   "columns_only_in_B_audited": [],
+   "columns_differing": []
+  }
+ },
+ "all_identical": true,
+ "is_headline_B_original": {
+  "sharpe": -1.174067431234681,
+  "total_return": -0.4563376830466489,
+  "max_dd": -0.4674881770067414,
+  "trades": 109,
+  "fees": 6389.8965746348385,
+  "funding": 1438.8106007914257
+ },
+ "is_headline_B_audited": {
+  "sharpe": -1.174067431234681,
+  "total_return": -0.4563376830466489,
+  "max_dd": -0.4674881770067414,
+  "trades": 109,
+  "fees": 6389.8965746348385,
+  "funding": 1438.8106007914257
+ },
+ "fingerprints": {
+  "B_original": {
+   "df1h": "940a72379be8d055874b29f7c40169465c35e5d678ad407f0e773a07acf6ae0e",
+   "df4h": "2e96137cce15245a5b703c59783e3c1e5c382b6c35649f518569aa664fc489fb",
+   "boxes": "ed54044c772df4d2798337155ea1b51c119d319db5312e7c7968c283d250071e",
+   "signals": "49d00c035e0bd5af9195fd78e9a77a7bb9ddd7f9e3eb10aa78120241164a77f3",
+   "trades": "03b0646220064a4bf268eb7bcd444f4edf841a2028ea1edea1916dda863f38d2",
+   "equity": "3c2e8c9a4f7443e6e31a334508eb94abdd78674bf5345706c1e3f71b141a4bb2",
+   "position": "96c87037038e6ffea23d065e0c56ec165e62e26bc55e0e968fbd7ccc388f2c4b"
+  },
+  "B_audited": {
+   "df1h": "940a72379be8d055874b29f7c40169465c35e5d678ad407f0e773a07acf6ae0e",
+   "df4h": "2e96137cce15245a5b703c59783e3c1e5c382b6c35649f518569aa664fc489fb",
+   "boxes": "ed54044c772df4d2798337155ea1b51c119d319db5312e7c7968c283d250071e",
+   "signals": "49d00c035e0bd5af9195fd78e9a77a7bb9ddd7f9e3eb10aa78120241164a77f3",
+   "trades": "03b0646220064a4bf268eb7bcd444f4edf841a2028ea1edea1916dda863f38d2",
+   "equity": "3c2e8c9a4f7443e6e31a334508eb94abdd78674bf5345706c1e3f71b141a4bb2",
+   "position": "96c87037038e6ffea23d065e0c56ec165e62e26bc55e0e968fbd7ccc388f2c4b"
+  }
+ },
+ "reproduce": "python -m ppvp_audit.b_audited"
+}

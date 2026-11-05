@@ -2,11 +2,15 @@
 ppvp_audit/manifest.py — 冻结 B_original：代码版本、未提交差异、配置、数据清单与哈希、随机种子、交易账本、图表、
 复现命令，以及历史上 VAL / OOS / ETH 信息的暴露登记。输出 reports/audit_round/baseline_manifest.json。
 
-B_original = 本轮开始时仓库 HEAD 的策略与引擎代码在 IS 上的结果（BASELINE_STRATEGY / BASELINE_BACKTEST）。
+B_original = 冻结提交 B_ORIGINAL_COMMIT 的策略与引擎代码在 IS 上的结果（BASELINE_STRATEGY / BASELINE_BACKTEST）。
+重新生成本文件（例如审计 D-12 之后把数据块限定为 IS 行）不改变 B_original 的定义：git 与引擎源码哈希取自冻结提交，
+成交账本由当前代码重算并要求与冻结哈希逐位相同；B_audited 的核验结果（b_audited_check.json）附在 b_audited 块中。
 """
 from __future__ import annotations
 
+import hashlib
 import json
+import subprocess
 from dataclasses import asdict
 from datetime import datetime, timezone
 
@@ -18,6 +22,8 @@ from .common import OUT, ROOT, SEED, git_state, is_run, sha256_file, write_json
 
 ENGINE_FILES = ("config.py", "pipeline.py", "data_loader.py", "ppvp_engine.py", "strategy_state_machine.py",
                 "backtester.py", "metrics.py", "attribution.py", "numba_compat.py")
+B_ORIGINAL_COMMIT = "9f3e1e4031b1500d219f61bcbf995468446059d8"      # 首次冻结 382bc9c，去掉 1m 数据后在此提交重新冻结
+B_ORIGINAL_LEDGER_SHA256 = "43b004b878c4df9dac442ebb29822eb809c349400ecf93347b89e9a60c4d17af"
 PHASE2_FIGURES = ("phase2_equity_underwater.png", "phase2_is_exit_paths.png", "phase2_is_null_test.png",
                   "phase2_is_regime.png", "phase2_is_winrate_by_rr.png")
 
@@ -62,7 +68,20 @@ EXPOSURE_REGISTER = [
 ]
 
 
+def _blob_sha256(commit: str, path: str) -> str:
+    blob = subprocess.run(["git", "show", f"{commit}:{path}"], cwd=ROOT, capture_output=True, check=True).stdout
+    return hashlib.sha256(blob).hexdigest()
+
+
+def _git_at(commit: str) -> dict:
+    def run(*a):
+        return subprocess.run(["git", *a], cwd=ROOT, capture_output=True, text=True).stdout.strip()
+    return {"commit": commit, "describe": run("describe", "--always", commit), "branch": "claude/sharp-darwin-k34sz1",
+            "status_porcelain_at_freeze": "", "note": "B_original is defined as the code at this commit"}
+
+
 def freeze() -> dict:
+    prev = json.loads((OUT / "baseline_manifest.json").read_text()) if (OUT / "baseline_manifest.json").exists() else {}
     out = is_run(BASELINE_STRATEGY, BASELINE_BACKTEST)
     res = out["result"]
     led = OUT / "ledgers"
@@ -76,24 +95,32 @@ def freeze() -> dict:
         p = ROOT / meta["path"]
         df = pd.read_parquet(p)
         idx = df.index
+        # 只记录本轮实际使用部分的元数据（审计 D-12）：文件本身覆盖 2020-2026，这里不统计 IS 之后的任何行
+        keep = {"BTCUSDT_perp_1h": (idx >= IS_START) & (idx < IS_END), "BTCUSDT_funding": (idx >= IS_START) & (idx <= IS_END),
+                "BTCUSDT_spot_1h": idx < IS_START}[name]
+        used_idx = idx[keep]
+        fills = [g for g in (meta.get("gap_fills") or []) if pd.Timestamp(g["gap_start"]) < IS_END]
+        holders = [x for x in (meta.get("dropped_placeholder_bars") or []) if pd.Timestamp(x) < IS_END]
         used[name] = {"path": meta["path"], "sha256_recorded": meta["sha256"], "sha256_actual": sha256_file(p),
-                      "rows_total": int(len(df)), "first": str(idx.min()), "last": str(idx.max()),
-                      "rows_used_in_this_round": {"BTCUSDT_perp_1h": int(((idx >= IS_START) & (idx < IS_END)).sum()),
-                                                  "BTCUSDT_funding": int(((idx >= IS_START) & (idx <= IS_END)).sum()),
-                                                  "BTCUSDT_spot_1h": int((idx < IS_START).sum())}[name],
+                      "file_covers": "2020-2026 (spot from 2019); only the rows below are read in this round",
+                      "rows_used_in_this_round": int(keep.sum()), "first_used": str(used_idx.min()), "last_used": str(used_idx.max()),
                       "use": {"BTCUSDT_perp_1h": "全部策略计算（截断在 IS_END 之前）",
                               "BTCUSDT_funding": "资金费现金流（结算时刻 ≤ IS_END）",
                               "BTCUSDT_spot_1h": "只用 2020 年之前的日线收盘做慢速价格指标预热（不含成交量）"}[name],
-                      "provider": meta.get("provider"), "gap_fills_in_file": meta.get("gap_fills"),
-                      "dropped_placeholder_bars_in_file": meta.get("dropped_placeholder_bars")}
+                      "provider": meta.get("provider"), "gap_fills_in_used_rows": fills,
+                      "dropped_placeholder_bars_in_used_rows": holders}
     rep = out["report"]["IS"]
     manifest = {
         "name": "B_original",
-        "frozen_at_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "frozen_at_utc": prev.get("frozen_at_utc", datetime.now(timezone.utc).isoformat(timespec="seconds")),
+        "regenerated_at_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "regeneration_note": "data block restricted to the rows read in this round (audit D-12); B_audited block added. "
+                             "B_original definition, configs, ledger and its hash are unchanged.",
         "definition": "BASELINE_STRATEGY / BASELINE_BACKTEST on the repository code at the commit below, BTCUSDT perp, "
                       "IS [2020-01-01, 2024-01-01) UTC, data truncated at IS_END before entering the engine",
-        "git": git_state(),
-        "engine_source_sha256": {f: sha256_file(ROOT / f) for f in ENGINE_FILES},
+        "git": _git_at(B_ORIGINAL_COMMIT),
+        "generated_from_git": git_state(),
+        "engine_source_sha256": {f: _blob_sha256(B_ORIGINAL_COMMIT, f) for f in ENGINE_FILES},
         "configs": {"strategy": asdict(BASELINE_STRATEGY), "strategy_key": BASELINE_STRATEGY.key(),
                     "backtest": asdict(BASELINE_BACKTEST), "backtest_key": BASELINE_BACKTEST.key()},
         "segment": {"name": "IS", "start": str(IS_START), "end_exclusive": str(IS_END)},
@@ -110,10 +137,25 @@ def freeze() -> dict:
         "ledger": {"path": "reports/audit_round/ledgers/trades_B_original_raw.csv", "rows": int(len(tr)),
                    "sha256": sha256_file(led / "trades_B_original_raw.csv")},
         "phase2_figures": {f: sha256_file(ROOT / "reports" / "figures" / f) for f in PHASE2_FIGURES},
-        "reproduce": ["python -m ppvp_audit.manifest           # 本文件",
-                      "python -m ppvp_audit.repro_figures      # 五张图的核验版与 figure_checks.json"],
+        "reproduce": ["python -m ppvp_audit.b_audited          # B_audited 与 B_original 的逐位核验（b_audited_check.json）",
+                      "python -m ppvp_audit.manifest           # 本文件",
+                      "python -m ppvp_audit.repro_figures      # 五张图的核验版与 figure_checks.json",
+                      "python -m ppvp_audit.run_ledgers --version B_audited   # 账本、核对表、切片",
+                      "python -m ppvp_audit.nulls              # 随机基准复核",
+                      "python -m ppvp_audit.experiments        # 9 个预注册版本"],
         "exposure_register": EXPOSURE_REGISTER,
     }
+    if manifest["ledger"]["sha256"] != B_ORIGINAL_LEDGER_SHA256:
+        raise RuntimeError("the B_original ledger recomputed by the current code differs from the frozen ledger")
+    chk = OUT / "b_audited_check.json"
+    if chk.exists():
+        c = json.loads(chk.read_text())
+        manifest["b_audited"] = {
+            "definition": c["definition"], "git": c["b_audited_git"], "fixes": c["fixes"],
+            "engine_source_sha256": {f: sha256_file(ROOT / f) for f in ENGINE_FILES + ("ppvp_audit/engine_path.py",)},
+            "configs_identical": c["configs_identical"], "all_identical_on_IS": c["all_identical"],
+            "compared": {k: v["identical"] for k, v in c["comparison"].items()}, "fingerprints": c["fingerprints"],
+            "check_file": "reports/audit_round/b_audited_check.json", "reproduce": c["reproduce"]}
     write_json(OUT / "baseline_manifest.json", manifest)
     return manifest
 

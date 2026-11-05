@@ -134,7 +134,7 @@ def version_metrics(out: dict, v: str, parents: int, rejections: dict) -> dict:
         "win_rate": rep["win_rate"], "avg_win_usd": float(cl.loc[win, "pnl"].mean()) if win.any() else float("nan"),
         "avg_loss_usd": float(cl.loc[~win, "pnl"].mean()) if (~win).any() else float("nan"),
         "avg_win_pct_equity": rep["avg_win_pct"], "avg_loss_pct_equity": rep["avg_loss_pct"],
-        "profit_factor": rep["profit_factor"], "avg_hold_hours": rep["avg_hold_bars"], "exposure": rep["exposure"],
+        "profit_factor": rep["profit_factor"], "avg_hours_to_exit_bar_close": rep["avg_hold_bars"], "exposure": rep["exposure"],
         "mean_nominal_leverage": float((cl["notional"] / cl["equity_at_entry"]).mean()),
         "mean_risk_pct_equity": float((risk / cl["equity_at_entry"]).mean()),
         "commission_usd": float(cl["fees"].sum()), "slippage_impact_usd": float((gross_ref - cl["gross_pnl"]).sum()),
@@ -263,6 +263,48 @@ def matched_random_improvement(base: dict, bcfg, v: str, fill_rule: str = "throu
             "pool_size_median": float(np.median([len(p) for p in pools]))}
 
 
+def poc_tie_trades(base: dict, bcfg) -> dict:
+    """计划第 7 节第 3 条：列出所用箱体的 POC 存在并列（ppvp_engine.TIE_RTOL 容差）的成交，以及取价格最高的并列桶时
+    “Entry < POC < VAH”是否翻转；对翻转的成交，用事件撮合给出 D1 / D2 在两种并列规则下的单笔结果（只是标注，
+    不改变 D1 / D2 的定义：定义仍取箱体表中的 POC，即价格最低的并列桶）。"""
+    from ppvp_engine import TIE_RTOL, volume_profile
+    df1h, boxes, sig = base["df1h"], base["boxes"], base["signals"]
+    lo1, hi1, v1 = (df1h[k].to_numpy(dtype=np.float64) for k in ("low", "high", "volume"))
+    scfg, _ = base_configs()
+    tr = base["result"].trades
+    rows = []
+    for _, t in tr.iterrows():
+        k = int(sig["box_id"].to_numpy()[int(t["entry_bar"])])
+        bx = boxes.loc[k]
+        s0 = int(df1h.index.searchsorted(pd.Timestamp(bx["window_start"]), side="left"))
+        e0 = int(df1h.index.searchsorted(pd.Timestamp(bx["window_end"]), side="left"))
+        prof = volume_profile(lo1[s0:e0], hi1[s0:e0], v1[s0:e0], scfg.n_bins, scfg.va_pct)
+        hist, edges = prof["hist"], prof["edges"]
+        tied = np.flatnonzero(hist >= hist.max() - TIE_RTOL * hist.max())
+        if len(tied) < 2:
+            continue
+        p_lo, p_hi = 0.5 * (edges[tied[0]] + edges[tied[0] + 1]), 0.5 * (edges[tied[-1]] + edges[tied[-1] + 1])
+        if not np.isclose(p_lo, t["poc"], rtol=0, atol=1e-9 * abs(p_lo)):
+            raise RuntimeError("recomputed lowest tied POC differs from the box table")
+        ok_lo = bool(t["entry_px"] < p_lo < t["tp"])
+        ok_hi = bool(t["entry_px"] < p_hi < t["tp"])
+        row = {"entry_time": str(t["entry_time"]), "box_id": k, "n_tied_bins": int(len(tied)), "poc_lowest_tied": float(p_lo),
+               "poc_highest_tied": float(p_hi), "entry_px": float(t["entry_px"]), "tp": float(t["tp"]),
+               "eligible_lowest_rule": ok_lo, "eligible_highest_rule": ok_hi, "flips": ok_lo != ok_hi}
+        if ok_lo != ok_hi:
+            bar = np.array([int(t["entry_bar"])])
+            sl_, tp_ = np.array([t["sl"]]), np.array([t["tp"]])
+            for name, be in (("D1", False), ("D2", True)):
+                r_lo = simulate_events(df1h, bar, sl_, tp_, np.array([p_lo]), partial=True, frac=V.D_PARTIAL_FRAC,
+                                       move_be=be, bcfg=bcfg)["ret"][0]
+                r_hi = simulate_events(df1h, bar, sl_, tp_, np.array([p_hi]), partial=True, frac=V.D_PARTIAL_FRAC,
+                                       move_be=be, bcfg=bcfg)["ret"][0]
+                row[f"{name}_event_ret_lowest_rule"] = float(r_lo)
+                row[f"{name}_event_ret_highest_rule"] = float(r_hi)
+        rows.append(row)
+    return {"n_trades_with_tied_poc": len(rows), "n_flipping": int(sum(r["flips"] for r in rows)), "trades": rows}
+
+
 def thinning_benchmark(base: dict, bcfg, entries: int, k: int) -> dict:
     _, fund, _ = load_is_market()
     th = A.random_thinning(base["df1h"], base["signals"], bcfg, fund, IS_START, IS_END, target_trades=int(entries),
@@ -364,13 +406,23 @@ def run() -> dict:
                 ev = N.matched_event_null(out_v, tfv, seed=SEED_MATCH + k)
                 dd = tfv["r_ex_funding"].to_numpy() - ev["per_trade_expected_r"]
                 ci = N.cluster_bootstrap_mean(dd, tfv["entry_time"].dt.strftime("%Y-%m").to_numpy(), seed=SEED_CLUSTER)
+                tfb = A.trade_frame(base["result"], base["df1h"], base["boxes"], scfg)
+                eb = N.matched_event_null(base, tfb, seed=SEED_MATCH + k)
+                db_ = tfb["r_ex_funding"].to_numpy() - eb["per_trade_expected_r"]
+                cib = N.cluster_bootstrap_mean(db_, tfb["entry_time"].dt.strftime("%Y-%m").to_numpy(), seed=SEED_CLUSTER)
                 entry["matched_random"] = {"kind": "matched event-level random timing of B2's trades",
                                            "actual_mean_r_ex_funding": ev["actual_mean_r"],
                                            "null_mean_r": ev["null_mean_r_mean"], "p_lower": ev["p_lower"],
-                                           "mean_diff": ci["mean"], "diff_ci_month_cluster": [ci["lo"], ci["hi"]]}
+                                           "mean_diff": ci["mean"], "diff_ci_month_cluster": [ci["lo"], ci["hi"]],
+                                           "same_statistic_for_B_audited": {
+                                               "actual_mean_r_ex_funding": eb["actual_mean_r"], "null_mean_r": eb["null_mean_r_mean"],
+                                               "p_lower": eb["p_lower"], "mean_diff": cib["mean"],
+                                               "diff_ci_month_cluster": [cib["lo"], cib["hi"]]}}
             else:
                 entry["matched_random"] = {"kind": "same rule at matched random times (improvement real minus random)",
                                            **matched_random_improvement(base, bcfg, v)}
+            if v in ("D1", "D2"):
+                entry["poc_tie_annotation"] = poc_tie_trades(base, bcfg)
             tr = out_v["result"].trades
             tr.to_csv(EXP / f"{v}_trades.csv", index=False, float_format="%.10g")
             res[v] = entry
@@ -386,6 +438,9 @@ def run() -> dict:
     adj = holm(pvals)
     for v in pvals:
         res[v]["paired_vs_base"]["p_holm"] = adj[v]
+        res[v]["total_net_return_diff_vs_base"] = res[v]["metrics"]["total_net_return"] - res["base"]["total_net_return"]
+        res[v]["per_opportunity_net_pnl_diff_vs_base"] = (res[v]["metrics"]["per_opportunity_net_pnl"]
+                                                          - res["base"]["per_opportunity_net_pnl"])
         res[v]["decision"] = decide(res[v])
     res["holm_adjusted_p"] = adj
     res["meta"]["runtime_s"] = time.time() - t_all
@@ -434,8 +489,7 @@ def decide(e: dict) -> dict:
     m = e["metrics"]
     per = {r["period"]: r for r in e["periods"]}
     c1 = p.get("p_holm", 1.0) <= 0.05
-    base_ret = None
-    c2 = e["box_concentration"]["total_pnl_diff"] > 0
+    c2 = e["total_net_return_diff_vs_base"] > 0           # 总净收益（按 IS 期末盯市净值）高于 B_audited
     mr = e.get("matched_random", {})
     if "p" in mr:
         c3 = mr["p"] <= 0.10

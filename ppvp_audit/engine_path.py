@@ -27,8 +27,8 @@ REASONS_PATH = {0: "OPEN", 1: "SL", 2: "TP", 3: "BE", 6: "POC"}
 
 @njit(cache=True)
 def _sim(mo, mh, ml, mhour, h_close, n_hours, sig, sl_h, tp_h, poc_h, lim_h, tick_h, valid_min,
-         fund_min, fund_rate, init_cap, taker, maker, slip, lev, lev_cap, tp_mode, partial_frac, move_be, limit_mode,
-         through):
+         fund_min, fund_rate, fund_t, open_ns, bar_ns, init_cap, taker, maker, slip, lev, lev_cap, tp_mode, partial_frac,
+         move_be, limit_mode, through):
     M = mo.shape[0]
     eq_h = np.empty(n_hours)
     pos_h = np.zeros(n_hours)
@@ -58,7 +58,7 @@ def _sim(mo, mh, ml, mhour, h_close, n_hours, sig, sl_h, tp_h, poc_h, lim_h, tic
     qty0 = 0.0
     entry_px = 0.0
     entry_min = -1
-    charge_from = 0          # 资金费只在结算分钟 ≥ charge_from 时收付（入场时刻严格早于结算时刻）
+    entry_t = np.int64(0)    # 入场时刻（ns）：资金费只在 入场时刻 < 结算时刻 T 时收付（与 backtester.py 相同的时间规则）
     sl = np.nan
     tp = np.nan
     poc = np.nan
@@ -81,7 +81,7 @@ def _sim(mo, mh, ml, mhour, h_close, n_hours, sig, sl_h, tp_h, poc_h, lim_h, tic
         # ---- 资金费：结算分钟开始时仍持仓、且入场早于该分钟 ----
         while fi < nf and fund_min[fi] < m:
             fi += 1
-        if fi < nf and fund_min[fi] == m and qty > 0.0 and m >= charge_from:
+        if fi < nf and fund_min[fi] == m and qty > 0.0 and entry_t < fund_t[fi]:
             f = qty * mo[m] * fund_rate[fi]
             wallet -= f
             fund += f
@@ -108,7 +108,7 @@ def _sim(mo, mh, ml, mhour, h_close, n_hours, sig, sl_h, tp_h, poc_h, lim_h, tic
                         wallet -= fee
                         entry_px = efill
                         entry_min = m
-                        charge_from = m + 1      # 成交发生在第 m 分钟内：其后各分钟开盘时的结算都要收付
+                        entry_t = open_ns[m] + np.int64(1)     # 成交发生在该子 K 线开盘之后（具体时刻未知）
                         sl = sl_h[pend_parent]
                         tp = tp_h[pend_parent]
                         poc = poc_h[pend_parent]
@@ -219,8 +219,8 @@ def _sim(mo, mh, ml, mhour, h_close, n_hours, sig, sl_h, tp_h, poc_h, lim_h, tic
                         fee = notional * taker
                         wallet -= fee
                         entry_px = efill
-                        entry_min = m            # 收盘成交：从下一分钟起检查离场
-                        charge_from = m + 2      # 入场时刻 = 第 m+1 分钟开盘；恰在该时刻的结算不收（与 1H 引擎一致）
+                        entry_min = m            # 收盘成交：从下一根起检查离场
+                        entry_t = open_ns[m] + bar_ns          # 入场时刻 = 该子 K 线收盘；恰在该时刻的结算不收（与 1H 引擎一致）
                         sl = sl_h[h]
                         tp = tp_h[h]
                         poc = poc_h[h]
@@ -268,22 +268,35 @@ ORDER_STATUS = {1: "filled", 2: "expired_unfilled", 3: "skipped_position_or_orde
 
 def run_path(df1h: pd.DataFrame, signals: pd.DataFrame, bcfg, funding: pd.DataFrame,
              limit_price: np.ndarray | None = None, valid_bars: int = 3, fill_rule: str = "through") -> dict:
-    """以 1H K 线为子 K 线运行撮合器（最坏路径规则）。limit_price 为 None 时为市价入场（与 1H 引擎逐位一致）。"""
+    """以 1H K 线为子 K 线运行撮合器（最坏路径规则）。只支持 venue='perp'、sizing='fixed'、复利、无时间止损、无破位离场
+    （其余配置直接报错）；在这一配置下市价模式与 1H 引擎逐位一致。资金费按 入场时刻 < 结算时刻 的时间规则收付，
+    include_funding=False 时不收；两次结算落在同一根子 K 线时报错（与 backtester.funding_arrays 相同）。"""
+    if (bcfg.venue != "perp" or bcfg.sizing != "fixed" or not bcfg.compounding or bcfg.time_stop_bars is not None
+            or bcfg.exit_on_breakdown):
+        raise ValueError("engine_path supports venue='perp', sizing='fixed', compounding=True, no time stop and no "
+                         "breakdown exit only")
     n = len(df1h)
     ht = df1h.index.as_unit("ns").asi8
-    f_t = funding.index.as_unit("ns").asi8
-    inwin = (f_t > ht[0]) & (f_t <= ht[-1] + 3600 * 10**9)
-    f_t, f_r = f_t[inwin], funding["funding_rate"].to_numpy(dtype=np.float64)[inwin]
+    if bcfg.funding_on:
+        from backtester import check_funding_coverage
+        check_funding_coverage(df1h, funding)
+        f_t = funding.index.as_unit("ns").asi8
+        inwin = (f_t > ht[0]) & (f_t <= ht[-1] + 3600 * 10**9)
+        f_t, f_r = f_t[inwin], funding["funding_rate"].to_numpy(dtype=np.float64)[inwin]
+    else:
+        f_t, f_r = np.zeros(0, dtype=np.int64), np.zeros(0)
     f_bar = np.searchsorted(ht, f_t, side="left")
     keep = f_bar < n
-    f_bar, f_r = f_bar[keep].astype(np.int64), f_r[keep]
+    f_bar, f_r, f_t = f_bar[keep].astype(np.int64), f_r[keep], f_t[keep].astype(np.int64)
+    if np.unique(f_bar).size != f_bar.size:
+        raise ValueError("two funding settlements map to the same bar (data gap longer than the settlement interval)")
     limit_mode = limit_price is not None
     lim = np.asarray(limit_price, dtype=np.float64) if limit_mode else np.full(n, np.nan)
     out = _sim(df1h["open"].to_numpy(np.float64), df1h["high"].to_numpy(np.float64), df1h["low"].to_numpy(np.float64),
                np.arange(n, dtype=np.int64), df1h["close"].to_numpy(np.float64), n,
                signals["signal"].to_numpy(bool), signals["sl"].to_numpy(np.float64), signals["tp"].to_numpy(np.float64),
                signals["poc_tp"].to_numpy(np.float64), lim, tick_size(df1h.index), int(valid_bars),
-               f_bar, f_r, float(bcfg.initial_capital), float(bcfg.taker_fee), float(bcfg.maker_fee), float(bcfg.slippage),
+               f_bar, f_r, f_t, ht.astype(np.int64), np.int64(3600 * 10**9), float(bcfg.initial_capital), float(bcfg.taker_fee), float(bcfg.maker_fee), float(bcfg.slippage),
                float(bcfg.fixed_leverage), float(bcfg.leverage_cap), {"vah": 0, "poc_partial": 1}[bcfg.tp_mode],
                float(bcfg.partial_frac), bool(bcfg.move_to_breakeven), bool(limit_mode), fill_rule == "through")
     (eq_h, pos_h, nt, par, ebar, xbar, epx, xpx, q, notional, eq, sl, tp, poc, fees, fund, gross, pnl, reason, pbar,

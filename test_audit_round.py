@@ -279,3 +279,91 @@ def test_prefix_truncation_consistency_within_is(base):
         for col in ("entry_bar", "exit_bar", "entry_px", "exit_px", "qty", "fees", "funding", "pnl"):
             assert np.array_equal(done[col].to_numpy(), ref[col].to_numpy()), (t, col)
         assert np.array_equal(res.equity.to_numpy(), base["result"].equity.to_numpy()[:t])
+
+
+# ---------------------------------------------------------------------------
+# 数据层修复（审计 D-1、D-4、D-5）：合成数据 + 本地桩，不访问网络
+# ---------------------------------------------------------------------------
+def _full_grid_frame():
+    import data_loader as dl
+    idx = pd.date_range(dl.RESEARCH_START, dl.RESEARCH_END - H, freq="h", tz="UTC")
+    n = len(idx)
+    return pd.DataFrame({"open": 100.0, "high": 101.0, "low": 99.0, "close": 100.0, "volume": np.full(n, 50.0),
+                         "quote_volume": 5000.0, "count": 10.0, "taker_buy_volume": 25.0}, index=idx)
+
+
+def _okx_stub(symbol, start, end, bar="1H"):
+    idx = pd.date_range(start, end - H, freq="h", tz="UTC")
+    return pd.DataFrame({"open": 100.0, "high": 101.0, "low": 99.0, "close": 100.0, "volume": np.full(len(idx), 25.0),
+                         "quote_volume": 2500.0, "count": np.nan, "taker_buy_volume": np.nan}, index=idx)
+
+
+def test_gap_fill_keeps_placeholder_maintenance_missing(monkeypatch):
+    import data_loader as dl
+    monkeypatch.setattr(dl, "fetch_okx_klines", _okx_stub)
+    df = _full_grid_frame()
+    maint = pd.date_range("2021-06-01 00:00", periods=7, freq="h", tz="UTC")       # 7 小时维护占位（已剔除）
+    archive = pd.date_range("2021-08-01 00:00", periods=6, freq="h", tz="UTC")     # 6 小时归档缺失
+    df = df.drop(maint).drop(archive)
+    out, rec = dl.fill_archive_gaps(df, "BTCUSDT", placeholders=[str(t) for t in maint])
+    assert not out.index.isin(maint).any()                                         # 停机保持缺失，不伪造 K 线
+    assert archive.isin(out.index).all() and (out.loc[archive, "fill_source"] == "okx_swap").all()
+    assert len(rec) == 1 and rec[0]["missing_hours"] == 6
+    assert out.loc[archive, "volume"].notna().all()
+
+
+def test_gap_fill_refuses_without_pre_gap_overlap(monkeypatch):
+    import data_loader as dl
+    monkeypatch.setattr(dl, "fetch_okx_klines", _okx_stub)
+    df = _full_grid_frame()
+    head = pd.date_range(dl.RESEARCH_START, periods=6, freq="h", tz="UTC")          # 缺口位于数据开头：没有缺口前样本
+    with pytest.raises(ValueError):
+        dl.fill_archive_gaps(df.drop(head), "BTCUSDT")
+
+
+def test_missing_cache_raises_instead_of_rebuilding(monkeypatch, tmp_path):
+    import data_loader as dl
+    monkeypatch.setattr(dl, "_proc_path", lambda name: tmp_path / f"{name}.parquet")
+    monkeypatch.setattr(dl, "build_cache", lambda *a, **k: (_ for _ in ()).throw(AssertionError("network rebuild")))
+    with pytest.raises(FileNotFoundError):
+        dl.load_klines("BTCUSDT", "1h", "perp")
+
+
+# ---------------------------------------------------------------------------
+# 路径撮合器修复（审计 E-1、E-2）
+# ---------------------------------------------------------------------------
+def _gap_frame(gap_hours):
+    t = [T0 + k * H for k in range(4)] + [T0 + (4 + gap_hours + k) * H for k in range(3)]
+    rows = [(100, 101, 99, 100), (100, 101, 99, 100), (100, 101, 99, 100), (100, 101, 99.5, 100),
+            (100.5, 102, 99.8, 101), (101, 102, 100, 101.5), (101.5, 102, 101, 101.8)]
+    df = bars(rows)
+    df.index = pd.DatetimeIndex(t)
+    return df
+
+
+def test_engine_path_charges_funding_inside_a_gap_like_the_backtester():
+    df = _gap_frame(6)                                         # 04:00–09:00 缺失；08:00 的结算落在缺口内
+    fund = pd.DataFrame({"funding_rate": [0.001], "funding_interval_hours": [8]},
+                        index=pd.DatetimeIndex([T0 + 8 * H], name="funding_time"))
+    s = one_signal(df, 3, sl=95.0, tp=120.0)
+    a = run_backtest(df, s, BASELINE_BACKTEST, fund).trades
+    b = run_path(df, s, BASELINE_BACKTEST, fund)["trades"]
+    assert a.at[0, "funding"] > 0 and b.at[0, "funding"] == pytest.approx(a.at[0, "funding"], rel=0, abs=1e-9)
+    df16 = _gap_frame(14)                                      # 08:00 与 16:00 两次结算落在同一根 → 报错
+    fund16 = pd.DataFrame({"funding_rate": [0.001, 0.002], "funding_interval_hours": [8, 8]},
+                          index=pd.DatetimeIndex([T0 + 8 * H, T0 + 16 * H], name="funding_time"))
+    with pytest.raises(ValueError):
+        run_path(df16, one_signal(df16, 3, sl=95.0, tp=120.0), BASELINE_BACKTEST, fund16)
+
+
+def test_engine_path_rejects_unsupported_configs_and_honours_funding_switch():
+    df = bars([(100, 101, 99, 100)] * 4)
+    s = one_signal(df, 1, sl=95.0, tp=120.0)
+    fund = pd.DataFrame({"funding_rate": [0.0], "funding_interval_hours": [8]},
+                        index=pd.DatetimeIndex([T0], name="funding_time"))
+    for bad in (dict(venue="spot"), dict(sizing="risk"), dict(compounding=False), dict(time_stop_bars=3),
+                dict(exit_on_breakdown=True)):
+        with pytest.raises(ValueError):
+            run_path(df, s, BASELINE_BACKTEST.with_(**bad), fund)
+    r = run_path(df, s, NOFUND, fund)
+    assert (r["trades"]["funding"] == 0).all()

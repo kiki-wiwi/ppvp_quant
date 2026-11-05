@@ -329,18 +329,27 @@ def drop_placeholder_bars(df: pd.DataFrame) -> tuple[pd.DataFrame, list[str]]:
     return df.loc[~mask].copy(), [str(t) for t in df.index[mask]]
 
 
-def fill_archive_gaps(df: pd.DataFrame, symbol: str, min_hours: int = ARCHIVE_GAP_MIN_HOURS) -> tuple[pd.DataFrame, list[dict]]:
+MIN_SCALE_HOURS = 24        # 缺口前用于估计 Binance / OKX 成交量比例的最少共同小时数；不足时报错，绝不写入 NaN 成交量
+
+
+def fill_archive_gaps(df: pd.DataFrame, symbol: str, min_hours: int = ARCHIVE_GAP_MIN_HOURS,
+                      placeholders=()) -> tuple[pd.DataFrame, list[dict]]:
     """用 OKX USDT 永续 1H 补齐 Binance 归档中 ≥min_hours 的连续缺口，并逐行标记 fill_source。
 
+    placeholders：已被 drop_placeholder_bars 剔除的维护占位小时。它们是交易所停机的证据，按规则保持缺失、
+    不进入补齐候选（即使与归档缺失的小时相连，也只按归档缺失的小时计算连续长度）。
     成交量口径对齐：缩放系数 = 缺口开始前 168 根 1H 上 (Binance 成交量 / OKX 成交量) 的中位数，
-    只使用缺口之前的数据，避免数据准备环节引入任何未来信息。
+    只使用缺口之前的数据，避免数据准备环节引入任何未来信息；共同小时少于 MIN_SCALE_HOURS 或比例不是有限正数时报错。
     """
     step = INTERVAL_TD["1h"]
     df = df.copy()
     df["fill_source"] = "binance_um"
     grid = pd.date_range(RESEARCH_START, RESEARCH_END - step, freq=step, tz="UTC")
+    missing = grid.difference(df.index)
+    if len(placeholders):
+        missing = missing.difference(pd.DatetimeIndex(pd.to_datetime(list(placeholders), utc=True)))
     records = []
-    for s, e, n in _ranges(grid.difference(df.index), step):
+    for s, e, n in _ranges(missing, step):
         if n < min_hours:
             continue
         s, e = pd.Timestamp(s), pd.Timestamp(e)
@@ -348,7 +357,12 @@ def fill_archive_gaps(df: pd.DataFrame, symbol: str, min_hours: int = ARCHIVE_GA
         okx_hist = fetch_okx_klines(symbol, s - 168 * step, s)
         bin_hist = df.loc[(df.index >= s - 168 * step) & (df.index < s), "volume"]
         common = bin_hist.index.intersection(okx_hist.index)
+        if len(common) < MIN_SCALE_HOURS:
+            raise ValueError(f"cannot scale OKX volume for the gap starting {s}: only {len(common)} common pre-gap hours "
+                             f"(need {MIN_SCALE_HOURS})")
         ratio = float(np.median(bin_hist.loc[common].to_numpy() / okx_hist.loc[common, "volume"].to_numpy()))
+        if not (np.isfinite(ratio) and ratio > 0):
+            raise ValueError(f"non-finite or non-positive OKX volume scale ratio for the gap starting {s}")
         fill = okx_gap.copy()
         fill["volume"] *= ratio
         fill["quote_volume"] *= ratio
@@ -526,7 +540,7 @@ def build_cache(okx_check_window: tuple[str, str] = ("2024-03-01", "2024-03-15")
 
         print(f"[{sym}] cleaning + gap fill ...", flush=True)
         p1h, placeholders = drop_placeholder_bars(p1h_raw)
-        p1h, fills = fill_archive_gaps(p1h, sym)
+        p1h, fills = fill_archive_gaps(p1h, sym, placeholders=placeholders)
 
         qa = {
             "perp_1h_raw_archive": qa_ohlcv(p1h_raw, "1h", RESEARCH_START, RESEARCH_END),
@@ -569,9 +583,12 @@ def build_cache(okx_check_window: tuple[str, str] = ("2024-03-01", "2024-03-15")
 
 
 def _ensure_cache(name: str) -> Path:
+    """缓存缺失时直接报错，不再静默联网重建（重建会下载全部归档并访问 OKX）。需要重建时显式运行
+    `python data_loader.py --build`。"""
     p = _proc_path(name)
     if not p.exists():
-        build_cache()
+        raise FileNotFoundError(f"cache file {p} is missing; rebuild explicitly with `python data_loader.py --build` "
+                                "(downloads from the network)")
     return p
 
 
