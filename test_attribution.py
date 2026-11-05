@@ -238,6 +238,8 @@ def test_common_shift_null_matches_direct_computation(base):
     out, tf = base
     df1h = out["df1h"]
     ist = A.segment_trades(tf, IS_START, IS_END)
+    assert A.common_shift_null(df1h, ist, BASELINE_BACKTEST, IS_START, IS_END, max_shift_bars=3,
+                               min_shift_bars=2)["n_shifts"] == 4
     res = A.common_shift_null(df1h, ist, BASELINE_BACKTEST, IS_START, IS_END, max_shift_bars=3)
     assert res["n_shifts"] == 6
     end_bar = int(np.searchsorted(df1h.index, IS_END))
@@ -269,9 +271,47 @@ def test_max_gap_permutation_synthetic():
 def test_random_thinning_keep_one_reproduces_baseline(base):
     out, _ = base
     _, fund, _ = pipeline.load_market("BTCUSDT")
-    th = A.random_thinning(out["df1h"], out["signals"], BASELINE_BACKTEST, fund, 1.0, IS_START, IS_END, n_rep=1)
+    th = A.random_thinning(out["df1h"], out["signals"], BASELINE_BACKTEST, fund, IS_START, IS_END, keep=1.0, n_rep=1)
     assert th["trades"][0] == PINNED["IS"]["trades"]
     assert abs(th["sharpe"][0] - PINNED["IS"]["sharpe"]) < 1e-12
+
+
+def test_random_thinning_calibration_and_guards(base):
+    out, _ = base
+    _, fund, _ = pipeline.load_market("BTCUSDT")
+    args = (out["df1h"], out["signals"], BASELINE_BACKTEST, fund, IS_START, IS_END)
+    with pytest.raises(ValueError):
+        A.random_thinning(*args, keep=1.07, n_rep=2)                      # 稀释不能增加交易
+    with pytest.raises(ValueError):
+        A.random_thinning(*args, target_trades=115, n_rep=2)
+    with pytest.raises(ValueError):
+        A.random_thinning(*args, n_rep=2)                                 # keep 与 target_trades 必须给且只给一个
+    th = A.random_thinning(*args, target_trades=95, n_rep=24, calib_reps=24, seed=11)
+    assert abs(th["mean_trades"] - 95) <= 1.5 and 0.8 < th["keep"] < 0.95
+
+
+def test_executable_bars_match_the_state_machine_counterfactually(base):
+    """可执行 K 线 = 在该根强加一个看涨 Pinbar 就会在收盘发出信号的 K 线：抽样核对两个方向。"""
+    from strategy_state_machine import _run_state_machine, state_machine_args
+    out, _ = base
+    df1h, sig, boxes = out["df1h"], out["signals"], out["boxes"]
+    ex = A.executable_bars(df1h, sig)
+    args = list(state_machine_args(df1h, BASELINE_STRATEGY, boxes))
+    pin = np.asarray(args[12]).copy()
+    end_is = int(np.searchsorted(df1h.index, IS_END))
+    rng = np.random.default_rng(5)
+    st = sig["state"].to_numpy()
+    with np.errstate(invalid="ignore"):
+        touch = (df1h["low"].to_numpy() <= sig["zone_hi"].to_numpy()) & (df1h["close"].to_numpy() >= sig["zone_lo"].to_numpy())
+    non_ex = np.setdiff1d(np.flatnonzero(touch & (st >= 1) & (st <= 4)), ex)        # 触及支撑带但不可执行（多为第 1 次测试）
+    for bars, expect in ((rng.choice(ex[ex < end_is], 12, replace=False), True),
+                         (rng.choice(non_ex[non_ex < end_is], 12, replace=False), False)):
+        for b in bars:
+            p2 = pin.copy()
+            p2[b] = True
+            args[12] = p2
+            fired = bool(_run_state_machine(*args)[4][b])
+            assert fired == expect, (int(b), expect)
 
 
 def test_poisson_binomial_cdf_matches_enumeration():
@@ -351,6 +391,23 @@ def test_attribution_respects_oos_lock():
         A.bracket_outcomes(df, [0], [0.5], [2.0], len(df), BacktestConfig())
     with pytest.raises(OOSLockedError):
         A.regime_features(df, pd.DataFrame(), None, np.array([0]))
+    df4 = pd.DataFrame({"open": 1.0, "high": 1.0, "low": 1.0, "close": 1.0, "volume": 1.0,
+                        "available_time": idx + pd.Timedelta(hours=4)}, index=idx)
+    with pytest.raises(OOSLockedError):                         # 研究期 1H + 越过 OOS 的 4H
+        A.regime_features(df.iloc[:2], df4, None, np.array([0]))
+    with pytest.raises(OOSLockedError):
+        A.crash_event_times(df4)
+    with pytest.raises(OOSLockedError):
+        A.common_shift_null(df, tfo, BacktestConfig(), idx[0], idx[-1], max_shift_bars=2)
+    with pytest.raises(OOSLockedError):
+        A.max_gap_permutation(tfo, {"g": tfo["exit_reason"]}, "r_multiple", n_perm=5)
+    with pytest.raises(OOSLockedError):
+        A.paired_sharpe_diff(pd.Series(0.01, index=idx), pd.Series(0.02, index=idx), n_boot=5)
+    with pytest.raises(OOSLockedError):
+        A.segment_daily_returns(res, idx[0].floor("D"), idx[0].floor("D") + pd.Timedelta(days=1))
+    sig_df = pd.DataFrame({"signal": False, "sl": np.nan, "tp": np.nan, "poc_tp": np.nan}, index=idx)
+    with pytest.raises(OOSLockedError):
+        A.random_thinning(df, sig_df, BacktestConfig(include_funding=False), None, idx[0], idx[-1], keep=1.0, n_rep=1)
     xb, rs, r = A.bracket_outcomes(df, [0], [0.5], [2.0], 3, BacktestConfig())   # 只用 OOS 之前的 K 线：允许
     assert rs[0] == 0
 

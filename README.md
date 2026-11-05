@@ -10,7 +10,7 @@
 |---|---|---|
 | Phase 0 | 数据工程：官方归档下载、SHA256 校验、清洗补缺、交叉校验、Parquet 缓存 | [docs/phase_logs/PHASE0_data_engineering.md](docs/phase_logs/PHASE0_data_engineering.md) |
 | Phase 1 | PPVP 引擎、1H 状态机、事件驱动回测器、日度指标、OOS 锁；防未来函数闸门（BTC/ETH 截断逐位比对、执行不变量、切换点内核截断、突变测试）与四轮对抗式审计修复 | [docs/phase_logs/PHASE1_engine.md](docs/phase_logs/PHASE1_engine.md) |
-| Phase 2 | BTC 基线回测（IS / VAL）、成本对照、随机入场零假设、IS 亏损与回撤归因、Phase 3 假设清单；ETH 留出锁 | [docs/phase_logs/PHASE2_baseline.md](docs/phase_logs/PHASE2_baseline.md) |
+| Phase 2 | BTC 基线回测（IS / VAL）、成本与状态机扩展对照、随机入场零假设与零技能稀释基准、IS 亏损与回撤归因、事先写定的 Phase 3 判定规则与候选清单；ETH 留出锁 | [docs/phase_logs/PHASE2_baseline.md](docs/phase_logs/PHASE2_baseline.md) |
 
 ## 快速开始
 
@@ -28,6 +28,10 @@ python -m pytest test_lookahead.py test_audit_regressions.py test_attribution.py
 
 ```bash
 python tools/run_phase2.py
+```
+
+```bash
+python tools/phase2_review_checks.py
 ```
 
 ```bash

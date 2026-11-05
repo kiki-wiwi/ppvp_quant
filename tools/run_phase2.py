@@ -68,7 +68,8 @@ STRUCT_VARIANTS = {
 }
 # 随机入场零假设：(键, 时间窗天数, 取样侧, 剔除信号 K 线前后多少根)；分桶的超额 R 以 local_15d_x24 为基准
 # (键, 时间窗天数, 取样侧, 剔除信号 K 线前后多少根, 候选池, 几何)：
-# 候选池 'enterable' = 策略此刻可以入场的 K 线（处理后状态 ∈ {ARMED, TOUCH1, DEPARTED, TOUCH2}、触及支撑带、收盘 ≥ 带下沿）
+# 候选池 'enterable' = 若此根出现看涨形态即会在收盘发出信号的 K 线：处理后状态为 TOUCH2 且触及支撑带、收盘 ≥ 带下沿，
+# 或本身就是原始信号 K 线（信号消费序列后状态回到 ARMED）。test_attribution 用“在该根强加 Pinbar”的反事实逐根核对。
 NULL_SPECS = (
     ("global", None, "both", None, None, "pct"),
     ("local_60d", 60, "both", None, None, "pct"),
@@ -268,6 +269,8 @@ def hold_profile(tf: pd.DataFrame, total_pnl: float, total_log: float) -> list[d
     for h in (12, 24, 48):
         m = tf["hold_bars"] > h
         rows.append({"hold_gt": h, "n": int(m.sum()), "mean_r": float(tf.loc[m, "r_multiple"].mean()),
+                     "kept_mean_r": float(tf.loc[~m, "r_multiple"].mean()), "kept_mean_ret": float(tf.loc[~m, "ret_on_base"].mean()),
+                     "median_d_sl": float(tf.loc[m, "d_sl"].median()), "median_d_sl_rest": float(tf.loc[~m, "d_sl"].median()),
                      "mean_ret": float(tf.loc[m, "ret_on_base"].mean()), "pnl": float(tf.loc[m, "pnl"].sum()),
                      "share_of_net_loss": float(tf.loc[m, "pnl"].sum() / total_pnl),
                      "share_of_log_loss": float(np.log1p(tf.loc[m, "ret_on_base"]).sum() / total_log)})
@@ -394,7 +397,7 @@ def tables_md(R: dict, ent: pd.DataFrame, reg: pd.DataFrame) -> str:
                  f"{_f(v['VAL']['sharpe'])} | {_pct(v['VAL']['total_return'], 2, True)} |")
 
     L += ["", "### T3 carry / roll 四种组合（总体指标；IS 配对夏普差与零技能稀释基准）", "",
-          "| 状态机扩展 | IS 原始信号 / 入场 | IS 夏普 | IS 配对夏普差 [95%] | IS 稀释基准（经验 / 公式） | IS 扣除稀释后的增量 | 稀释下不差于该变体的概率 | IS 平均 R | VAL 原始信号 / 入场 | VAL 夏普 | VAL 稀释公式基准 | VAL 平均 R |",
+          "| 状态机扩展 | IS 原始信号 / 入场 | IS 夏普 | IS 配对夏普差 [95%] | IS 稀释基准（经验 / 公式；稀释后平均笔数） | IS 扣除稀释后的增量 | 稀释下不差于该变体的概率 | IS 平均 R | VAL 原始信号 / 入场 | VAL 夏普 | VAL 稀释公式基准 | VAL 平均 R |",
           "|---|---|---|---|---|---|---|---|---|---|---|---|"]
     snames = {"carry_on_roll_on (baseline)": "carry 开、roll 开（基线）", "carry_off": "carry 关", "roll_off": "roll 关",
               "carry_off_roll_off": "二者都关"}
@@ -402,7 +405,7 @@ def tables_md(R: dict, ent: pd.DataFrame, reg: pd.DataFrame) -> str:
         pdiff = R["struct_paired_is"].get(k)
         th = R["struct_thinning"].get(k)
         pd_s = "—" if pdiff is None else f"{_f(pdiff['diff'], 3, True)} {_ci(pdiff['lo'], pdiff['hi'])}"
-        th_s = "—" if th is None else f"{_f(th['thinned_mean_sharpe'])} / {_f(th['formula_is'])}"
+        th_s = "—" if th is None else f"{_f(th['thinned_mean_sharpe'])} / {_f(th['formula_is'])}；{_f(th['thinned_mean_trades'], 1)}"
         mg_s = "—" if th is None else _f(th["margin_is_vs_empirical"], 3, True)
         pp_s = "—" if th is None else _f(th["p_thinned_ge_variant"], 3)
         vf_s = "—" if th is None else _f(th["formula_val"])
@@ -416,13 +419,14 @@ def tables_md(R: dict, ent: pd.DataFrame, reg: pd.DataFrame) -> str:
     nn = {"global": "IS 任意时刻", "local_60d": "信号前后 60 天", "local_15d": "信号前后 15 天",
           "local_15d_x24": "信号前后 15 天，剔除前后 24 根", "local_3d": "信号前后 3 天", "before_3d": "信号前 3 天",
           "after_3d": "信号后 3 天", "after_3d_x24": "信号后第 25 根至 3 天",
-          "enterable_global": "可入场 K 线池，IS 任意时刻", "enterable_15d": "可入场 K 线池，信号前后 15 天",
+          "enterable_global": "可执行 K 线池，IS 任意时刻", "enterable_15d": "可执行 K 线池，信号前后 15 天",
           "atr_global": "ATR 几何，IS 任意时刻", "atr_15d_x24": "ATR 几何，信号前后 15 天，剔除前后 24 根"}
     for k, v in R["is_null"].items():
         L.append(f"| {nn[k]} | {_f(v['null_mean_r_mean'], 3, True)} | {_ci(v['null_mean_r_p05'], v['null_mean_r_p95'], 3)} | "
                  f"{_f(v['p_mean_r_le'], 3)} | {_f(v['null_wins_mean'], 1)} | {_f(v['p_wins_le'], 3)} |")
     cs = R["is_null_common_shift"]
-    L.append(f"| 全部入场整体平移 ±1–360 根（保留聚集结构，{cs['n_shifts']} 次） | {_f(cs['null_mean_r_mean'], 3, True)} | "
+    L.append(f"| 全部入场整体平移 ±{cs['min_shift_bars']}–{cs['max_shift_bars']} 根（保留聚集结构，{cs['n_shifts']} 次） | "
+             f"{_f(cs['null_mean_r_mean'], 3, True)} | "
              f"{_ci(cs['null_mean_r_p05'], cs['null_mean_r_p95'], 3)} | {_f(cs['p_mean_r_le'], 3)} | — | — |")
 
     def bucket_lines(tab, spec):
@@ -471,8 +475,10 @@ def tables_md(R: dict, ent: pd.DataFrame, reg: pd.DataFrame) -> str:
                  f"{_pct(v['flagged_mean_ret'], 2, True)} | {_pct(v['kept_mean_ret'], 2, True)} | "
                  f"{_pct(v['flagged_share_of_net_loss'], 0)} | {_pct(v['flagged_share_of_log_loss'], 0)} |")
     for r in R["is_hold_profile"]:
-        L.append(f"| 持仓超过 {r['hold_gt']} 小时（时间止损的作用对象） | {r['n']} | {_f(r['mean_r'], 2, True)} | — | "
-                 f"{_pct(r['mean_ret'], 2, True)} | — | {_pct(r['share_of_net_loss'], 0)} | {_pct(r['share_of_log_loss'], 0)} |")
+        L.append(f"| 持仓超过 {r['hold_gt']} 小时（时间止损的作用对象） | {r['n']} | {_f(r['mean_r'], 2, True)} | "
+                 f"{_f(r['kept_mean_r'], 2, True)} | "
+                 f"{_pct(r['mean_ret'], 2, True)} | {_pct(r['kept_mean_ret'], 2, True)} | {_pct(r['share_of_net_loss'], 0)} | "
+                 f"{_pct(r['share_of_log_loss'], 0)} |")
 
     L += ["", "### T8 年度分布（IS）", "", "| 年份 | 笔数 | 胜率 | 平均 R | 盈亏（USDT） |", "|---|---|---|---|---|"]
     for r in R["is_by_year"]:
@@ -702,17 +708,18 @@ def main() -> None:
     R["struct_thinning"] = {}
     for j, vname in enumerate(k for k in STRUCT_VARIANTS if STRUCT_VARIANTS[k]):
         v = R["struct_variants"][vname]
-        keep = v["IS"]["entries"] / n_ref_is
-        th = A.random_thinning(df1h, sig, bcfg, fund_research, keep, IS_START, IS_END, n_rep=N_THIN, seed=SEED + 100 + j)
+        th = A.random_thinning(df1h, sig, bcfg, fund_research, IS_START, IS_END, target_trades=v["IS"]["entries"],
+                               n_rep=N_THIN, seed=SEED + 100 + j)
         R["struct_thinning"][vname] = {
-            "keep": keep, "thinned_mean_trades": th["mean_trades"], "thinned_mean_sharpe": th["mean_sharpe"],
+            "keep": th["keep"], "thinned_mean_trades": th["mean_trades"], "thinned_mean_sharpe": th["mean_sharpe"],
+            "thinned_sd_sharpe": th["sd_sharpe"],
             "p_thinned_ge_variant": float((1 + (th["sharpe"] >= v["IS"]["sharpe"]).sum()) / (N_THIN + 1)),
             "formula_is": s_ref_is * np.sqrt(v["IS"]["entries"] / n_ref_is),
             "margin_is_vs_formula": v["IS"]["sharpe"] - s_ref_is * np.sqrt(v["IS"]["entries"] / n_ref_is),
             "margin_is_vs_empirical": v["IS"]["sharpe"] - th["mean_sharpe"],
             "formula_val": s_ref_val * np.sqrt(v["VAL"]["entries"] / n_ref_val),
             "margin_val_vs_formula": v["VAL"]["sharpe"] - s_ref_val * np.sqrt(v["VAL"]["entries"] / n_ref_val)}
-    th1 = A.random_thinning(df1h, sig, bcfg, fund_research, 1.0, IS_START, IS_END, n_rep=1, seed=SEED)
+    th1 = A.random_thinning(df1h, sig, bcfg, fund_research, IS_START, IS_END, keep=1.0, n_rep=1, seed=SEED)
     assert abs(th1["sharpe"][0] - s_ref_is) < 1e-12 and th1["trades"][0] == n_ref_is   # keep = 1 复现基线
 
     # ---- 3. IS 交易级归因 ----
@@ -751,9 +758,7 @@ def main() -> None:
     lows = df1h["low"].to_numpy(dtype=np.float64)
     closes = df1h["close"].to_numpy(dtype=np.float64)
     st = sgl["state"].to_numpy()
-    with np.errstate(invalid="ignore"):
-        enterable = np.flatnonzero((st >= 1) & (st <= 4) & (lows <= sgl["zone_hi"].to_numpy())
-                                   & (closes >= sgl["zone_lo"].to_numpy()))
+    enterable = A.executable_bars(df1h, sgl)
     assert np.isin(ist["entry_bar"].to_numpy(), enterable).all()           # 全部真实入场都在候选池内
     atr_bar = sgl["atr"].to_numpy(dtype=np.float64)                         # 第 i 根开盘时已知的 ATR
     nulls = {}
@@ -765,7 +770,7 @@ def main() -> None:
     R["is_enterable_pool"] = {"n_bars_is": int(((enterable >= int(np.searchsorted(df1h.index, IS_START)))
                                                  & (enterable < int(np.searchsorted(df1h.index, IS_END)))).sum()),
                               "contains_all_entries": True}
-    shift = A.common_shift_null(df1h, ist, bcfg, IS_START, IS_END, max_shift_bars=360)
+    shift = A.common_shift_null(df1h, ist, bcfg, IS_START, IS_END, max_shift_bars=360, min_shift_bars=25)
     ist["null_r"] = nulls[EXCESS_BASE]["per_trade_null_mean_r"]       # 分桶的超额 R 基准：±15 天、剔除前后 24 根
     act = float(ist["r_ex_funding"].mean())
     R["is_null"] = {k: {kk: vv for kk, vv in v.items() if not isinstance(vv, np.ndarray)} for k, v in nulls.items()}
@@ -830,6 +835,11 @@ def main() -> None:
         ep.update({"trades_closed": int(m.sum()), "wins": int(ist.loc[m, "win"].sum()),
                    "pnl": float(ist.loc[m, "pnl"].sum()), "sum_r": float(ist.loc[m, "r_multiple"].sum())})
     R["is_drawdown_episodes"] = eps
+    dd_is = d_is / d_is.cummax() - 1.0
+    R["is_dd_path"] = {"min_2020": float(dd_is[dd_is.index < "2021-01-01"].min()),
+                       "min_2020_date": dd_is[dd_is.index < "2021-01-01"].idxmin(),
+                       "max_2021q1": float(dd_is[(dd_is.index >= "2021-01-01") & (dd_is.index < "2021-04-01")].max()),
+                       "max_2021q1_date": dd_is[(dd_is.index >= "2021-01-01") & (dd_is.index < "2021-04-01")].idxmax()}
     yr = ist.groupby(ist["entry_time"].dt.year)
     R["is_by_year"] = pd.DataFrame({"n": yr.size(), "win_rate": yr["win"].mean(), "mean_r": yr["r_multiple"].mean(),
                                     "sum_pnl": yr["pnl"].sum()}).reset_index()
@@ -859,9 +869,14 @@ def main() -> None:
     ret, rmul, dsl = ist["ret_on_base"], ist["r_multiple"], ist["d_sl"]
     w_fixed = {name: float(dsl[m].mean() / dsl.mean()) for name, m in
                (("d_sl<1%", dsl < 0.01), ("1%<=d_sl<2%", (dsl >= 0.01) & (dsl < 0.02)), ("d_sl>=2%", dsl >= 0.02))}
+    x_fixed = rmul * dsl / dsl.mean()                  # 固定名义仓位、按相同平均风险归一后的逐笔收益（以 R 计）
+    groups = (("d_sl<1%", dsl < 0.01), ("1%<=d_sl<2%", (dsl >= 0.01) & (dsl < 0.02)), ("d_sl>=2%", dsl >= 0.02))
     R["is_sizing_mechanism"] = {
         "per_trade_ir_fixed_notional": float(ret.mean() / ret.std(ddof=1)),
         "per_trade_ir_equal_risk": float(rmul.mean() / rmul.std(ddof=1)),
+        "equal_avg_risk_mean_fixed": float(x_fixed.mean()), "equal_avg_risk_sd_fixed": float(x_fixed.std(ddof=1)),
+        "equal_avg_risk_mean_equal": float(rmul.mean()), "equal_avg_risk_sd_equal": float(rmul.std(ddof=1)),
+        "dsl_weighted_mean_r_by_group": {name: float((rmul[m] * dsl[m]).sum() / dsl[m].sum()) for name, m in groups},
         "relative_risk_weight_fixed_notional": w_fixed,
         "mean_r_by_group": {name: float(rmul[m].mean()) for name, m in
                             (("d_sl<1%", dsl < 0.01), ("1%<=d_sl<2%", (dsl >= 0.01) & (dsl < 0.02)), ("d_sl>=2%", dsl >= 0.02))},

@@ -74,7 +74,9 @@ def trade_frame(res: BacktestResult, df1h: pd.DataFrame, boxes: pd.DataFrame, sc
     tf["d_sl"] = 1.0 - sl / ep
     tf["d_tp"] = tp / ep - 1.0
     tf["rr_fill"] = (tp - ep) / risk_unit
-    tf["p_rw"] = tf["d_sl"] / (tf["d_sl"] + tf["d_tp"])          # 无漂移连续随机游走下先触及止盈的概率
+    # 无漂移连续随机游走先触及止盈的概率：价格路径从信号收盘出发，SL / TP 按原始高低价触发，
+    # 因此起点取信号收盘而不是含滑点的成交价（后者会把 2bp 入场滑点算进“不含成本”的基准）
+    tf["p_rw"] = (c[eb] - sl) / (tp - sl)
     # 成交价 = 参考价 * (1 ± 滑点)，因此滑点成本可由成交价精确反推
     tf["slip_usd"] = q * (ep - ep / (1.0 + slip)) + q * (xp / (1.0 - slip) - xp)
     tf["pre_cost_pnl"] = tf["gross_pnl"] + tf["slip_usd"]
@@ -134,9 +136,18 @@ def trade_frame(res: BacktestResult, df1h: pd.DataFrame, boxes: pd.DataFrame, sc
 # ---------------------------------------------------------------------------
 # 入场时刻的因果市场状态特征
 # ---------------------------------------------------------------------------
-def crash_event_times(df4h: pd.DataFrame, body_atr4: float = 2.0, vol_mult4: float = 2.0) -> np.ndarray:
+def _check_4h_extent(df4h: pd.DataFrame, allow_oos: bool) -> None:
+    if allow_oos or len(df4h) == 0:
+        return
+    if pd.DatetimeIndex(df4h["available_time"]).max() > OOS_START:
+        raise OOSLockedError("4H bars beyond OOS_START enter this computation; it requires allow_oos=True")
+
+
+def crash_event_times(df4h: pd.DataFrame, body_atr4: float = 2.0, vol_mult4: float = 2.0,
+                      allow_oos: bool = False) -> np.ndarray:
     """4H 放量大阴线（实体 ≥ x*ATR_4H(14) 且 量 ≥ y*均量(20)，ATR/均量取前一根 4H 收盘值）的可用时刻（ns）。
     与 strategy_state_machine.regime_block_mask 的 crash_cooldown 定义相同。"""
+    _check_4h_extent(df4h, allow_oos)
     o4, h4, l4, c4, v4 = (df4h[k].to_numpy(dtype=np.float64) for k in ("open", "high", "low", "close", "volume"))
     atr4 = shift_known_at_open(wilder_atr(h4, l4, c4, 14))
     vs4 = shift_known_at_open(pd.Series(v4).rolling(20, min_periods=20).mean().to_numpy())
@@ -154,6 +165,9 @@ def regime_features(df1h: pd.DataFrame, df4h: pd.DataFrame, spot_daily: pd.Serie
     df1h（全部用于日线与滚动计算）延伸到 OOS_START 之后时须 allow_oos=True。
     """
     _check_bars_extent(df1h, len(df1h), allow_oos)
+    _check_4h_extent(df4h, allow_oos)
+    if spot_daily is not None and len(spot_daily) and not allow_oos and spot_daily.index.max() >= OOS_START:
+        raise OOSLockedError("spot warm-up beyond OOS_START requires allow_oos=True")
     bars = np.asarray(decision_bars, dtype=np.int64)
     t_dec = to_ns(df1h.index)[bars] + NS_HOUR
     d = daily_closes_with_warmup(df1h, spot_daily)
@@ -175,7 +189,7 @@ def regime_features(df1h: pd.DataFrame, df4h: pd.DataFrame, spot_daily: pd.Serie
     out.loc[j < 0, :] = np.nan
     out.insert(0, "daily_label", daily.index[np.clip(j, 0, None)])
 
-    ev = crash_event_times(df4h)
+    ev = crash_event_times(df4h, allow_oos=allow_oos)
     k = np.searchsorted(ev, t_dec, side="right") - 1
     hrs = np.full(len(bars), np.inf)
     ok = k >= 0
@@ -352,10 +366,22 @@ def random_entry_null(df1h: pd.DataFrame, tf: pd.DataFrame, bcfg: BacktestConfig
     }
 
 
+def executable_bars(df1h: pd.DataFrame, signals: pd.DataFrame) -> np.ndarray:
+    """若在该根出现看涨形态即会在收盘发出信号的 K 线下标：处理后状态为 TOUCH2、触及支撑带（low ≤ 带上沿）且收盘
+    ≥ 带下沿，或本身就是原始信号 K 线（信号消费序列后状态回到 ARMED）。用于“策略可执行范围”的随机入场零假设。"""
+    st = signals["state"].to_numpy()
+    with np.errstate(invalid="ignore"):
+        touch = ((df1h["low"].to_numpy(dtype=np.float64) <= signals["zone_hi"].to_numpy(dtype=np.float64))
+                 & (df1h["close"].to_numpy(dtype=np.float64) >= signals["zone_lo"].to_numpy(dtype=np.float64)))
+    return np.flatnonzero(((st == 4) & touch) | signals["sig_raw"].to_numpy(dtype=bool))
+
+
 def common_shift_null(df1h: pd.DataFrame, tf: pd.DataFrame, bcfg: BacktestConfig, start: pd.Timestamp,
-                      end: pd.Timestamp, max_shift_bars: int = 360, allow_oos: bool = False) -> dict:
-    """保留入场聚集结构的零假设：把全部真实入场整体平移同一个 s 根（s = ±1..±max_shift_bars，穷举），
-    几何取百分比距离；平移后落到 [start, end) 可撮合范围之外的交易从该次平移中剔除。p = (1 + #{零假设 ≤ 实际}) / (次数 + 1)。"""
+                      end: pd.Timestamp, max_shift_bars: int = 360, min_shift_bars: int = 1,
+                      allow_oos: bool = False) -> dict:
+    """保留入场聚集结构的零假设：把全部真实入场整体平移同一个 s 根（min_shift_bars ≤ |s| ≤ max_shift_bars，穷举），
+    几何取百分比距离；平移后落到 [start, end) 可撮合范围之外的交易从该次平移中剔除。p = (1 + #{零假设 ≤ 实际}) / (次数 + 1)。
+    |s| 很小的平移基本重放真实交易自己的路径，局部零假设因此剔除前后 24 根（min_shift_bars = 25 与之对应）。"""
     _check_trades_extent(tf, allow_oos)
     if end > OOS_START and not allow_oos:
         raise OOSLockedError("random-entry nulls reaching beyond OOS_START require allow_oos=True")
@@ -364,7 +390,8 @@ def common_shift_null(df1h: pd.DataFrame, tf: pd.DataFrame, bcfg: BacktestConfig
     end_bar = int(np.searchsorted(idx, end, side="left"))
     eb = tf["entry_bar"].to_numpy(dtype=np.int64)
     c = df1h["close"].to_numpy(dtype=np.float64)
-    shifts = np.array([s for s in range(-max_shift_bars, max_shift_bars + 1) if s != 0], dtype=np.int64)
+    shifts = np.array([s for s in range(-max_shift_bars, max_shift_bars + 1) if abs(s) >= max(1, min_shift_bars)],
+                      dtype=np.int64)
     means, kept = np.empty(len(shifts)), np.empty(len(shifts), dtype=np.int64)
     for j, sh in enumerate(shifts):
         b = eb + sh
@@ -373,7 +400,8 @@ def common_shift_null(df1h: pd.DataFrame, tf: pd.DataFrame, bcfg: BacktestConfig
         _, _, r = bracket_outcomes(df1h, b[ok], sl_abs.ravel(), tp_abs.ravel(), end_bar, bcfg, allow_oos=allow_oos)
         means[j], kept[j] = r.mean(), ok.sum()
     act = float(tf["r_ex_funding"].mean())
-    return {"n_shifts": int(len(shifts)), "max_shift_bars": max_shift_bars, "actual_mean_r_ex_funding": act,
+    return {"n_shifts": int(len(shifts)), "max_shift_bars": max_shift_bars, "min_shift_bars": min_shift_bars,
+            "actual_mean_r_ex_funding": act,
             "null_mean_r_mean": float(means.mean()), "null_mean_r_sd": float(means.std(ddof=1)),
             "null_mean_r_p05": float(np.percentile(means, 5)), "null_mean_r_p95": float(np.percentile(means, 95)),
             "p_mean_r_le": float((1 + (means <= act + 1e-12).sum()) / (len(shifts) + 1)),
@@ -422,29 +450,57 @@ def max_gap_permutation(tf: pd.DataFrame, groupings: dict, value_col: str, n_per
 
 
 def random_thinning(df1h: pd.DataFrame, signals: pd.DataFrame, bcfg: BacktestConfig, funding: pd.DataFrame | None,
-                    keep: float, start: pd.Timestamp, end: pd.Timestamp, n_rep: int = 200, seed: int = 0,
+                    start: pd.Timestamp, end: pd.Timestamp, keep: float | None = None, target_trades: float | None = None,
+                    n_rep: int = 300, seed: int = 0, calib_reps: int = 100, calib_iters: int = 8,
                     allow_oos: bool = False) -> dict:
     """零技能稀释基准：每个可交易信号独立地以概率 keep 保留（其余丢弃），重跑回测，记录 [start, end) 分段的入场笔数与
-    日度夏普。基线夏普为负时，随机减少交易本身就会把夏普推向零（约按 sqrt(保留比例)），过滤器的改进须扣除这一部分。"""
+    日度夏普。基线夏普为负时，随机减少交易本身就会把夏普推向零（约按 sqrt(保留比例)），过滤器的改进须扣除这一部分。
+
+    给定 target_trades 时先校准 keep：丢掉信号会让此前因持仓而跳过的信号成交，按 n_目标 / n_现任 取 keep 会使平均笔数
+    偏多，因此用同一组随机数（共同随机数）的前 calib_reps 行二分 calib_iters 次，使平均入场笔数等于目标。
+    只能稀释（keep ≤ 1）；入场笔数不少于现任的候选没有稀释基准，由调用方改用配对检验。"""
     from backtester import run_backtest
     _check_bars_extent(df1h, len(df1h), allow_oos)
+    if (keep is None) == (target_trades is None):
+        raise ValueError("give exactly one of keep or target_trades")
+    if keep is not None and not 0.0 < keep <= 1.0:
+        raise ValueError("keep must be in (0, 1]: thinning cannot add trades")
     rng = np.random.default_rng(seed)
-    sig_bars = np.flatnonzero(signals["signal"].to_numpy(dtype=bool))
-    n_tr, sh = np.empty(n_rep, dtype=np.int64), np.empty(n_rep)
-    for i in range(n_rep):
-        s2 = signals.copy()
-        drop = sig_bars[rng.random(len(sig_bars)) >= keep]
-        col = s2["signal"].to_numpy(dtype=bool).copy()
-        col[drop] = False
-        s2["signal"] = col
-        res = run_backtest(df1h, s2, bcfg, funding)
+    base_sig = signals["signal"].to_numpy(dtype=bool)
+    sig_bars = np.flatnonzero(base_sig)
+    u = rng.random((n_rep, len(sig_bars)))
+
+    def run(row: np.ndarray, k: float, need_sharpe: bool):
+        col = base_sig.copy()
+        col[sig_bars[row >= k]] = False
+        res = run_backtest(df1h, signals.assign(signal=col), bcfg, funding)
         tr = res.trades
-        n_tr[i] = int(((tr["entry_time"] >= start) & (tr["entry_time"] < end)).sum())
+        n = int(((tr["entry_time"] >= start) & (tr["entry_time"] < end)).sum())
+        if not need_sharpe:
+            return n, np.nan
         r = segment_daily_returns(res, start, end, allow_oos)
         sd = r.std(ddof=1)
-        sh[i] = float(r.mean() / sd * np.sqrt(ANN)) if sd > 0 else np.nan
-    return {"keep": keep, "n_rep": n_rep, "seed": seed, "trades": n_tr, "sharpe": sh,
-            "mean_trades": float(n_tr.mean()), "mean_sharpe": float(np.nanmean(sh))}
+        return n, (float(r.mean() / sd * np.sqrt(ANN)) if sd > 0 else np.nan)
+
+    calib = None
+    if target_trades is not None:
+        lo, hi = 0.0, 1.0
+        n_full = np.mean([run(u[i], 1.0, False)[0] for i in range(min(1, n_rep))])
+        if target_trades >= n_full:
+            raise ValueError("target_trades must be below the incumbent's entry count: thinning cannot add trades")
+        for _ in range(calib_iters):
+            mid = 0.5 * (lo + hi)
+            m = np.mean([run(u[i], mid, False)[0] for i in range(min(calib_reps, n_rep))])
+            lo, hi = (mid, hi) if m < target_trades else (lo, mid)
+        keep = 0.5 * (lo + hi)
+        calib = {"target_trades": float(target_trades), "calib_reps": int(min(calib_reps, n_rep)),
+                 "calib_iters": calib_iters}
+    n_tr, sh = np.empty(n_rep, dtype=np.int64), np.empty(n_rep)
+    for i in range(n_rep):
+        n_tr[i], sh[i] = run(u[i], keep, True)
+    return {"keep": float(keep), "n_rep": n_rep, "seed": seed, "calibration": calib, "trades": n_tr, "sharpe": sh,
+            "mean_trades": float(n_tr.mean()), "mean_sharpe": float(np.nanmean(sh)),
+            "sd_sharpe": float(np.nanstd(sh, ddof=1)) if n_rep > 1 else float("nan")}
 
 
 def poisson_binomial_cdf(p: np.ndarray, k: int) -> float:
