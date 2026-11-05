@@ -1,8 +1,8 @@
 """
 ppvp_audit/b_audited.py — B_audited 的定义与逐位一致性核验（IS only）。
 
-B_audited = 当前工作树的代码（相对 B_original 只修复已证实的实现错误，见 B_AUDITED_FIXES）+ 与 B_original 完全相同的
-配置。核验方法：在 B_original 冻结提交（baseline_manifest.json 的 git.commit）的独立工作树中，与在当前工作树中，
+B_audited = 当前工作树的代码（相对 B_original 修复 4 个已证实的实现错误 D-1、D-5、E-1、E-2，另加 1 项对结果没有影响的
+流程保护 D-4，见 B_AUDITED_FIXES）+ 与 B_original 完全相同的配置。其余定义问题与设计选择一律不改。核验方法：在 B_original 冻结提交（baseline_manifest.json 的 git.commit）的独立工作树中，与在当前工作树中，
 各自用子进程运行 IS 基线（ppvp_audit.common.is_run），对 1H / 4H、箱体表、信号表、成交表、逐小时净值与持仓逐列计算
 指纹并比较；任何一列不同都会列出。两边都只读 IS 截断后的数据。
 
@@ -113,8 +113,10 @@ def run() -> dict:
     changed = subprocess.run(["git", "diff", "--stat", commit, "--", "."], cwd=ROOT, capture_output=True, text=True).stdout
     rep = {
         "name": "B_audited",
-        "definition": "current working tree code (only proven implementation-error fixes relative to B_original, listed "
-                      "below) with the B_original configs; BTCUSDT perp IS [2020-01-01, 2024-01-01)",
+        "definition": "current working tree code with the B_original configs: B_original plus the four proven "
+                      "implementation-error fixes (D-1, D-5, E-1, E-2) and one result-neutral process safeguard (D-4, a "
+                      "design choice changed to satisfy the section 9 no-download constraint); all other definition "
+                      "questions and design choices unchanged; BTCUSDT perp IS [2020-01-01, 2024-01-01)",
         "b_original_commit": commit,
         "b_audited_git": git_state(),
         "diff_stat_vs_b_original_commit": changed,

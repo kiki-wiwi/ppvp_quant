@@ -37,8 +37,8 @@ EXPOSURE_REGISTER = [
      "influenced_decisions": "数据清洗政策：≥6 小时缺口用 OKX 补齐（只发生在 OOS 的 2026-10-28）、占位 K 线剔除"},
     {"phase": "Phase 1", "commits": "ee26506..d1bc53c", "segment": "IS+VAL (research period)", "symbols": "BTC, ETH",
      "kind": "outcome counts and aggregate equity (debug output)",
-     "what": "中间版本的研究期离场原因计数（BTC 止损 85 / 止盈 60，ETH 止损 104 / 止盈 56）；研究期若干配置的期末净值"
-             "（显示基线明显亏损）；破位离场计数（22 次中 12 次）；第一轮审计中的亏损止盈交易计数",
+     "what": "中间版本的研究期离场原因计数（BTC 与 ETH）；研究期若干配置的期末净值（显示基线明显亏损）；破位离场计数；"
+             "第一轮审计中的亏损止盈交易计数（本登记只描述看过什么，不重复任何 VAL / ETH 数值）",
      "influenced_decisions": "记录称未据此改动代码或参数（用于核对重构前后一致性）"},
     {"phase": "Phase 1", "commits": "ee26506 (removed in 3e494cf, still in git history)", "segment": "OOS",
      "symbols": "BTC, ETH", "kind": "activity counts",
@@ -46,14 +46,14 @@ EXPOSURE_REGISTER = [
     {"phase": "Phase 1-2", "commits": "ee26506..04724f0", "segment": "IS+VAL+OOS", "symbols": "BTC, ETH",
      "kind": "pass/fail look-ahead gate; structural counts",
      "what": "防未来函数闸门在 2020-2026 全量数据上截断比对（只输出通过 / 失败）；耗时基准记录全量 K 线数与箱体数；"
-             "研究期结构计数（箱体 1,579 / 1,558，原始信号 193 / 202，消融表中的可交易 / 成交笔数，INVALID 时间占比）",
+             "研究期结构计数（BTC 与 ETH 的箱体数、原始信号数、消融表中的可交易 / 成交笔数、INVALID 时间占比）",
      "influenced_decisions": "闸门失败会触发引擎修复（未来函数类缺陷），不涉及绩效"},
     {"phase": "Phase 2", "commits": "a59f783..04724f0", "segment": "VAL", "symbols": "BTC",
      "kind": "performance (headline)",
-     "what": "基线 VAL 夏普 −0.525（区间 [−1.93, +1.11]）、累计 −6.9%、最大回撤 −13.59%、30 笔（32 个原始信号）、"
-             "胜率 / 盈亏比 / 平均 R、买入持有 VAL 夏普 1.47；6 个成本对照的 VAL 指标；carry / roll 三个变体的 VAL 夏普"
-             "（−0.68 至 −0.33）与平均 R；草稿图（a59f783、f85c142）画出过 VAL 日度净值路径；"
-             "test_attribution.py 把 VAL 夏普钉为常量",
+     "what": "基线 VAL 总体指标（夏普及其区间、累计收益、最大回撤、成交笔数与原始信号数、胜率 / 盈亏比 / 平均 R）、"
+             "买入持有 VAL 夏普；6 个成本对照的 VAL 指标；carry / roll 三个变体的 VAL 夏普与平均 R；"
+             "草稿图（a59f783、f85c142）画出过 VAL 日度净值路径；test_attribution.py 把 VAL 夏普钉为常量"
+             "（数值见 Phase 2 记录，本登记不重复）",
      "influenced_decisions": "用于 Phase 2 第 3b 节按事先规则否决 carry / roll 变体，以及 Phase 3 判定规则的设计讨论；"
                              "VAL 因此不再是未见数据"},
     {"phase": "Phase 2", "commits": "a59f783..04724f0", "segment": "ETH", "symbols": "ETH",
@@ -139,10 +139,11 @@ def freeze() -> dict:
         "phase2_figures": {f: sha256_file(ROOT / "reports" / "figures" / f) for f in PHASE2_FIGURES},
         "reproduce": ["python -m ppvp_audit.b_audited          # B_audited 与 B_original 的逐位核验（b_audited_check.json）",
                       "python -m ppvp_audit.manifest           # 本文件",
-                      "python -m ppvp_audit.repro_figures      # 五张图的核验版与 figure_checks.json",
+                      "python -m ppvp_audit.repro_figures      # 图 1、2、4、5 的核验图与 figure_checks.json（图 3 只核验分组数值）",
                       "python -m ppvp_audit.run_ledgers --version B_audited   # 账本、核对表、切片",
                       "python -m ppvp_audit.nulls              # 随机基准复核",
-                      "python -m ppvp_audit.experiments        # 9 个预注册版本"],
+                      "python -m ppvp_audit.experiments        # 9 个预注册版本（results.json、实验台账 R01–R09）",
+                      "python -m ppvp_audit.post_run           # 运行后的补充核算与补记运行（post_run_checks.json、台账 R10–R21）"],
         "exposure_register": EXPOSURE_REGISTER,
     }
     if manifest["ledger"]["sha256"] != B_ORIGINAL_LEDGER_SHA256:

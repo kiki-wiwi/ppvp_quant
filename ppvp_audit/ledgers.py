@@ -153,7 +153,8 @@ def opportunities(out: dict, scfg: StrategyConfig, bcfg: BacktestConfig, version
     bf = P.box_flags(boxes, P.bar_flags(df1h))
     for col in bf.columns:
         df[f"profile_{col}"] = bf[col].to_numpy()[sbox[bars]]
-    df = pd.concat([df, P.spot_warmup_dependence(df["signal_time"]).reset_index(drop=True)], axis=1)
+    # 逐特征精确判断是否用到现货预热（带 / 不带预热各算一次比较）；旧的按窗口长度估计的两列只覆盖 SMA200 与 365 日特征
+    df = pd.concat([df, P.spot_warmup_dependence_exact(df1h, out["df4h"], spot, bars).reset_index(drop=True)], axis=1)
     # 去向
     tradable = sig["signal"].to_numpy()[bars]
     status = np.where(sig["block_rr"].to_numpy()[bars], "blocked_rr_vah_not_above_close",

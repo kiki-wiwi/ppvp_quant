@@ -42,6 +42,27 @@ def box_flags(boxes: pd.DataFrame, flags: pd.DataFrame) -> pd.DataFrame:
     return pd.DataFrame({f"window_n_{k[3:]}": cm[k][b] - cm[k][a] for k in cm}, index=boxes.index)
 
 
+DAILY_FEATURES = ("above_sma200", "sma200_up", "mom20d", "vol30d", "vol30d_pct", "dd365")
+
+
+def spot_warmup_dependence_exact(df1h: pd.DataFrame, df4h: pd.DataFrame, spot: pd.Series, bars: np.ndarray) -> pd.DataFrame:
+    """逐个日线状态特征精确判断是否依赖 2020 年之前的现货预热（审计复核 AF-8）：分别带预热与不带预热计算
+    attribution.regime_features，取值不同（含一边为 NaN）即为依赖。0/1 特征按相等比较，连续特征按相对 1e-9 比较
+    （滚动求和的浮点累积误差不算依赖）。另给出任一特征依赖预热的汇总列。"""
+    import attribution as A
+    a = A.regime_features(df1h, df4h, spot, bars)
+    b = A.regime_features(df1h, df4h, None, bars)
+    out = {}
+    for k in DAILY_FEATURES:
+        x, y = a[k].to_numpy(dtype=np.float64), b[k].to_numpy(dtype=np.float64)
+        both_nan = np.isnan(x) & np.isnan(y)
+        close = np.isclose(x, y, rtol=1e-9, atol=0.0)
+        out[f"regime_{k}_uses_spot_warmup"] = ~(both_nan | close)
+    df = pd.DataFrame(out)
+    df["regime_any_daily_feature_uses_spot_warmup"] = df.any(axis=1)
+    return df
+
+
 def spot_warmup_dependence(signal_time: pd.Series) -> pd.DataFrame:
     """决策所用的最近一根已收盘日线为 D（signal_time 之前收盘），SMA200 窗口 [D−199, D]、365 日特征窗口 [D−364, D]；
     窗口起点早于 2020-01-01 即用到了现货预热收盘（只有价格）。"""

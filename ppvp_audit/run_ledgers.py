@@ -77,7 +77,9 @@ def build(version: str, scfg=BASELINE_STRATEGY, bcfg=BASELINE_BACKTEST, out: dic
         "filled_profile_changed_since_chain_start": int(op.loc[op["status"] == "filled", "profile_changed_since_chain_start"].sum()),
         "filled_n_rolls": op.loc[op["status"] == "filled", "n_rolls"].value_counts().sort_index().to_dict(),
         "filled_signal_at_profile_supersede_instant": int(op.loc[op["status"] == "filled", "signal_at_profile_supersede_instant"].sum()),
-        "filled_regime_sma200_uses_spot_warmup": int(op.loc[op["status"] == "filled", "regime_sma200_uses_spot_warmup"].sum()),
+        "spot_warmup_dependence_all_opportunities": {c: int(op[c].sum()) for c in op.columns if c.endswith("_uses_spot_warmup")},
+        "spot_warmup_dependence_filled": {c: int(op.loc[op["status"] == "filled", c].sum()) for c in op.columns
+                                          if c.endswith("_uses_spot_warmup")},
         "filled_profile_window_with_partial_hour": int((op.loc[op["status"] == "filled", "profile_window_n_partial"] > 0).sum()),
         "filled_departure_height_atr_quantiles": op.loc[op["status"] == "filled", "departure_height_atr"].quantile(
             [0, 0.1, 0.25, 0.5, 0.75, 0.9, 1]).to_dict(),

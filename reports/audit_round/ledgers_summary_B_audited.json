@@ -24,7 +24,24 @@
   "3": 1
  },
  "filled_signal_at_profile_supersede_instant": 2,
- "filled_regime_sma200_uses_spot_warmup": 15,
+ "spot_warmup_dependence_all_opportunities": {
+  "regime_above_sma200_uses_spot_warmup": 18,
+  "regime_sma200_up_uses_spot_warmup": 19,
+  "regime_mom20d_uses_spot_warmup": 0,
+  "regime_vol30d_uses_spot_warmup": 1,
+  "regime_vol30d_pct_uses_spot_warmup": 37,
+  "regime_dd365_uses_spot_warmup": 19,
+  "regime_any_daily_feature_uses_spot_warmup": 37
+ },
+ "spot_warmup_dependence_filled": {
+  "regime_above_sma200_uses_spot_warmup": 15,
+  "regime_sma200_up_uses_spot_warmup": 16,
+  "regime_mom20d_uses_spot_warmup": 0,
+  "regime_vol30d_uses_spot_warmup": 1,
+  "regime_vol30d_pct_uses_spot_warmup": 34,
+  "regime_dd365_uses_spot_warmup": 16,
+  "regime_any_daily_feature_uses_spot_warmup": 34
+ },
  "filled_profile_window_with_partial_hour": 0,
  "filled_departure_height_atr_quantiles": {
   "0.0": 1.0031607068365753,
