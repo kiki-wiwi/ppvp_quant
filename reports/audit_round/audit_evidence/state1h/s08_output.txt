@@ -1,0 +1,61 @@
+raw signals 120 | filled 109 | status {'filled': 109, 'skipped_position_open': 8, 'blocked_rr_vah_not_above_close': 3}
+events (s01): {'box_switch': 1149, 'carry_keep': 139, 'carry_keep_in_state': {'2': 36, '3': 97, '4': 6}, 'reset_mid_sequence': 134, 'hv_block': 155, 'breakdown_active': 283, 'breakdown_inv': 514, 'merge': 106, 'roll': 55, 't2_accept': 207, 't2_accept_by': {'bounce_only': 96, 'bars_only': 3, 'both': 108}, 'activation_req': 108, 'signal_req': 120, 't1_start': 428, 't1_start_at_activation_in_band': 83}
+
+== S-1 separation ==
+filled: by bounce 109 | by bars 53 | bars-only 0 | bounce-only 56
+all 120: bars-only 1 status of bars-only: ['skipped_position_open'] bounce [0.916]
+filled min bounce 1.0032 | <1.10 ATR 12 | <1.05 ATR 9
+filled single fully-above bar between tests (gap==2): 15 | gap quantiles {0.0: 2.0, 0.25: 3.0, 0.5: 5.0}
+filled: bounce vs band top at departure bar < 1 ATR: 5
+filled with >=1 merge: 22 | merge dist {0: 87, 1: 14, 2: 6, 3: 2}
+IS merges 106 | merged touch set a lower first-test low 32
+TOUCH1->DEPARTED 376 all low>band top True | rolls 55 all low>band top True | DEPARTED->TOUCH2 207 all low<=band top True
+ledger departure columns match independent machine: True | qualified_by labels match: True
+
+== S-2 carry ==
+filled with box change during the sequence 37 | carry dist {0: 72, 1: 28, 2: 9} | ledger profile_changed_between_tests (filled) 27
+|dVAL|/ATR(signal bar) max 1.303 median 0.481 | dVAH% min/max -4.77 2.84
+filled whose second-test start is not a touch of the sequence-start box band: 10
+filled where departure or second touch exists only relative to a moved band: 7 | of which box switch between the two bars: 4
+filled whose first-test low lies above the signal-bar band top: 4 | below the signal-bar band low: 45
+
+== S-3 roll ==
+filled roll dist {0: 88, 1: 18, 2: 2, 3: 1}
+rolled with an earlier lower test low 10 | SL above all-tests stop by ATR 0.216 - 1.432 | % of close 0.114 - 1.865
+
+== S-4 first test at activation inside band ==
+seq_start_at_activation    False  True 
+row_0                                  
+prev bar fully above band     66     11
+prev close above band          1      9
+prev close inside band         0     22
+inside-band activation starts among filled 22 | without roll 17 | IS test-1 starts 428 of which at activation with prior close inside band 83
+
+== S-5 pattern lag ==
+filled lag dist {0: 35, 1: 32, 2: 20, 3: 12, 4: 5, 5: 2, 6: 3} | lag>=1 74
+
+== S-6 reclaim ==
+filled close<VAL 6 | close<first-test low 6 | either 8 | both 4
+
+== S-7 touch geometry ==
+filled with a test-1 bar entirely below the band 1 | with a test-2 bar entirely below the band 1
+first-test low below signal-bar band low (ATR): max 4.26 | stop distance (close-SL)/ATR max 5.17
+
+== S-8 consumption / requirements ==
+{('activation', 'cleared_by_bar_above'): 27, ('activation', 'cleared_by_bar_above_unclaimed'): 18, ('activation', 'expired_fresh_structure'): 63, ('signal', 'cleared_by_bar_above'): 101, ('signal', 'cleared_by_bar_above_unclaimed'): 13, ('signal', 'expired_fresh_structure'): 6}
+signal requirements claimed by >=1 later same-zone box: 12 | bars to fate (signal) median/max 2.0 130
+
+== S-9 INVALID ==
+IS occupancy by state code {0: 0.0025, 1: 0.458, 2: 0.0617, 3: 0.1563, 4: 0.0093, 5: 0.3121}
+transitions into INVALID from ARMED/TOUCH1/DEPARTED/TOUCH2 292 | close-based breakdown bar 276 | box switch (memory block) 16 | unexplained 0
+active sequences ended by INVALID 181 | breakdown bars in IS 797 | any closing >= band low 0
+
+== S-10 engulfing prior low ==
+signals with engulfing 52 | prior low used in SL 0
+
+== B1 code path (baseline only) ==
+DEPARTED/TOUCH2 bars piercing first-test low (>=1 tick) or band low, close >= max(VAL, first-test low): 134 | -> INVALID 0 | breakdown flag 0 | -> ARMED not explained by signal/box switch 0
+
+== SL / TP ==
+trades SL/TP == signal SL/TP at entry bar: True True
+hand check 2023-03-07 00:00 bar: t1_low 22240.1 ATR 86.6248 -> SL 22222.78 kernel 22222.78 | TP 22469.46 = VAH box 893 22469.46 | VAH previous box 22599.75

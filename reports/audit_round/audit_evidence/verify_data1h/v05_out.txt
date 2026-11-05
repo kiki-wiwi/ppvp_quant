@@ -1,0 +1,7 @@
+IS trades 109 engine funding total $1438.81 settlements counted 163 on 63 trades
+independent: 163 settlements on 63 trades, total $1438.81, max |diff| vs engine 7.11e-15
+basis = previous 1H close instead of open: delta $0.0111
+basis = entry notional instead of qty*open(T): delta $-5.8658
+entries at a settlement: 10 by hour {0: 3, 8: 4, 16: 3} rates [2.37e-05, 0.00018] | charging them would add $62.41
+exits on a bar opening at a settlement: 12 {'SL': 7, 'TP': 5} charged $124.17 | SL filled at a gap open among them: 0
+min hold_bars 1

@@ -1,0 +1,20 @@
+D-1 placeholder run 5h: dropped 5; fill records []; fill_source of those hours ['nan']; volumes [nan, nan, nan]
+D-1 placeholder run 6h: dropped 6; fill records [('2020-01-20 00:00:00+00:00', 6)]; fill_source of those hours ['okx_swap']; volumes [5994.827]
+D-1 placeholder run 8h: dropped 8; fill records [('2020-01-20 00:00:00+00:00', 8)]; fill_source of those hours ['okx_swap']; volumes [5994.827]
+D-1 same 6 hours absent from archive: fill records [('2020-01-20 00:00:00+00:00', 6)]
+
+D-5 start-of-window gap: ratio nan window hours 0 NaN volume rows 6 warnings ['RuntimeWarning: Mean of empty slice', 'RuntimeWarning: invalid value encountered in scalar divide']
+D-5 gap starting 2020-01-01 03:00: window hours 3 ratio 1614.1825
+D-5 qa_ohlcv on the filled frame: zero_volume_rows 0 negative_volume_rows 0 missing_bars 0 -> NaN volume not flagged
+D-5 volume_profile finite: POC 102.070 VAL 101.800 VAH 103.000 | with one NaN: POC 100.030 VAL 100.000 VAH 100.060, NaN bins 50/50
+D-5 boxes on start-gap frame: 19 boxes; with NaN total_volume: 0
+D-5 20-bar vol SMA NaN rows (first 40 bars): 25
+
+D-9 4H rows 185 n_bars counts {4: 184, 3: 1}
+    partial bucket 2020-01-10 04:00:00+00:00 {'high': 7818.3, 'low': 7718.05, 'n_bars': 3, 'available_time': Timestamp('2020-01-10 08:00:00+0000', tz='UTC')}
+    same bucket with all 4 hours: high 7818.3 low 7718.05
+    missing bucket 2020-01-15 08:00 present: False
+    calendar span of an 11-row window centred next to the hole: 1 days 20:00:00
+    data ending with 1H open 2020-01-31 01:00 -> last 4H kept 2020-01-30 20:00:00+00:00
+
+stub calls 10 | network attempts 0

@@ -1,0 +1,42 @@
+pivot bars: 1150 highs 576 lows 583 both 9 | boxes 1149
+independent pivots/windows/available_time == engine for all boxes: True
+VAL: exact-equal 1149/1149  max|diff| 0.000e+00
+POC: exact-equal 1149/1149  max|diff| 0.000e+00
+VAH: exact-equal 1149/1149  max|diff| 0.000e+00
+VA coverage min/median/max: 0.7000 0.7098 0.7426
+boxes with POC tie (>=2 bins within 1e-9*max): 54  VA steps with |up-dn|<=tol: 12
+trades 109 unique signal boxes 108
+bin width / ATR_signal: median 0.138 P90 0.214 max 0.424
+VA width / ATR_signal: median 3.34
+  [typical] VAL: |d| median 0.546 P90 1.445 max 2.704 | >0.5ATR 58/109 >1ATR 22/109 | signed median +0.417
+  [typical] POC: |d| median 1.020 P90 3.417 max 7.420 | >0.5ATR 78/109 >1ATR 55/109 | signed median -0.318
+  [typical] VAH: |d| median 0.895 P90 2.573 max 4.160 | >0.5ATR 72/109 >1ATR 52/109 | signed median +0.318
+  [close] VAL: |d| median 0.554 P90 1.413 max 2.912 | >0.5ATR 61/109 >1ATR 24/109 | signed median +0.444
+  [close] POC: |d| median 0.821 P90 3.583 max 8.348 | >0.5ATR 67/109 >1ATR 48/109 | signed median +0.000
+  [close] VAH: |d| median 0.887 P90 2.908 max 8.966 | >0.5ATR 74/109 >1ATR 49/109 | signed median +0.550
+  [body] VAL: |d| median 0.308 P90 1.255 max 2.912 | >0.5ATR 37/109 >1ATR 20/109 | signed median +0.200
+  [body] POC: |d| median 0.244 P90 2.631 max 6.760 | >0.5ATR 37/109 >1ATR 27/109 | signed median +0.000
+  [body] VAH: |d| median 0.377 P90 1.244 max 3.536 | >0.5ATR 40/109 >1ATR 17/109 | signed median -0.219
+  [tri_close] VAL: |d| median 0.137 P90 0.798 max 2.689 | >0.5ATR 15/109 >1ATR 10/109 | signed median +0.000
+  [tri_close] POC: |d| median 0.118 P90 1.235 max 5.460 | >0.5ATR 19/109 >1ATR 13/109 | signed median +0.000
+  [tri_close] VAH: |d| median 0.142 P90 0.680 max 2.056 | >0.5ATR 19/109 >1ATR 6/109 | signed median -0.061
+  [tri_typical] VAL: |d| median 0.146 P90 0.805 max 3.401 | >0.5ATR 16/109 >1ATR 8/109 | signed median +0.000
+  [tri_typical] POC: |d| median 0.146 P90 1.161 max 8.348 | >0.5ATR 16/109 >1ATR 13/109 | signed median +0.000
+  [tri_typical] VAH: |d| median 0.158 P90 0.833 max 2.783 | >0.5ATR 15/109 >1ATR 6/109 | signed median -0.079
+  [window->available_time] VAL: |d| median 0.406 P90 1.742 max 4.757 | >0.5ATR 51/109 >1ATR 25/109 | signed median +0.000
+  [window->available_time] POC: |d| median 0.325 P90 2.704 max 10.607 | >0.5ATR 51/109 >1ATR 38/109 | signed median +0.000
+  [window->available_time] VAH: |d| median 0.543 P90 2.081 max 8.966 | >0.5ATR 57/109 >1ATR 33/109 | signed median -0.133
+excluded bars per box unique: [20]
+window hours (trade signal boxes): median 24 min 8 max 64
+excluded share of (window+excluded): median 0.455
+hours from window_end to signal close: min 21 median 33 max 70
+  [two-row VA] VAL: |d| median 0.061 P90 0.215 max 1.205 | >0.5ATR 3/109 >1ATR 2/109 | signed median +0.000
+  [two-row VA] POC: |d| median 0.000 P90 0.000 max 0.000 | >0.5ATR 0/109 >1ATR 0/109 | signed median +0.000
+  [two-row VA] VAH: |d| median 0.000 P90 0.204 max 0.950 | >0.5ATR 3/109 >1ATR 0/109 | signed median +0.000
+unique signal boxes with POC tie: [np.int64(41), np.int64(334), np.int64(457), np.int64(519), np.int64(748), np.int64(976)]  trades: 6
+   box 41: dPOC +0.141 ATR dVAL +0.000 dVAH +0.000  tied bins [13, 14]  signal 2020-03-01 05:00:00+00:00
+   box 334: dPOC +0.530 ATR dVAL +0.000 dVAH +0.000  tied bins [29, 30, 31, 32, 33, 34]  signal 2021-03-13 04:00:00+00:00
+   box 457: dPOC +0.224 ATR dVAL +0.000 dVAH +0.000  tied bins [8, 9, 10]  signal 2021-08-17 17:00:00+00:00
+   box 519: dPOC +0.168 ATR dVAL +0.000 dVAH +0.000  tied bins [12, 13, 14]  signal 2021-11-06 13:00:00+00:00
+   box 748: dPOC +0.305 ATR dVAL +0.000 dVAH +0.000  tied bins [12, 13, 14, 15, 16, 17]  signal 2022-09-06 14:00:00+00:00
+   box 976: dPOC +0.149 ATR dVAL +0.000 dVAH +0.000  tied bins [24, 25, 26]  signal 2023-06-13 18:00:00+00:00

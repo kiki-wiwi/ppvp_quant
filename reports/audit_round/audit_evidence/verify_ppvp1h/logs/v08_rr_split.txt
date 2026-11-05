@@ -1,0 +1,2 @@
+RR<1: n 40  CSV flag share 0.400 (16)  switch-from-first-test-start share 0.425 (17)  switch-from-chain-start share 0.500 (20)
+RR>=1: n 69  CSV flag share 0.159 (11)  switch-from-first-test-start share 0.203 (14)  switch-from-chain-start share 0.246 (17)

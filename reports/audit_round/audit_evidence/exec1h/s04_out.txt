@@ -1,0 +1,13 @@
+tradable signals 117  min gap 5  gaps<=3: 0  gaps<=4: 0  gap value counts (<=10): {5: 1}
+raw signals 120  min gap 5  gaps<=3: 0
+engine_path(market) equity identical: True
+  entry_bar: identical=True
+  exit_bar: identical=True
+  entry_px: identical=True
+  exit_px: identical=True
+  qty: identical=True
+  fees: identical=True
+  funding: identical=True
+  pnl: identical=True
+  hold_bars identical: True
+  orders status counts (market mode): {'filled': 109, 'skipped_position_or_order': 8}

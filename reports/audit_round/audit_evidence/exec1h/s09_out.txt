@@ -1,0 +1,6 @@
+SL&TP trade index: [58]  SL&POC (left panel, not strict) trade indices: [46, 58]
+distinct trades behind the 1 + 2 counts: [46, 58]
+  trade 6: entry 2020-04-05 07:00:00+00:00 hold 11 amb_tp False poc_in_exit_bar True in_left_panel True reached_poc_strict True
+  trade 46: entry 2021-07-01 05:00:00+00:00 hold 2 amb_tp False poc_in_exit_bar True in_left_panel True reached_poc_strict False
+  trade 58: entry 2021-11-22 11:00:00+00:00 hold 3 amb_tp True poc_in_exit_bar True in_left_panel True reached_poc_strict False
+  trade 82: entry 2023-02-01 10:00:00+00:00 hold 10 amb_tp False poc_in_exit_bar True in_left_panel True reached_poc_strict True

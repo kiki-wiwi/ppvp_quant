@@ -1,0 +1,20 @@
+[ledger] entry_ref == signal close: True  exit_ref == min(open,SL) or TP: False
+[ledger] slippage_impact == q*(fill_in-ref_in)+q*(ref_out-fill_out): 5.030810125461471e-05
+[ledger] commission == taker*entry notional + (taker|maker)*exit notional: 4.6202416115193046e-08
+[ledger] gross_ref - slippage - commission - funding - net (max abs): 9.099999260797631e-07
+[ledger] gross_pnl (at fill) == gross_ref - slippage: 7.899998308857903e-07
+[ledger] totals: {'gross_pnl_ref': -34908.05, 'slippage_impact': 2897.01, 'commission': 6389.9, 'funding_cashflow': 1438.81, 'net_pnl': -45633.77, 'gross_pnl': -37805.06}
+[ledger] equity change 100000 -> final: -45633.77  sum net: -45633.77
+[ledger] double-count check: gross_at_fill - fees - funding - slippage = -48530.78 (would be wrong)
+[R] initial_risk_usd == qty*(entry_fill - initial SL): 6.0571420362975914e-05  r_multiple == net/risk: 1.0565948493912458e-07  net_R == r_multiple: 0.0
+[R] ledger SL == signal SL at entry bar: False
+[R] mean net R incl funding -0.34  ex funding -0.33  gross_R_ref -0.2212
+[R] SL trades net R range: -1.459 -1.014  gross_R_ref of SL trades (should be exactly -1 absent gaps): -0.997754 -0.923373
+[daily] daily equity label D == hourly MTM at D+1 00:00 for all days: True
+[daily] midnights with an open position: 56 of 1461; max |MTM - realised cash| at those: 2242.56 USDT
+[daily] example: 2020-02-04 00:00:00+00:00 position from trade entered 2020-02-03 12:00:00+00:00 qty=10.688789 entry_px=9358.59 close=9300.64; equity=99352.64, realised cash=99981.99, unrealised=-629.35 = qty*(close-entry_px) - funding so far? -619.43
+
+[zero-cost fixed qty] final 65091.95 (-34.9080%), sharpe -0.8895
+[zero-cost recompounded] final 63712.07 (-36.2879%), sharpe -0.8630, same entry/exit bars: True
+[zero-cost recompounded] = 1e5*prod(exit_ref/entry_ref): 63712.07
+[zero-cost fixed qty]  = 1e5 + sum(gross_ref): 65091.95

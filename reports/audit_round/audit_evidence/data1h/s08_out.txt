@@ -1,0 +1,14 @@
+(A) synthetic gaps in Jan-2020 copy: 4H rows 185 n_bars counts {4: 184, 3: 1}
+    bucket 2020-01-10 04:00 -> {'high': 7818.3, 'low': 7718.05, 'n_bars': 3, 'available_time': Timestamp('2020-01-10 08:00:00+0000', tz='UTC')}
+    bucket 2020-01-15 08:00 present: False
+    columns carried to engine: ['open', 'high', 'low', 'close', 'volume', 'quote_volume', 'n_bars', 'close_time', 'available_time']
+    boxes columns: ['available_time', 'pivot_a_idx', 'pivot_b_idx', 'pivot_a_type', 'pivot_b_type', 'pivot_a_time', 'pivot_b_time', 'window_start', 'window_end', 'n_1h', 'VAL', 'POC', 'VAH', 'P_low', 'P_high', 'total_volume'] -> no n_bars / partial flag in boxes
+    calendar span of 11-row pivot window around the hole: 1 days 20:00:00 (40h without the hole)
+    data ending 2020-01-31 01:00: last 4H kept 2020-01-30 20:00:00+00:00 (partial 00:00 bucket dropped)
+
+(B) 6 placeholder hours dropped: 6 -> fill records: [('2020-01-20 00:00:00+00:00', 6, 'okx_rest BTC-USDT-SWAP')]
+    fill_source of the 6 maintenance hours after cleaning: ['okx_swap']  volume there: [5994.827]
+    5-hour placeholder run: dropped 5 fill records 0 rows 739
+
+(C) 6h archive gap at window start: ratio nan window hours 0 | filled volume NaN rows: 6 | warnings: ['RuntimeWarning']
+    no network calls made: stub called 4 times

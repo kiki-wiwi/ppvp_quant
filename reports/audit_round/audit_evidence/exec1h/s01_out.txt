@@ -1,0 +1,39 @@
+independent trades 109 {'SL': 65, 'TP': 44}
+  entry_bar        max|diff| = 0.000e+00
+  exit_bar         max|diff| = 0.000e+00
+  entry_px         max|diff| = 0.000e+00
+  exit_px          max|diff| = 7.276e-12
+  qty              max|diff| = 0.000e+00
+  fees             max|diff| = 0.000e+00
+  funding          max|diff| = 0.000e+00
+  n_funding        max|diff| = 0.000e+00
+  gross_pnl        max|diff| = 0.000e+00
+  pnl              max|diff| = 9.095e-13
+  sl               max|diff| = 0.000e+00
+  tp               max|diff| = 0.000e+00
+  equity_at_entry  max|diff| = 0.000e+00
+  reason equal: True
+hourly equity max|diff| vs backtester: 0.0
+
+[entry] fill = close*(1+slip) exactly: True
+[entry] next open vs signal close (bp): min -0.903 max +0.857 max|.| 0.903; n>0 35 n<0 32 n==0 42
+[entry] all 120 raw signals: max|next open - close| = 0.903 bp
+[exit] exit_bar > entry_bar for all: True  min hold 1
+[exit] bars strictly between entry and exit that touched SL or TP (should be 0): 0
+[exit] trigger condition holds on every exit bar: True
+[exit] min_low/max_high equal post-entry extremes: True
+[gap] SL exits filled at the open (open < SL): 0; TP exits whose bar opened above TP: 0
+[ambiguity] SL exit bar also touched TP: 1; SL exit bar touched POC (POC>entry): 4; union 4 of 109 = 3.67%
+   trade   6 entry 2020-04-05 07:00:00+00:00 exit bar open 2020-04-05 17:00:00+00:00 O=6782.48 H=6853.15 L=6668.02 SL=6713.00 POC=6786.30 TP=6958.80 hold=11 amb_tp=False amb_poc=True
+   trade  46 entry 2021-07-01 05:00:00+00:00 exit bar open 2021-07-01 06:00:00+00:00 O=34311.55 H=34449.00 L=33380.00 SL=33957.60 POC=34436.28 TP=35349.72 hold=2 amb_tp=False amb_poc=True
+   trade  58 entry 2021-11-22 11:00:00+00:00 exit bar open 2021-11-22 13:00:00+00:00 O=57176.63 H=59624.56 L=56577.00 SL=56692.22 POC=58487.29 TP=58852.78 hold=3 amb_tp=True amb_poc=True
+   trade  82 entry 2023-02-01 10:00:00+00:00 exit bar open 2023-02-01 19:00:00+00:00 O=23073.30 H=23495.00 L=22747.00 SL=22884.90 POC=23119.96 TP=23755.71 hold=10 amb_tp=False amb_poc=True
+   SL&TP bar: open<=SL? False  open>=TP? False
+[sequencing] trades entering at the close of the bar in which the previous trade exited: 0
+
+[funding] events 163, total 1438.8106 vs backtester 1438.8106; n_funding sum 163
+[funding] trades whose entry time coincides with a settlement (not charged): 10; trades whose exit-bar open is a settlement (charged, then exit intrabar): 12
+[funding] n_funding equals #{T: entry_time < T <= exit_bar_open}: True
+[funding] price used == open of bar starting at T: True
+[funding] rate sign: long pays when rate>0 -> amt sign equals rate sign: True
+[funding] settlements per day in window:  {3: 1460, 2: 1, 1: 1}  hours: [0, 8, 16]  minutes/seconds nonzero: 0

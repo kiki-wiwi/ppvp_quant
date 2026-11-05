@@ -1,0 +1,71 @@
+--- S-1 2020-01-22 20:00 bars 2020-01-22 08:00:00+00:00 .. 2020-01-22 19:00:00+00:00
+512 2020-01-22 08:00 O8744.76 H8749.00 L8633.27 C8680.97 box12 VAL8613.72 zl8587.379 zh8640.062 atr52.6833 pre=ARMED post=TOUCH1 t1last=512 mh=nan ['t1_start'] 
+513 2020-01-22 09:00 O8681.00 H8692.03 L8642.29 C8685.96 box12 VAL8613.72 zl8585.127 zh8642.314 atr57.1867 pre=TOUCH1 post=TOUCH1 t1last=513 mh=nan [] 
+514 2020-01-22 10:00 O8686.56 H8686.56 L8650.05 C8663.60 box12 VAL8613.72 zl8585.393 zh8642.048 atr56.6548 pre=TOUCH1 post=DEPART t1last=513 mh=8686.56 ['depart'] 
+515 2020-01-22 11:00 O8663.24 H8668.87 L8616.09 C8661.33 box12 VAL8613.72 zl8586.113 zh8641.329 atr55.2158 pre=DEPART post=TOUCH1 t1last=515 mh=8686.56 ['merge_lower'] 
+516 2020-01-22 12:00 O8660.50 H8679.98 L8647.26 C8665.56 box12 VAL8613.72 zl8586.200 zh8641.242 atr55.0419 pre=TOUCH1 post=DEPART t1last=515 mh=8679.98 ['depart'] 
+517 2020-01-22 13:00 O8665.50 H8671.26 L8639.40 C8646.72 box12 VAL8613.72 zl8586.997 zh8640.445 atr53.4474 pre=DEPART post=TOUCH1 t1last=517 mh=8679.98 ['merge'] 
+518 2020-01-22 14:00 O8646.36 H8677.24 L8640.00 C8655.34 box12 VAL8613.72 zl8587.768 zh8639.674 atr51.9055 pre=TOUCH1 post=DEPART t1last=517 mh=8677.24 ['depart'] 
+519 2020-01-22 15:00 O8655.27 H8670.00 L8651.00 C8657.38 box12 VAL8613.72 zl8588.292 zh8639.150 atr50.8579 pre=DEPART post=DEPART t1last=517 mh=8677.24 [] 
+520 2020-01-22 16:00 O8657.39 H8720.59 L8585.85 C8692.79 box13 VAL8623.63 zl8599.335 zh8647.918 atr48.5824 pre=DEPART post=TOUCH1 t1last=520 mh=8677.24 ['carry_keep_in_3', 'merge_lower'] carry
+521 2020-01-22 17:00 O8692.06 H8704.00 L8667.00 C8695.70 box13 VAL8623.63 zl8596.258 zh8650.995 atr54.7365 pre=TOUCH1 post=DEPART t1last=520 mh=8704.00 ['depart'] 
+522 2020-01-22 18:00 O8695.69 H8695.89 L8630.10 C8672.97 box13 VAL8623.63 zl8596.892 zh8650.361 atr53.4696 pre=DEPART post=TOUCH2 t1last=520 mh=8704.00 ['t2_accept_bounce_only'] 
+523 2020-01-22 19:00 O8673.25 H8676.60 L8647.07 C8671.66 box13 VAL8623.63 zl8596.452 zh8650.801 atr54.3496 pre=TOUCH2 post=ARMED t1last=-1 mh=nan ['signal'] 
+S-1 bounce (touch band, touch ATR) 1.0032 | (dep band, touch ATR) 0.9913 | (dep band, dep ATR) 0.9684 | gap 2 | lag 1
+pin True eng False
+
+S-2 chain start 2023-03-06 02:00:00+00:00 t1_last 2023-03-06 02:00:00+00:00 d0 2023-03-06 03:00:00+00:00 t2s 2023-03-07 00:00:00+00:00 signal bar 2023-03-07 00:00:00+00:00
+--- S-2 start..departure bars 2023-03-06 02:00:00+00:00 .. 2023-03-06 03:00:00+00:00
+27842 2023-03-06 02:00 O22368.80 H22396.30 L22240.10 C22380.40 box892 VAL22248.00 zl22200.227 zh22295.773 atr95.5463 pre=ARMED post=TOUCH1 t1last=27842 mh=nan ['t1_start'] 
+27843 2023-03-06 03:00 O22380.40 H22407.30 L22361.50 C22378.00 box892 VAL22248.00 zl22198.061 zh22297.939 atr99.8787 pre=TOUCH1 post=DEPART t1last=27842 mh=22407.30 ['depart'] 
+--- S-2 last two bars bars 2023-03-06 23:00:00+00:00 .. 2023-03-07 00:00:00+00:00
+27863 2023-03-06 23:00 O22425.90 H22433.00 L22378.40 C22397.10 box892 VAL22248.00 zl22203.456 zh22292.544 atr89.0882 pre=DEPART post=DEPART t1last=27842 mh=22594.50 [] 
+27864 2023-03-07 00:00 O22397.10 H22417.50 L22364.20 C22402.70 box893 VAL22326.93 zl22283.620 zh22370.244 atr86.6248 pre=DEPART post=ARMED t1last=-1 mh=nan ['carry_keep_in_3', 't2_accept_both', 'signal'] carry
+departure bars 21 all fully above own band: True
+boxes 892 893 VAL 22248.0 22326.932 dVAL/ATR(s) 0.911194291993979 seqval 22248.0 VAH 22599.75 22469.462
+signal bar low 22364.2 zh(s) 22370.244387211773 zh(s-1) 22292.544109304985 old-box band top with ATR(s) 22291.312387211772 low - old top 72.88761278822858
+SL 22222.77504511529 = t1low 22240.1 t2low 22364.2 - 0.2* 86.62477442354552 -> 22222.77504511529 | TP 22469.462 pattern 1
+
+S-3 rolls 2 chain_min 55074.3 t1low 56299.68 t2low 56136.0 ATR 741.5513705414703 SL 55987.68972589171 all-tests stop 54925.98972589171 diff ATR 1.4317281879268307 pct of close 0.018645812112313878
+   chain event t2_accept 2021-03-12 13:00:00+00:00 (np.float64(1.5029325995692275), 3)
+   chain event roll 2021-03-12 15:00:00+00:00 (np.float64(55888.0), np.float64(55074.3))
+   chain event t2_accept 2021-03-12 20:00:00+00:00 (np.float64(1.639561750082271), 6)
+   chain event roll 2021-03-12 22:00:00+00:00 (np.float64(55074.3), np.float64(56299.68))
+   chain event t2_accept 2021-03-13 00:00:00+00:00 (np.float64(1.437057250897567), 3)
+
+S-4 chain start 2020-03-21 20:00:00+00:00 switch arm box 58 prev box 57 VAL 6179.62 band [6098.25, 6260.99] prev bar H/L/C 6241.24 6185.26 6211.99 prev-box band [4897.27, 5068.23] activation bar low 6173.0 n_roll 0
+   last bar fully outside new band before activation: 2020-03-21 10:00:00+00:00 below bars back 10
+   22 inside-band activation trades: last excursion outside the new band before activation: Counter({'above': 15, 'below': 7}) | no-roll subset: Counter({'above': 11, 'below': 6})
+
+S-6 2020-08-19 06:00:00+00:00 VAL 11752.9136 zl 11697.709103628476 zh 11808.118096371523 t1low 11810.0 low 11620.0 close 11743.28 t1low>zh(s) True n_carry 1 n_roll 1
+--- S-6 last test-1 bars bars 2020-08-18 13:00:00+00:00 .. 2020-08-18 14:00:00+00:00
+5533 2020-08-18 13:00 O12267.25 H12280.00 L12024.99 C12181.03 box180 VAL11773.80 zl11728.271 zh11819.329 atr91.0576 pre=DEPART post=DEPART t1last=5509 mh=12499.42 [] 
+5534 2020-08-18 14:00 O12181.00 H12209.60 L11810.00 C11953.93 box180 VAL11773.80 zl11722.416 zh11825.184 atr102.7685 pre=DEPART post=TOUCH2 t1last=5509 mh=12499.42 ['t2_accept_both'] 
+
+S-7a 2020-07-02 16:00:00+00:00 OHLC 9049.62 9074.6 8936.0 9047.29 band [9044.63, 9092.48] below band low by 108.62603316051172 body/ATR 0.04869471651529299 brk False state TOUCH1 ['t1_start']
+   signal 2020-07-05 07:00:00+00:00 t1low 8936.0 t1bar 2020-07-02 16:00:00+00:00 SL 8930.296786795428 ATR 28.516066022855572 (close-SL)/ATR 4.636797133889202 t2low 9040.0
+--- S-7b bars 2023-02-13 15:00:00+00:00 .. 2023-02-13 18:00:00+00:00
+27351 2023-02-13 15:00 O21662.70 H21670.50 L21544.80 C21553.30 box873 VAL21486.80 zl21425.537 zh21548.063 atr122.5258 pre=DEPART post=TOUCH2 t1last=27346 mh=21688.00 ['t2_accept_bounce_only'] 
+27352 2023-02-13 16:00 O21553.30 H21638.90 L21359.00 C21496.90 box874 VAL21607.77 zl21546.394 zh21669.146 atr122.7525 pre=TOUCH2 post=TOUCH2 t1last=27346 mh=21688.00 ['carry_keep_in_4'] carry
+27353 2023-02-13 17:00 O21497.00 H21538.10 L21338.00 C21453.00 box874 VAL21607.77 zl21540.781 zh21674.759 atr133.9773 pre=TOUCH2 post=TOUCH2 t1last=27346 mh=21688.00 [] 
+27354 2023-02-13 18:00 O21453.00 H21668.00 L21441.10 C21628.60 box874 VAL21607.77 zl21538.420 zh21677.120 atr138.7004 pre=TOUCH2 post=ARMED t1last=-1 mh=nan ['signal'] 
+   VAL change at 16:00: 120.97000000000116
+
+S-8 requirement fates: {('activation', 'expired_fresh_structure'): 63, ('activation', 'cleared_claimed'): 27, ('signal', 'cleared_claimed'): 101, ('activation', 'cleared_unclaimed'): 18, ('signal', 'cleared_unclaimed'): 13, ('signal', 'expired_fresh_structure'): 6}
+signal reqs 120 | claimed by >=1 later same-zone box switch: 12 | bars to fate median/max 2.0 130
+example req: 2020-02-03 11:00:00+00:00 box 21 VAL 9312.53 claims [(Timestamp('2020-02-04 00:00:00+0000', tz='UTC'), 22, np.float64(9335.546))] fate cleared_claimed 2020-02-05 11:00:00+00:00 | states between (exclusive): {'ARMED': 21, 'INVALID': 26} | fate-bar state INVALID | incl fate bar: {'ARMED': 21, 'INVALID': 27}
+
+S-9 occupancy {'NO_BOX': 0.0025, 'ARMED': 0.458, 'TOUCH1': 0.0617, 'DEPART': 0.1563, 'TOUCH2': 0.0093, 'INVALID': 0.3121}
+transitions into INVALID from 1-4 (state array): 292 | on a breakdown bar: 276 | without breakdown (switch): 16 Counter({'hv_block': 16})
+in-progress sequences ended in INVALID (state array): 181 | breakdown bars: 797 | breakdown with close>=zl: 0
+S-9 example 2020-06-11 15:00:00+00:00 box 122 VAL 9663.8 band [9628.81, 9698.79] OHLC 9623.31 9623.31 9503.0 9525.02 body/ATR 1.405 vol/sma 2.804 pre TOUCH2 post INVALID ['brk_ends_seq_from_4', 'brk_into_invalid_from_4']
+--- S-9 next bar bars 2020-06-11 16:00:00+00:00 .. 2020-06-11 16:00:00+00:00
+3904 2020-06-11 16:00 O9525.02 H9572.64 L9060.87 C9083.01 box123 VAL9661.86 zl9625.076 zh9698.645 atr73.5683 pre=INVALID post=INVALID t1last=-1 mh=nan [] hv_block
+   box 123 window_start 2020-06-09 00:00:00+00:00 VAL 9661.8604
+   first non-INVALID bar after: 2020-06-12 16:00:00+00:00 ARMED box 124 VAL 9497.0932 arm | INVALID bars 25
+S-12 2023-06-09 17:00 box 971 low 26403.4 zh 26329.37 state DEPART pre DEPART []
+S-12 2023-06-09 18:00 box 971 low 26400.0 zh 26328.37 state DEPART pre DEPART []
+S-12 2023-06-09 19:00 box 971 low 26371.0 zh 26327.57 state DEPART pre DEPART []
+S-12 2023-06-09 20:00 box 971 low 26385.0 zh 26327.09 state DEPART pre DEPART []
+   chain start 2023-06-09 04:00:00+00:00 signal? False None
+   min low of TOUCH1 bars before 17:00 in this chain: 26411.4

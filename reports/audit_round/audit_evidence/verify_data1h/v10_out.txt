@@ -1,0 +1,24 @@
+baseline position open during 2021-03-02 01:00: 0
+next baseline entries after it: [('2021-03-13 05:00:00+00:00', 'TP'), ('2021-03-15 13:00:00+00:00', 'SL'), ('2021-04-03 19:00:00+00:00', 'SL')]
+boxes whose profile window contains the hour: 2 | hour's share of their volume: max 0.00023
+                           state  box_id       VAL       zone_lo       zone_hi
+open_time                                                                     
+2021-03-01 22:00:00+00:00      1     324  43111.53  42722.355613  43500.704387
+2021-03-01 23:00:00+00:00      1     324  43111.53  42724.106998  43498.953002
+2021-03-02 00:00:00+00:00      1     324  43111.53  42725.507212  43497.552788
+2021-03-02 01:00:00+00:00      1     324  43111.53  42720.517054  43502.542946
+2021-03-02 02:00:00+00:00      1     324  43111.53  42746.575836  43476.484164
+2021-03-02 03:00:00+00:00      1     324  43111.53  42745.873991  43477.186009
+2021-03-02 04:00:00+00:00      1     324  43111.53  42751.908348  43471.151652
+
+boxes: base 1149 dropped-hour 1149 | box tables equal on VAL/VAH/POC/available_time: True
+  sig_raw identical on all common rows: True
+  signal identical on all common rows: True
+  breakdown identical on all common rows: True
+  state identical on all common rows: True
+  box_id identical on all common rows: True
+  VAL identical: True
+  VAH identical: True
+max rel change next 24h: vsma 0.1306, atr 0.0714
+bearish closes below zone_lo in the 20 h after the hour: []
+signals with any SL change: [('2021-03-13 04:00:00+00:00', 5.1e-13), ('2021-03-15 12:00:00+00:00', 8.3e-15)]

@@ -1,0 +1,13 @@
+IS hours: perp low below spot low by > 50bp: 75 | perp high above spot high by > 50bp: 61
+largest perp-only down-wicks (bp): {Timestamp('2020-03-12 10:00:00+0000', tz='UTC'): -632.1, Timestamp('2021-05-19 13:00:00+0000', tz='UTC'): -437.3, Timestamp('2020-03-13 02:00:00+0000', tz='UTC'): -423.9, Timestamp('2021-05-19 14:00:00+0000', tz='UTC'): -404.1, Timestamp('2020-03-13 04:00:00+0000', tz='UTC'): -328.2}
+SL exits: 65 | spot low also <= SL: 59 | spot bar missing: 0 | perp-only stop (spot low > SL): 6
+                exit_bar_open            SL  perp_low  spot_low  perp_low_below_SL_bp  spot_low_above_SL_bp
+21  2020-09-27 12:00:00+00:00  10592.849178  10584.00  10594.82             -8.353916              1.860522
+28  2020-12-04 12:00:00+00:00  18669.975537  18669.13  18686.38             -0.452886              8.786547
+62  2022-04-03 01:00:00+00:00  45523.568583  45501.00  45530.92             -4.957560              1.614859
+77  2022-11-02 10:00:00+00:00  20326.525856  20323.00  20339.99             -1.734608              6.623928
+87  2023-04-05 16:00:00+00:00  27787.947762  27775.00  27805.10             -4.659488              6.172546
+99  2023-08-27 01:00:00+00:00  25955.994105  25955.60  25966.11             -0.151836              3.897325
+TP exits: 44 | spot high also >= TP: 43 | perp-only TP (spot high < TP): 1
+entry-bar close perp-spot basis bp: median -2.82 min -9.11 max 23.38
+trades whose entry bar / exit bar / bar after entry has |open/prev close| > 5bp: 0 0 0

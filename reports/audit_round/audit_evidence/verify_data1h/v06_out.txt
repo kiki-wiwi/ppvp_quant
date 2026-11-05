@@ -1,0 +1,12 @@
+warm-up series: n 365 first 2019-01-01 last 2019-12-31 all < 2020: True dtype float64 name close
+2019 spot days with data 365 with a 23:00 bar 365
+warm-up equals the last 1H close of each 2019 day: True
+baseline signal table identical with spot warm-up removed: True | regime_filter = None
+first box: window_start 2020-01-03 00:00:00+00:00 available 2020-01-04 16:00:00+00:00
+ATR first defined at bar open 2020-01-01 14:00:00+00:00 | vol SMA first defined at bar open 2020-01-01 20:00:00+00:00
+raw signals 120 traded 109
+SMA200 window reaches 2019 spot: raw 18, traded 15
+sma200_up (SMA200 and its 20-day lag, 220 closes): raw 19, traded 16
+365-day windows (dd365): raw 35, traded 32
+first signal decision 2020-01-22 20:00:00+00:00 : SMA200 window = 179 spot + 21 perp closes
+splice: last spot close 7195.23 (2019-12-31) -> first perp daily close 7197.57 (2020-01-01)

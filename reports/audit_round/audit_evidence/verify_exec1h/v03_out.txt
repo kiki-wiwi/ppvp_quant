@@ -1,0 +1,10 @@
+(a) gap after close entry, T in gap: current 0.000000 | corrected 99.980004
+(b) mid-hold gap with 2 settlements: current 99.980004 | corrected 299.940012
+(d) contiguous control: current 199.960008 | corrected 199.960008
+(c) limit fill then gap, T in gap: current 100.279944 | corrected 100.279944
+== IS baseline, market mode (B_original only)
+corrected vs current equity identical: True
+corrected vs backtester per-trade funding identical: True | total 1438.810601 vs 1438.810601
+  entry_bar: identical=True
+  exit_bar: identical=True
+  pnl: identical=True

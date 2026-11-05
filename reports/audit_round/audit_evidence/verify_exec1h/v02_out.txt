@@ -1,0 +1,36 @@
+== E-1 funding boundary
+(a) gap after close entry, T inside gap  : engine_path 0.000000 | documented rule 99.980004 (n=1) | backtester 99.980004 (n=1)
+(a2) gap after close entry, next open = T: engine_path 0.000000 | documented rule 99.980004 (n=1) | backtester 99.980004 (n=1)
+(b) mid-hold gap covering 2 settlements  : engine_path 99.980004 | documented rule 299.940012 (n=2) | backtester raises: two funding settlements map to the same 1H bar (data gap longer than t
+(c) limit fill then gap, T inside gap     : engine_path 100.279944 | documented rule 100.279944 (n=1) | backtester 99.681853 (n=1)
+(c2) gap before limit-fill bar           : engine_path 0.000000 | documented rule 0.000000 (n=0) | backtester 99.980004 (n=1)
+(d) contiguous, entry at T, next T held   : engine_path 199.960008 | documented rule 199.960008 (n=1) | backtester 199.960008 (n=1)
+== E-2 unsupported config fields (contiguous bars)
+(e) include_funding=False
+  engine_path: [{'entry_bar': 7, 'exit_bar': -1, 'exit_reason': 'OPEN', 'qty': 993.837018, 'notional': 100000.0, 'funding': 199.960008, 'pnl': -468.723412}]
+  backtester : [{'entry_bar': 7, 'exit_bar': -1, 'exit_reason': 'OPEN', 'qty': 993.837018, 'notional': 100000.0, 'funding': 0.0, 'pnl': -268.763404}]
+(f) venue='spot'
+  engine_path: [{'entry_bar': 7, 'exit_bar': -1, 'exit_reason': 'OPEN', 'qty': 993.837018, 'notional': 100000.0, 'funding': 199.960008, 'pnl': -518.723412}]
+  backtester : [{'entry_bar': 7, 'exit_bar': -1, 'exit_reason': 'OPEN', 'qty': 992.844174, 'notional': 99900.0999, 'funding': 0.0, 'pnl': -318.444959}]
+  engine_path: spot cash after buy = -100.0000
+  backtester: spot cash after buy = -0.0000
+(g) compounding=False (2nd trade sized on initial capital?)
+  engine_path: [{'entry_bar': 1, 'exit_bar': 2, 'exit_reason': 'SL', 'qty': 993.837018, 'notional': 100000.0, 'funding': 0.0, 'pnl': -2722.139727}, {'entry_bar': 3, 'exit_bar': 5, 'exit_reason': 'TP', 'qty': 996.500088, 'notional': 97277.860273, 'funding': 0.0, 'pnl': 12244.66886}]
+  backtester : [{'entry_bar': 1, 'exit_bar': 2, 'exit_reason': 'SL', 'qty': 993.837018, 'notional': 100000.0, 'funding': 0.0, 'pnl': -2722.139727}, {'entry_bar': 3, 'exit_bar': 5, 'exit_reason': 'TP', 'qty': 1024.385287, 'notional': 100000.0, 'funding': 0.0, 'pnl': 12587.313111}]
+(h) sizing='risk' (1% risk)
+  engine_path: [{'entry_bar': 1, 'exit_bar': 2, 'exit_reason': 'SL', 'qty': 993.837018, 'notional': 100000.0, 'funding': 0.0, 'pnl': -2722.139727}, {'entry_bar': 3, 'exit_bar': 5, 'exit_reason': 'TP', 'qty': 996.500088, 'notional': 97277.860273, 'funding': 0.0, 'pnl': 12244.66886}]
+  backtester : [{'entry_bar': 1, 'exit_bar': 2, 'exit_reason': 'SL', 'qty': 381.661909, 'notional': 38402.867044, 'funding': 0.0, 'pnl': -1045.3797}, {'entry_bar': 3, 'exit_bar': 5, 'exit_reason': 'TP', 'qty': 377.758598, 'notional': 36876.613026, 'funding': 0.0, 'pnl': 4641.774746}]
+(i) time_stop_bars=2
+  engine_path: [{'entry_bar': 7, 'exit_bar': -1, 'exit_reason': 'OPEN', 'qty': 993.837018, 'notional': 100000.0, 'funding': 199.960008, 'pnl': -468.723412}]
+  backtester : [{'entry_bar': 7, 'exit_bar': 9, 'exit_reason': 'TIME', 'qty': 993.837018, 'notional': 100000.0, 'funding': 0.0, 'pnl': -338.600292}]
+(j) exit_on_breakdown=True (bar 10 closes 99.1 < VAL-k1ATR 99.4)
+  engine_path: [{'entry_bar': 7, 'exit_bar': -1, 'exit_reason': 'OPEN', 'qty': 993.837018, 'notional': 100000.0, 'funding': 199.960008, 'pnl': -468.723412}]
+  backtester : [{'entry_bar': 7, 'exit_bar': 10, 'exit_reason': 'BREAKDOWN', 'qty': 993.837018, 'notional': 100000.0, 'funding': 0.0, 'pnl': -1629.684153}]
+(k) missing 16:00: engine_path funding 0.0 final equity 99731.23659562324 | backtester raises: funding table misses the settlement at 2021-03-01 16:00:00+0
+(k) NaN at 16:00: engine_path funding nan final equity nan | backtester raises: funding table has NaN rates inside the backtest window
+== E-3 pending-order expiry vs a new signal
+  parent bar 1 (valid bars 2,3,4); 2nd signal at bar 2: [(1, 'expired_unfilled'), (2, 'skipped_position_or_order')]
+  parent bar 1 (valid bars 2,3,4); 2nd signal at bar 3: [(1, 'expired_unfilled'), (3, 'skipped_position_or_order')]
+  parent bar 1 (valid bars 2,3,4); 2nd signal at bar 4: [(1, 'expired_unfilled'), (4, 'skipped_position_or_order')]
+  parent bar 1 (valid bars 2,3,4); 2nd signal at bar 5: [(1, 'expired_unfilled'), (5, 'expired_unfilled')]
+  position analogue: trades engine_path [{'entry_bar': 1, 'exit_bar': 3, 'exit_reason': 'SL'}, {'entry_bar': 3, 'exit_bar': 5, 'exit_reason': 'TP'}] | backtester [{'entry_bar': 1, 'exit_bar': 3, 'exit_reason': 'SL'}, {'entry_bar': 3, 'exit_bar': 5, 'exit_reason': 'TP'}]

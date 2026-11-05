@@ -1,0 +1,11 @@
+end_bar 35064 n 35064  last bar used for matching opens at 2023-12-31 23:00:00+00:00
+[bracket on real entries] exit bars equal: True  reasons equal: True  max|R - r_ex_funding|: 6.661338147750939e-16
+[global] actual -0.3300  null mean -0.0851  p_le 0.0212 (= (1+105)/5001)  unresolved 0.00120  same-bar SL&TP 0.0188
+[local_15d_x24] actual -0.3300  null mean -0.1167  p_le 0.0324 (= (1+161)/5001)  unresolved 0.00005  same-bar SL&TP 0.0094
+[global] independent first 300 reps: max|null-mean diff| 0.00e+00; bars min 1 max 35056 (allowed [0,35062]); max exit bar 35063 (IS last bar 35063); draws with |b-e|<=24: 50; with replacement: duplicates within a trade column 144
+[global] overlapping trade pairs per replicate: mean 8.4; share of random trades that overlap another: ~13.24% (30 reps); hold bars median 6, p99 380, max 1676
+[local_15d_x24] independent first 300 reps: max|null-mean diff| 0.00e+00; bars min 165 max 35061 (allowed [0,35062]); max exit bar 35063 (IS last bar 35063); draws with |b-e|<=24: 0; with replacement: duplicates within a trade column 6310
+[local_15d_x24] overlapping trade pairs per replicate: mean 3.9; share of random trades that overlap another: ~6.70% (30 reps); hold bars median 6, p99 124, max 1215
+[real] hold bars median 7 p99 79 max 90
+[global] p_lower 0.0212 p_upper 0.9790 two-sided(min*2) 0.0424; null sd 0.1258
+[local_15d_x24] p_lower 0.0324 p_upper 0.9678 two-sided(min*2) 0.0648; null sd 0.1196

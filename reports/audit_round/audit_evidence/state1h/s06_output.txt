@@ -1,0 +1,14 @@
+running first-test low == kernel t1_low at all 120 signal bars: True
+
+population (DEPARTED/TOUCH2 bars piercing first-test low or band low intrabar, close >= max(VAL, first-test low)): 134
+  pierce first-test low by >=1 tick: 124 ; pierce band low: 36
+state_after    1   2  3   4
+state_before               
+3             14  23  4  27
+4             35   0  1  30
+  -> INVALID (5): 0  breakdown flag: 0
+  -> ARMED (1): 49  of which raw signal or box switch: 49  unexplained: 0
+  -> DEPARTED (3) [needs low > band top, impossible for a piercing bar unless box switch]: 5  with box switch: 0
+  -> merged into TOUCH1 (separation not met; the pierce becomes the new first-test low): 23
+
+breakdown bars in IS: 797 ; any with close >= band low: 0 ; any with close >= VAL: 0

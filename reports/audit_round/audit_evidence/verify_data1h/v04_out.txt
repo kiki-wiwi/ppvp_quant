@@ -1,0 +1,5 @@
+(1) with sockets blocked: 1H rows 35064 funding rows 4384 spot warm-up days 365 | is_run trades 109 reasons {'SL': 65, 'TP': 44} | IS Sharpe -1.174 | network attempts 0
+(2) load_is_market with an empty processed dir -> ['build_cache'] | build_cache would run here (downloads all archives, OKX REST, 1m daily archives)
+(3) local zip exists: True
+    first URL requested by fetch_vision_zip: BTCUSDT-1h-2020-01.zip.CHECKSUM
+network attempts total 0

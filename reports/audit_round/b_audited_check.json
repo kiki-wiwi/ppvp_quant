@@ -1,0 +1,175 @@
+{
+ "name": "B_audited",
+ "definition": "current working tree code with the B_original configs: B_original plus the four proven implementation-error fixes (D-1, D-5, E-1, E-2) and one result-neutral process safeguard (D-4, a design choice changed to satisfy the section 9 no-download constraint); all other definition questions and design choices unchanged; BTCUSDT perp IS [2020-01-01, 2024-01-01)",
+ "b_original_commit": "9f3e1e4031b1500d219f61bcbf995468446059d8",
+ "b_audited_git": {
+  "commit": "ac11241906dabf701c87dd60fa1c1fa635590295",
+  "describe": "ac11241",
+  "branch": "claude/sharp-darwin-k34sz1",
+  "status_porcelain": "",
+  "diff_stat_vs_head": ""
+ },
+ "diff_stat_vs_b_original_commit": " data_loader.py                                     |   27 +-\n ppvp_audit/b_audited.py                            |  141 ++\n ppvp_audit/engine_path.py                          |   39 +-\n ppvp_audit/event_sim.py                            |  131 ++\n ppvp_audit/experiments.py                          |  620 ++++++\n ppvp_audit/ledgers.py                              |   66 +-\n ppvp_audit/manifest.py                             |   81 +-\n ppvp_audit/nulls.py                                |   47 +\n ppvp_audit/post_run.py                             |  305 +++\n ppvp_audit/provenance.py                           |   83 +\n ppvp_audit/repro_figures.py                        |    8 +-\n ppvp_audit/run_ledgers.py                          |   31 +-\n ppvp_audit/slices.py                               |   20 +-\n ppvp_audit/sm_trace.py                             |   65 +\n ppvp_audit/variants.py                             |  177 ++\n reports/audit_round/audit_evidence/README.md       |   15 +\n reports/audit_round/audit_evidence/audit_brief.md  |   57 +\n .../audit_round/audit_evidence/data1h/s01_out.txt  |   67 +\n .../audit_evidence/data1h/s01_schema.py            |   19 +\n .../audit_evidence/data1h/s02_manifest_is.py       |   29 +\n .../audit_round/audit_evidence/data1h/s02_out.txt  |   23 +\n .../audit_evidence/data1h/s03_is_1h_4h.py          |   93 +\n .../audit_round/audit_evidence/data1h/s03_out.txt  |   73 +\n .../audit_round/audit_evidence/data1h/s04_out.txt  |   27 +\n .../audit_evidence/data1h/s04_thin_hours.py        |   20 +\n .../audit_round/audit_evidence/data1h/s05_out.txt  |   27 +\n .../audit_evidence/data1h/s05_raw_archives.py      |   92 +\n .../audit_evidence/data1h/s06_engine_time.py       |  108 +\n .../audit_evidence/data1h/s06_funding_by_trade.csv |  110 +\n .../audit_round/audit_evidence/data1h/s06_out.txt  |   29 +\n .../audit_round/audit_evidence/data1h/s07_out.txt  |   46 +\n .../audit_evidence/data1h/s07_prefix_and_thin.py   |   64 +\n .../audit_evidence/data1h/s08_codepaths.py         |   69 +\n .../audit_round/audit_evidence/data1h/s08_out.txt  |   14 +\n .../audit_round/audit_evidence/data1h/s09_misc.py  |   48 +\n .../audit_round/audit_evidence/data1h/s09_out.txt  |    8 +\n .../audit_round/audit_evidence/data1h/s10_out.txt  |   13 +\n .../audit_evidence/data1h/s10_venue_wicks.py       |   35 +\n .../audit_round/audit_evidence/data1h/s11_out.txt  |    6 +\n .../audit_evidence/data1h/s11_spot_holes.py        |   22 +\n .../audit_round/audit_evidence/data1h/s12_out.txt  |    5 +\n .../audit_evidence/data1h/s12_warmup_exposure.py   |   16 +\n .../audit_evidence/exec1h/s00_baseline_dump.py     |   24 +\n .../audit_round/audit_evidence/exec1h/s00_out.txt  |    5 +\n .../exec1h/s01_independent_engine.py               |  123 ++\n .../audit_round/audit_evidence/exec1h/s01_out.txt  |   39 +\n .../audit_evidence/exec1h/s02_accounting.py        |  105 +\n .../audit_round/audit_evidence/exec1h/s02_out.txt  |   20 +\n .../audit_round/audit_evidence/exec1h/s02b_out.txt |    6 +\n .../audit_evidence/exec1h/s02b_precision.py        |   23 +\n .../audit_round/audit_evidence/exec1h/s03_out.txt  |   11 +\n .../audit_evidence/exec1h/s03_random_null.py       |   96 +\n .../audit_round/audit_evidence/exec1h/s04_out.txt  |   13 +\n .../audit_evidence/exec1h/s04_signal_gaps.py       |   26 +\n .../exec1h/s05_engine_path_synthetic.py            |   83 +\n .../audit_round/audit_evidence/exec1h/s05_out.txt  |    9 +\n .../audit_evidence/exec1h/s05b_gap_funding.py      |   22 +\n .../audit_round/audit_evidence/exec1h/s05b_out.txt |    3 +\n .../audit_evidence/exec1h/s06_exec_details.py      |   49 +\n .../audit_round/audit_evidence/exec1h/s06_out.txt  |    9 +\n .../audit_evidence/exec1h/s07_matched_null.py      |   31 +\n .../audit_round/audit_evidence/exec1h/s07_out.txt  |    3 +\n .../exec1h/s08_funding_entry_instant.py            |   19 +\n .../audit_round/audit_evidence/exec1h/s08_out.txt  |    2 +\n .../audit_evidence/exec1h/s09_ambiguity_sets.py    |   19 +\n .../audit_round/audit_evidence/exec1h/s09_out.txt  |    6 +\n .../ppvp1h/alloc_sensitivity_trade_boxes.csv       |  110 +\n .../ppvp1h/box_lifecycle_all_IS_boxes.csv          | 1150 ++++++++++\n .../ppvp1h/box_lifecycle_trade_boxes.csv           |  145 ++\n .../ppvp1h/engine_diag_trade_boxes.csv             |  110 +\n reports/audit_round/audit_evidence/ppvp1h/indep.py |  127 ++\n .../audit_evidence/ppvp1h/logs/make_sm_instr.txt   |    1 +\n .../audit_evidence/ppvp1h/logs/s01_dump.txt        |   24 +\n .../ppvp1h/logs/s02_indep_compare.txt              |   33 +\n .../audit_evidence/ppvp1h/logs/s03_box_prefix.txt  |    6 +\n .../ppvp1h/logs/s04_signal_prefix.txt              |    3 +\n .../ppvp1h/logs/s05_profile_versions.txt           |   32 +\n .../ppvp1h/logs/s06_sample_independent.txt         |   44 +\n .../ppvp1h/logs/s07_alloc_sensitivity.txt          |   18 +\n .../ppvp1h/logs/s08_engine_diagnostics.txt         |   18 +\n .../ppvp1h/logs/s09_ties_and_supersede.txt         |   13 +\n .../audit_evidence/ppvp1h/logs/s10_lifecycle.txt   |   15 +\n .../ppvp1h/logs/s11_worked_example.txt             |   10 +\n .../audit_evidence/ppvp1h/make_sm_instr.py         |   57 +\n .../ppvp1h/profile_versions_per_signal.csv         |  121 ++\n .../audit_round/audit_evidence/ppvp1h/s01_dump.py  |   23 +\n .../audit_evidence/ppvp1h/s02_indep_compare.py     |   73 +\n .../audit_evidence/ppvp1h/s03_box_prefix.py        |   93 +\n .../audit_evidence/ppvp1h/s04_signal_prefix.py     |   71 +\n .../audit_evidence/ppvp1h/s05_profile_versions.py  |   93 +\n .../ppvp1h/s06_sample_independent.py               |   85 +\n .../audit_evidence/ppvp1h/s07_alloc_sensitivity.py |   69 +\n .../ppvp1h/s08_engine_diagnostics.py               |  110 +\n .../ppvp1h/s09_ties_and_supersede.py               |   70 +\n .../audit_evidence/ppvp1h/s10_lifecycle.py         |   65 +\n .../audit_evidence/ppvp1h/s11_worked_example.py    |   41 +\n .../audit_evidence/ppvp1h/sm_copy_raw.py           |  256 +++\n .../audit_round/audit_evidence/ppvp1h/sm_instr.py  |  294 +++\n .../audit_evidence/state1h/s00_baseline_dump.py    |   30 +\n .../audit_evidence/state1h/s01_events.json         |   25 +\n .../audit_evidence/state1h/s01_independent_sm.py   |  261 +++\n .../audit_evidence/state1h/s01_output.txt          |    4 +\n .../audit_evidence/state1h/s01_signal_diag.csv     |  121 ++\n .../audit_evidence/state1h/s02_filled_diag.csv     |  110 +\n .../audit_evidence/state1h/s03_examples.py         |  108 +\n .../audit_evidence/state1h/s03_filled_diag.csv     |  110 +\n .../audit_evidence/state1h/s03_output.txt          |  110 +\n .../audit_evidence/state1h/s04_output.txt          |   21 +\n .../audit_evidence/state1h/s04_wick_paths.py       |  100 +\n .../state1h/s05_independent_sm_running.py          |  263 +++\n .../audit_evidence/state1h/s06_output.txt          |   14 +\n .../audit_evidence/state1h/s06_wick_paths_exact.py |   55 +\n .../state1h/s07_requirement_fates.csv              |  229 ++\n .../state1h/s07_requirement_fates.py               |  276 +++\n .../audit_evidence/state1h/s08_output.txt          |   61 +\n .../audit_evidence/state1h/s08_summary.py          |  142 ++\n .../audit_evidence/verify_data1h/_setup.py         |   39 +\n .../audit_evidence/verify_data1h/v00_path.py       |    1 +\n .../verify_data1h/v01_manifest_is.py               |   20 +\n .../audit_evidence/verify_data1h/v01_out.txt       |   12 +\n .../audit_evidence/verify_data1h/v02_is_data.py    |   57 +\n .../audit_evidence/verify_data1h/v02_out.txt       |   28 +\n .../audit_evidence/verify_data1h/v03_codepaths.py  |   97 +\n .../audit_evidence/verify_data1h/v03_out.txt       |   20 +\n .../audit_evidence/verify_data1h/v04_network.py    |   48 +\n .../audit_evidence/verify_data1h/v04_out.txt       |    5 +\n .../audit_evidence/verify_data1h/v05_funding.py    |   44 +\n .../audit_evidence/verify_data1h/v05_out.txt       |    7 +\n .../audit_evidence/verify_data1h/v06_out.txt       |   12 +\n .../audit_evidence/verify_data1h/v06_warmup.py     |   54 +\n .../audit_evidence/verify_data1h/v07_out.txt       |   20 +\n .../audit_evidence/verify_data1h/v07_wicks_hold.py |   33 +\n .../verify_data1h/v08_baseline_manifest.py         |   18 +\n .../audit_evidence/verify_data1h/v08_out.txt       |    7 +\n .../audit_evidence/verify_data1h/v09_out.txt       |   11 +\n .../audit_evidence/verify_data1h/v09_spot_holes.py |   37 +\n .../audit_evidence/verify_data1h/v10_out.txt       |   24 +\n .../verify_data1h/v10_thin_hour_structural.py      |   43 +\n .../audit_evidence/verify_data1h/v11_nan_reach.py  |   38 +\n .../audit_evidence/verify_data1h/v11_out.txt       |   10 +\n .../audit_evidence/verify_data1h/v12_out.txt       |    8 +\n .../audit_evidence/verify_data1h/v12_raw_is.py     |   38 +\n .../audit_evidence/verify_data1h/v13_out.txt       |    7 +\n .../audit_evidence/verify_data1h/v13_provenance.py |   16 +\n .../verify_exec1h/v01_baseline_facts.py            |   96 +\n .../audit_evidence/verify_exec1h/v01_out.txt       |   42 +\n .../audit_evidence/verify_exec1h/v02_out.txt       |   36 +\n .../verify_exec1h/v02_synthetic_engine.py          |  152 ++\n .../verify_exec1h/v03_corrected_funding.py         |   77 +\n .../audit_evidence/verify_exec1h/v03_out.txt       |   10 +\n .../audit_evidence/verify_exec1h/v04_gap_scope.py  |   41 +\n .../audit_evidence/verify_exec1h/v04_out.txt       |    3 +\n .../audit_evidence/verify_ppvp1h/logs/v01_load.txt |    6 +\n .../verify_ppvp1h/logs/v02_profiles.txt            |   42 +\n .../verify_ppvp1h/logs/v02b_examples.txt           |   19 +\n .../verify_ppvp1h/logs/v03_types_supersede_ids.txt |   22 +\n .../verify_ppvp1h/logs/v05_instr.txt               |   28 +\n .../logs/v06_poc_tie_fig1_invalid.txt              |    9 +\n .../verify_ppvp1h/logs/v07_invalid_split.txt       |    2 +\n .../verify_ppvp1h/logs/v08_rr_split.txt            |    2 +\n .../audit_evidence/verify_ppvp1h/v01_load.py       |   20 +\n .../audit_evidence/verify_ppvp1h/v02_profiles.py   |   98 +\n .../audit_evidence/verify_ppvp1h/v02b_examples.py  |   35 +\n .../verify_ppvp1h/v03_types_supersede_ids.py       |   74 +\n .../audit_evidence/verify_ppvp1h/v05_instr.py      |   98 +\n .../verify_ppvp1h/v05_trades_profile_versions.csv  |  110 +\n .../verify_ppvp1h/v06_poc_tie_fig1_invalid.py      |   37 +\n .../verify_ppvp1h/v07_invalid_split.py             |   18 +\n .../audit_evidence/verify_ppvp1h/v08_rr_split.py   |   13 +\n .../audit_evidence/verify_ppvp1h/vp_indep.py       |   76 +\n .../audit_evidence/verify_state1h/v00_dump.py      |   23 +\n .../audit_evidence/verify_state1h/v01_output.txt   |    5 +\n .../audit_evidence/verify_state1h/v01_trace.py     |  271 +++\n .../audit_evidence/verify_state1h/v02_output.txt   |   83 +\n .../audit_evidence/verify_state1h/v02_signals.csv  |  121 ++\n .../audit_evidence/verify_state1h/v02_signals.py   |  184 ++\n .../audit_evidence/verify_state1h/v03_examples.py  |  163 ++\n .../audit_evidence/verify_state1h/v03_output.txt   |   71 +\n .../audit_evidence/verify_state1h/v04_more.py      |   82 +\n .../audit_evidence/verify_state1h/v04_output.txt   |   15 +\n .../audit_evidence/verify_state1h/v05_episodes.py  |   18 +\n .../audit_evidence/verify_state1h/v05_output.txt   |    4 +\n reports/audit_round/audit_report.md                |  197 ++\n reports/audit_round/b_audited_check.json           |  175 ++\n reports/audit_round/baseline_manifest.json         |  187 +-\n reports/audit_round/box_lifecycle.csv              | 1150 ++++++++++\n reports/audit_round/decision_report.md             |  135 ++\n reports/audit_round/experiment_ledger.csv          |   23 +\n reports/audit_round/experiment_plan.md             |   79 +\n reports/audit_round/experiments/A1_trades.csv      |   55 +\n reports/audit_round/experiments/A2_trades.csv      |   87 +\n reports/audit_round/experiments/A3_trades.csv      |   32 +\n reports/audit_round/experiments/B1_trades.csv      |   58 +\n reports/audit_round/experiments/B2_trades.csv      |  166 ++\n reports/audit_round/experiments/C1_trades.csv      |   80 +\n reports/audit_round/experiments/D1_trades.csv      |  110 +\n reports/audit_round/experiments/D2_trades.csv      |  114 +\n reports/audit_round/experiments/E1_trades.csv      |   11 +\n .../audit_round/experiments/post_run_checks.json   |  548 +++++\n .../rematerialised/A1_trades_2x_costs.csv          |   55 +\n .../rematerialised/A2_trades_2x_costs.csv          |   87 +\n .../rematerialised/A3_trades_2x_costs.csv          |   32 +\n .../rematerialised/B1_trades_2x_costs.csv          |   58 +\n .../rematerialised/B2_trades_2x_costs.csv          |  166 ++\n .../rematerialised/B_audited_trades.csv            |  110 +\n .../rematerialised/B_audited_trades_2x_costs.csv   |  110 +\n .../experiments/rematerialised/C1_touch_trades.csv |   80 +\n .../rematerialised/C1_trades_2x_costs.csv          |   80 +\n .../rematerialised/D1_trades_2x_costs.csv          |  110 +\n .../rematerialised/D2_trades_2x_costs.csv          |  114 +\n .../rematerialised/E1_trades_2x_costs.csv          |   11 +\n reports/audit_round/experiments/results.json       | 2243 ++++++++++++++++++++\n reports/audit_round/figure_checks.json             |    6 +-\n reports/audit_round/figures/exp_sharpe_diff.png    |  Bin 0 -> 89365 bytes\n .../figures/exp_sharpe_diff_by_year.png            |  Bin 0 -> 82668 bytes\n reports/audit_round/figures/slices/slice_01.png    |  Bin 0 -> 217617 bytes\n reports/audit_round/figures/slices/slice_02.png    |  Bin 0 -> 222027 bytes\n reports/audit_round/figures/slices/slice_03.png    |  Bin 0 -> 204038 bytes\n reports/audit_round/figures/slices/slice_04.png    |  Bin 0 -> 200068 bytes\n reports/audit_round/figures/slices/slice_05.png    |  Bin 0 -> 201610 bytes\n reports/audit_round/figures/slices/slice_06.png    |  Bin 0 -> 211837 bytes\n reports/audit_round/figures/slices/slice_07.png    |  Bin 0 -> 226364 bytes\n reports/audit_round/figures/slices/slice_08.png    |  Bin 0 -> 212578 bytes\n reports/audit_round/figures/slices/slice_09.png    |  Bin 0 -> 211493 bytes\n reports/audit_round/figures/slices/slice_10.png    |  Bin 0 -> 219165 bytes\n reports/audit_round/figures/slices/slice_11.png    |  Bin 0 -> 198336 bytes\n reports/audit_round/figures/slices/slice_12.png    |  Bin 0 -> 219546 bytes\n reports/audit_round/figures/slices/slice_13.png    |  Bin 0 -> 205664 bytes\n reports/audit_round/figures/slices/slice_14.png    |  Bin 0 -> 205779 bytes\n reports/audit_round/figures/slices/slice_15.png    |  Bin 0 -> 241311 bytes\n reports/audit_round/figures/slices/slice_16.png    |  Bin 0 -> 220804 bytes\n reports/audit_round/ledgers_summary_B_audited.json |  300 +++\n reports/audit_round/null_tests_ledger.csv          |   17 +\n reports/audit_round/post_stop_paths.csv            |   66 +\n reports/audit_round/signal_opportunities.csv       |  121 ++\n reports/audit_round/slices_selected.csv            |   17 +\n reports/audit_round/trade_reconciliation.csv       |  110 +\n reports/audit_round/trades.csv                     |  110 +\n reports/audit_round/worst_month_trades.csv         |   14 +\n test_audit_round.py                                |  369 ++++\n 240 files changed, 19576 insertions(+), 119 deletions(-)\n",
+ "fixes": [
+  {
+   "id": "D-1",
+   "file": "data_loader.py",
+   "kind": "implementation error (latent; IS unaffected)",
+   "what": "缺口补齐会把清洗阶段剔除的维护占位小时当作归档遗漏，用 OKX 数据补回，违反“维护期保持缺失”的成文规则",
+   "fix": "占位小时不进入补齐候选（fill_archive_gaps(..., placeholders=...)）",
+   "test": "test_audit_round.py::test_gap_fill_keeps_placeholder_maintenance_missing"
+  },
+  {
+   "id": "D-5",
+   "file": "data_loader.py",
+   "kind": "implementation error (latent; IS unaffected)",
+   "what": "缺口位于数据开头时成交量缩放比例样本为空，补出的成交量为 NaN，进而使箱体的成交量分布全为 NaN",
+   "fix": "重叠样本少于 MIN_SCALE_HOURS=24 小时或比例非有限时直接报错",
+   "test": "test_audit_round.py::test_gap_fill_refuses_without_pre_gap_overlap"
+  },
+  {
+   "id": "D-4",
+   "file": "data_loader.py",
+   "kind": "process safeguard required by the section 9 constraint (a design choice changed, not an implementation-error fix; no effect on any result)",
+   "what": "缓存缺失时静默联网重建全部缓存（含 1m 日度归档的裁决）",
+   "fix": "缓存缺失时报 FileNotFoundError，只有显式 python data_loader.py --build 才联网",
+   "test": "test_audit_round.py::test_missing_cache_raises_instead_of_rebuilding"
+  },
+  {
+   "id": "E-1",
+   "file": "ppvp_audit/engine_path.py",
+   "kind": "implementation error (latent; IS unaffected)",
+   "what": "路径撮合器按子 K 线下标而不是“入场时刻早于结算时刻”判断资金费，数据缺口内的结算会被漏收",
+   "fix": "按时间戳判断（entry_t < fundingTime），两次结算映射到同一根 K 线时报错",
+   "test": "test_audit_round.py::test_engine_path_charges_funding_inside_a_gap_like_the_backtester"
+  },
+  {
+   "id": "E-2",
+   "file": "ppvp_audit/engine_path.py",
+   "kind": "implementation error (latent; IS unaffected)",
+   "what": "路径撮合器静默忽略它不支持的回测参数（现货场所、不复利、以损定仓、时间止损、破位离场、关闭资金费）",
+   "fix": "不支持的配置直接报错；include_funding=False 时按配置不计资金费",
+   "test": "test_audit_round.py::test_engine_path_rejects_unsupported_configs_and_honours_funding_switch"
+  }
+ ],
+ "configs_identical": true,
+ "strategy_key": "6feffb8a3fb0c7fa",
+ "backtest_key": "5bc37091ab0d16cb",
+ "comparison": {
+  "df1h": {
+   "identical": true,
+   "rows": [
+    35064,
+    35064
+   ],
+   "index_identical": true,
+   "columns_only_in_B_original": [],
+   "columns_only_in_B_audited": [],
+   "columns_differing": []
+  },
+  "df4h": {
+   "identical": true,
+   "rows": [
+    8766,
+    8766
+   ],
+   "index_identical": true,
+   "columns_only_in_B_original": [],
+   "columns_only_in_B_audited": [],
+   "columns_differing": []
+  },
+  "boxes": {
+   "identical": true,
+   "rows": [
+    1149,
+    1149
+   ],
+   "index_identical": true,
+   "columns_only_in_B_original": [],
+   "columns_only_in_B_audited": [],
+   "columns_differing": []
+  },
+  "signals": {
+   "identical": true,
+   "rows": [
+    35064,
+    35064
+   ],
+   "index_identical": true,
+   "columns_only_in_B_original": [],
+   "columns_only_in_B_audited": [],
+   "columns_differing": []
+  },
+  "trades": {
+   "identical": true,
+   "rows": [
+    109,
+    109
+   ],
+   "index_identical": true,
+   "columns_only_in_B_original": [],
+   "columns_only_in_B_audited": [],
+   "columns_differing": []
+  },
+  "equity": {
+   "identical": true,
+   "rows": [
+    35064,
+    35064
+   ],
+   "index_identical": true,
+   "columns_only_in_B_original": [],
+   "columns_only_in_B_audited": [],
+   "columns_differing": []
+  },
+  "position": {
+   "identical": true,
+   "rows": [
+    35064,
+    35064
+   ],
+   "index_identical": true,
+   "columns_only_in_B_original": [],
+   "columns_only_in_B_audited": [],
+   "columns_differing": []
+  }
+ },
+ "all_identical": true,
+ "is_headline_B_original": {
+  "sharpe": -1.174067431234681,
+  "total_return": -0.4563376830466489,
+  "max_dd": -0.4674881770067414,
+  "trades": 109,
+  "fees": 6389.8965746348385,
+  "funding": 1438.8106007914257
+ },
+ "is_headline_B_audited": {
+  "sharpe": -1.174067431234681,
+  "total_return": -0.4563376830466489,
+  "max_dd": -0.4674881770067414,
+  "trades": 109,
+  "fees": 6389.8965746348385,
+  "funding": 1438.8106007914257
+ },
+ "fingerprints": {
+  "B_original": {
+   "df1h": "940a72379be8d055874b29f7c40169465c35e5d678ad407f0e773a07acf6ae0e",
+   "df4h": "2e96137cce15245a5b703c59783e3c1e5c382b6c35649f518569aa664fc489fb",
+   "boxes": "ed54044c772df4d2798337155ea1b51c119d319db5312e7c7968c283d250071e",
+   "signals": "49d00c035e0bd5af9195fd78e9a77a7bb9ddd7f9e3eb10aa78120241164a77f3",
+   "trades": "03b0646220064a4bf268eb7bcd444f4edf841a2028ea1edea1916dda863f38d2",
+   "equity": "3c2e8c9a4f7443e6e31a334508eb94abdd78674bf5345706c1e3f71b141a4bb2",
+   "position": "96c87037038e6ffea23d065e0c56ec165e62e26bc55e0e968fbd7ccc388f2c4b"
+  },
+  "B_audited": {
+   "df1h": "940a72379be8d055874b29f7c40169465c35e5d678ad407f0e773a07acf6ae0e",
+   "df4h": "2e96137cce15245a5b703c59783e3c1e5c382b6c35649f518569aa664fc489fb",
+   "boxes": "ed54044c772df4d2798337155ea1b51c119d319db5312e7c7968c283d250071e",
+   "signals": "49d00c035e0bd5af9195fd78e9a77a7bb9ddd7f9e3eb10aa78120241164a77f3",
+   "trades": "03b0646220064a4bf268eb7bcd444f4edf841a2028ea1edea1916dda863f38d2",
+   "equity": "3c2e8c9a4f7443e6e31a334508eb94abdd78674bf5345706c1e3f71b141a4bb2",
+   "position": "96c87037038e6ffea23d065e0c56ec165e62e26bc55e0e968fbd7ccc388f2c4b"
+  }
+ },
+ "reproduce": "python -m ppvp_audit.b_audited"
+}

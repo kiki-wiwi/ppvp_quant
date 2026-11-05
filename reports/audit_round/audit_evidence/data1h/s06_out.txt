@@ -1,0 +1,29 @@
+trades 109 exit reasons {'SL': 65, 'TP': 44} IS sharpe -1.1741
+funding rows passed to engine: 4384 max ts == IS_END: True
+df1h index unit datetime64[ms, UTC] | equity index unit datetime64[us, UTC] | first/last equity ts 2020-01-01 01:00:00+00:00 2024-01-01 00:00:00+00:00
+equity index minus 1ns dtype datetime64[ns, UTC] | label of 2020-01-02 00:00 point: 2020-01-01
+daily equity first rows: {Timestamp('2019-12-31 00:00:00+0000', tz='UTC'): 100000.0, Timestamp('2020-01-01 00:00:00+0000', tz='UTC'): 100000.0, Timestamp('2020-01-02 00:00:00+0000', tz='UTC'): 100000.0}  last label 2023-12-31 len 1462
+daily equity 2020-01-01 value == equity at 2020-01-02 00:00: True
+
+bars using a box: 34976  violations available_time > open_time: 0  bars where a newer box was already available but not used: 0
+boxes 1149 available_time - window_end values: {Timedelta('0 days 20:00:00'): 1149}
+window_start on 4H boundary: True  n_1h == hours(window): True  min window_start: 2020-01-03 00:00:00+00:00
+first box available 2020-01-04 16:00:00+00:00  first box window 2020-01-03 00:00:00+00:00 -> 2020-01-03 20:00:00+00:00
+first finite ATR at bar open 2020-01-01 14:00:00+00:00  first vsma 2020-01-01 20:00:00+00:00  first raw signal bar 2020-01-22 19:00:00+00:00  first trade entry 2020-01-22 20:00:00+00:00
+
+signals identical with spot_daily=None (baseline regime_filter=None): True
+spot warm-up series: n 365 first 2019-01-01 last 2019-12-31 name close dtype float64
+
+funding recomputation: n_funding equal True  max |engine - indep| $ 1.4210854715202004e-14  total engine $ 1438.8106  total indep $ 1438.8106
+trades with >=1 settlement: 63  total settlements: 163
+notional basis alternatives: entry-notional basis total $ 1432.9448 (diff -5.8658), prev-close basis $ 1438.8217 (diff 0.0111)
+
+entries exactly at a settlement time (fill after settlement => not charged): 10  entry hours: {0: 3, 1: 8, 2: 1, 3: 6, 4: 1, 5: 5, 6: 3, 7: 6, 8: 4, 9: 4, 10: 3, 11: 4, 12: 3, 13: 4, 14: 9, 15: 5, 16: 3, 17: 6, 18: 8, 19: 9, 20: 4, 21: 2, 22: 3, 23: 5}
+   if those settlements were charged instead: +$62.4075 (open-at-T basis) / +$62.4199 (entry notional), vs total funding $1438.8106 and total |pnl| $120342.1
+   entry-time settlement rates: min 2.369e-05 max 0.00017967
+exits whose exit-bar open is a settlement (held through T => charged): 12  of which SL: 7  TP: 5  SL filled at the gap open on such a bar: 0
+   funding charged at those exit-bar-open settlements: $124.1694
+SL fills at the bar open (gap through stop), all trades: 0
+trades exiting on the first bar after entry: 16
+
+trade entry close vs next open bp: max abs 0.903

@@ -1,0 +1,13 @@
+# 原始归档 zip 不入库（可由 data/manifest.json 中的 URL + SHA256 重新下载复现）
+data/raw/
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+.ipynb_checkpoints/
+
+# 临时产物
+*.log
+tmp/
+

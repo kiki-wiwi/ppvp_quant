@@ -1,0 +1,20 @@
+spot rows missing at exit bars: 0
+SL exits 65 | perp low <= SL: 65 | spot low <= SL: 59
+TP exits 44 | perp high >= TP: 44 | spot high >= TP: 43
+/tmp/claude-0/-home-user-ppvp-quant/04a66f10-1e5e-5960-9a9f-ffb5b694e43a/scratchpad/audit_round/verify_data1h/v07_wicks_hold.py:23: UserWarning: obj.round has no effect with datetime, timedelta, or period dtypes. Use obj.dt.round(...) instead.
+  print("perp-only SL breaches:\n", t.round(2).to_string(index=False))
+perp-only SL breaches:
+             exit_bar_open       SL  perp_low_bp_vs_SL  spot_low_bp_vs_SL
+2020-09-27 12:00:00+00:00 10592.85              -8.35               1.86
+2020-12-04 12:00:00+00:00 18669.98              -0.45               8.79
+2022-04-03 01:00:00+00:00 45523.57              -4.96               1.61
+2022-11-02 10:00:00+00:00 20326.53              -1.73               6.62
+2023-04-05 16:00:00+00:00 27787.95              -4.66               6.17
+2023-08-27 01:00:00+00:00 25955.99              -0.15               3.90
+TP touched on perp but not spot: [('2021-01-05 18:00:00+00:00', np.float64(-10.03))]
+
+D-13 hold_bars == exit_bar - entry_bar for all: True | exits on the first bar after entry: 16 {'TP': 15, 'SL': 1}
+exit_time == exit_bar_open + 1h: True | entry_time == open(entry_bar)+1h: True
+ledger hold_hours == hold_bars: True | ledger first-bar exits: 16
+mean hold_hours (upper bound) 13.13, lower bound 12.13, n=109
+reasons {'SL': 65, 'TP': 44}

@@ -1,0 +1,9 @@
+[A] signal at bar 4 (last valid bar of the bar-1 order): {Timestamp('2021-03-01 01:00:00+0000', tz='UTC'): 'expired_unfilled', Timestamp('2021-03-01 04:00:00+0000', tz='UTC'): 'skipped_position_or_order'}
+[A] signal at bar 5 (first bar after expiry):            {Timestamp('2021-03-01 01:00:00+0000', tz='UTC'): 'expired_unfilled', Timestamp('2021-03-01 05:00:00+0000', tz='UTC'): 'expired_unfilled'}
+[B] limit fill bar 8 (opens 2021-03-01 08:00:00+00:00); funding charged 200.559888; expected only T=16:00: 200.559888; exit bar 17 TP
+[C] market entry at 2021-03-01 08:00:00+00:00: path funding 199.363706, 1H engine funding 199.363706, n_funding 1
+[D] include_funding=False: path engine funding 199.363706 vs 1H engine 0.000000
+[D] venue='spot': path engine funding 199.363706 vs 1H engine 0.000000; qty path 993.837018 vs 1H 992.844174
+[E] gap-down fill bar: entry_px 100.0200 (= L*(1+slip)), exit_px 97.9804 (= SL*(1-slip)); a real limit buy would fill near the open 97.0 and be stopped near the open -> engine is conservative
+[F] gap of 16h covering two settlements: path funding 0.000000 (one settlement = 99.980004); 1H engine: ValueError: two funding settlements map to the same 1H bar (data gap longer than the settl
+[G] fill bar 2 touches TP but exit bar = 3 (TP) -> fill-bar TP not counted

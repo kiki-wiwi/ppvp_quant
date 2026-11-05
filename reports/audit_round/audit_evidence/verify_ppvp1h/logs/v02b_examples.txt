@@ -1,0 +1,19 @@
+tri mode 0.0: sum 1.000000000000 first bins [0.19 0.17 0.15] last [0.03 0.01]
+tri mode 2.0: sum 1.000000000000 first bins [0.05   0.15   0.1875] last [0.0375 0.0125]
+tri mode 10.0: sum 1.000000000000 first bins [0.01 0.03 0.05] last [0.17 0.19]
+ typical: share |dVAL|>0 0.954 (104/109)  share |dVAH|>0 0.972
+   close: share |dVAL|>0 0.945 (103/109)  share |dVAH|>0 0.945
+    body: share |dVAL|>0 0.908 (99/109)  share |dVAH|>0 0.890
+tri_close: share |dVAL|>0 0.688 (75/109)  share |dVAH|>0 0.706
+tri_typical: share |dVAL|>0 0.743 (81/109)  share |dVAH|>0 0.743
+     ext: share |dVAL|>0 0.890 (97/109)  share |dVAH|>0 0.954
+  tworow: share |dVAL|>0 0.514 (56/109)  share |dVAH|>0 0.495
+signal bar 2023-12-13 02:00: box 1130 n_1h 24 ATR 372.18 VAL 40692.81 VAH 42473.42 | typical: dVAL +2.70 dVAH +3.33 close: dVAL +2.91 dVAH +3.33 tri_close: dVAL +0.62 dVAH +0.00 tri_typical: dVAL +0.62 dVAH +0.00 ext: dVAL +0.62 dVAH -0.21
+signal bar 2023-08-28 22:00: box 1045 n_1h 16 ATR 87.81 VAL 25981.76 VAH 26103.84 | typical: dVAL +0.55 dVAH +0.79 close: dVAL +0.60 dVAH +0.79 tri_close: dVAL -0.15 dVAH +0.00 tri_typical: dVAL -0.15 dVAH +0.00 ext: dVAL -0.76 dVAH -0.09
+signal bar 2020-07-05 07:00: box 145 n_1h 28 ATR 28.52 VAL 9071.66 VAH 9293.00 | typical: dVAL +0.50 dVAH -0.75 close: dVAL -1.00 dVAH -2.00 tri_close: dVAL -0.25 dVAH +0.00 tri_typical: dVAL -0.25 dVAH -0.25 ext: dVAL -4.76 dVAH -2.75
+  box 145: pivots H@2020-07-01 16:00:00+00:00 L@2020-07-02 16:00:00+00:00 window [2020-07-01 16:00:00+00:00, 2020-07-02 20:00:00+00:00) n_1h 28 available 2020-07-03 16:00:00+00:00
+signal bar 2020-01-22 19:00: box 13 n_1h 24 ATR 54.35 VAL 8623.63 VAH 8683.98 | typical: dVAL +0.33 dVAH +0.11 close: dVAL +0.44 dVAH -0.11 tri_close: dVAL +0.22 dVAH +0.00 tri_typical: dVAL +0.11 dVAH +0.00 ext: dVAL -0.21 dVAH +0.86
+  box 13: window [2020-01-20 20:00:00+00:00, 2020-01-21 20:00:00+00:00) n_1h 24; excluded 2020-01-21 20:00:00+00:00 .. 2020-01-22 15:00:00+00:00 (20 bars); available 2020-01-22 16:00:00+00:00
+two-row: signal bar 2020-09-29 13:00 box 216 dVAL -1.20 ATR
+two-row: signal bar 2021-01-05 06:00 box 283 dVAL +0.93 ATR
+two-row: signal bar 2022-06-18 03:00 box 691 dVAL +1.14 ATR

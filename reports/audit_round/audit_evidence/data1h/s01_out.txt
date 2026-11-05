@@ -1,0 +1,67 @@
+BTCUSDT_perp_1h schema:
+   open: double
+high: double
+low: double
+close: double
+volume: double
+quote_volume: double
+count: double
+taker_buy_volume: double
+fill_source: large_string
+close_time: timestamp[us, tz=UTC]
+open_time: timestamp[ms, tz=UTC]
+-- schema metadata --
+pandas: '{"index_columns": ["open_time"], "column_indexes": [{"name": nul' + 1546
+   pandas metadata keys: [b'pandas']
+   IS rows: 35064 index name: open_time tz: UTC unit: datetime64[ms, UTC]
+   IS first/last index: 2020-01-01 00:00:00+00:00 2023-12-31 23:00:00+00:00
+   dtypes: {'open': 'float64', 'high': 'float64', 'low': 'float64', 'close': 'float64', 'volume': 'float64', 'quote_volume': 'float64', 'count': 'float64', 'taker_buy_volume': 'float64', 'fill_source': 'str', 'close_time': 'datetime64[us, UTC]'}
+   fill_source counts (IS): {'binance_um': 35064}
+
+BTCUSDT_funding schema:
+   funding_rate: double
+funding_interval_hours: int64
+funding_time: timestamp[ms, tz=UTC]
+-- schema metadata --
+pandas: '{"index_columns": ["funding_time"], "column_indexes": [{"name": ' + 639
+   pandas metadata keys: [b'pandas']
+   IS rows: 4383 index name: funding_time tz: UTC unit: datetime64[ms, UTC]
+   IS first/last index: 2020-01-01 00:00:00+00:00 2023-12-31 16:00:00+00:00
+   dtypes: {'funding_rate': 'float64', 'funding_interval_hours': 'int64'}
+
+BTCUSDT_spot_1h schema:
+   open: double
+high: double
+low: double
+close: double
+volume: double
+quote_volume: double
+count: double
+taker_buy_volume: double
+close_time: timestamp[us, tz=UTC]
+open_time: timestamp[ms, tz=UTC]
+-- schema metadata --
+pandas: '{"index_columns": ["open_time"], "column_indexes": [{"name": nul' + 1428
+   pandas metadata keys: [b'pandas']
+   IS rows: 43765 index name: open_time tz: UTC unit: datetime64[ms, UTC]
+   IS first/last index: 2019-01-01 00:00:00+00:00 2023-12-31 23:00:00+00:00
+   dtypes: {'open': 'float64', 'high': 'float64', 'low': 'float64', 'close': 'float64', 'volume': 'float64', 'quote_volume': 'float64', 'count': 'float64', 'taker_buy_volume': 'float64', 'close_time': 'datetime64[us, UTC]'}
+
+BTCUSDT_perp_4h_official schema:
+   open: double
+high: double
+low: double
+close: double
+volume: double
+quote_volume: double
+count: double
+taker_buy_volume: double
+close_time: timestamp[us, tz=UTC]
+open_time: timestamp[ms, tz=UTC]
+-- schema metadata --
+pandas: '{"index_columns": ["open_time"], "column_indexes": [{"name": nul' + 1428
+   pandas metadata keys: [b'pandas']
+   IS rows: 8766 index name: open_time tz: UTC unit: datetime64[ms, UTC]
+   IS first/last index: 2020-01-01 00:00:00+00:00 2023-12-31 20:00:00+00:00
+   dtypes: {'open': 'float64', 'high': 'float64', 'low': 'float64', 'close': 'float64', 'volume': 'float64', 'quote_volume': 'float64', 'count': 'float64', 'taker_buy_volume': 'float64', 'close_time': 'datetime64[us, UTC]'}
+

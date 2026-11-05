@@ -1,0 +1,6 @@
+1H 35064 2020-01-01 00:00:00+00:00 2023-12-31 23:00:00+00:00
+1H contiguous hourly: True
+4H 8766 contiguous 4h: True n_bars unique [np.int64(4)]
+boxes 1149 raw signals 120 trades 109
+IS sharpe -1.174067431234681
+trade columns: ['entry_bar', 'exit_bar', 'entry_time', 'exit_bar_open', 'exit_time', 'entry_px', 'exit_px', 'qty', 'notional', 'leverage', 'equity_at_entry', 'sl', 'tp', 'poc', 'fees', 'funding', 'n_funding', 'gross_pnl', 'pnl', 'exit_reason', 'partial_bar', 'partial_px', 'min_low', 'max_high', 'capped', 'funding_complete', 'r_multiple', 'ret_on_equity', 'ret_on_base', 'hold_bars', 'mae_pct', 'mfe_pct', 'pattern', 'box_id', 'VAL', 'POC', 'VAH', 'P_low', 't1_low', 't1_bar', 't2_low', 't2_bar', 't2_start', 'rr', 'atr', 'zone_lo', 'zone_hi']

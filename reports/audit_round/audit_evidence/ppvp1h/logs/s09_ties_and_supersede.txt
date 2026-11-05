@@ -1,0 +1,13 @@
+distinct boxes used by the 109 trades (chain start, first-test start/low, t2 start, signal): 144
+trades whose signal box has a POC tie: 6
+                 signal_open  box                 tied_bins  dPOC_if_highest_tied_atr  dVAL_atr  dVAH_atr
+0  2020-03-01 05:00:00+00:00   41                  [13, 14]                  0.141439       0.0       0.0
+1  2021-03-13 04:00:00+00:00  334  [29, 30, 31, 32, 33, 34]                  0.529506       0.0       0.0
+2  2021-08-17 17:00:00+00:00  457                [8, 9, 10]                  0.223749       0.0       0.0
+3  2021-11-06 13:00:00+00:00  519              [12, 13, 14]                  0.167720       0.0       0.0
+4  2022-09-06 14:00:00+00:00  748  [12, 13, 14, 15, 16, 17]                  0.304835       0.0       0.0
+5  2023-06-13 18:00:00+00:00  976              [24, 25, 26]                  0.149316       0.0       0.0
+
+Two trades whose signal box was superseded at the decision moment (close of the signal bar):
+  signal bar 2022-08-04 11:00:00+00:00 (decision 2022-08-04 12:00:00+00:00): used box 719 VAL 22824.8 VAH 23426.8; box 720 confirmed at the decision moment: VAL 22854.3 VAH 23440.6; dVAL +0.16 ATR, dVAH +0.08 ATR; signal close 22872.3; new box pivots 2022-08-02 08:00:00+00:00 -> 2022-08-03 12:00:00+00:00 (LH)
+  signal bar 2023-11-26 19:00:00+00:00 (decision 2023-11-26 20:00:00+00:00): used box 1118 VAL 37232.8 VAH 37891.6; box 1119 confirmed at the decision moment: VAL 37620.9 VAH 37918.1; dVAL +2.51 ATR, dVAH +0.17 ATR; signal close 37360.0; new box pivots 2023-11-24 12:00:00+00:00 -> 2023-11-25 20:00:00+00:00 (HH)

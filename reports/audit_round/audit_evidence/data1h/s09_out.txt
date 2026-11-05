@@ -1,0 +1,8 @@
+SL differs at signal bar 2021-03-13 04:00:00+00:00 baseline 55987.6897258917 dropped 55987.6897258631 rel -5.115e-13 | is a traded signal: True | sig_raw True signal True
+SL differs at signal bar 2021-03-15 12:00:00+00:00 baseline 54316.6434268040 dropped 54316.6434268036 rel -8.327e-15 | is a traded signal: True | sig_raw True signal True
+
+volume_profile finite volumes: POC 101.050 VAL 101.000 VAH 102.900
+volume_profile one NaN volume : POC 100.050 VAL 100.000 VAH 100.100  (NaN bins: 50 of 50)
+20-bar volume SMA after one NaN volume: NaN for 20 bars
+
+load_is_market + is_run with HTTP blocked: OK (1H rows 35064, funding rows 4384, spot days 365, trades 109)

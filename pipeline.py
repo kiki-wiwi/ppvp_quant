@@ -1,0 +1,104 @@
+"""
+pipeline.py — 数据 → 4H PPVP 箱体 → 1H 状态机信号 → 回测 → 分段指标 的统一入口（带箱体缓存与 OOS 锁）。
+
+``pipeline.run`` 是 Phase 2/3 唯一受支持的研究入口。研究阶段默认 ``end = RESEARCH_DATA_END (= 2025-07-01)``：
+OOS 区间的 K 线根本不会被送入引擎。只有在 Phase 4 锁定最终参数后，才允许以 ``allow_oos=True`` 运行到 2026-11-01。
+跨品种验证标的（config.HOLDOUT_SYMBOLS，即 ETH）在参数锁定前只允许 ``segments=()`` 的结构性运行：
+返回箱体与信号，``result`` 为 None，不运行回测、不计算任何净值或逐笔盈亏（防未来函数闸门以 allow_oos=True 运行，
+只输出通过/失败）。
+OOS 锁在每个入口（load_market / get_boxes / run）缓存查找之前检查；缓存对象以深拷贝返回（每次约 1 ms），
+列数据与行/列索引都复制（DatetimeIndex.asi8 是可写视图，只复制列数据时经索引的就地写入仍会污染缓存），
+因此调用方通过公开 API 就地修改返回的数据（含 ``Series.array``、``index.asi8`` 写入、pandas 2.x 无写时复制的情形）
+都不会污染缓存。
+"""
+from __future__ import annotations
+
+import pandas as pd
+
+from backtester import run_backtest
+from config import (BASELINE_BACKTEST, BASELINE_STRATEGY, HOLDOUT_SYMBOLS, OOS_END, RESEARCH_DATA_END, RESEARCH_START,
+                    BacktestConfig, StrategyConfig)
+from data_loader import load_funding, load_klines
+from metrics import OOSLockedError, segment_report
+from ppvp_engine import build_boxes
+from strategy_state_machine import generate_signals
+
+_MARKET: dict = {}
+_BOXES: dict = {}
+
+
+def _detached(x):
+    """深拷贝 DataFrame / Series，连同行索引（与 DataFrame 的列索引）一起复制，与缓存对象不共享任何缓冲区。
+    RangeIndex.copy(deep=True) 与原对象共享已物化的整数数组（index.array 可写），因此按 start/stop/step 重建。"""
+    y = x.copy(deep=True)
+    idx = x.index
+    y.index = pd.RangeIndex(idx.start, idx.stop, idx.step, name=idx.name) if isinstance(idx, pd.RangeIndex) \
+        else idx.copy(deep=True)
+    if isinstance(x, pd.DataFrame):
+        y.columns = x.columns.copy(deep=True)
+    return y
+
+
+def clear_cache() -> None:
+    _MARKET.clear()
+    _BOXES.clear()
+
+
+def _check_lock(end: pd.Timestamp, allow_oos: bool) -> None:
+    if end > RESEARCH_DATA_END and not allow_oos:
+        raise OOSLockedError(f"data beyond {RESEARCH_DATA_END} is locked until final parameters are frozen")
+
+
+def spot_daily_warmup(symbol: str) -> pd.Series:
+    """2020 年之前的现货日线收盘（仅供慢速价格类过滤器预热）。先截断到 RESEARCH_START 之前再重采样，
+    不对其后的任何行做计算（截断前后的结果相同：被保留的日线都是 2020 年之前的完整自然日）。"""
+    s = load_klines(symbol, "1h", "spot")
+    s = s[s.index < RESEARCH_START]
+    return s["close"].resample("1D").last().dropna()
+
+
+def load_market(symbol: str, end: pd.Timestamp = RESEARCH_DATA_END, allow_oos: bool = False):
+    """返回 (df1h, funding, spot_daily)。1H 取 open_time < end；资金费取结算时刻 ≤ end
+    （end 恰为最后一根 1H 的收盘，该时刻的结算由 end 之前的溢价决定，收盘市价离场需要承担它）。"""
+    _check_lock(end, allow_oos)
+    key = (symbol, end)
+    if key not in _MARKET:
+        df = load_klines(symbol, "1h", "perp")
+        df = df[(df.index >= RESEARCH_START) & (df.index < end)]
+        fund = load_funding(symbol)
+        fund = fund[(fund.index >= RESEARCH_START) & (fund.index <= end)]
+        _MARKET[key] = (df, fund, spot_daily_warmup(symbol))
+    df, fund, spot = _MARKET[key]
+    return _detached(df), _detached(fund), _detached(spot)
+
+
+def get_boxes(symbol: str, scfg: StrategyConfig, end: pd.Timestamp = RESEARCH_DATA_END, allow_oos: bool = False):
+    _check_lock(end, allow_oos)
+    key = (symbol, end, scfg.structural_key())
+    if key not in _BOXES:
+        df1h, _, _ = load_market(symbol, end, allow_oos)
+        _BOXES[key] = build_boxes(df1h, scfg)
+    boxes, df4h = _BOXES[key]
+    return _detached(boxes), _detached(df4h)
+
+
+def run(symbol: str = "BTCUSDT", scfg: StrategyConfig = BASELINE_STRATEGY, bcfg: BacktestConfig = BASELINE_BACKTEST,
+        end: pd.Timestamp = RESEARCH_DATA_END, segments=("IS", "VAL"), allow_oos: bool = False) -> dict:
+    holdout = symbol in HOLDOUT_SYMBOLS and not allow_oos
+    if holdout and segments:
+        # ETH 是跨品种零改参验证集：参数锁定前只允许结构性运行（segments=()），不出分段绩效
+        raise OOSLockedError(f"{symbol} is the cross-asset holdout; segment metrics are locked until Phase 4")
+    df1h, fund, spot_d = load_market(symbol, end, allow_oos)
+    boxes, df4h = get_boxes(symbol, scfg, end, allow_oos)
+    sig = generate_signals(df1h, scfg, boxes, df4h, spot_d)
+    if holdout:
+        # 结构性运行只返回箱体与信号，不运行回测：留出标的的净值与逐笔盈亏在参数锁定前不得被计算
+        return {"df1h": df1h, "df4h": df4h, "boxes": boxes, "signals": sig, "result": None, "report": {}}
+    res = run_backtest(df1h, sig, bcfg, fund)
+    rep = segment_report(res, segments, allow_oos) if segments else {}
+    return {"df1h": df1h, "df4h": df4h, "boxes": boxes, "signals": sig, "result": res, "report": rep}
+
+
+def run_full_period(symbol: str, scfg: StrategyConfig, bcfg: BacktestConfig) -> dict:
+    """Phase 4 专用：在参数锁定后运行完整 2020-01-01 ~ 2026-11-01。"""
+    return run(symbol, scfg, bcfg, end=OOS_END, segments=("IS", "VAL", "OOS"), allow_oos=True)

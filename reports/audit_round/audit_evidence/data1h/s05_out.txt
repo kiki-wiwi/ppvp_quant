@@ -1,0 +1,27 @@
+perp 1H raw IS rows 35064 dups 0 raw close_time != open+1h-1ms rows: 0
+months with header: ['2022-01', '2022-02', '2022-03'] ... 24 of 48 ; first headered month: 2022-01
+processed IS rows 35064 index equal raw: True
+   open             exact-equal: True
+   high             exact-equal: True
+   low              exact-equal: True
+   close            exact-equal: True
+   volume           exact-equal: True
+   quote_volume     exact-equal: True
+   count            exact-equal: True
+   taker_buy_volume exact-equal: True
+official 4H raw IS rows 8766 close_time mismatches 0 open hours [0, 4, 8, 12, 16, 20]
+
+funding CSV header lines (first line of each IS file):
+   'calc_time,funding_interval_hours,last_funding_rate' : 48 files (2020-01 .. 2023-12)
+funding IS raw rows 4383 dev from 8h grid (ms): min 0 max 47 abs>1000ms: 0 abs>30000ms: 0
+   dev quantiles ms: {0.0: 0.0, 0.5: 1.0, 0.9: 13.0, 0.99: 24.0, 1.0: 47.0}
+   rows with dev != 0: 2233
+   interval_raw values: {8: 4383}
+parsed funding IS rows 4383 dups 0 all on 8h grid after rounding: True
+8h grid points in IS 4383 missing 0 extra 0
+processed funding IS rows 4383 index equal True rate exact-equal True interval values {8: 4383}
+IS funding rate: mean 0.000136616  min -0.003  max 0.003  share>0 0.865
+
+spot 2019 raw rows 8732 expected 8760 first 2019-01-01 00:00:00+00:00 last 2019-12-31 23:00:00+00:00
+processed spot <2020 rows 8732 close exact-equal raw: True
+2019 spot days 365 days whose last available hour != 23: 0

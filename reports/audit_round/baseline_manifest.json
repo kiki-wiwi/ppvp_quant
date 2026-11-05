@@ -1,0 +1,364 @@
+{
+ "name": "B_original",
+ "frozen_at_utc": "2026-11-05T04:12:01+00:00",
+ "regenerated_at_utc": "2026-11-05T06:57:26+00:00",
+ "regeneration_note": "data block restricted to the rows read in this round (audit D-12); B_audited block added. B_original definition, configs, ledger and its hash are unchanged.",
+ "definition": "BASELINE_STRATEGY / BASELINE_BACKTEST on the repository code at the commit below, BTCUSDT perp, IS [2020-01-01, 2024-01-01) UTC, data truncated at IS_END before entering the engine",
+ "git": {
+  "commit": "9f3e1e4031b1500d219f61bcbf995468446059d8",
+  "describe": "9f3e1e4",
+  "branch": "claude/sharp-darwin-k34sz1",
+  "status_porcelain_at_freeze": "",
+  "note": "B_original is defined as the code at this commit"
+ },
+ "generated_from_git": {
+  "commit": "ac11241906dabf701c87dd60fa1c1fa635590295",
+  "describe": "ac11241-dirty",
+  "branch": "claude/sharp-darwin-k34sz1",
+  "status_porcelain": "M reports/audit_round/b_audited_check.json",
+  "diff_stat_vs_head": "reports/audit_round/b_audited_check.json | 10 +++++-----\n 1 file changed, 5 insertions(+), 5 deletions(-)"
+ },
+ "engine_source_sha256": {
+  "config.py": "858ff5a924a9555c950a96d30054642144dbe4a1e2d6f055e769540879beb429",
+  "pipeline.py": "0dfcf1cf61161e449c747a5cf2f6b904bb7b04fbb73194b1e0ee100e74e9e6d7",
+  "data_loader.py": "4f3820ae8b59d8a2b821617b5ea0a5d881008ec599a056d0553de743407f0a86",
+  "ppvp_engine.py": "6c498886be2731c96b3e8b1e50394859788fda8e17555c540120ee038cd0a2b2",
+  "strategy_state_machine.py": "790ad492a9c96b2188148e0de61f53cce9cbca19fb31ab86eb4690e4cffb3e2a",
+  "backtester.py": "6dd67439db79fe983bad7a3343bc7dcef118e012d7560499ced91756a8177568",
+  "metrics.py": "13d16204f0724ff54e5a42f2ed3c1d8fd7a7661cd2955b949f17e6b5ef86e52b",
+  "attribution.py": "1c7165769eef97fb86d1ef010e4dc3cdeef381f4ab52290bd7cfffe488c7357c",
+  "numba_compat.py": "fadd3ecc7e5b9f91637e513db77e673a24d4b5a6dd8de191a57729b28f8e28de"
+ },
+ "configs": {
+  "strategy": {
+   "pivot_left": 5,
+   "pivot_right": 5,
+   "profile_pivots": 2,
+   "n_bins": 50,
+   "va_pct": 0.7,
+   "atr_len": 14,
+   "vol_sma_len": 20,
+   "zone_k1": 0.5,
+   "zone_k2": 0.5,
+   "min_bars_between_touches": 6,
+   "min_bounce_atr": 1.0,
+   "carry_touches_on_box_update": true,
+   "roll_failed_second_touch": true,
+   "break_body_atr": 0.6,
+   "break_vol_mult": 1.5,
+   "use_pinbar": true,
+   "pin_wick_frac": 0.6,
+   "pinbar_ratio": 2.0,
+   "pin_close_pos": 0.5,
+   "pin_require_bull_close": false,
+   "use_engulfing": true,
+   "engulf_ratio": 1.0,
+   "engulf_gap_tol": 0.0002,
+   "max_pattern_lag_bars": null,
+   "sl_buffer_atr": 0.2,
+   "sl_anchor": "test",
+   "min_rr": 0.0,
+   "max_box_width_atr": null,
+   "max_box_width_pct": null,
+   "reject_broken_at_activation": false,
+   "regime_filter": null,
+   "regime_sma_days": 200,
+   "regime_slope_days": 20,
+   "crash_body_atr4": 2.0,
+   "crash_vol_mult4": 2.0,
+   "crash_cooldown_hours": 48
+  },
+  "strategy_key": "6feffb8a3fb0c7fa",
+  "backtest": {
+   "initial_capital": 100000.0,
+   "venue": "perp",
+   "include_funding": true,
+   "perp_taker_fee": 0.0005,
+   "perp_maker_fee": 0.0002,
+   "spot_taker_fee": 0.001,
+   "spot_maker_fee": 0.001,
+   "slippage": 0.0002,
+   "sizing": "fixed",
+   "fixed_leverage": 1.0,
+   "risk_per_trade": 0.01,
+   "target_vol": 0.4,
+   "vol_lookback_bars": 720,
+   "max_leverage": 1.5,
+   "compounding": true,
+   "tp_mode": "vah",
+   "partial_frac": 0.5,
+   "move_to_breakeven": true,
+   "time_stop_bars": null,
+   "exit_on_breakdown": false
+  },
+  "backtest_key": "5bc37091ab0d16cb"
+ },
+ "segment": {
+  "name": "IS",
+  "start": "2020-01-01 00:00:00+00:00",
+  "end_exclusive": "2024-01-01 00:00:00+00:00"
+ },
+ "data": {
+  "manifest_path": "data/manifest.json",
+  "manifest_sha256": "fb9b0bd2ab021b1fefb33287a554bd82255501c77ea1ff3c224dd2beba53e4f1",
+  "datasets_used": {
+   "BTCUSDT_perp_1h": {
+    "path": "data/processed/BTCUSDT_perp_1h.parquet",
+    "sha256_recorded": "f8903e4d0306cc9e0c2d0465f0525b6e2492f69df3e6b47ad890ec0d96310a8d",
+    "sha256_actual": "f8903e4d0306cc9e0c2d0465f0525b6e2492f69df3e6b47ad890ec0d96310a8d",
+    "file_covers": "2020-2026 (spot from 2019); only the rows below are read in this round",
+    "rows_used_in_this_round": 35064,
+    "first_used": "2020-01-01 00:00:00+00:00",
+    "last_used": "2023-12-31 23:00:00+00:00",
+    "use": "全部策略计算（截断在 IS_END 之前）",
+    "provider": "binance_vision_futures_um",
+    "gap_fills_in_used_rows": [],
+    "dropped_placeholder_bars_in_used_rows": []
+   },
+   "BTCUSDT_funding": {
+    "path": "data/processed/BTCUSDT_funding.parquet",
+    "sha256_recorded": "bb61b4c1393e15da51e5b11950316cbae37bc66d85b243e529ed3d727e65a570",
+    "sha256_actual": "bb61b4c1393e15da51e5b11950316cbae37bc66d85b243e529ed3d727e65a570",
+    "file_covers": "2020-2026 (spot from 2019); only the rows below are read in this round",
+    "rows_used_in_this_round": 4384,
+    "first_used": "2020-01-01 00:00:00+00:00",
+    "last_used": "2024-01-01 00:00:00+00:00",
+    "use": "资金费现金流（结算时刻 ≤ IS_END）",
+    "provider": "binance_vision_futures_um",
+    "gap_fills_in_used_rows": [],
+    "dropped_placeholder_bars_in_used_rows": []
+   },
+   "BTCUSDT_spot_1h": {
+    "path": "data/processed/BTCUSDT_spot_1h.parquet",
+    "sha256_recorded": "fb6e0a32ed5234678e0740a96cd41c167f6f86f3d9b64ea77a368122be64c6a4",
+    "sha256_actual": "fb6e0a32ed5234678e0740a96cd41c167f6f86f3d9b64ea77a368122be64c6a4",
+    "file_covers": "2020-2026 (spot from 2019); only the rows below are read in this round",
+    "rows_used_in_this_round": 8732,
+    "first_used": "2019-01-01 00:00:00+00:00",
+    "last_used": "2019-12-31 23:00:00+00:00",
+    "use": "只用 2020 年之前的日线收盘做慢速价格指标预热（不含成交量）",
+    "provider": "binance_vision_spot",
+    "gap_fills_in_used_rows": [],
+    "dropped_placeholder_bars_in_used_rows": []
+   }
+  },
+  "finer_than_1h": "none used. Per the user's supplementary constraint (section 9), intrabar ordering is handled with the pre-declared worst-case rule on 1H bars. 1m archives downloaded before that constraint arrived (commit b0298f2) were deleted unused-for-results; see audit_report.md."
+ },
+ "seeds": {
+  "round_master_seed": 20261105,
+  "phase2_seed_used_for_figure_reproduction": 20261104
+ },
+ "is_headline": {
+  "sharpe": -1.174067431234681,
+  "sortino": -1.3871545259381883,
+  "cagr": -0.14122855115275768,
+  "total_return": -0.4563376830466489,
+  "max_dd": -0.4674881770067414,
+  "calmar": -0.3021007976223559,
+  "trades": 109,
+  "win_rate": 0.3669724770642202,
+  "profit_factor": 0.4501157788201149,
+  "avg_r": -0.3400077612474142,
+  "avg_hold_bars": 13.128440366972477,
+  "fees": 6389.8965746348385,
+  "funding": 1438.8106007914257,
+  "exposure": 0.040811088295687886,
+  "exit_reasons": {
+   "SL": 65,
+   "TP": 44
+  },
+  "trades_open_at_end": 0
+ },
+ "ledger": {
+  "path": "reports/audit_round/ledgers/trades_B_original_raw.csv",
+  "rows": 109,
+  "sha256": "43b004b878c4df9dac442ebb29822eb809c349400ecf93347b89e9a60c4d17af"
+ },
+ "phase2_figures": {
+  "phase2_equity_underwater.png": "44bdf3307252ab404ad83bf4467e86d7620433def5c12cef47b7745fab25d45f",
+  "phase2_is_exit_paths.png": "a967d71ef530d39b5c08c7fbb70a756e007aa701ef813ce5ec117ccf39534f23",
+  "phase2_is_null_test.png": "8535336fdff9672f5b0101722e6f88a0f7e088aa35b035757869a6a0b1f057ef",
+  "phase2_is_regime.png": "a29c851802c811d873d5496a0d5dcbbef712ea5f42e207349d06e41b2f9e8676",
+  "phase2_is_winrate_by_rr.png": "4cb25d6d1f044c4ab651b6072ba23c60e3bb538a13ccc0bbaccff965fe129aea"
+ },
+ "reproduce": [
+  "python -m ppvp_audit.b_audited          # B_audited 与 B_original 的逐位核验（b_audited_check.json）",
+  "python -m ppvp_audit.manifest           # 本文件",
+  "python -m ppvp_audit.repro_figures      # 图 1、2、4、5 的核验图与 figure_checks.json（图 3 只核验分组数值）",
+  "python -m ppvp_audit.run_ledgers --version B_audited   # 账本、核对表、切片",
+  "python -m ppvp_audit.nulls              # 随机基准复核",
+  "python -m ppvp_audit.experiments        # 9 个预注册版本（results.json、实验台账 R01–R09）",
+  "python -m ppvp_audit.post_run           # 运行后的补充核算与补记运行（post_run_checks.json、台账 R10–R21）"
+ ],
+ "exposure_register": [
+  {
+   "phase": "Phase 0",
+   "commits": "cb95e21",
+   "segment": "IS+VAL+OOS",
+   "symbols": "BTC, ETH",
+   "kind": "data quality (no strategy output)",
+   "what": "全区间行数、缺口与占位 K 线检测（OOS 内 2026-10-28 归档缺口、VAL 内 2024-10-28 占位 K 线）、OKX 补数及其相对现货的价差、全样本永续-现货基差与收益相关、2020-2026 资金费率均值与年化成本、2024-03-01~14 与 OKX 的价格比对、官方 4H 归档错误裁决",
+   "influenced_decisions": "数据清洗政策：≥6 小时缺口用 OKX 补齐（只发生在 OOS 的 2026-10-28）、占位 K 线剔除"
+  },
+  {
+   "phase": "Phase 1",
+   "commits": "ee26506..d1bc53c",
+   "segment": "IS+VAL (research period)",
+   "symbols": "BTC, ETH",
+   "kind": "outcome counts and aggregate equity (debug output)",
+   "what": "中间版本的研究期离场原因计数（BTC 与 ETH）；研究期若干配置的期末净值（显示基线明显亏损）；破位离场计数；第一轮审计中的亏损止盈交易计数（本登记只描述看过什么，不重复任何 VAL / ETH 数值）",
+   "influenced_decisions": "记录称未据此改动代码或参数（用于核对重构前后一致性）"
+  },
+  {
+   "phase": "Phase 1",
+   "commits": "ee26506 (removed in 3e494cf, still in git history)",
+   "segment": "OOS",
+   "symbols": "BTC, ETH",
+   "kind": "activity counts",
+   "what": "两个 OOS 截断点上的累计信号数与平仓交易数（无收益信息）",
+   "influenced_decisions": "记录称从未用于决策"
+  },
+  {
+   "phase": "Phase 1-2",
+   "commits": "ee26506..04724f0",
+   "segment": "IS+VAL+OOS",
+   "symbols": "BTC, ETH",
+   "kind": "pass/fail look-ahead gate; structural counts",
+   "what": "防未来函数闸门在 2020-2026 全量数据上截断比对（只输出通过 / 失败）；耗时基准记录全量 K 线数与箱体数；研究期结构计数（BTC 与 ETH 的箱体数、原始信号数、消融表中的可交易 / 成交笔数、INVALID 时间占比）",
+   "influenced_decisions": "闸门失败会触发引擎修复（未来函数类缺陷），不涉及绩效"
+  },
+  {
+   "phase": "Phase 2",
+   "commits": "a59f783..04724f0",
+   "segment": "VAL",
+   "symbols": "BTC",
+   "kind": "performance (headline)",
+   "what": "基线 VAL 总体指标（夏普及其区间、累计收益、最大回撤、成交笔数与原始信号数、胜率 / 盈亏比 / 平均 R）、买入持有 VAL 夏普；6 个成本对照的 VAL 指标；carry / roll 三个变体的 VAL 夏普与平均 R；草稿图（a59f783、f85c142）画出过 VAL 日度净值路径；test_attribution.py 把 VAL 夏普钉为常量（数值见 Phase 2 记录，本登记不重复）",
+   "influenced_decisions": "用于 Phase 2 第 3b 节按事先规则否决 carry / roll 变体，以及 Phase 3 判定规则的设计讨论；VAL 因此不再是未见数据"
+  },
+  {
+   "phase": "Phase 2",
+   "commits": "a59f783..04724f0",
+   "segment": "ETH",
+   "symbols": "ETH",
+   "kind": "none beyond structural runs",
+   "what": "参数锁定前只做结构性运行（不回测）；闸门见上一行",
+   "influenced_decisions": "无"
+  },
+  {
+   "phase": "conversation",
+   "commits": "-",
+   "segment": "IS (figures); VAL headline mentioned",
+   "symbols": "BTC",
+   "kind": "screenshots of Phase 2 figures",
+   "what": "用户截图的五张图（IS）；图 5 标题注明 VAL 只报告总体指标",
+   "influenced_decisions": "本轮审计的出发点"
+  },
+  {
+   "phase": "this round",
+   "commits": "from 04724f0",
+   "segment": "IS only",
+   "symbols": "BTC",
+   "kind": "all analyses",
+   "what": "本轮全部分析只用 [2020-01-01, 2024-01-01) 的 BTC 数据",
+   "influenced_decisions": "本轮的审计与实验结论"
+  }
+ ],
+ "b_audited": {
+  "definition": "current working tree code with the B_original configs: B_original plus the four proven implementation-error fixes (D-1, D-5, E-1, E-2) and one result-neutral process safeguard (D-4, a design choice changed to satisfy the section 9 no-download constraint); all other definition questions and design choices unchanged; BTCUSDT perp IS [2020-01-01, 2024-01-01)",
+  "git": {
+   "commit": "ac11241906dabf701c87dd60fa1c1fa635590295",
+   "describe": "ac11241",
+   "branch": "claude/sharp-darwin-k34sz1",
+   "status_porcelain": "",
+   "diff_stat_vs_head": ""
+  },
+  "fixes": [
+   {
+    "id": "D-1",
+    "file": "data_loader.py",
+    "kind": "implementation error (latent; IS unaffected)",
+    "what": "缺口补齐会把清洗阶段剔除的维护占位小时当作归档遗漏，用 OKX 数据补回，违反“维护期保持缺失”的成文规则",
+    "fix": "占位小时不进入补齐候选（fill_archive_gaps(..., placeholders=...)）",
+    "test": "test_audit_round.py::test_gap_fill_keeps_placeholder_maintenance_missing"
+   },
+   {
+    "id": "D-5",
+    "file": "data_loader.py",
+    "kind": "implementation error (latent; IS unaffected)",
+    "what": "缺口位于数据开头时成交量缩放比例样本为空，补出的成交量为 NaN，进而使箱体的成交量分布全为 NaN",
+    "fix": "重叠样本少于 MIN_SCALE_HOURS=24 小时或比例非有限时直接报错",
+    "test": "test_audit_round.py::test_gap_fill_refuses_without_pre_gap_overlap"
+   },
+   {
+    "id": "D-4",
+    "file": "data_loader.py",
+    "kind": "process safeguard required by the section 9 constraint (a design choice changed, not an implementation-error fix; no effect on any result)",
+    "what": "缓存缺失时静默联网重建全部缓存（含 1m 日度归档的裁决）",
+    "fix": "缓存缺失时报 FileNotFoundError，只有显式 python data_loader.py --build 才联网",
+    "test": "test_audit_round.py::test_missing_cache_raises_instead_of_rebuilding"
+   },
+   {
+    "id": "E-1",
+    "file": "ppvp_audit/engine_path.py",
+    "kind": "implementation error (latent; IS unaffected)",
+    "what": "路径撮合器按子 K 线下标而不是“入场时刻早于结算时刻”判断资金费，数据缺口内的结算会被漏收",
+    "fix": "按时间戳判断（entry_t < fundingTime），两次结算映射到同一根 K 线时报错",
+    "test": "test_audit_round.py::test_engine_path_charges_funding_inside_a_gap_like_the_backtester"
+   },
+   {
+    "id": "E-2",
+    "file": "ppvp_audit/engine_path.py",
+    "kind": "implementation error (latent; IS unaffected)",
+    "what": "路径撮合器静默忽略它不支持的回测参数（现货场所、不复利、以损定仓、时间止损、破位离场、关闭资金费）",
+    "fix": "不支持的配置直接报错；include_funding=False 时按配置不计资金费",
+    "test": "test_audit_round.py::test_engine_path_rejects_unsupported_configs_and_honours_funding_switch"
+   }
+  ],
+  "engine_source_sha256": {
+   "config.py": "858ff5a924a9555c950a96d30054642144dbe4a1e2d6f055e769540879beb429",
+   "pipeline.py": "0dfcf1cf61161e449c747a5cf2f6b904bb7b04fbb73194b1e0ee100e74e9e6d7",
+   "data_loader.py": "92f88c5aabf4340c6bf186fb52cf483f20e5d399edd36da9a295467c720598c1",
+   "ppvp_engine.py": "6c498886be2731c96b3e8b1e50394859788fda8e17555c540120ee038cd0a2b2",
+   "strategy_state_machine.py": "790ad492a9c96b2188148e0de61f53cce9cbca19fb31ab86eb4690e4cffb3e2a",
+   "backtester.py": "6dd67439db79fe983bad7a3343bc7dcef118e012d7560499ced91756a8177568",
+   "metrics.py": "13d16204f0724ff54e5a42f2ed3c1d8fd7a7661cd2955b949f17e6b5ef86e52b",
+   "attribution.py": "1c7165769eef97fb86d1ef010e4dc3cdeef381f4ab52290bd7cfffe488c7357c",
+   "numba_compat.py": "fadd3ecc7e5b9f91637e513db77e673a24d4b5a6dd8de191a57729b28f8e28de",
+   "ppvp_audit/engine_path.py": "79c5a9d041b194bde16c951ae11ae4f8c5b1c0cb375dd213855e7d396791d8e6"
+  },
+  "configs_identical": true,
+  "all_identical_on_IS": true,
+  "compared": {
+   "df1h": true,
+   "df4h": true,
+   "boxes": true,
+   "signals": true,
+   "trades": true,
+   "equity": true,
+   "position": true
+  },
+  "fingerprints": {
+   "B_original": {
+    "df1h": "940a72379be8d055874b29f7c40169465c35e5d678ad407f0e773a07acf6ae0e",
+    "df4h": "2e96137cce15245a5b703c59783e3c1e5c382b6c35649f518569aa664fc489fb",
+    "boxes": "ed54044c772df4d2798337155ea1b51c119d319db5312e7c7968c283d250071e",
+    "signals": "49d00c035e0bd5af9195fd78e9a77a7bb9ddd7f9e3eb10aa78120241164a77f3",
+    "trades": "03b0646220064a4bf268eb7bcd444f4edf841a2028ea1edea1916dda863f38d2",
+    "equity": "3c2e8c9a4f7443e6e31a334508eb94abdd78674bf5345706c1e3f71b141a4bb2",
+    "position": "96c87037038e6ffea23d065e0c56ec165e62e26bc55e0e968fbd7ccc388f2c4b"
+   },
+   "B_audited": {
+    "df1h": "940a72379be8d055874b29f7c40169465c35e5d678ad407f0e773a07acf6ae0e",
+    "df4h": "2e96137cce15245a5b703c59783e3c1e5c382b6c35649f518569aa664fc489fb",
+    "boxes": "ed54044c772df4d2798337155ea1b51c119d319db5312e7c7968c283d250071e",
+    "signals": "49d00c035e0bd5af9195fd78e9a77a7bb9ddd7f9e3eb10aa78120241164a77f3",
+    "trades": "03b0646220064a4bf268eb7bcd444f4edf841a2028ea1edea1916dda863f38d2",
+    "equity": "3c2e8c9a4f7443e6e31a334508eb94abdd78674bf5345706c1e3f71b141a4bb2",
+    "position": "96c87037038e6ffea23d065e0c56ec165e62e26bc55e0e968fbd7ccc388f2c4b"
+   }
+  },
+  "check_file": "reports/audit_round/b_audited_check.json",
+  "reproduce": "python -m ppvp_audit.b_audited"
+ }
+}

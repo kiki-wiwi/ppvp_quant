@@ -1,0 +1,15 @@
+all IS boxes: 1149 | invalidated while current: 438 | superseded within IS: 1148
+boxes used by trades: 144 | natural key (pivot_a_time|pivot_b_time) unique over all IS boxes: True | available_time unique: True
+first 1H bar using a box == its available_time for all: True
+boxes invalidated (INVALID state) at some point while current: 29 {'': 115, 'breakdown_bar': 29}
+trades signalled after their signal box had already turned INVALID while current: 0 []
+   box_id                        natural_key     pivot_a_time(4H open)     pivot_b_time(4H open) confirmed_at=available_time     first_1h_bar_using_it      first_decision_close             superseded_at invalid_while_current_from_close invalid_cause  used_by_109_trades
+0      12  2020-01-19 20:00|2020-01-20 20:00 2020-01-19 20:00:00+00:00 2020-01-20 20:00:00+00:00   2020-01-21 20:00:00+00:00 2020-01-21 20:00:00+00:00 2020-01-21 21:00:00+00:00 2020-01-22 16:00:00+00:00                              NaT                              True
+1      13  2020-01-20 20:00|2020-01-21 16:00 2020-01-20 20:00:00+00:00 2020-01-21 16:00:00+00:00   2020-01-22 16:00:00+00:00 2020-01-22 16:00:00+00:00 2020-01-22 17:00:00+00:00 2020-01-23 04:00:00+00:00                              NaT                              True
+2      20  2020-01-31 12:00|2020-02-01 00:00 2020-01-31 12:00:00+00:00 2020-02-01 00:00:00+00:00   2020-02-02 00:00:00+00:00 2020-02-02 00:00:00+00:00 2020-02-02 01:00:00+00:00 2020-02-03 04:00:00+00:00                              NaT                              True
+3      21  2020-02-01 00:00|2020-02-02 04:00 2020-02-01 00:00:00+00:00 2020-02-02 04:00:00+00:00   2020-02-03 04:00:00+00:00 2020-02-03 04:00:00+00:00 2020-02-03 05:00:00+00:00 2020-02-04 00:00:00+00:00                              NaT                              True
+4      34  2020-02-17 12:00|2020-02-19 16:00 2020-02-17 12:00:00+00:00 2020-02-19 16:00:00+00:00   2020-02-20 16:00:00+00:00 2020-02-20 16:00:00+00:00 2020-02-20 17:00:00+00:00 2020-02-20 20:00:00+00:00                              NaT                              True
+5      35  2020-02-19 16:00|2020-02-19 20:00 2020-02-19 16:00:00+00:00 2020-02-19 20:00:00+00:00   2020-02-20 20:00:00+00:00 2020-02-20 20:00:00+00:00 2020-02-20 21:00:00+00:00 2020-02-22 12:00:00+00:00                              NaT                              True
+
+bars that wicked below the band low but closed back >= band low while the zone was live (prev state 1-4): 669 -> state INVALID on that bar: 1
+filled trades whose signal bar low < first-test low (intrabar sweep of t1 low): 44 ; signal bar low < band low: 23 ; signal close < VAL (closed back only inside the lower half-band): 6

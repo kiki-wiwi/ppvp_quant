@@ -1,0 +1,28 @@
+instrumented copy reproduces all 15 kernel outputs bit for bit: True
+
+109 trades:
+  any box switch between first-test START and signal: 31  distribution {0: 78, 1: 25, 2: 6}
+  CSV-style flag (box at t1 LOW bar or t2_start != signal box): 27
+  switched but flag False: 4
+              signal_open                  t1_start  box_t1start  box_t1low  box_t2start  box_sig
+2020-01-22 19:00:00+00:00 2020-01-22 08:00:00+00:00           12         13           13       13
+2020-10-14 18:00:00+00:00 2020-10-14 10:00:00+00:00          227        228          228      228
+2021-09-25 13:00:00+00:00 2021-09-25 05:00:00+00:00          485        486          486      486
+2022-06-18 03:00:00+00:00 2022-06-17 14:00:00+00:00          690        691          691      691
+  flag True but no switch from t1 start: 0
+  box at t1 start != box at t1 low: 4
+  rolled (n_roll>0): 21 {0: 88, 1: 18, 2: 2, 3: 1}
+  rolled with box at chain start != signal box: 15
+  chain spans >1 profile version (any switch chain start..signal): 37
+  in-chain carry switches: 46 | max |VAL_new-seq_val|/ATR at switch: 0.985
+  total in-chain box switches: 46 == carry events: True
+  changed (n=31): |dVAL| ATR median 0.41 max 1.30 ; |dVAH| ATR median 1.36 P90 4.69 max 9.44
+  signalled on the first bar that could use the signal box: 4
+  2020-01-22 19:00: chain_start 2020-01-22 08:00:00+00:00 t1_start 2020-01-22 08:00:00+00:00 n_roll 0 boxes chain/t1start/t1low/t2/sig 12/12/13/13/13 flag False
+  2020-05-31 23:00: chain_start 2020-05-30 20:00:00+00:00 t1_start 2020-05-31 15:00:00+00:00 n_roll 1 boxes chain/t1start/t1low/t2/sig 112/112/112/113/113 flag True
+  2021-06-04 08:00: chain_start 2021-06-02 00:00:00+00:00 t1_start 2021-06-02 00:00:00+00:00 n_roll 0 boxes chain/t1start/t1low/t2/sig 400/400/400/401/402 flag True
+  box 400 VAL 36096.8 VAH 37444.5; 401 VAL 36074.5 VAH 37127.8; 402 VAL 36135.2 VAH 38120.2 avail 2021-06-04 08:00:00+00:00; ATR 531.0; TP-VAH401 +1.87 TP-VAH400 +1.27
+
+120 signals: CSV profile_id/at_t1/at_t2_start equal to as-of mapping: True | CSV t1_bar == kernel t1 LOW bar: True | CSV t1_bar == first-test start: 72 of 120
+CSV filled profile_changed_between_tests: 27
+distinct boxes at (chain start, t1 start, t1 low, t2 start, signal): 144 | any bar chain..signal: 151 | of the 4-point set INVALID while current at some time: 29

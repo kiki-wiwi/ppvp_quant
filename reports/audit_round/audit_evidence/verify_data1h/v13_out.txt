@@ -1,0 +1,7 @@
+1H columns: ['open', 'high', 'low', 'close', 'volume', 'quote_volume', 'count', 'taker_buy_volume', 'fill_source', 'close_time']
+1H fill_source values: {'binance_um': 35064}
+4H columns: ['open', 'high', 'low', 'close', 'volume', 'quote_volume', 'n_bars', 'close_time', 'available_time'] | n_bars counts: {4: 8766}
+boxes: 1149 | n_1h == window hours for all: True | box columns: ['available_time', 'pivot_a_idx', 'pivot_b_idx', 'pivot_a_type', 'pivot_b_type', 'pivot_a_time', 'pivot_b_time', 'window_start', 'window_end', 'n_1h', 'VAL', 'POC', 'VAH', 'P_low', 'P_high', 'total_volume']
+signal-table provenance-like columns: []
+signal_opportunities_B_original.csv provenance-like columns: []
+trades_B_original.csv provenance-like columns: ['partial_bar', 'partial_px']

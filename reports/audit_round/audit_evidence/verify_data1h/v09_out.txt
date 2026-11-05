@@ -1,0 +1,11 @@
+2019 spot: rows 8732 missing hours 28 runs 5
+  hole 2019-03-12 02:00:00+00:00 .. 2019-03-12 07:00:00+00:00 (6 h): close before 3834.69, open after 3834.69, change +0.00 bp
+  hole 2019-05-15 03:00:00+00:00 .. 2019-05-15 12:00:00+00:00 (10 h): close before 7946.71, open after 7946.71, change +0.00 bp
+  hole 2019-08-15 02:00:00+00:00 .. 2019-08-15 09:00:00+00:00 (8 h): close before 10095.05, open after 10085.65, change -9.31 bp
+  hole 2019-11-13 02:00:00+00:00 .. 2019-11-13 03:00:00+00:00 (2 h): close before 8767.0, open after 8767.01, change +0.01 bp
+  hole 2019-11-25 02:00:00+00:00 .. 2019-11-25 03:00:00+00:00 (2 h): close before 6713.49, open after 6717.21, change +5.54 bp
+zero-volume rows in 2019 spot: 1
+  ordinary 6h spans: n=8701, share with |change| < 0.05 bp: 0.0007, < 1 bp: 0.0100, < 10 bp: 0.1118, median 54.6 bp
+  ordinary 8h spans: n=8696, share with |change| < 0.05 bp: 0.0003, < 1 bp: 0.0097, < 10 bp: 0.0958, median 63.9 bp
+  ordinary 10h spans: n=8693, share with |change| < 0.05 bp: 0.0008, < 1 bp: 0.0084, < 10 bp: 0.0882, median 72.5 bp
+  share of hours where next open == this close exactly (normal 1h boundary): 0.198

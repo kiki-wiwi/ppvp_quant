@@ -1,0 +1,264 @@
+{
+ "version": "B_original",
+ "opportunities": 120,
+ "status_counts": {
+  "filled": 109,
+  "skipped_position_open": 8,
+  "blocked_rr_vah_not_above_close": 3
+ },
+ "second_test_qualified_by_all": {
+  "bounce": 61,
+  "bounce+bars": 58,
+  "bars_only": 1
+ },
+ "second_test_qualified_by_filled": {
+  "bounce": 56,
+  "bounce+bars": 53
+ },
+ "filled_profile_changed_between_tests": 27,
+ "filled_departure_height_atr_quantiles": {
+  "0.0": 1.0031607068365753,
+  "0.1": 1.0930234059763475,
+  "0.25": 1.2466747678177106,
+  "0.5": 1.7098012236298554,
+  "0.75": 2.859131300251565,
+  "0.9": 4.074837017149213,
+  "1.0": 5.88565647895113
+ },
+ "next_open_vs_close_bp_filled": {
+  "count": 109.0,
+  "mean": -0.0317085602153739,
+  "std": 0.20451305500374278,
+  "min": -0.9026463716477195,
+  "25%": -0.011034458406999903,
+  "50%": 0.0,
+  "75%": 0.008806700841912374,
+  "max": 0.8569007486780578
+ },
+ "trades": 109,
+ "intrabar_path_ambiguity": {
+  "exit_bar_touches_sl_and_tp": 1,
+  "exit_bar_touches_sl_and_poc": 4,
+  "any": 4,
+  "share_any": 0.03669724770642202,
+  "entry_and_exit_same_bar": 0,
+  "rule": "worst case: stop-loss first; POC/TP touched inside the exit bar is not counted as reached"
+ },
+ "fig1_exclusions": {
+  "included": 85,
+  "TP: exit on the first bar after entry (no full bar)": 15,
+  "SL: POC not above entry (no POC target to reach)": 8,
+  "SL: exit on the first bar after entry (no full bar)": 1
+ },
+ "cost_decomposition_usd": {
+  "gross_pnl_ref": -34908.04854088743,
+  "slippage_impact": 2897.012588351239,
+  "commission": 6389.8965746348385,
+  "funding_cashflow": 1438.8106007914257,
+  "net_pnl": -45633.76830466494
+ },
+ "worst5_months": [
+  "2021-05",
+  "2020-03",
+  "2021-06",
+  "2020-02",
+  "2021-04"
+ ],
+ "worst5_trades": 13,
+ "worst5_exit_reasons": {
+  "SL": 13
+ },
+ "post_stop": {
+  "6h": {
+   "n_sl": 65,
+   "reached_poc": 6,
+   "n_poc_above_entry": 57,
+   "reached_vah": 4,
+   "median_further_drop_R": -0.7676932063471649,
+   "share_further_drop_gt_0_5R": 0.6307692307692307
+  },
+  "12h": {
+   "n_sl": 65,
+   "reached_poc": 15,
+   "n_poc_above_entry": 57,
+   "reached_vah": 7,
+   "median_further_drop_R": -1.0648247711340693,
+   "share_further_drop_gt_0_5R": 0.6923076923076923
+  },
+  "24h": {
+   "n_sl": 65,
+   "reached_poc": 28,
+   "n_poc_above_entry": 57,
+   "reached_vah": 19,
+   "median_further_drop_R": -1.3786675815881784,
+   "share_further_drop_gt_0_5R": 0.7538461538461538
+  }
+ },
+ "low_rr": {
+  "n_rr_lt_1": 40,
+  "n_rr_ge_1": 69,
+  "n_target_not_above_entry": 0,
+  "share_var_logRR_from_target": 0.8352512233640579,
+  "share_var_logRR_from_stop": 0.16474877663594206,
+  "groups": {
+   "RR<1": {
+    "n": 40,
+    "median_target_atr": 1.0219120219985134,
+    "median_stop_atr": 2.3066513960256545,
+    "median_box_width_atr": 2.1903012663002652,
+    "median_normalized_entry_position": 0.48579308400315674,
+    "share_entry_above_band_top": 0.9,
+    "share_entry_above_poc": 0.475,
+    "median_confirmation_range_atr": 1.2930682332695544,
+    "share_profile_changed_between_tests": 0.4,
+    "median_pattern_lag_bars": 1.0,
+    "share_tp_exit": 0.7,
+    "mean_net_R": -0.11295517246295066
+   },
+   "RR>=1": {
+    "n": 69,
+    "median_target_atr": 3.2795792706011953,
+    "median_stop_atr": 1.572407622228783,
+    "median_box_width_atr": 3.978546885834146,
+    "median_normalized_entry_position": 0.1886080675179898,
+    "share_entry_above_band_top": 0.7246376811594203,
+    "share_entry_above_poc": 0.10144927536231885,
+    "median_confirmation_range_atr": 1.0602245950013496,
+    "share_profile_changed_between_tests": 0.15942028985507245,
+    "median_pattern_lag_bars": 1.0,
+    "share_tp_exit": 0.2318840579710145,
+    "mean_net_R": -0.4716324503978279
+   }
+  }
+ },
+ "slices": [
+  {
+   "slice_no": 1,
+   "slice_reason": "RR<0.5 (stop-loss)",
+   "entry_time": "2020-02-03T12:00:00+00:00",
+   "exit_reason": "SL",
+   "rr_fill": 0.32250997028685485,
+   "r_multiple": -1.1241282916449
+  },
+  {
+   "slice_no": 2,
+   "slice_reason": "RR<0.5 (take-profit)",
+   "entry_time": "2020-06-22T01:00:00+00:00",
+   "exit_reason": "TP",
+   "rr_fill": 0.34059455715343273,
+   "r_multiple": 0.2893464235064621
+  },
+  {
+   "slice_no": 3,
+   "slice_reason": "RR<0.5 (take-profit)",
+   "entry_time": "2022-08-22T14:00:00+00:00",
+   "exit_reason": "TP",
+   "rr_fill": 0.016618691020285247,
+   "r_multiple": -0.02350579355312326
+  },
+  {
+   "slice_no": 4,
+   "slice_reason": "above daily SMA200, stopped out",
+   "entry_time": "2020-09-20T22:00:00+00:00",
+   "exit_reason": "SL",
+   "rr_fill": 1.518145772592308,
+   "r_multiple": -1.0852147125503548
+  },
+  {
+   "slice_no": 5,
+   "slice_reason": "above daily SMA200, stopped out",
+   "entry_time": "2020-11-23T14:00:00+00:00",
+   "exit_reason": "SL",
+   "rr_fill": 0.814056238342741,
+   "r_multiple": -1.0724790871353167
+  },
+  {
+   "slice_no": 6,
+   "slice_reason": "above daily SMA200, stopped out",
+   "entry_time": "2023-06-09T03:00:00+00:00",
+   "exit_reason": "SL",
+   "rr_fill": 2.039253156399071,
+   "r_multiple": -1.1500215641671085
+  },
+  {
+   "slice_no": 7,
+   "slice_reason": "RR>=2 (take-profit)",
+   "entry_time": "2021-11-06T14:00:00+00:00",
+   "exit_reason": "TP",
+   "rr_fill": 2.033994425734187,
+   "r_multiple": 1.8879210839278777
+  },
+  {
+   "slice_no": 8,
+   "slice_reason": "RR>=2 (take-profit)",
+   "entry_time": "2022-11-17T05:00:00+00:00",
+   "exit_reason": "TP",
+   "rr_fill": 2.7660470103578207,
+   "r_multiple": 2.6870725206093877
+  },
+  {
+   "slice_no": 9,
+   "slice_reason": "RR>=2 (stop-loss)",
+   "entry_time": "2020-05-26T11:00:00+00:00",
+   "exit_reason": "SL",
+   "rr_fill": 3.58242702775033,
+   "r_multiple": -1.106969369568242
+  },
+  {
+   "slice_no": 10,
+   "slice_reason": "RR>=2 (stop-loss)",
+   "entry_time": "2022-08-04T12:00:00+00:00",
+   "exit_reason": "SL",
+   "rr_fill": 2.6640714130862646,
+   "r_multiple": -1.1338645375363834
+  },
+  {
+   "slice_no": 11,
+   "slice_reason": "reached POC, then stopped out",
+   "entry_time": "2020-04-05T07:00:00+00:00",
+   "exit_reason": "SL",
+   "rr_fill": 3.214188890082354,
+   "r_multiple": -1.1479555611630479
+  },
+  {
+   "slice_no": 12,
+   "slice_reason": "reached POC, then stopped out",
+   "entry_time": "2022-09-30T23:00:00+00:00",
+   "exit_reason": "SL",
+   "rr_fill": 0.48242551554377416,
+   "r_multiple": -1.0822666314115348
+  },
+  {
+   "slice_no": 13,
+   "slice_reason": "random from the rest",
+   "entry_time": "2021-02-16T13:00:00+00:00",
+   "exit_reason": "TP",
+   "rr_fill": 0.0030578724772944567,
+   "r_multiple": -0.012912740294011734
+  },
+  {
+   "slice_no": 14,
+   "slice_reason": "random from the rest",
+   "entry_time": "2021-11-22T11:00:00+00:00",
+   "exit_reason": "SL",
+   "rr_fill": 2.0249285053033286,
+   "r_multiple": -1.0957396318303882
+  },
+  {
+   "slice_no": 15,
+   "slice_reason": "random from the rest",
+   "entry_time": "2022-05-27T07:00:00+00:00",
+   "exit_reason": "TP",
+   "rr_fill": 0.6491943300375005,
+   "r_multiple": 0.6008671627875284
+  },
+  {
+   "slice_no": 16,
+   "slice_reason": "random from the rest",
+   "entry_time": "2023-11-02T17:00:00+00:00",
+   "exit_reason": "TP",
+   "rr_fill": 0.0055015334703488634,
+   "r_multiple": -0.043319486369592784
+  }
+ ]
+}

@@ -1,0 +1,1017 @@
+{
+  "control": {
+    "description": "对照组：未修改的代码",
+    "applied": true,
+    "tests": [
+      "test_lookahead.py",
+      "test_audit_regressions.py"
+    ],
+    "verdict": "passed",
+    "detected": false,
+    "failure_type": null,
+    "first_failing_test": null,
+    "summary": "179 passed",
+    "seconds": 130.4
+  },
+  "L1": {
+    "description": "入场按信号 K 线自身的开盘价成交（提前 1 小时）",
+    "applied": true,
+    "tests": [
+      "test_lookahead.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_lookahead.py::test_no_lookahead[BTCUSDT]",
+    "summary": "1 failed",
+    "seconds": 6.5
+  },
+  "L2": {
+    "description": "资金费按结算 K 线收盘价计价（晚 1 小时）",
+    "applied": true,
+    "tests": [
+      "test_lookahead.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_lookahead.py::test_no_lookahead[BTCUSDT]",
+    "summary": "1 failed",
+    "seconds": 6.5
+  },
+  "L3": {
+    "description": "Pinbar 判定偷看下一根收盘",
+    "applied": true,
+    "tests": [
+      "test_lookahead.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_lookahead.py::test_no_lookahead_event_cuts[baseline-BTCUSDT]",
+    "summary": "1 failed, 2 passed",
+    "seconds": 21.0
+  },
+  "L4": {
+    "description": "成交量均线居中滚动（使用未来约 10 根）",
+    "applied": true,
+    "tests": [
+      "test_lookahead.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_lookahead.py::test_no_lookahead[BTCUSDT]",
+    "summary": "1 failed",
+    "seconds": 6.9
+  },
+  "L5": {
+    "description": "箱体在确认前 2 小时即被使用",
+    "applied": true,
+    "tests": [
+      "test_lookahead.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_lookahead.py::test_no_lookahead[ETHUSDT]",
+    "summary": "1 failed, 1 passed",
+    "seconds": 15.4
+  },
+  "L6": {
+    "description": "日线宏观过滤在当日开盘即可用",
+    "applied": true,
+    "tests": [
+      "test_lookahead.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_lookahead.py::test_no_lookahead_event_cuts[all_features_A-BTCUSDT]",
+    "summary": "1 failed, 4 passed",
+    "seconds": 33.2
+  },
+  "L7": {
+    "description": "枢轴确认滞后少 1 根 4H",
+    "applied": true,
+    "tests": [
+      "test_lookahead.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_lookahead.py::test_no_lookahead[ETHUSDT]",
+    "summary": "1 failed, 1 passed",
+    "seconds": 15.1
+  },
+  "L8": {
+    "description": "成交量分布窗口越过箱体确认时刻",
+    "applied": true,
+    "tests": [
+      "test_lookahead.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_lookahead.py::test_no_lookahead[BTCUSDT]",
+    "summary": "1 failed",
+    "seconds": 6.7
+  },
+  "L9": {
+    "description": "破位离场读取下一根的形态与收盘",
+    "applied": true,
+    "tests": [
+      "test_lookahead.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_lookahead.py::test_no_lookahead[BTCUSDT]",
+    "summary": "1 failed",
+    "seconds": 7.7
+  },
+  "L10": {
+    "description": "破位阈值改用本根收盘后才知道的 ATR（价位契约违规：第 i 根的价位须在开盘时确定；判定本身未读未来）",
+    "applied": true,
+    "tests": [
+      "test_lookahead.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_lookahead.py::test_no_lookahead[BTCUSDT]",
+    "summary": "1 failed",
+    "seconds": 7.6
+  },
+  "L11": {
+    "description": "结算时刻收盘离场漏计资金费",
+    "applied": true,
+    "tests": [
+      "test_lookahead.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_lookahead.py::test_no_lookahead[BTCUSDT]",
+    "summary": "1 failed",
+    "seconds": 11.5
+  },
+  "L12": {
+    "description": "破位阈值读取两根之后的 ATR（记录的价位随之改变）",
+    "applied": true,
+    "tests": [
+      "test_lookahead.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_lookahead.py::test_no_lookahead[BTCUSDT]",
+    "summary": "1 failed",
+    "seconds": 7.7
+  },
+  "L13": {
+    "description": "下一根将触及止损时偷偷下移止损",
+    "applied": true,
+    "tests": [
+      "test_lookahead.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_lookahead.py::test_no_lookahead[BTCUSDT]",
+    "summary": "1 failed",
+    "seconds": 6.5
+  },
+  "L14": {
+    "description": "破位离场判定读取两根之后的 ATR，记录的价位不变（第三轮 M07b）",
+    "applied": true,
+    "tests": [
+      "test_lookahead.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_lookahead.py::test_no_lookahead[BTCUSDT]",
+    "summary": "1 failed",
+    "seconds": 11.3
+  },
+  "L15": {
+    "description": "破位离场判定读取下一根收盘（第三轮 M04）",
+    "applied": true,
+    "tests": [
+      "test_lookahead.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_lookahead.py::test_no_lookahead[BTCUSDT]",
+    "summary": "1 failed",
+    "seconds": 11.2
+  },
+  "L16": {
+    "description": "破位离场判定读取下一根的放量实体条件（第三轮 M05）",
+    "applied": true,
+    "tests": [
+      "test_lookahead.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_lookahead.py::test_no_lookahead[BTCUSDT]",
+    "summary": "1 failed",
+    "seconds": 11.6
+  },
+  "L17": {
+    "description": "下一根最高价将触及 POC 时提前在本根末把止损上移到保本价（第三轮 M12）",
+    "applied": true,
+    "tests": [
+      "test_lookahead.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_lookahead.py::test_no_lookahead[BTCUSDT]",
+    "summary": "1 failed",
+    "seconds": 8.1
+  },
+  "L18": {
+    "description": "本根开始时按本根最高价是否触及 POC 决定保本止损（第三轮 M28）",
+    "applied": true,
+    "tests": [
+      "test_lookahead.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_lookahead.py::test_no_lookahead[BTCUSDT]",
+    "summary": "1 failed",
+    "seconds": 8.1
+  },
+  "L19": {
+    "description": "本根末按 min(本根低点, 下一根低点) 收紧止损（第三轮 M34）",
+    "applied": true,
+    "tests": [
+      "test_lookahead.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_lookahead.py::test_no_lookahead[BTCUSDT]",
+    "summary": "1 failed",
+    "seconds": 6.8
+  },
+  "L20": {
+    "description": "POC 分批由下一根最高价触发（第三轮 M03）",
+    "applied": true,
+    "tests": [
+      "test_lookahead.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_lookahead.py::test_no_lookahead[BTCUSDT]",
+    "summary": "1 failed",
+    "seconds": 7.8
+  },
+  "L21": {
+    "description": "收盘离场的结算费率经下一根的开盘映射读取（第三轮 M11）",
+    "applied": true,
+    "tests": [
+      "test_lookahead.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_lookahead.py::test_no_lookahead_event_cuts[exits_C-BTCUSDT]",
+    "summary": "1 failed, 8 passed",
+    "seconds": 61.8
+  },
+  "L22": {
+    "description": "数据首日尚无完整永续日线时不做现货预热（截断与全量的宏观状态不一致，第三轮 EX3-8）",
+    "applied": true,
+    "tests": [
+      "test_lookahead.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_lookahead.py::test_no_lookahead_event_cuts[all_features_A-BTCUSDT]",
+    "summary": "1 failed, 4 passed",
+    "seconds": 32.8
+  },
+  "L23": {
+    "description": "认领“先到带上方”要求时的容差使用下一根收盘后才知道的 ATR（第四轮 LA3b，只在箱体切换 K 线可见）",
+    "applied": true,
+    "tests": [
+      "test_lookahead.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_lookahead.py::test_state_machine_prefix_at_every_box_switch[baseline-ETHUSDT]",
+    "summary": "1 failed, 18 passed",
+    "seconds": 108.1
+  },
+  "L24": {
+    "description": "全仓 POC 离场只在下一根收盘不高于 POC 时执行（第四轮 X8）",
+    "applied": true,
+    "tests": [
+      "test_lookahead.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_lookahead.py::test_no_lookahead[BTCUSDT]",
+    "summary": "1 failed",
+    "seconds": 12.5
+  },
+  "L25": {
+    "description": "入场时按下一根的影线把止损挪到其下方，交易表记录挪动后的止损（第四轮 X1c）",
+    "applied": true,
+    "tests": [
+      "test_lookahead.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_lookahead.py::test_no_lookahead[BTCUSDT]",
+    "summary": "1 failed",
+    "seconds": 6.4
+  },
+  "L26": {
+    "description": "入场时按下一根最高价下调止盈，交易表记录下调后的止盈（第四轮 X2c）",
+    "applied": true,
+    "tests": [
+      "test_lookahead.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_lookahead.py::test_no_lookahead[BTCUSDT]",
+    "summary": "1 failed",
+    "seconds": 6.7
+  },
+  "S1": {
+    "description": "放量跌穿记忆只在 INVALID 状态下检查（SM-R1 回退）",
+    "applied": true,
+    "tests": [
+      "test_audit_regressions.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_audit_regressions.py::test_smr1_detour_through_other_zone_cannot_rearm_broken_level[False]",
+    "summary": "1 failed, 42 passed",
+    "seconds": 10.5
+  },
+  "S2": {
+    "description": "EXHAUSTED 期间的放量跌穿被忽略（SM-R2 回退）",
+    "applied": true,
+    "tests": [
+      "test_audit_regressions.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_audit_regressions.py::test_smr2_breakdown_while_exhausted_invalidates_zone",
+    "summary": "1 failed, 46 passed",
+    "seconds": 10.3
+  },
+  "S3": {
+    "description": "箱体切换时不认领任何未完成的“先到带上方”要求（SM-R3 回退）",
+    "applied": true,
+    "tests": [
+      "test_audit_regressions.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_audit_regressions.py::test_smr3_same_zone_box_update_keeps_post_signal_departure_requirement",
+    "summary": "1 failed, 47 passed",
+    "seconds": 10.4
+  },
+  "S4": {
+    "description": "“全新结构”边界取跌穿 K 线开盘而非收盘",
+    "applied": true,
+    "tests": [
+      "test_audit_regressions.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_audit_regressions.py::test_smr6_rebreakdown_measured_against_broken_level_and_fresh_boundary",
+    "summary": "1 failed, 53 passed",
+    "seconds": 10.4
+  },
+  "S5": {
+    "description": "失效期间再次跌穿不后移记忆时刻",
+    "applied": true,
+    "tests": [
+      "test_audit_regressions.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_audit_regressions.py::test_smr6_rebreakdown_measured_against_broken_level_and_fresh_boundary",
+    "summary": "1 failed, 53 passed",
+    "seconds": 10.2
+  },
+  "S6": {
+    "description": "激活时一律要求先到带上方（取消带内激活例外）",
+    "applied": true,
+    "tests": [
+      "test_audit_regressions.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_audit_regressions.py::test_smr7_in_band_activation_counts_first_touch",
+    "summary": "1 failed, 49 passed",
+    "seconds": 10.1
+  },
+  "S7": {
+    "description": "激活判定阈值误用带上沿",
+    "applied": true,
+    "tests": [
+      "test_audit_regressions.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_audit_regressions.py::test_smr7_in_band_activation_counts_first_touch",
+    "summary": "1 failed, 49 passed",
+    "seconds": 10.7
+  },
+  "S8": {
+    "description": "滚动后 carry 基准不更新为第 2 次测试的 VAL",
+    "applied": true,
+    "tests": [
+      "test_audit_regressions.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_audit_regressions.py::test_smr7_roll_moves_carry_reference_to_second_test_val",
+    "summary": "1 failed, 54 passed",
+    "seconds": 10.6
+  },
+  "S9": {
+    "description": "激活即否决时写入放量跌穿记忆",
+    "applied": true,
+    "tests": [
+      "test_audit_regressions.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_audit_regressions.py::test_smr5_reject_is_box_level_and_writes_no_breakdown_memory",
+    "summary": "1 failed, 52 passed",
+    "seconds": 10.5
+  },
+  "S10": {
+    "description": "价值区扩展在两侧无桶时不停止（SM-R4 回退）",
+    "applied": true,
+    "tests": [
+      "test_audit_regressions.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_audit_regressions.py::test_smr4_value_area_terminates_with_huge_volumes",
+    "summary": "1 failed, 51 passed",
+    "seconds": 10.3
+  },
+  "S11": {
+    "description": "放量跌穿记忆从不阻断（SPEC-1 完全回退）",
+    "applied": true,
+    "tests": [
+      "test_audit_regressions.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_audit_regressions.py::test_spec1_invalid_persists_on_overlapping_box[False-False]",
+    "summary": "1 failed",
+    "seconds": 3.9
+  },
+  "S12": {
+    "description": "信号后不要求先脱离到带上方（SPEC-3 回退）",
+    "applied": true,
+    "tests": [
+      "test_audit_regressions.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_audit_regressions.py::test_spec3_new_sequence_requires_departure_after_signal",
+    "summary": "1 failed, 8 passed",
+    "seconds": 3.8
+  },
+  "S13": {
+    "description": "持仓期破位参照当前箱体（EXECUTION-1 回退）",
+    "applied": true,
+    "tests": [
+      "test_audit_regressions.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_audit_regressions.py::test_execution1_breakdown_exit_uses_entry_box",
+    "summary": "1 failed, 16 passed",
+    "seconds": 6.0
+  },
+  "S14": {
+    "description": "放量跌穿记忆退化为单条（新写入覆盖旧记忆）",
+    "applied": true,
+    "tests": [
+      "test_audit_regressions.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_audit_regressions.py::test_smr1_memory_keeps_every_broken_zone",
+    "summary": "1 failed, 45 passed",
+    "seconds": 10.1
+  },
+  "S15": {
+    "description": "放量跌穿记忆容量 8 条、满时覆盖最近写入的一条（容量上限的另一种溢出策略）",
+    "applied": true,
+    "tests": [
+      "test_audit_regressions.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_audit_regressions.py::test_sm3_2_breakdown_memory_has_no_capacity_limit[7]",
+    "summary": "1 failed, 89 passed",
+    "seconds": 10.5
+  },
+  "S16": {
+    "description": "阻断只检查第一条记忆（第三轮 M09 / DOC3-2 M5）",
+    "applied": true,
+    "tests": [
+      "test_audit_regressions.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_audit_regressions.py::test_sm3_2_breakdown_memory_has_no_capacity_limit[1]",
+    "summary": "1 failed, 83 passed",
+    "seconds": 10.5
+  },
+  "S17": {
+    "description": "INVALID 期间其他支撑区（如被否决箱体）的放量跌穿不写入记忆（第三轮 M14 / DOC3-2 M4）",
+    "applied": true,
+    "tests": [
+      "test_audit_regressions.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_audit_regressions.py::test_doc3_10_breakdown_of_rejected_box_writes_zone_memory",
+    "summary": "1 failed, 105 passed",
+    "seconds": 10.7
+  },
+  "S18": {
+    "description": "再次跌穿只后移第一条同区记忆（第三轮 M31 / DOC3-2 M3）",
+    "applied": true,
+    "tests": [
+      "test_audit_regressions.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_audit_regressions.py::test_sm3_3_rebreakdown_moves_every_overlapping_entry",
+    "summary": "1 failed, 95 passed",
+    "seconds": 10.5
+  },
+  "S19": {
+    "description": "放量跌穿记忆永不失效（DOC3-2 M1a）",
+    "applied": true,
+    "tests": [
+      "test_audit_regressions.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_audit_regressions.py::test_spec1_invalid_lifted_by_box_built_after_breakdown",
+    "summary": "1 failed, 4 passed",
+    "seconds": 3.8
+  },
+  "S20": {
+    "description": "离开 INVALID 时丢弃全部“先到带上方”要求（第三轮 SM3-1 回退：失效绕行）",
+    "applied": true,
+    "tests": [
+      "test_audit_regressions.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_audit_regressions.py::test_sm3_1_departure_requirement_survives_rejected_box[True]",
+    "summary": "1 failed, 73 passed",
+    "seconds": 10.5
+  },
+  "S21": {
+    "description": "换到其他支撑区时丢弃全部未认领的要求（第三轮 SM3-1 回退：A→B→A 绕行）",
+    "applied": true,
+    "tests": [
+      "test_audit_regressions.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_audit_regressions.py::test_sm3_1_departure_requirement_survives_detour_through_other_zone",
+    "summary": "1 failed, 76 passed",
+    "seconds": 10.5
+  },
+  "S22": {
+    "description": "只有 ARMED 状态下到带上方才清除要求（第三轮 SM3-1：失效期间的脱离被忽略）",
+    "applied": true,
+    "tests": [
+      "test_audit_regressions.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_audit_regressions.py::test_sm3_1_departure_while_invalid_satisfies_requirement",
+    "summary": "1 failed, 80 passed",
+    "seconds": 10.3
+  },
+  "S23": {
+    "description": "被认领的要求也因全新结构失效",
+    "applied": true,
+    "tests": [
+      "test_audit_regressions.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_audit_regressions.py::test_sm3_1_fresh_box_after_breakdown_keeps_unsatisfied_same_zone_requirement",
+    "summary": "1 failed, 81 passed",
+    "seconds": 10.4
+  },
+  "S24": {
+    "description": "未认领要求的失效边界用 > 而非 ≥",
+    "applied": true,
+    "tests": [
+      "test_audit_regressions.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_audit_regressions.py::test_sm3_1_out_of_zone_requirement_expires_on_fresh_structure[9-signals1]",
+    "summary": "1 failed, 78 passed",
+    "seconds": 10.5
+  },
+  "S25": {
+    "description": "价值区单侧扩展时越界回绕到另一端（第三轮 SM3-4 M34）",
+    "applied": true,
+    "tests": [
+      "test_audit_regressions.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_audit_regressions.py::test_sm3_4_value_area_one_sided_expansion_does_not_wrap",
+    "summary": "1 failed, 101 passed",
+    "seconds": 10.4
+  },
+  "S26": {
+    "description": "不检查箱体窗口起点单调（第三轮 SM3-6）",
+    "applied": true,
+    "tests": [
+      "test_audit_regressions.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "Failed",
+    "first_failing_test": "test_audit_regressions.py::test_sm3_6_window_start_must_be_non_decreasing",
+    "summary": "1 failed, 103 passed",
+    "seconds": 10.7
+  },
+  "S27": {
+    "description": "放量跌穿记忆交换删除时不搬移时刻（第四轮 N25）",
+    "applied": true,
+    "tests": [
+      "test_audit_regressions.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_audit_regressions.py::test_sm4_kernel_matches_independent_reference_on_random_markets",
+    "summary": "1 failed, 116 passed",
+    "seconds": 13.0
+  },
+  "S28": {
+    "description": "放量跌穿记忆失效检查向上遍历（交换进来的条目被跳过，第四轮 N32）",
+    "applied": true,
+    "tests": [
+      "test_audit_regressions.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_audit_regressions.py::test_sm4_kernel_matches_independent_reference_on_random_markets",
+    "summary": "1 failed, 116 passed",
+    "seconds": 13.2
+  },
+  "S29": {
+    "description": "被认领的要求按锚点（而非当前箱体）的带上沿清除（第四轮 N1）",
+    "applied": true,
+    "tests": [
+      "test_audit_regressions.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_audit_regressions.py::test_sm4_kernel_matches_independent_reference_on_random_markets",
+    "summary": "1 failed, 116 passed",
+    "seconds": 12.9
+  },
+  "S30": {
+    "description": "被否决的箱体不写入激活条件 (a) 的要求（第四轮 N18）",
+    "applied": true,
+    "tests": [
+      "test_audit_regressions.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_audit_regressions.py::test_sm4_kernel_matches_independent_reference_on_random_markets",
+    "summary": "1 failed, 116 passed",
+    "seconds": 13.6
+  },
+  "S31": {
+    "description": "清除要求的交换删除不搬移认领标记（第四轮 N27）",
+    "applied": true,
+    "tests": [
+      "test_audit_regressions.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_audit_regressions.py::test_sm4_kernel_matches_independent_reference_on_random_markets",
+    "summary": "1 failed, 116 passed",
+    "seconds": 13.0
+  },
+  "S32": {
+    "description": "要求的清除阈值用 ≥ 而非 >（第四轮 N5）",
+    "applied": true,
+    "tests": [
+      "test_audit_regressions.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_audit_regressions.py::test_sm4_requirement_boundaries_are_strict_and_inclusive",
+    "summary": "1 failed, 130 passed",
+    "seconds": 13.9
+  },
+  "S33": {
+    "description": "认领容差用 < 而非 ≤（第四轮 N7）",
+    "applied": true,
+    "tests": [
+      "test_audit_regressions.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_audit_regressions.py::test_sm4_requirement_boundaries_are_strict_and_inclusive",
+    "summary": "1 failed, 130 passed",
+    "seconds": 14.4
+  },
+  "S34": {
+    "description": "信号写入的要求锚定在第 2 次测试开始时的箱体（第四轮 N15）",
+    "applied": true,
+    "tests": [
+      "test_audit_regressions.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_audit_regressions.py::test_sm4_signal_anchor_is_the_box_current_at_the_signal",
+    "summary": "1 failed, 131 passed",
+    "seconds": 14.0
+  },
+  "S35": {
+    "description": "carry 切换也重新认领要求（第四轮 N24）",
+    "applied": true,
+    "tests": [
+      "test_audit_regressions.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_audit_regressions.py::test_sm4_carry_switch_does_not_claim_requirements",
+    "summary": "1 failed, 132 passed",
+    "seconds": 14.6
+  },
+  "S36": {
+    "description": "箱体切换的那根 K 线不检查要求是否被清除（第四轮 N40）",
+    "applied": true,
+    "tests": [
+      "test_audit_regressions.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_audit_regressions.py::test_sm4_kernel_matches_independent_reference_on_random_markets",
+    "summary": "1 failed, 116 passed",
+    "seconds": 13.2
+  },
+  "S37": {
+    "description": "放量跌穿记忆容量 8 条、满时覆盖跌穿时刻最早的一条（b2fbdb7 的真实策略，第三轮 SM3-2 回退）",
+    "applied": true,
+    "tests": [
+      "test_audit_regressions.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_audit_regressions.py::test_sm3_2_breakdown_memory_has_no_capacity_limit[0]",
+    "summary": "1 failed, 82 passed",
+    "seconds": 10.4
+  },
+  "S38": {
+    "description": "失效期间再次跌穿时，记忆时刻后移到跌穿 K 线开盘而非收盘（第三轮 M12）",
+    "applied": true,
+    "tests": [
+      "test_audit_regressions.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_audit_regressions.py::test_sm3_3_rebreakdown_time_is_the_bar_close",
+    "summary": "1 failed, 96 passed",
+    "seconds": 10.5
+  },
+  "S39": {
+    "description": "认领时把要求的锚点改成新箱体的 VAL（锚点随箱体漂移，第三轮 M23/M24）",
+    "applied": true,
+    "tests": [
+      "test_audit_regressions.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_audit_regressions.py::test_sm3_3_requirement_anchor_stays_where_it_was_set",
+    "summary": "1 failed, 99 passed",
+    "seconds": 10.4
+  },
+  "S40": {
+    "description": "非 carry 切换时认领全部要求、不判断是否同区（第三轮 M22）",
+    "applied": true,
+    "tests": [
+      "test_audit_regressions.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_audit_regressions.py::test_sm3_1_out_of_zone_requirement_expires_on_fresh_structure[9-signals1]",
+    "summary": "1 failed, 78 passed",
+    "seconds": 10.2
+  },
+  "S41": {
+    "description": "激活条件 (a) 的写入时刻取切换 K 线收盘（晚一根，第四轮 N12 / DOC4-1）",
+    "applied": true,
+    "tests": [
+      "test_audit_regressions.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_audit_regressions.py::test_sm4_kernel_matches_independent_reference_on_random_markets",
+    "summary": "1 failed, 116 passed",
+    "seconds": 13.2
+  },
+  "S42": {
+    "description": "carry 切换时未认领的要求不按全新结构失效（第四轮 N10 / DOC4-1）",
+    "applied": true,
+    "tests": [
+      "test_audit_regressions.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_audit_regressions.py::test_sm4_kernel_matches_independent_reference_on_random_markets",
+    "summary": "1 failed, 116 passed",
+    "seconds": 13.4
+  },
+  "S43": {
+    "description": "未认领的要求按当前箱体（而非锚点）的带上沿清除（第四轮 N2 / DOC4-1）",
+    "applied": true,
+    "tests": [
+      "test_audit_regressions.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_audit_regressions.py::test_sm4_kernel_matches_independent_reference_on_random_markets",
+    "summary": "1 failed, 116 passed",
+    "seconds": 13.0
+  },
+  "E1": {
+    "description": "资金费网格用 np.arange 浮点估长（长窗口丢掉终点，第三轮 DOC3-1 回退）",
+    "applied": true,
+    "tests": [
+      "test_audit_regressions.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_audit_regressions.py::test_doc3_1_end_settlement_flag_on_long_windows[120]",
+    "summary": "1 failed, 107 passed",
+    "seconds": 10.3
+  },
+  "E2": {
+    "description": "接受不在结算网格上的时间戳（第三轮 EX3-4 回退）",
+    "applied": true,
+    "tests": [
+      "test_audit_regressions.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_audit_regressions.py::test_ex3_4_off_grid_or_nan_settlements_raise",
+    "summary": "1 failed, 109 passed",
+    "seconds": 11.0
+  },
+  "E3": {
+    "description": "交易统计不检查 OOS 离场（第三轮 EX3-5 回退）",
+    "applied": true,
+    "tests": [
+      "test_audit_regressions.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "Failed",
+    "first_failing_test": "test_audit_regressions.py::test_ex3_5_trade_stats_and_daily_equity_are_locked_past_oos_start",
+    "summary": "1 failed, 111 passed",
+    "seconds": 10.6
+  },
+  "E4": {
+    "description": "不报告跨越段起点的截断持仓（第三轮 EX3-6 回退）",
+    "applied": true,
+    "tests": [
+      "test_audit_regressions.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_audit_regressions.py::test_ex3_6_capped_position_straddling_segment_start_is_reported",
+    "summary": "1 failed, 112 passed",
+    "seconds": 10.9
+  },
+  "E5": {
+    "description": "缓存返回值与缓存共享行索引（第三轮 DOC3-6 回退）",
+    "applied": true,
+    "tests": [
+      "test_audit_regressions.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_audit_regressions.py::test_doc3_6_cache_isolated_from_index_writes",
+    "summary": "1 failed, 114 passed",
+    "seconds": 12.7
+  },
+  "E6": {
+    "description": "BacktestResult 的 repr 显示数值（第三轮 EX3-7 回退）",
+    "applied": true,
+    "tests": [
+      "test_audit_regressions.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_audit_regressions.py::test_ex3_7_backtest_result_repr_shows_no_values",
+    "summary": "1 failed, 115 passed",
+    "seconds": 13.3
+  },
+  "E7": {
+    "description": "缓存返回的箱体表与缓存共享 RangeIndex 的整数数组（第四轮 EX4-4 回退）",
+    "applied": true,
+    "tests": [
+      "test_audit_regressions.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "AssertionError",
+    "first_failing_test": "test_audit_regressions.py::test_ex4_4_cache_isolated_from_box_rangeindex_writes",
+    "summary": "1 failed, 134 passed",
+    "seconds": 14.3
+  },
+  "E8": {
+    "description": "夏普等序列指标不检查 OOS（第四轮 EX4-7 回退）",
+    "applied": true,
+    "tests": [
+      "test_audit_regressions.py"
+    ],
+    "verdict": "detected",
+    "detected": true,
+    "failure_type": "Failed",
+    "first_failing_test": "test_audit_regressions.py::test_ex4_7_series_helpers_are_locked_past_oos_start",
+    "summary": "1 failed, 135 passed",
+    "seconds": 14.6
+  }
+}

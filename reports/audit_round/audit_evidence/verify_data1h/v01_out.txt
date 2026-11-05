@@ -1,0 +1,12 @@
+cleaning_policy: {
+ "placeholder_bars": "volume==0 且 O=H=L=C 的维护占位 K 线剔除（与官方 4H 聚合口径一致）",
+ "archive_gaps": ">= 6h 的连续缺口用 OKX USDT 永续补齐，成交量按缺口前 168h 中位比值缩放；更短缺口视为真实停机保持缺失",
+ "4h_source": "策略使用 1H 本地聚合的 4H（官方 4H 仅作交叉校验，差异由 1m 归档裁决）"
+}
+IS dropped placeholders: []
+IS gap fills: []
+qa keys: ['perp_1h_raw_archive', 'perp_1h_cleaned', 'dropped_placeholder_bars', 'archive_gap_fills', 'fill_quality_vs_binance_spot', 'perp_4h_official', 'spot_1h', 'funding', 'resampled_4h_vs_official_4h', 'resampled_4h_vs_official_4h_adjudication_1m', 'perp_vs_spot_basis', 'okx_independent_crosscheck']
+IS adjudication record: 2023-11-10 12:00:00+00:00 keys: ['bar_open_time', 'official_1m_aggregate', 'official_4h', 'resampled_1h', 'verdict'] verdict: resampled_1h_correct
+   resampled_1h: {'open': 37098.9, 'high': 37276.0, 'low': 36821.2, 'close': 37092.6, 'volume': 80360.473}
+   official_4h: {'open': 37098.9, 'high': 37276.0, 'low': 36821.2, 'close': 37118.4, 'volume': 68307.178}
+   has official_1m_aggregate key: True (values not printed)

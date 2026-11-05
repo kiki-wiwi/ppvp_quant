@@ -1,0 +1,18 @@
+trades: 109  unique signal boxes: 108
+bin width / ATR_signal: median 0.138  P10 0.079  P90 0.214  max 0.424
+VA width / ATR_signal: median 3.34 P10 1.63 P90 5.81
+
+[typical]  shifts in ATR_signal units (|.|): median / P75 / P90 / max ; share |shift|>0 ; >0.5 ATR ; >1 ATR
+  VAL: 0.546 / 0.928 / 1.445 / 2.704 ; 95.4% ; 53.2% ; 20.2%   signed median +0.417
+  POC: 1.020 / 1.941 / 3.417 / 7.420 ; 95.4% ; 71.6% ; 50.5%   signed median -0.318
+  VAH: 0.895 / 1.711 / 2.573 / 4.160 ; 97.2% ; 66.1% ; 47.7%   signed median +0.318
+
+[close]  shifts in ATR_signal units (|.|): median / P75 / P90 / max ; share |shift|>0 ; >0.5 ATR ; >1 ATR
+  VAL: 0.554 / 0.895 / 1.413 / 2.912 ; 94.5% ; 56.0% ; 22.0%   signed median +0.444
+  POC: 0.821 / 2.277 / 3.583 / 8.348 ; 90.8% ; 61.5% ; 44.0%   signed median +0.000
+  VAH: 0.887 / 1.999 / 2.908 / 8.966 ; 94.5% ; 67.9% ; 45.0%   signed median +0.550
+
+[body]  shifts in ATR_signal units (|.|): median / P75 / P90 / max ; share |shift|>0 ; >0.5 ATR ; >1 ATR
+  VAL: 0.308 / 0.663 / 1.255 / 2.912 ; 90.8% ; 33.9% ; 18.3%   signed median +0.200
+  POC: 0.244 / 0.990 / 2.631 / 6.760 ; 81.7% ; 33.9% ; 24.8%   signed median +0.000
+  VAH: 0.377 / 0.780 / 1.244 / 3.536 ; 89.0% ; 36.7% ; 15.6%   signed median -0.219

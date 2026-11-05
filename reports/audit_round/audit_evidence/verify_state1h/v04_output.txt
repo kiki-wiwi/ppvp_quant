@@ -1,0 +1,15 @@
+S-11 population 134 | pierce t1 low 124 | pierce band low 36
+state_after   1   2  3   4
+state_mid                 
+3            14  23  4  27
+4            35   0  1  30
+events on these bars: Counter({'signal': 49, 't2_accept_both': 23, 'merge_lower': 22, 't2_accept_bounce_only': 18, 'carry_keep_in_4': 2, 'carry_keep_in_3': 1, 'merge': 1, 'roll': 1})
+-> INVALID: 0 | breakdown flag: 0
+piercing but not a touch (low > band top): 5 ['2021-06-06 23:00:00+00:00', '2023-02-14 08:00:00+00:00', '2023-06-09 17:00:00+00:00', '2023-06-09 18:00:00+00:00', '2023-06-09 20:00:00+00:00']
+
+S-4 all 428 chain starts: {(True, 'prev close above'): 40, (False, 'prev fully above'): 272, (True, 'prev close inside'): 83, (True, 'prev fully above'): 32, (False, 'prev close above'): 1}
+
+S-7 first-test low below the band low of its own bar: 44 of 109 | max depth ATR(own bar) 2.837 | vs signal-bar band (from v02): 45
+   depth quantiles (own bar, ATR) among those below: [0.545 1.727 2.837]
+
+S-2 t2-start not touching chain-start band: 10 | no test-2 bar ever touched it: 6 [('2020-02-03 12:00:00+00:00', False), ('2020-06-22 01:00:00+00:00', True), ('2020-10-14 08:00:00+00:00', True), ('2021-03-13 05:00:00+00:00', False), ('2021-08-16 18:00:00+00:00', False), ('2021-11-28 15:00:00+00:00', False), ('2022-05-27 07:00:00+00:00', True), ('2023-03-07 01:00:00+00:00', False), ('2023-04-30 21:00:00+00:00', True), ('2023-11-02 17:00:00+00:00', False)]
