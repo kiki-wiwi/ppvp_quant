@@ -282,24 +282,144 @@ def test_future_shock_does_not_change_past_box_state():
 # ----------------------------------------------------------------------------
 # 裁决规则（不联网：替换下载函数）
 # ----------------------------------------------------------------------------
-def test_adjudication_rule_v2(monkeypatch):
+def _adjudication_fixture():
     day = pd.Timestamp("2021-06-01", tz=UTC)
     good = _bars("2021-06-01", 100 + np.sin(np.arange(1440) / 50.0), vol=2.0)
     bad = good.copy()                                             # 月度归档：40 分钟被记成零成交占位
     hole = bad.index[600:640]
     bad.loc[hole, ["open", "high", "low", "close"]] = float(bad["close"].iloc[599])
     bad.loc[hole, ["volume", "quote_volume", "count", "taker_buy_volume"]] = 0.0
-    agg = good.copy()                                             # 逐笔聚合 = 正确的分钟数据
-    h1 = D.agg_ohlcv(good, "1h")
-    monkeypatch.setattr(D, "fetch_daily_1m", lambda d, market="futures/um": (good.copy(), {"url": "daily", "sha256": "x"}))
-    monkeypatch.setattr(D, "fetch_aggtrades_1m", lambda d: (agg.copy(), {"url": "agg", "sha256": "y"}))
+    return day, good, bad, D.agg_ohlcv(good, "1h")
+
+
+def _patch(monkeypatch, daily, agg):
+    monkeypatch.setattr(D, "fetch_daily_1m", lambda d, market="futures/um", pinned_sha256=None:
+                        (daily.copy(), {"url": "daily", "sha256": "x"}))
+    monkeypatch.setattr(D, "fetch_aggtrades_1m", lambda d, pinned_sha256=None: (agg.copy(), {"url": "agg", "sha256": "y"}))
+
+
+def test_adjudication_rule_v2(monkeypatch):
+    day, good, bad, h1 = _adjudication_fixture()
+    _patch(monkeypatch, good, good)                               # 日度归档与逐笔聚合都是正确数据
     rec = D.adjudicate_day(day, bad, h1)
     assert rec["verdict"] == "replace_with_daily_archive"
     assert rec["silent_traded_minutes"]["monthly"] == 40 and rec["silent_traded_minutes"]["daily"] == 0
-    # 日度归档自身也有“零成交却有逐笔成交”的分钟 → 不替换
-    monkeypatch.setattr(D, "fetch_daily_1m", lambda d, market="futures/um": (bad.copy(), {"url": "daily", "sha256": "x"}))
-    rec2 = D.adjudicate_day(day, bad, h1)
-    assert rec2["verdict"] == "unresolved_keep_monthly"
+    assert rec["rule_v2"] == {"a_daily_1h_ohlc_equal": True, "b_aggtrades_complete_and_day_volume_equal": True,
+                              "c_daily_no_silent_traded_minutes": True, "monthly_violates_a_or_c": True}
+    # (c) 不成立：日度归档自身也有“零成交却有逐笔成交”的分钟 → 不替换
+    _patch(monkeypatch, bad, good)
+    assert D.adjudicate_day(day, bad, h1)["verdict"] == "unresolved_keep_monthly"
+    # (a) 不成立：日度归档某一小时的最高价与仓库 1H 不同 → 不替换
+    off = good.copy()
+    off.loc[off.index[700], "high"] += 5.0
+    _patch(monkeypatch, off, off)
+    r_a = D.adjudicate_day(day, bad, h1)
+    assert r_a["verdict"] == "unresolved_keep_monthly" and not r_a["rule_v2"]["a_daily_1h_ohlc_equal"]
+    # (b) 不成立之一：逐笔归档有空洞（日度归档有成交的分钟逐笔没有记录）→ 不替换（保守）
+    _patch(monkeypatch, good, good.drop(good.index[100:124]))
+    r_b = D.adjudicate_day(day, bad, h1)
+    assert r_b["verdict"] == "unresolved_keep_monthly" and r_b["aggtrades_holes_vs_daily"]["minutes"] == 24
+    # (b) 不成立之二：全天成交量不等
+    agg2 = good.copy()
+    agg2["volume"] *= 1.001
+    _patch(monkeypatch, good, agg2)
+    assert not D.adjudicate_day(day, bad, h1)["rule_v2"]["b_aggtrades_complete_and_day_volume_equal"]
+
+
+def test_download_scope_guards_raise_before_network(monkeypatch):
+    def boom(*a, **k):
+        raise AssertionError("network must not be touched")
+    monkeypatch.setattr(D, "fetch_vision_zip", boom)
+    monkeypatch.setattr(D, "_http_get", boom)
+    with pytest.raises(ScopeError):
+        D.fetch_monthly("futures/um", "1m", ("2023-12", "2024-01"))
+    with pytest.raises(ScopeError):
+        D.fetch_monthly("spot", "1m", ("2019-10", "2019-11"))
+    with pytest.raises(ScopeError):
+        D.fetch_daily_1m(pd.Timestamp("2024-01-01", tz=UTC))
+    with pytest.raises(ScopeError):
+        D.fetch_aggtrades(pd.Timestamp("2019-12-31", tz=UTC))
+    with pytest.raises(ScopeError):
+        D.fetch_archive("futures/um/monthly/klines/ETHUSDT/1m/ETHUSDT-1m-2021-01.zip")
+    with pytest.raises(ScopeError):
+        D.fetch_archive("futures/um/daily/aggTrades/BTCUSDT/BTCUSDT-aggTrades-2025-03-01.zip", "0" * 64)
+
+
+def test_qa_vs_reference_flags_zero_volume_reference_bars():
+    from impulse_study import qa as Q
+    df = _bars("2021-01-01", 100 + np.arange(60) * 0.01, vol=1.0)
+    ref = D.agg_ohlcv(df, "15m")
+    ref.loc[ref.index[1], ["volume", "quote_volume", "taker_buy_volume", "count"]] = 0.0     # 参照把一根记成零成交
+    out = Q.qa_vs_reference(df, ref, "15m", "synthetic")
+    assert out["volume_mismatch_bars"] == 1 and out["volume_reference_zero_aggregate_positive_bars"] == 1
+    assert out["volume_max_rel_diff"] == np.inf and out["ohlc_mismatch_bars"] == 0
+
+
+def test_qa_daily_available_is_not_a_tautology():
+    from impulse_study import qa as Q
+    df = _bars("2020-01-01", 100 + np.arange(1440 * 2) * 0.001)
+    out = Q.qa_daily_available(df, Q.daily_bars(df), D.agg_ohlcv(df, "1d"))
+    assert out["days_last_1m_close_ne_available_time"] == 0 and out["days_with_ne_1440_minutes"] == 0
+    short = df.drop(df.index[1439])                              # 第一天缺最后一分钟
+    out2 = Q.qa_daily_available(short, Q.daily_bars(short), D.agg_ohlcv(short, "1d"))
+    assert out2["days_last_1m_close_ne_available_time"] == 1 and out2["days_with_ne_1440_minutes"] == 1
+
+
+def test_box_variants_reentry_close_and_below_bounce():
+    n = 40
+    d_lo, d_hi = np.full(n, 112.0), np.full(n, 114.0)
+    d_lo[n - 10], d_hi[n - 10] = 100.5, 101.5                   # 触及支撑带 [99, 101]
+    d_lo[n - 9:], d_hi[n - 9:] = 101.2, 102.8                   # 之后最高 102.8 ≥ 反弹线 102.6，但 < POC 110
+    d = _daily_frame(d_lo, d_hi)
+    d["close"] = 101.5                                           # 收盘价都低于反弹线
+    atr = pd.Series(2.0, index=d.index)
+    as_of = d.index[-1] + pd.Timedelta(days=1)
+    prof = _flat_prof([as_of])
+    assert bool(DY.box_state(d, prof, atr)["primed"].iloc[0])                        # 主口径：按最高价
+    assert not bool(DY.box_state(d, prof, atr, bounce_on="close")["primed"].iloc[0])  # S8：按收盘价未完成反弹
+    assert not bool(DY.box_state(d, prof, atr, exit_above_poc=True)["primed"].iloc[0])  # S6：从未离开二段区间
+    d2 = d.copy()
+    d2.loc[d2.index[n - 3], "high"] = 111.0                      # 之后某日越过 POC 110 → 离开过区间
+    assert bool(DY.box_state(d2, prof, atr, exit_above_poc=True)["primed"].iloc[0])
+    st = DY.box_state(d, prof, atr)
+    t = np.asarray(pd.DatetimeIndex([as_of + pd.Timedelta(hours=1)] * 2).as_unit("ns").asi8)
+    px = np.array([102.0, 103.0])                                # 都在 [99, 110] 内；103 高于反弹线 102.6
+    assert DY.minute_box_ok(t, px, st).tolist() == [True, True]
+    assert DY.minute_box_ok(t, px, st, below_bounce=True).tolist() == [True, False]   # S7
+
+
+def test_box_onset_counts_entry_into_zone():
+    c1 = np.zeros(10, dtype=bool)
+    c2 = np.array([0, 1, 1, 1, 1, 0, 0, 0, 0, 0], dtype=bool)   # 一段脉冲从第 1 分钟持续到第 4 分钟
+    box = np.array([0, 0, 0, 1, 1, 0, 0, 0, 0, 0], dtype=bool)  # 第 3 分钟才进入区间
+    base = np.ones(10, dtype=bool)
+    tab, _ = S.direction_table(c1, c2, base, box, np.full(10, 2021), (2021,))
+    assert tab["IS"]["onset"]["total"] == 1 and tab["IS"]["box_onset"]["total"] == 1
+    assert tab["IS"]["box_raw"]["total"] == 2 and tab["IS"]["box_sched45"]["total"] == 1
+
+
+def test_planted_leak_is_detected_by_prefix_comparison():
+    """把成交量分布窗口改为含当日的 [D − 60d, D + 1d)，全量与截断的状态表在截断日不同：截断比对对这类泄漏有检出能力。"""
+    df = _random_walk_1m(75, seed=31)
+    tau = df.index[70 * 1440 + 800]
+
+    def leaky(x):
+        daily = DY.daily_from_1m(x)
+        atr = DY.atr_1d(daily, None)
+        as_of = pd.DatetimeIndex(daily.index).append(pd.DatetimeIndex([daily.index[-1] + pd.Timedelta(days=1)]))
+        as_of = as_of[as_of <= x.index[-1].floor("D")]
+        prof = DY.rolling_profiles(x, as_of + pd.Timedelta(days=1), window_days=61, min_first_bar=x.index[0])
+        prof.index = as_of
+        return DY.box_state(daily, prof, atr)
+
+    full, trunc = leaky(df), leaky(df[df.index < tau])
+    d0 = tau.floor("D")
+    assert full.loc[d0, "n_bars"] != trunc.loc[d0, "n_bars"]                 # 窗口构成不同即被检出（价位未必变）
+    with pytest.raises(AssertionError):
+        pd.testing.assert_frame_equal(full.loc[trunc.index], trunc)
+    ok_full = DY.build_box_states(df, None, variants=("main",))["main"]
+    ok_trunc = DY.build_box_states(df[df.index < tau], None, variants=("main",))["main"]
+    pd.testing.assert_frame_equal(ok_full.loc[ok_trunc.index], ok_trunc)      # 正确实现：截断前后逐位相同
 
 
 # ----------------------------------------------------------------------------
@@ -309,7 +429,7 @@ CACHE = ROOT / "data" / "processed_1m" / D.CACHE_FILES["perp_1m"]
 RESULTS = ROOT / "reports" / "impulse_vs_box_round" / "cp1" / "cp1_results.json"
 
 
-@pytest.mark.skipif(not CACHE.exists(), reason="1m cache not built (python -m impulse_study.data_1m --build)")
+@pytest.mark.skipif(not CACHE.exists(), reason="1m cache not built (python -m impulse_study.data_1m --rebuild)")
 def test_real_data_cache_hash_and_headline_counts():
     assert all(v is True for v in D.verify().values())
     df = D.load_perp_1m()
@@ -326,3 +446,18 @@ def test_real_data_cache_hash_and_headline_counts():
                 "up_sched45": r["up"]["IS"]["sched45"]["total"], "dn_sched45": r["dn"]["IS"]["sched45"]["total"]}
         assert got == want
     assert got == {"up_raw": 27_835, "dn_raw": 27_466, "up_sched45": 5_930, "dn_sched45": 5_789}
+
+
+RAW = ROOT / "data" / "raw" / "futures" / "um" / "monthly" / "klines" / "BTCUSDT" / "1m"
+
+
+@pytest.mark.skipif(not (RAW.exists() and len(list(RAW.glob("*.zip"))) == 48 and D.MANIFEST_PATH.exists()),
+                    reason="raw archives not present locally")
+def test_real_data_offline_rebuild_from_manifest(tmp_path, monkeypatch):
+    """按 manifest 锁定的 SHA256 从本地原始归档离线重建，五个缓存的内容哈希都与 manifest 相同。"""
+    monkeypatch.setattr(D, "OFFLINE", True)
+    def no_net(*a, **k):
+        raise AssertionError("offline rebuild must not touch the network")
+    monkeypatch.setattr(D, "_http_get", no_net)
+    monkeypatch.setattr(D, "fetch_vision_zip", no_net)
+    assert D.rebuild_from_manifest(cache_dir=tmp_path) == {k: True for k in D.CACHE_FILES}

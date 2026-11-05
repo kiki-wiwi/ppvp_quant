@@ -17,13 +17,19 @@ impulse_study/daily.py — A 组“日线箱体二段反弹”背景：UTC 日�
    as_of 日使用 ATR[as_of − 1d]。价格预热：2019-09-01 起的现货日线（只用价格）与 2020-01-01 起的永续日线拼接。
 5. 二段支撑状态（在 as_of 日内恒定）：band_lo = VAL − 0.5·ATR，band_hi = VAL + 0.5·ATR，bounce = band_hi + 0.8·ATR；
    过去 30 根已收盘日线 [as_of − 30d, as_of − 1d] 中存在 j1 < j2：日线 j1 触及支撑带（low ≤ band_hi 且 high ≥ band_lo），
-   日线 j2 的最高价 ≥ bounce（完成第 1 段反弹）。VAL / ATR 取 as_of 当时的值（“当前”支撑带）。
+   日线 j2 的最高价 ≥ bounce（完成第 1 段反弹，按最高价判定，即日内触及该距离即算完成）。VAL / ATR 取 as_of 当时的值
+   （“当前”支撑带）。
 6. 分钟级过滤：``box_ok(T) = primed(as_of) ∧ band_lo ≤ ref(T) ≤ POC``，主口径 ref(T) = 触发 K 线收盘价 C_T。
+   “当前价格再次回到二段支撑区”在主口径中按状态判定：只要求 primed 且当前价格在区间内，不要求价格在反弹之后曾离开区间
+   （当 POC 高于反弹线时，价格反弹到反弹线后一直停在区间内也满足）。较严格的“离开后再回到”读法登记为 S6 / S7。
 7. 预热：成交量分布只用永续成交量（不跨市场拼接），第一个完整 60 日窗口的 as_of 为 2020-03-01；此前 A 组不交易。
+   这偏离了规格“及日线滚动窗口所需的早期现货 / 永续预热数据”的字面提供；用现货预热的两种读法登记为 S4 / S9。
 
-敏感性（只做计数，Checkpoint 1 不选择）：S1a 分布用 1H K 线、S1b 分布用日线；S2 允许 j1 = j2（同一根日线内先触及后反弹）；
-S3 ref = 脉冲起点收盘价；S4 用 2019-11/12 现货 1m 成交量拼接预热（as_of 自 2020-01-01 起可用）；
-S5 触及与反弹按各自当日（as_of = j1）的支撑带判定（时点口径），当前区间仍用当前值。
+敏感性（只做计数，Checkpoint 1 不选择）：S1a 分布用 1H K 线、S1b 分布用 60 根日线；S2 允许 j1 = j2（同一根日线内先触及后
+反弹）；S3 ref = 脉冲起点收盘价；S4 用 2019-11/12 现货 1m 成交量拼接预热（as_of 自 2020-01-01 起可用）；S5 触及与反弹
+按触及当日（as_of = j1）的支撑带判定（时点口径），当前区间仍用当前值；S6 触及之后须有某根已收盘日线最高价 ≥ bounce 且
+> POC（价格离开过二段区间），当前价格再回到区间内；S7 当前价格还须 < bounce（已从第 1 段反弹线回落）；S8 反弹按日线收盘价
+≥ bounce 判定；S9 分布用 60 根日线并以 2019-09 起的现货日线（价格与成交量）预热（规格最字面的组合，as_of 自 2020-01-01 起可用）。
 """
 from __future__ import annotations
 
@@ -147,14 +153,20 @@ def rolling_profiles(bars: pd.DataFrame, as_of_days: pd.DatetimeIndex, window_da
 # ----------------------------------------------------------------------------
 def box_state(daily: pd.DataFrame, prof: pd.DataFrame, atr: pd.Series, touch_days: int = W_TOUCH_DAYS,
               k_band: float = K_BAND, k_bounce: float = K_BOUNCE, same_day_bounce: bool = False,
-              point_in_time: bool = False) -> pd.DataFrame:
+              point_in_time: bool = False, bounce_on: str = "high", exit_above_poc: bool = False) -> pd.DataFrame:
     """每个 as_of 日的支撑带、二段区间与 primed 标记（只使用 as_of 之前已收盘的日线）。
 
     point_in_time=False（主口径）：触及与反弹都按 as_of 当时的支撑带判定；
-    point_in_time=True（S5）：日线 j 是否触及按 as_of = j 的支撑带判定，其后的反弹按触及日的支撑带判定。
+    point_in_time=True（S5）：日线 j 是否触及按 as_of = j 的支撑带判定，其后的反弹按触及日的支撑带判定；
+    bounce_on='close'（S8）：反弹按日线收盘价 ≥ bounce 判定；
+    exit_above_poc=True（S6）：触及之后须有某根日线最高价 ≥ bounce 且 > POC（价格离开过二段区间）。
+    输出列含 VAL / POC / VAH / P_low / P_high / n_bars（窗口分布与其使用的 K 线根数）与 ATR、支撑带、反弹线、primed、valid。
     """
+    if bounce_on not in ("high", "close"):
+        raise ValueError(bounce_on)
     day_ns = np.asarray(pd.DatetimeIndex(daily.index).as_unit("ns").asi8, dtype=np.int64)
     dlo, dhi = daily["low"].to_numpy(dtype=np.float64), daily["high"].to_numpy(dtype=np.float64)
+    dref = dhi if bounce_on == "high" else daily["close"].to_numpy(dtype=np.float64)
     prof_ns = np.asarray(pd.DatetimeIndex(prof.index).as_unit("ns").asi8, dtype=np.int64)
     pos_prof = {int(x): i for i, x in enumerate(prof_ns)}
     pos_day = {int(x): i for i, x in enumerate(day_ns)}
@@ -174,7 +186,9 @@ def box_state(daily: pd.DataFrame, prof: pd.DataFrame, atr: pd.Series, touch_day
             continue                                     # 触及回看窗口不足 30 根日线
         if not point_in_time:
             touch = (dlo[j0:j_prev + 1] <= b_hi) & (dhi[j0:j_prev + 1] >= b_lo)
-            bounce = dhi[j0:j_prev + 1] >= b_hi + k_bounce * a
+            bounce = dref[j0:j_prev + 1] >= b_hi + k_bounce * a
+            if exit_above_poc:
+                bounce = bounce & (dhi[j0:j_prev + 1] > POC[i])
             if touch.any():
                 f = int(np.argmax(touch))
                 primed[i] = bool(bounce[f:].any()) if same_day_bounce else bool(bounce[f + 1:].any())
@@ -185,18 +199,22 @@ def box_state(daily: pd.DataFrame, prof: pd.DataFrame, atr: pd.Series, touch_day
                     continue
                 lo1, hi1, bnc1 = out[k, 1], out[k, 2], out[k, 3]
                 if dlo[j1] <= hi1 and dhi[j1] >= lo1:
-                    rest = dhi[j1:j_prev + 1] if same_day_bounce else dhi[j1 + 1:j_prev + 1]
+                    rest = dref[j1:j_prev + 1] if same_day_bounce else dref[j1 + 1:j_prev + 1]
                     if (rest >= bnc1).any():
                         primed[i] = True
                         break
     st = pd.DataFrame(out, columns=["ATR", "band_lo", "band_hi", "bounce_level", "POC", "VAL"], index=prof.index)
+    for c in ("VAH", "P_low", "P_high", "n_bars"):           # n_bars：窗口实际使用的 K 线根数（截断核验对窗口构成敏感）
+        st[c] = prof[c].to_numpy() if c in prof.columns else np.nan
     st["primed"] = primed
     st["valid"] = np.isfinite(st["band_lo"].to_numpy()) & np.isfinite(st["POC"].to_numpy())
     return st
 
 
-def minute_box_ok(minute_open_ns: np.ndarray, ref_price: np.ndarray, state: pd.DataFrame) -> np.ndarray:
-    """box_ok(T) = primed(as_of(T)) ∧ band_lo ≤ ref ≤ POC，as_of(T) = floor_day(T)；无状态的分钟为 False。"""
+def minute_box_ok(minute_open_ns: np.ndarray, ref_price: np.ndarray, state: pd.DataFrame,
+                  below_bounce: bool = False) -> np.ndarray:
+    """box_ok(T) = primed(as_of(T)) ∧ band_lo ≤ ref ≤ POC，as_of(T) = floor_day(T)；无状态的分钟为 False。
+    below_bounce=True（S7）：还要求 ref < bounce_level（已从第 1 段反弹线回落）。"""
     st_ns = np.asarray(pd.DatetimeIndex(state.index).as_unit("ns").asi8, dtype=np.int64)
     as_of = (minute_open_ns // DAY_NS) * DAY_NS
     k = np.searchsorted(st_ns, as_of)
@@ -205,7 +223,10 @@ def minute_box_ok(minute_open_ns: np.ndarray, ref_price: np.ndarray, state: pd.D
     primed = state["primed"].to_numpy()[k] & state["valid"].to_numpy()[k] & k_ok
     lo, poc = state["band_lo"].to_numpy()[k], state["POC"].to_numpy()[k]
     with np.errstate(invalid="ignore"):
-        return primed & (ref_price >= lo) & (ref_price <= poc)
+        ok = primed & (ref_price >= lo) & (ref_price <= poc)
+        if below_bounce:
+            ok = ok & (ref_price < state["bounce_level"].to_numpy()[k])
+    return ok
 
 
 def build_box_states(df1m: pd.DataFrame, spot_1d: pd.DataFrame | None, spot_1m: pd.DataFrame | None = None,
@@ -233,10 +254,13 @@ def build_box_states(df1m: pd.DataFrame, spot_1d: pd.DataFrame | None, spot_1m: 
                 cols = ["open", "high", "low", "close", "volume"]
                 x = pd.concat([spot_1m[spot_1m.index < first_perp][cols], df1m[cols]])
                 cache[source] = rolling_profiles(x, as_of, min_first_bar=pd.DatetimeIndex(spot_1m.index)[0].ceil("D"))
+            elif source == "1d_spot_stitched":
+                sd = _stitched_daily(daily, spot_1d)
+                cache[source] = rolling_profiles(sd, as_of, min_first_bar=pd.DatetimeIndex(sd.index)[0])
         return cache[source]
 
     for v in variants:
-        if v in ("main", "S3_origin_ref"):
+        if v in ("main", "S3_origin_ref", "S7_ref_below_bounce"):
             out[v] = box_state(daily, prof("1m"), atr)
         elif v == "S1a_profile_1h":
             out[v] = box_state(daily, prof("1h"), atr)
@@ -248,6 +272,12 @@ def build_box_states(df1m: pd.DataFrame, spot_1d: pd.DataFrame | None, spot_1m: 
             out[v] = box_state(_stitched_daily(daily, spot_1d), prof("1m_spot_stitched"), _stitched_atr(daily, spot_1d))
         elif v == "S5_point_in_time":
             out[v] = box_state(daily, prof("1m"), atr, point_in_time=True)
+        elif v == "S6_reentry_above_poc":
+            out[v] = box_state(daily, prof("1m"), atr, exit_above_poc=True)
+        elif v == "S8_bounce_close":
+            out[v] = box_state(daily, prof("1m"), atr, bounce_on="close")
+        elif v == "S9_profile_1d_spot_warmup":
+            out[v] = box_state(_stitched_daily(daily, spot_1d), prof("1d_spot_stitched"), _stitched_atr(daily, spot_1d))
         else:
             raise ValueError(v)
     return out

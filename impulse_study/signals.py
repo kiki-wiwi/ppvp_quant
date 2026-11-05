@@ -9,18 +9,23 @@ impulse_study/signals.py — 时间价格脉冲触发器与纯频次统计（Che
   Up_Impulse = ① ∨ ②（向上），Down_Impulse 同理；拆分为“仅 ①”“仅 ②”“① + ② 同时”。
 端点为缺失或维护占位分钟（零成交且 O = H = L = C）时收益率记为缺失、不触发；15 分钟回看 [T−15, T] 内含占位分钟的触发
 记为“维护污染”，单独计数，不进入可交易计数。
+同一分钟可以同时满足向上与向下条件（例如 1m + 5m 急涨叠加 15m 累计急跌）。单方向版本按各自定义计入；双向版本（B3）
+如何处理这类分钟由实验计划决定，本模块分别报告“计入两个方向”与“跳过方向不明的分钟”两种计数。
 
 稳健性口径（Z-score，另行登记）：σ7d(T) = 截至 T−15 的 10,080 根 1m 简单收益率的均方根（不含脉冲窗口本身，
-有效值 ≥ 95%），三个阈值按 σ7d(T) / σ_ref 等比缩放；σ_ref = IS 全部分钟 σ7d 的中位数（只用价格波动，不用任何结果）。
-在 σ7d = σ_ref 时两种口径相同。
+有效值 ≥ 95%），三个阈值按同一个倍数 σ7d(T) / σ_ref 缩放（等价于 z_k = r_k / (σ7d·√k) 与固定 z 阈值比较，
+即假设 k 分钟收益的波动按 √k 放大）。σ_ref = IS 可交易分钟 σ7d 的中位数：它只用价格波动、不用任何结果，但它是用
+整个 IS 估计的常数，在 IS 内对较早的分钟而言不是因果量；用于 IS 之外时必须冻结为本阶段的数值。在 σ7d = σ_ref 时两种口径相同。
 
 计数层级
 --------
 raw     满足条件的分钟数（大行情中条件会连续多分钟成立）；
-onset   条件由不成立变为成立的分钟数（独立“事件”数的上界近似）；
+onset   条件由不成立变为成立的分钟数（独立“事件”数的上界近似）。有箱体时为 (触发条件 ∧ 箱体) 由不成立变为成立的分钟数，
+        与有箱体版本实际可能入场的第一分钟一致；
 sched   按持仓互斥 + 冷却推算的可成交笔数：只用触发时间戳与固定的持仓日程，不读取触发后的价格。
-        触发 K 线 T → T+1min 开盘入场；持 1 根合成 15m 棒于 T+16min 离场、冷却 15 分钟 → 下一触发须 ≥ T+30min（sched30）；
-        持满 2 根于 T+31min 离场 → 下一触发须 ≥ T+45min（sched45）。实际笔数在两者之间（止损提前离场可多于 sched30）。
+        触发 K 线 T → T+1min 开盘入场；持满 2 根合成 15m 棒于 T+31min 离场、冷却 15 分钟 → 下一触发须 ≥ T+45min（sched45）；
+        持 1 根于 T+16min 离场 → 下一触发须 ≥ T+30min（sched30，“无提前离场”的计数）；止损在入场后第 1 根 1m 内离场时，
+        离场时刻晚于 T+1min，冷却后最早可在 T+17min 开盘入场 → 下一触发须 ≥ T+16min（sched16，含止损的上界）。
 可交易窗口：触发 K 线 T ∈ [IS 起点 + 15min, IS_END − 31min]，保证 15 分钟回看与最长 30 分钟持仓都在 IS 之内。
 """
 from __future__ import annotations
@@ -35,7 +40,7 @@ SIGMA_WINDOW = 10_080           # 7 日 1m 根数
 SIGMA_MIN_VALID = 0.95
 LOOKBACK = 15
 MAX_HOLD_MIN = 30
-BLOCK = {"sched30": 30, "sched45": 45}
+BLOCK = {"sched16": 16, "sched30": 30, "sched45": 45}
 
 
 def impulse_frame(grid: pd.DataFrame) -> pd.DataFrame:
@@ -105,9 +110,11 @@ def direction_table(c1: np.ndarray, c2: np.ndarray, base: np.ndarray, box: np.nd
     trig = (c1 | c2) & base
     trig_box = trig & box
     on = onset(c1 | c2) & base
-    on_box = on & box
-    sets = {"sched30": schedule(trig, 30), "sched45": schedule(trig, 45),
-            "box_sched30": schedule(trig_box, 30), "box_sched45": schedule(trig_box, 45)}
+    on_box = onset((c1 | c2) & box) & base
+    sets = {}
+    for name, blk in BLOCK.items():
+        sets[name] = schedule(trig, blk)
+        sets["box_" + name] = schedule(trig_box, blk)
     out = {}
     for y in list(year_list) + ["IS"]:
         ys = np.ones_like(trig) if y == "IS" else (years == y)
