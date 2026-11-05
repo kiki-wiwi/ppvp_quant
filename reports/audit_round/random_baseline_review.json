@@ -1,0 +1,75 @@
+{
+ "matched_event": {
+  "null_mean_r_mean": -0.11632881956391061,
+  "null_mean_r_p05": -0.3122051172344992,
+  "null_mean_r_p95": 0.08322475339170456,
+  "actual_mean_r": -0.3300033898710715,
+  "p_lower": 0.03759248150369926,
+  "n_rep": 5000,
+  "seed": 20261115
+ },
+ "pool_size_quantiles": {
+  "0.0": 23.0,
+  "0.1": 382.6,
+  "0.5": 738.0,
+  "0.9": 1014.2,
+  "1.0": 1371.0
+ },
+ "window_days_used_counts": {
+  "30": 109
+ },
+ "paired_difference_vs_matched_by_month": {
+  "mean": -0.21409908760189336,
+  "lo": -0.384085371402451,
+  "hi": -0.043154492791695406,
+  "p_le_0": 0.9927,
+  "n_clusters": 44,
+  "n": 109
+ },
+ "paired_difference_vs_matched_by_box": {
+  "mean": -0.21409908760189336,
+  "lo": -0.41167995925502726,
+  "hi": -0.005126466711104944,
+  "p_le_0": 0.9779,
+  "n_clusters": 108,
+  "n": 109
+ },
+ "mean_net_r_incl_funding_vs_zero_by_month": {
+  "mean": -0.3400077612474142,
+  "lo": -0.5060616185119221,
+  "hi": -0.17173595273675688,
+  "p_le_0": 0.9999,
+  "n_clusters": 44,
+  "n": 109
+ },
+ "mean_r_ex_funding_vs_zero_by_month": {
+  "mean": -0.3300033898710715,
+  "lo": -0.4963703165278238,
+  "hi": -0.1616624107170238,
+  "p_le_0": 0.9998,
+  "n_clusters": 44,
+  "n": 109
+ },
+ "matched_portfolio": {
+  "n_rep": 1000,
+  "seed": 20261117,
+  "raw_signals": 120,
+  "window_days_used_counts": {
+   "30": 120
+  },
+  "real": {
+   "sharpe": -1.174067431234681,
+   "total_return": -0.4563376830466489,
+   "avg_r": -0.3400077612474142,
+   "trades": 109
+  },
+  "null_sharpe_mean": -0.3417205822012533,
+  "null_sharpe_p05": -1.1071353505468102,
+  "null_sharpe_p95": 0.4676662085814649,
+  "p_sharpe_lower": 0.03696303696303696,
+  "null_total_return_mean": -0.15772953538771448,
+  "null_avg_r_mean": -0.13167012873561215,
+  "p_avg_r_lower": 0.03196803196803197,
+  "null_trades_mean": 111.932
+ }
+}

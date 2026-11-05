@@ -1,0 +1,101 @@
+"""
+ppvp_audit/run_ledgers.py — 生成机会级 / 成交级账本、核对表、切片、最差月份核查表、止损后走势与低 RR 分解（IS only）。
+
+用法：python -m ppvp_audit.run_ledgers [--version B_original|B_audited]
+输出目录：reports/audit_round/（CSV 与 ledgers_summary_<version>.json）、reports/audit_round/figures/slices/
+"""
+from __future__ import annotations
+
+import argparse
+
+import numpy as np
+import pandas as pd
+
+from config import BASELINE_BACKTEST, BASELINE_STRATEGY
+from metrics import daily_equity, monthly_returns
+
+from . import ledgers as L
+from . import slices as S
+from .common import FIG, OUT, is_run, write_json
+from .data_1m import load_1m
+
+
+def build(version: str, scfg=BASELINE_STRATEGY, bcfg=BASELINE_BACKTEST, out: dict | None = None, plots: bool = True) -> dict:
+    out = out if out is not None else is_run(scfg, bcfg)
+    m1 = load_1m()
+    op = L.opportunities(out, scfg, bcfg, version)
+    tl = L.trade_ledger(out, scfg, bcfg, m1, version)
+    add = op[op["status"] == "filled"].set_index("signal_bar")
+    keep = ["profile_id_at_t1", "profile_id_at_t2_start", "profile_changed_between_tests", "departure_bar",
+            "departure_height_atr", "second_test_qualified_by", "touch_gap_bars_from_t1_last", "confirmation_range_atr",
+            "normalized_entry_position", "next_open_vs_close_bp", "pivot_a_time", "pivot_b_time",
+            "profile_available_time", "profile_superseded_at"] + [c for c in op.columns if c.startswith("regime_")]
+    tl = tl.join(add[keep], on="entry_bar")
+    tl["above_sma200"] = tl["regime_above_sma200"]
+    rc = L.reconciliation(tl)
+    sfx = "" if version == "B_audited" else f"_{version}"
+    op.to_csv(OUT / f"signal_opportunities{sfx}.csv", index=False, float_format="%.10g")
+    tl.to_csv(OUT / f"trades{sfx}.csv", index=False, float_format="%.10g")
+    rc.to_csv(OUT / f"trade_reconciliation{sfx}.csv", index=False, float_format="%.10g")
+
+    # 切片（固定种子）与最差月份 13 笔
+    sel = S.select_slices(tl)
+    sel.to_csv(OUT / f"slices_selected{sfx}.csv", index=False, float_format="%.10g")
+    res = out["result"]
+    d = daily_equity(res)
+    mr = monthly_returns(d).stack().rename("ret").reset_index()
+    w5 = mr.nsmallest(5, "ret")
+    months = [f"{int(y)}-{int(m):02d}" for y, m in w5[["year", "month"]].to_numpy()]
+    worst = tl[tl["entry_time"].dt.strftime("%Y-%m").isin(months)].copy()
+    cols = ["entry_time", "exit_time", "exit_reason", "rr_fill", "d_sl", "d_tp", "width_atr", "sl_atr",
+            "departure_height_atr", "profile_changed_between_tests", "pattern_name", "sfp", "regime_above_sma200",
+            "regime_mom20d", "regime_ret24h", "regime_hours_since_crash", "net_pnl", "return_on_equity", "net_R",
+            "exit_reason_1m_path"]
+    worst[cols].to_csv(OUT / f"worst_month_trades{sfx}.csv", index=False, float_format="%.10g")
+    post = S.post_stop_paths(tl, out["df1h"])
+    post.to_csv(OUT / f"post_stop_paths{sfx}.csv", index=False, float_format="%.10g")
+    psum = {}
+    for H_ in (6, 12, 24):
+        m = post[f"window_complete_{H_}h"]
+        pp = post[m & post["poc_above_entry"]]
+        psum[f"{H_}h"] = {"n_sl": int(m.sum()), "reached_poc": int(pp[f"reached_poc_{H_}h"].sum()), "n_poc_above_entry": int(len(pp)),
+                          "reached_vah": int(post.loc[m, f"reached_vah_{H_}h"].sum()),
+                          "median_further_drop_R": float(post.loc[m, f"further_drop_below_sl_R_{H_}h"].median()),
+                          "share_further_drop_gt_0_5R": float((post.loc[m, f"further_drop_below_sl_R_{H_}h"] < -0.5).mean())}
+    summary = {
+        "version": version,
+        "opportunities": int(len(op)), "status_counts": op["status"].value_counts().to_dict(),
+        "second_test_qualified_by_all": op["second_test_qualified_by"].value_counts().to_dict(),
+        "second_test_qualified_by_filled": op.loc[op["status"] == "filled", "second_test_qualified_by"].value_counts().to_dict(),
+        "filled_profile_changed_between_tests": int(op.loc[op["status"] == "filled", "profile_changed_between_tests"].sum()),
+        "filled_departure_height_atr_quantiles": op.loc[op["status"] == "filled", "departure_height_atr"].quantile(
+            [0, 0.1, 0.25, 0.5, 0.75, 0.9, 1]).to_dict(),
+        "next_open_vs_close_bp_filled": op.loc[op["status"] == "filled", "next_open_vs_close_bp"].describe().to_dict(),
+        "exit_reason_matches_1m_path": int(tl["exit_reason_matches_1m"].sum()), "trades": int(len(tl)),
+        "exit_reason_1m_path_counts": tl["exit_reason_1m_path"].value_counts().to_dict(),
+        "fig1_exclusions": rc["excluded_from_fig1_because"].replace("", "included").value_counts().to_dict(),
+        "poc_before_sl_in_exit_bar_1m": int(rc["poc_reached_in_exit_bar_before_sl_1m"].sum()),
+        "cost_decomposition_usd": tl[["gross_pnl_ref", "slippage_impact", "commission", "funding_cashflow", "net_pnl"]].sum().to_dict(),
+        "worst5_months": months, "worst5_trades": int(len(worst)),
+        "worst5_exit_reasons": worst["exit_reason"].value_counts().to_dict(),
+        "post_stop": psum,
+        "low_rr": S.low_rr_decomposition(tl),
+        "slices": sel[["slice_no", "slice_reason", "entry_time", "exit_reason", "rr_fill", "r_multiple"]],
+    }
+    write_json(OUT / f"ledgers_summary_{version}.json", summary)
+    if plots:
+        (FIG / "slices").mkdir(parents=True, exist_ok=True)
+        sig = out["signals"]
+        for _, r in sel.iterrows():
+            S.plot_slice(r, out["df1h"], out["df4h"], sig, out["boxes"],
+                         FIG / "slices" / f"slice_{int(r['slice_no']):02d}{sfx}.png")
+    return {"op": op, "tl": tl, "rc": rc, "sel": sel, "summary": summary}
+
+
+if __name__ == "__main__":
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--version", default="B_original")
+    a = ap.parse_args()
+    r = build(a.version)
+    import json
+    print(json.dumps({k: v for k, v in r["summary"].items() if k not in ("slices",)}, default=str, ensure_ascii=False, indent=1)[:5000])
