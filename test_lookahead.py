@@ -38,7 +38,7 @@ import pytest
 
 import pipeline
 from backtester import run_backtest
-from config import OOS_END, OOS_START, RESEARCH_DATA_END, BacktestConfig, StrategyConfig
+from config import HOLDOUT_SYMBOLS, OOS_END, OOS_START, RESEARCH_DATA_END, BacktestConfig, StrategyConfig
 from data_loader import load_funding, load_klines, resample_ohlcv
 from metrics import daily_equity, daily_returns, sharpe
 from numba_compat import HAVE_NUMBA
@@ -557,7 +557,8 @@ def test_research_pipeline_matches_full_period():
     for sym in SYMBOLS:
         for name in ("baseline", "all_features_A"):
             scfg, bcfg = CONFIGS[name]
-            r = pipeline.run(sym, scfg, bcfg, end=RESEARCH_DATA_END, segments=())
+            # ETH 是留出标的：不带 allow_oos 的结构性运行不出回测结果；闸门是只输出通过/失败的既定例外
+            r = pipeline.run(sym, scfg, bcfg, end=RESEARCH_DATA_END, segments=(), allow_oos=sym in HOLDOUT_SYMBOLS)
             f = pipeline.run(sym, scfg, bcfg, end=OOS_END, segments=(), allow_oos=True)
             t_cut = r["df1h"].index[-1]
             compare_truncated_vs_full((f["boxes"], f["signals"], f["result"]), (r["boxes"], r["signals"], r["result"]),

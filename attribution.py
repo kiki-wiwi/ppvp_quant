@@ -16,7 +16,10 @@ attribution.py — 基线与实验的研究诊断（Phase 2 起使用）。
 * 市场状态特征只使用决策时刻（信号 K 线收盘）之前已收盘的数据：日线 D 于 D+1 00:00 可用，4H K 线于
   available_time 可用，1H 收益取到信号 K 线收盘为止（截断测试见 test_attribution.py）。
 
-OOS 隔离：接收回测结果或交易表的函数调用 metrics 的范围检查（默认拒绝延伸到 OOS_START 之后的输入）。
+OOS 隔离：trade_frame / segment_trades / bucket_stats / random_entry_null 检查交易表的入场与离场时刻，
+regime_features / bracket_outcomes / random_entry_null 检查实际参与计算的 K 线范围，drawdown_episodes /
+stationary_bootstrap_sharpe / paired_sharpe_diff / segment_daily_returns / buy_and_hold 检查序列的时间范围；
+任何一项延伸到 OOS_START 之后时须显式传入 allow_oos=True（仅 Phase 4 参数锁定后使用）。
 """
 from __future__ import annotations
 
@@ -24,15 +27,23 @@ import numpy as np
 import pandas as pd
 
 from backtester import BacktestResult
-from config import BacktestConfig, StrategyConfig
-from metrics import (ANN, DAY, _check_result_extent, _check_series_extent, _check_trades_extent, daily_equity,
-                     daily_returns, max_drawdown, sharpe, sortino)
+from config import OOS_START, BacktestConfig, StrategyConfig
+from metrics import (ANN, DAY, OOSLockedError, _check_result_extent, _check_series_extent, _check_trades_extent,
+                     daily_equity, daily_returns, max_drawdown, sharpe, sortino)
 from numba_compat import njit
 from ppvp_engine import shift_known_at_open, to_ns, wilder_atr
 from strategy_state_machine import daily_closes_with_warmup
 
 NS_HOUR = np.int64(3600 * 10**9)
 NS_DAY = np.int64(86400 * 10**9)
+
+
+def _check_bars_extent(df1h: pd.DataFrame, n_used: int, allow_oos: bool) -> None:
+    """参与计算的前 n_used 根 1H 的最后收盘晚于 OOS_START 时，必须显式 allow_oos=True。"""
+    if allow_oos or n_used <= 0:
+        return
+    if df1h.index[n_used - 1] + pd.Timedelta(hours=1) > OOS_START:
+        raise OOSLockedError("1H bars beyond OOS_START enter this computation; it requires allow_oos=True")
 
 
 # ---------------------------------------------------------------------------
@@ -135,12 +146,14 @@ def crash_event_times(df4h: pd.DataFrame, body_atr4: float = 2.0, vol_mult4: flo
 
 
 def regime_features(df1h: pd.DataFrame, df4h: pd.DataFrame, spot_daily: pd.Series | None,
-                    decision_bars: np.ndarray) -> pd.DataFrame:
+                    decision_bars: np.ndarray, allow_oos: bool = False) -> pd.DataFrame:
     """在第 i 根 1H 收盘（决策时刻）计算的市场状态特征；只使用该时刻之前已收盘的日线 / 4H / 1H 数据。
 
     above_sma200 / sma200_up（20 日斜率）/ mom20d / vol30d / vol30d_pct（相对过去 365 天）/ dd365（距 365 日高点）
     来自最近一根已收盘日线；hours_since_crash 来自 4H；ret24h / ret168h 来自 1H 收盘。
+    df1h（全部用于日线与滚动计算）延伸到 OOS_START 之后时须 allow_oos=True。
     """
+    _check_bars_extent(df1h, len(df1h), allow_oos)
     bars = np.asarray(decision_bars, dtype=np.int64)
     t_dec = to_ns(df1h.index)[bars] + NS_HOUR
     d = daily_closes_with_warmup(df1h, spot_daily)
@@ -215,9 +228,11 @@ def _bracket(o, h, l, c, entry_bar, sl_abs, tp_abs, end_bar, taker, maker, slip)
     return xbar, reason, r_mult
 
 
-def bracket_outcomes(df1h: pd.DataFrame, entry_bar, sl_abs, tp_abs, end_bar: int, bcfg: BacktestConfig):
+def bracket_outcomes(df1h: pd.DataFrame, entry_bar, sl_abs, tp_abs, end_bar: int, bcfg: BacktestConfig,
+                     allow_oos: bool = False):
     """在 entry_bar 收盘以 close*(1+slip) 入场、绝对价位 sl_abs / tp_abs 的括号单，于 end_bar 之前撮合。
-    返回 (exit_bar, reason[1=SL, 2=TP, 0=未了结], R_ex_funding)。"""
+    返回 (exit_bar, reason[1=SL, 2=TP, 0=未了结], R_ex_funding)。第 end_bar-1 根的收盘晚于 OOS_START 时须 allow_oos。"""
+    _check_bars_extent(df1h, int(end_bar), allow_oos)
     o, h, l, c = (df1h[k].to_numpy(dtype=np.float64) for k in ("open", "high", "low", "close"))
     eb = np.asarray(entry_bar, dtype=np.int64)
     if len(eb) and (eb.min() < 0 or eb.max() >= end_bar - 1):
@@ -226,11 +241,49 @@ def bracket_outcomes(df1h: pd.DataFrame, entry_bar, sl_abs, tp_abs, end_bar: int
                     int(end_bar), float(bcfg.taker_fee), float(bcfg.maker_fee), float(bcfg.slippage))
 
 
+def _sample_entry_bars(idx_ns: np.ndarray, entry_bars: np.ndarray, first: int, end_bar: int, n_rep: int,
+                       rng: np.random.Generator, window_days: float | None, side: str,
+                       exclude_bars: int | None) -> np.ndarray:
+    """为每笔交易抽 n_rep 个随机入场 K 线（形状 n_rep × m）。可抽范围 = [first, end_bar - 1)（保证至少一根后续 K 线），
+    window_days 给定时再限制为开盘时刻距信号 K 线开盘 ≤ window_days；side='before' / 'after' 只取信号 K 线之前 / 之后；
+    exclude_bars = k 时剔除 |b - 信号 K 线| ≤ k 的 K 线（去掉与真实交易共享路径的入场）。"""
+    m = len(entry_bars)
+    hi_cap = end_bar - 1
+    if window_days is None:
+        lo = np.full(m, first, np.int64)
+        hi = np.full(m, hi_cap, np.int64)
+    else:
+        w = np.int64(round(window_days * 86400 * 10**9))
+        t_e = idx_ns[entry_bars]
+        lo = np.maximum(np.searchsorted(idx_ns, t_e - w, side="left"), first).astype(np.int64)
+        hi = np.minimum(np.searchsorted(idx_ns, t_e + w, side="right"), hi_cap).astype(np.int64)
+    if side == "both" and exclude_bars is None:
+        if (hi <= lo).any():
+            raise ValueError("a trade's sampling window is empty")
+        return lo[None, :] + np.floor(rng.random((n_rep, m)) * (hi - lo)[None, :]).astype(np.int64)
+    k = 0 if exclude_bars is None else int(exclude_bars)
+    left_lo, left_hi = lo, np.minimum(hi, entry_bars - k)              # [lo, e - k)
+    right_lo, right_hi = np.maximum(lo, entry_bars + k + 1), hi        # [e + k + 1, hi)
+    n_left = np.where(side in ("both", "before"), np.maximum(left_hi - left_lo, 0), 0)
+    n_right = np.where(side in ("both", "after"), np.maximum(right_hi - right_lo, 0), 0)
+    tot = n_left + n_right
+    if (tot <= 0).any():
+        raise ValueError("a trade's sampling pool is empty")
+    u = np.floor(rng.random((n_rep, m)) * tot[None, :]).astype(np.int64)
+    return np.where(u < n_left[None, :], left_lo[None, :] + u, right_lo[None, :] + (u - n_left[None, :]))
+
+
 def random_entry_null(df1h: pd.DataFrame, tf: pd.DataFrame, bcfg: BacktestConfig, start: pd.Timestamp,
-                      end: pd.Timestamp, n_rep: int = 2000, seed: int = 0, window_days: float | None = None) -> dict:
-    """每笔真实交易保持 (d_sl, d_tp) 不变，入场换成 [start, end) 内随机 1H K 线的收盘（window_days 给定时限制在
-    开盘时刻距真实信号 K 线开盘 ≤ window_days 的 K 线内），撮合截止于 end 之前的最后一根 K 线。
-    返回零分布与单侧 p 值。window_days 足够小时只能抽到真实信号 K 线本身，零分布退化为真实结果（测试据此校验）。"""
+                      end: pd.Timestamp, n_rep: int = 2000, seed: int = 0, window_days: float | None = None,
+                      side: str = "both", exclude_bars: int | None = None, allow_oos: bool = False) -> dict:
+    """每笔真实交易保持 (d_sl, d_tp) 不变，入场换成 [start, end) 内随机 1H K 线的收盘（抽样范围见 _sample_entry_bars），
+    撮合截止于 end 之前的最后一根 K 线。返回零分布与单侧 p 值。
+    window_days 足够小且 side='both'、不剔除时只能抽到真实信号 K 线本身，零分布退化为真实结果（测试据此校验）。"""
+    if side not in ("both", "before", "after"):
+        raise ValueError("side must be 'both', 'before' or 'after'")
+    _check_trades_extent(tf, allow_oos)
+    if end > OOS_START and not allow_oos:
+        raise OOSLockedError("random-entry nulls reaching beyond OOS_START require allow_oos=True")
     idx = df1h.index
     first = int(np.searchsorted(idx, start, side="left"))
     end_bar = int(np.searchsorted(idx, end, side="left"))          # 第一根 open ≥ end 的 K 线（不参与撮合）
@@ -240,24 +293,13 @@ def random_entry_null(df1h: pd.DataFrame, tf: pd.DataFrame, bcfg: BacktestConfig
     m = len(tf)
     d_sl = tf["d_sl"].to_numpy(dtype=np.float64)
     d_tp = tf["d_tp"].to_numpy(dtype=np.float64)
-    if window_days is None:
-        lo = np.full(m, first, np.int64)
-        hi = np.full(m, end_bar - 1, np.int64)                     # 采样上界（不含）：保证至少有一根后续 K 线
-    else:
-        # 以真实入场 K 线（信号 K 线）的开盘时刻为中心：开盘时刻与之相差不超过 window_days 的 K 线
-        idx_ns = to_ns(idx)                                        # 整数纳秒运算：与索引的存储精度（ms/us/ns）无关
-        w = np.int64(round(window_days * 86400 * 10**9))
-        t_e = idx_ns[tf["entry_bar"].to_numpy(dtype=np.int64)]
-        lo = np.maximum(np.searchsorted(idx_ns, t_e - w, side="left"), first).astype(np.int64)
-        hi = np.minimum(np.searchsorted(idx_ns, t_e + w, side="right"), end_bar - 1).astype(np.int64)
-        if (hi <= lo).any():
-            raise ValueError("a trade's sampling window is empty")
-    bars = lo[None, :] + np.floor(rng.random((n_rep, m)) * (hi - lo)[None, :]).astype(np.int64)
+    bars = _sample_entry_bars(to_ns(idx), tf["entry_bar"].to_numpy(dtype=np.int64), first, end_bar, n_rep, rng,
+                              window_days, side, exclude_bars)
     c = df1h["close"].to_numpy(dtype=np.float64)
     efill = c[bars.ravel()] * (1.0 + float(bcfg.slippage))
     sl_abs = efill * (1.0 - np.tile(d_sl, n_rep))
     tp_abs = efill * (1.0 + np.tile(d_tp, n_rep))
-    _, reason, r = bracket_outcomes(df1h, bars.ravel(), sl_abs, tp_abs, end_bar, bcfg)
+    _, reason, r = bracket_outcomes(df1h, bars.ravel(), sl_abs, tp_abs, end_bar, bcfg, allow_oos=allow_oos)
     wins = (r > 0).reshape(n_rep, m)
     rr = r.reshape(n_rep, m)
     w_null = wins.sum(axis=1)
@@ -265,7 +307,8 @@ def random_entry_null(df1h: pd.DataFrame, tf: pd.DataFrame, bcfg: BacktestConfig
     w_act = int((tf["r_ex_funding"] > 0).sum())
     r_act = float(tf["r_ex_funding"].mean())
     return {
-        "n_trades": m, "n_rep": n_rep, "seed": seed, "window_days": window_days,
+        "n_trades": m, "n_rep": n_rep, "seed": seed, "window_days": window_days, "side": side,
+        "exclude_bars": exclude_bars,
         "actual_wins": w_act, "actual_mean_r_ex_funding": r_act,
         "null_wins_mean": float(w_null.mean()), "null_wins_p05": float(np.percentile(w_null, 5)),
         "null_wins_p95": float(np.percentile(w_null, 95)),
@@ -279,6 +322,16 @@ def random_entry_null(df1h: pd.DataFrame, tf: pd.DataFrame, bcfg: BacktestConfig
         "per_trade_null_mean_r": rr.mean(axis=0),          # 每笔交易在零假设下的期望 R（用于按组计算超额 R）
         "null_r_dist": r_null, "null_w_dist": w_null,
     }
+
+
+def poisson_binomial_cdf(p: np.ndarray, k: int) -> float:
+    """独立伯努利（成功概率 p_j）之和 ≤ k 的精确概率（动态规划）。"""
+    dist = np.zeros(len(p) + 1)
+    dist[0] = 1.0
+    for q in np.asarray(p, dtype=np.float64):
+        dist[1:] = dist[1:] * (1.0 - q) + dist[:-1] * q
+        dist[0] *= 1.0 - q
+    return float(dist[: k + 1].sum())
 
 
 # ---------------------------------------------------------------------------
@@ -319,10 +372,26 @@ def wilson(k: int, n: int, z: float = 1.959964) -> tuple[float, float]:
     return float(mid - half), float(mid + half)
 
 
-def bucket_stats(tf: pd.DataFrame, by, n_boot: int = 2000, seed: int = 0) -> pd.DataFrame:
-    """按 by（列名或与 tf 对齐的 Series）分组：笔数、胜率（Wilson 95%）、平均 R（自助法 95%）、总盈亏、
-    随机游走基准胜率（组内 p_rw 均值）；tf 含 null_r 列（每笔交易在随机入场零假设下的期望 R）时，
-    另给出组内零假设平均 R 与超额 R（r_ex_funding - null_r）。"""
+def _boot_mean(x: np.ndarray, rng: np.random.Generator, n_boot: int) -> tuple[float, float, float]:
+    """均值的自助法 95% 区间与标准误（样本量 1 时区间退化为该值、标准误为 NaN）。"""
+    if len(x) < 2:
+        return float(x.mean()), float(x.mean()), float("nan")
+    b = rng.choice(x, size=(n_boot, len(x)), replace=True).mean(axis=1)
+    return float(np.percentile(b, 2.5)), float(np.percentile(b, 97.5)), float(b.std(ddof=1))
+
+
+def bucket_stats(tf: pd.DataFrame, by, n_boot: int = 2000, seed: int = 0, allow_oos: bool = False) -> pd.DataFrame:
+    """按 by（列名或与 tf 对齐的 Series）分组的交易统计。
+
+    * 净胜率（pnl > 0，Wilson 95%）与止盈命中率（exit_reason == 'TP'，Wilson 95%）。与无漂移随机游走理论值
+      rw_win_rate（组内 d_sl/(d_sl+d_tp) 的均值，即“先触及止盈”的概率，不含成本）可比的是止盈命中率。
+    * 平均 R（含资金费，自助法 95%）；tf 含 r_ex_funding 时另给不含资金费的平均 R（mean_r_xf，自助法 95%）。
+    * 净值口径：每笔占入场净值的平均盈亏 mean_ret（ret_on_base）与组内对数收益之和 sum_log_ret
+      （复利、单仓位下 IS 期末/期初净值的对数 = 全部交易 log(1+ret_on_base) 之和）。
+    * tf 含 null_r（每笔交易在随机入场零假设下的期望 R，不含资金费）时，给出组内零假设平均 R 与超额 R
+      （r_ex_funding - null_r，自助法 95% 与标准误），此时 mean_r_xf - null_mean_r = excess_r 恒成立。
+    """
+    _check_trades_extent(tf, allow_oos)
     rng = np.random.default_rng(seed)
     key = tf[by] if isinstance(by, str) else by
     rows = []
@@ -331,16 +400,26 @@ def bucket_stats(tf: pd.DataFrame, by, n_boot: int = 2000, seed: int = 0) -> pd.
         k = int(sub["win"].sum())
         lo, hi = wilson(k, n)
         r = sub["r_multiple"].to_numpy()
-        boots = rng.choice(r, size=(n_boot, n), replace=True).mean(axis=1) if n > 1 else np.array([r.mean()])
+        r_lo, r_hi, r_se = _boot_mean(r, rng, n_boot)
         row = {"bucket": g, "n": n, "wins": k, "win_rate": k / n, "win_lo": lo, "win_hi": hi,
-               "rw_win_rate": float(sub["p_rw"].mean()), "mean_r": float(r.mean()),
-               "mean_r_lo": float(np.percentile(boots, 2.5)), "mean_r_hi": float(np.percentile(boots, 97.5)),
-               "sum_r": float(r.sum()), "sum_pnl": float(sub["pnl"].sum())}
+               "rw_win_rate": float(sub["p_rw"].mean()), "mean_r": float(r.mean()), "mean_r_lo": r_lo,
+               "mean_r_hi": r_hi, "sum_r": float(r.sum()), "sum_pnl": float(sub["pnl"].sum())}
+        if "exit_reason" in sub.columns:
+            k_tp = int((sub["exit_reason"] == "TP").sum())
+            t_lo, t_hi = wilson(k_tp, n)
+            row.update({"tp_hits": k_tp, "tp_rate": k_tp / n, "tp_lo": t_lo, "tp_hi": t_hi})
+        if "ret_on_base" in sub.columns:
+            ret = sub["ret_on_base"].to_numpy(dtype=np.float64)
+            row.update({"mean_ret": float(ret.mean()), "sum_log_ret": float(np.log1p(ret).sum())})
+        if "r_ex_funding" in sub.columns:
+            xf = sub["r_ex_funding"].to_numpy(dtype=np.float64)
+            x_lo, x_hi, x_se = _boot_mean(xf, rng, n_boot)
+            row.update({"mean_r_xf": float(xf.mean()), "mean_r_xf_lo": x_lo, "mean_r_xf_hi": x_hi, "mean_r_xf_se": x_se})
         if "null_r" in sub.columns:
             ex = (sub["r_ex_funding"] - sub["null_r"]).to_numpy()
-            eb = rng.choice(ex, size=(n_boot, n), replace=True).mean(axis=1) if n > 1 else np.array([ex.mean()])
+            e_lo, e_hi, e_se = _boot_mean(ex, rng, n_boot)
             row.update({"null_mean_r": float(sub["null_r"].mean()), "excess_r": float(ex.mean()),
-                        "excess_r_lo": float(np.percentile(eb, 2.5)), "excess_r_hi": float(np.percentile(eb, 97.5))})
+                        "excess_r_lo": e_lo, "excess_r_hi": e_hi, "excess_r_se": e_se})
         rows.append(row)
     return pd.DataFrame(rows)
 

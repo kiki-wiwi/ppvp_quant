@@ -3,7 +3,9 @@ pipeline.py — 数据 → 4H PPVP 箱体 → 1H 状态机信号 → 回测 → 
 
 ``pipeline.run`` 是 Phase 2/3 唯一受支持的研究入口。研究阶段默认 ``end = RESEARCH_DATA_END (= 2025-07-01)``：
 OOS 区间的 K 线根本不会被送入引擎。只有在 Phase 4 锁定最终参数后，才允许以 ``allow_oos=True`` 运行到 2026-11-01。
-跨品种验证标的（config.HOLDOUT_SYMBOLS，即 ETH）在参数锁定前只允许 ``segments=()`` 的结构性运行，不出分段绩效。
+跨品种验证标的（config.HOLDOUT_SYMBOLS，即 ETH）在参数锁定前只允许 ``segments=()`` 的结构性运行：
+返回箱体与信号，``result`` 为 None，不运行回测、不计算任何净值或逐笔盈亏（防未来函数闸门以 allow_oos=True 运行，
+只输出通过/失败）。
 OOS 锁在每个入口（load_market / get_boxes / run）缓存查找之前检查；缓存对象以深拷贝返回（每次约 1 ms），
 列数据与行/列索引都复制（DatetimeIndex.asi8 是可写视图，只复制列数据时经索引的就地写入仍会污染缓存），
 因此调用方通过公开 API 就地修改返回的数据（含 ``Series.array``、``index.asi8`` 写入、pandas 2.x 无写时复制的情形）
@@ -48,10 +50,11 @@ def _check_lock(end: pd.Timestamp, allow_oos: bool) -> None:
 
 
 def spot_daily_warmup(symbol: str) -> pd.Series:
-    """2020 年之前的现货日线收盘（仅供慢速价格类过滤器预热）。"""
+    """2020 年之前的现货日线收盘（仅供慢速价格类过滤器预热）。先截断到 RESEARCH_START 之前再重采样，
+    不对其后的任何行做计算（截断前后的结果相同：被保留的日线都是 2020 年之前的完整自然日）。"""
     s = load_klines(symbol, "1h", "spot")
-    d = s["close"].resample("1D").last().dropna()
-    return d[d.index < RESEARCH_START]
+    s = s[s.index < RESEARCH_START]
+    return s["close"].resample("1D").last().dropna()
 
 
 def load_market(symbol: str, end: pd.Timestamp = RESEARCH_DATA_END, allow_oos: bool = False):
@@ -81,12 +84,16 @@ def get_boxes(symbol: str, scfg: StrategyConfig, end: pd.Timestamp = RESEARCH_DA
 
 def run(symbol: str = "BTCUSDT", scfg: StrategyConfig = BASELINE_STRATEGY, bcfg: BacktestConfig = BASELINE_BACKTEST,
         end: pd.Timestamp = RESEARCH_DATA_END, segments=("IS", "VAL"), allow_oos: bool = False) -> dict:
-    if symbol in HOLDOUT_SYMBOLS and segments and not allow_oos:
+    holdout = symbol in HOLDOUT_SYMBOLS and not allow_oos
+    if holdout and segments:
         # ETH 是跨品种零改参验证集：参数锁定前只允许结构性运行（segments=()），不出分段绩效
         raise OOSLockedError(f"{symbol} is the cross-asset holdout; segment metrics are locked until Phase 4")
     df1h, fund, spot_d = load_market(symbol, end, allow_oos)
     boxes, df4h = get_boxes(symbol, scfg, end, allow_oos)
     sig = generate_signals(df1h, scfg, boxes, df4h, spot_d)
+    if holdout:
+        # 结构性运行只返回箱体与信号，不运行回测：留出标的的净值与逐笔盈亏在参数锁定前不得被计算
+        return {"df1h": df1h, "df4h": df4h, "boxes": boxes, "signals": sig, "result": None, "report": {}}
     res = run_backtest(df1h, sig, bcfg, fund)
     rep = segment_report(res, segments, allow_oos) if segments else {}
     return {"df1h": df1h, "df4h": df4h, "boxes": boxes, "signals": sig, "result": res, "report": rep}
