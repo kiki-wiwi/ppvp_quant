@@ -346,11 +346,13 @@
   "trades_entered_in_worst5_months": 13,
   "worst5_trades_share_of_trade_log_loss": 0.708579894370947,
   "costs_usd": {
+   "gross_pnl_ref": -34908.04854088738,
+   "slippage_impact_included_in_fill_prices": 2897.0125883512897,
    "gross_pnl_at_fill": -37805.06112923867,
    "fees": 6389.8965746348385,
    "funding": 1438.8106007914257,
-   "slippage": 2897.0125883512897,
-   "net_pnl": -45633.76830466494
+   "net_pnl": -45633.76830466494,
+   "identities": "gross_ref - slippage - fees - funding = net = gross_at_fill - fees - funding"
   }
  }
 }

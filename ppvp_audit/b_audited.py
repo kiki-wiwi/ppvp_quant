@@ -28,7 +28,7 @@ B_AUDITED_FIXES = [
     {"id": "D-5", "file": "data_loader.py", "kind": "implementation error (latent; IS unaffected)",
      "what": "缺口位于数据开头时成交量缩放比例样本为空，补出的成交量为 NaN，进而使箱体的成交量分布全为 NaN",
      "fix": "重叠样本少于 MIN_SCALE_HOURS=24 小时或比例非有限时直接报错", "test": "test_audit_round.py::test_gap_fill_refuses_without_pre_gap_overlap"},
-    {"id": "D-8", "file": "data_loader.py", "kind": "process safeguard (section 9 constraint)",
+    {"id": "D-4", "file": "data_loader.py", "kind": "process safeguard required by the section 9 constraint (a design choice changed, not an implementation-error fix; no effect on any result)",
      "what": "缓存缺失时静默联网重建全部缓存（含 1m 日度归档的裁决）",
      "fix": "缓存缺失时报 FileNotFoundError，只有显式 python data_loader.py --build 才联网", "test": "test_audit_round.py::test_missing_cache_raises_instead_of_rebuilding"},
     {"id": "E-1", "file": "ppvp_audit/engine_path.py", "kind": "implementation error (latent; IS unaffected)",

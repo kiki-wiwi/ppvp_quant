@@ -538,17 +538,26 @@ def plots(res: dict) -> None:
     from .plotstyle import C1, C2, GRID, INK2, MUTED, SURF, style
     style()
     vs = [v for v in V.VERSIONS if v in res and "paired_vs_base" in res[v]]
-    fig, ax = plt.subplots(figsize=(8.6, 4.4))
+    base_sh = res["base"]["sharpe"]
+    fig, ax = plt.subplots(figsize=(8.8, 4.8))
     y = np.arange(len(vs))[::-1]
+    zero_lab = True
     for yi, v in zip(y, vs):
         p = res[v]["paired_vs_base"]
         ax.plot([p["lo"], p["hi"]], [yi, yi], color=C1, linewidth=1.8)
-        ax.plot(p["sharpe_diff"], yi, "o", color=C1, markersize=7, markeredgecolor=SURF)
+        ax.plot(p["sharpe_diff"], yi, "o", color=C1, markersize=7, markeredgecolor=SURF,
+                label="版本 − B_audited（点估计与 95% 区间）" if yi == y[0] else None)
+        mr = res[v].get("matched_random", {})
+        if "thinned_mean_sharpe" in mr:            # 零技能对照：随机保留到同样笔数时夏普的平均变化
+            ax.plot(mr["thinned_mean_sharpe"] - base_sh, yi, "D", color=C2, markersize=6, markeredgecolor=SURF,
+                    label="同笔数随机保留的平均夏普差（零技能对照）" if zero_lab else None)
+            zero_lab = False
         ax.text(1.01, yi, f"Holm p = {p['p_holm']:.2f}", transform=ax.get_yaxis_transform(), va="center", fontsize=8.5, color=MUTED)
     ax.axvline(0, color=INK2, linewidth=1.0)
     ax.set_yticks(y, vs)
     ax.set_xlabel("相对 B_audited 的日度夏普差（配对平稳自助法 95% 区间）")
     ax.set_title("IS：9 个预注册版本相对 B_audited 的夏普差")
+    ax.legend(loc="upper left", bbox_to_anchor=(0.0, -0.13), ncol=2, fontsize=8)
     fig.tight_layout()
     fig.savefig(FIG / "exp_sharpe_diff.png")
     plt.close(fig)
@@ -559,7 +568,8 @@ def plots(res: dict) -> None:
     im = ax.imshow(mat, cmap="RdBu", vmin=-lim, vmax=lim, aspect="auto")
     for i in range(len(vs)):
         for j in range(len(years)):
-            ax.text(j, i, f"{mat[i, j]:+.2f}", ha="center", va="center", fontsize=8.5, color="#111111")
+            dark = abs(mat[i, j]) > 0.6 * lim
+            ax.text(j, i, f"{mat[i, j]:+.2f}", ha="center", va="center", fontsize=8.5, color="#ffffff" if dark else "#111111")
     ax.set_xticks(range(len(years)), years)
     ax.set_yticks(range(len(vs)), vs)
     ax.grid(False)
@@ -570,7 +580,41 @@ def plots(res: dict) -> None:
     plt.close(fig)
 
 
+SEEDS = {"paired_sharpe_stationary_bootstrap": SEED_PAIRED, "month_cluster_bootstrap": SEED_CLUSTER,
+         "random_thinning": "20261130 + version index (A1=0 ... E1=8)", "matched_random_C1_D1_D2": SEED_MATCH,
+         "matched_event_null_B2_and_B_audited": "20261140 + 4 (B2's index)"}
+
+
+def annotate_ledger() -> None:
+    """实验台账补充种子与 results.json 的哈希（只读运行结果，不重跑任何版本）。"""
+    led = pd.read_csv(OUT / "experiment_ledger.csv")
+    k = {v: i for i, v in enumerate(V.VERSIONS)}
+    seeds = []
+    for v in led["version"]:
+        if v not in k:
+            seeds.append("")
+            continue
+        s = [f"paired={SEED_PAIRED}", f"cluster={SEED_CLUSTER}"]
+        if v in ("A1", "A2", "A3", "B1", "E1"):
+            s.append(f"thinning={SEED_THIN + k[v]}")
+        elif v == "B2":
+            s.append(f"matched_event={SEED_MATCH + k[v]}")
+        else:
+            s.append(f"matched_random={SEED_MATCH}")
+        seeds.append(";".join(s))
+    led["seeds"] = seeds
+    led["results_file"] = "reports/audit_round/experiments/results.json"
+    led["results_sha256"] = sha256_file(EXP / "results.json")
+    led.to_csv(OUT / "experiment_ledger.csv", index=False)
+
+
 if __name__ == "__main__":
     import json
-    r = run()
-    print(json.dumps({v: r[v].get("decision") for v in V.VERSIONS}, ensure_ascii=False, indent=1, default=str))
+    import sys
+    if "--plots-only" in sys.argv:                 # 只从 results.json 重画图与补充台账，不重跑任何版本
+        plots(json.loads((EXP / "results.json").read_text()))
+        annotate_ledger()
+    else:
+        r = run()
+        annotate_ledger()
+        print(json.dumps({v: r[v].get("decision") for v in V.VERSIONS}, ensure_ascii=False, indent=1, default=str))
