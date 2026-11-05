@@ -1,0 +1,22 @@
+P-3 anchor pairs: {'H->L': 457, 'L->H': 455, 'L->L': 112, 'H->H': 107, 'L->HL': 6, 'HL->H': 5, 'HL->L': 4, 'H->HL': 3}
+same-type boxes 219/1149 = 19.0601%
+box k pivot_a == box k-1 pivot_b for all: True pairs 1148
+109 trades' signal-box pairs: {'H->L': 54, 'L->H': 34, 'L->L': 11, 'H->H': 7, 'H->HL': 2, 'L->HL': 1}
+  signal bar 2021-05-20 18:00: box 388 L->L pivots 2021-05-17 16:00:00+00:00 .. 2021-05-19 12:00:00+00:00 window_end 2021-05-19 16:00:00+00:00 n_1h 48 VAL 39326.34 VAH 45846.61
+  signal bar 2020-09-27 10:00: box 214 H->H pivots 2020-09-24 20:00:00+00:00 .. 2020-09-26 04:00:00+00:00 window_end 2020-09-26 08:00:00+00:00 n_1h 36 VAL 10614.42 VAH 10740.13
+
+P-5 trades whose next box is confirmed exactly at the signal close: 2
+  signal bar 2022-08-04 11:00:00+00:00 close 22872.3 ATR 182.8: used box 719 VAL 22824.8 VAH 23426.8; box 720 (L->H 2022-08-02 08:00:00+00:00..2022-08-03 12:00:00+00:00) VAL 22854.3 (+0.16 ATR) VAH 23440.6 (+0.08 ATR); new band [22762.9,22945.7]
+  signal bar 2023-11-26 19:00:00+00:00 close 37360.0 ATR 154.7: used box 1118 VAL 37232.8 VAH 37891.6; box 1119 (H->H 2023-11-24 12:00:00+00:00..2023-11-25 20:00:00+00:00) VAL 37620.9 (+2.51 ATR) VAH 37918.1 (+0.17 ATR); new band [37543.6,37698.3]
+engine box_id == latest box with available_time <= open_time: True
+CSV rows (0-based data index) with signal_time == profile_superseded_at: [3, 72, 116] -> file line numbers incl. header: [5, 74, 118] status ['blocked_rr_vah_not_above_close', 'filled', 'filled']
+
+P-7 box_id is positional RangeIndex: True box_id
+pivot_a_time == 4H open of pivot_a_idx: True | pivot_b_time == 4H open: True
+natural key unique: True | available_time unique: True
+first 1H bar using each box opens at available_time: True boxes w/o IS bar: 0
+BOX_COLUMNS have superseded/invalid fields: []
+boxes with an INVALID bar while current: 438 | boxes with a breakdown bar while current: 340
+box 13: key 2020-01-20 20:00:00+00:00|2020-01-21 16:00:00+00:00 type b L 4H low at pivot_b 8448.6 available 2020-01-22 16:00:00+00:00 superseded 2020-01-23 04:00:00+00:00 INVALID while current: False
+prefix cuts 12: tables not equal to the full-table prefix: 0  (1s)
+data start 2020-02-01: common boxes 1127 | same box_id for same natural key: 0 | example offset 22

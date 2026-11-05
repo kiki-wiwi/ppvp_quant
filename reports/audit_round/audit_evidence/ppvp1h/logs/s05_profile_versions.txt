@@ -1,0 +1,32 @@
+instrumented copy reproduces all 15 engine outputs bit for bit: True
+CSV profile_id == box at signal: True
+CSV profile_id_at_t1 == box at first-test LOW bar: True
+CSV profile_id_at_t2_start == box at t2_start: True
+
+109 trades:
+  all four boxes identical (start, low, t2, signal): 78
+  box changed somewhere between first-test start and signal: 31
+  CSV flag profile_changed_between_tests True: 27
+  changed incl. first-test start (start/low/t2 vs signal): 31
+  box at first-test START differs from box at first-test LOW bar: 4
+  box at t2_start differs from box at signal: 4
+  box at first-test start differs from signal box: 31
+  n box switches in sequence distribution: {0: 78, 1: 25, 2: 6}
+  all in-sequence switches were carries: True
+  |VAL(signal box) - VAL(first-test-start box)| / ATR_signal for changed:  {'count': 31.0, 'mean': 0.456, 'std': 0.366, 'min': 0.006, '25%': 0.154, '50%': 0.411, '75%': 0.616, 'max': 1.303}
+  hours from signal-box available_time to signal bar open: min 0 median 12 max 49
+  rows where seq_start != t1_bar (low not on the first bar of test 1): 45
+                 signal_open            seq_start_time  box_at_seq_start  box_at_t1_low  box_at_t2_start  box_at_signal  n_box_switches_in_sequence  csv_profile_changed_between_tests
+0  2020-01-22 19:00:00+00:00 2020-01-22 08:00:00+00:00                12             13               13             13                           1                              False
+14 2020-06-07 00:00:00+00:00 2020-06-06 12:00:00+00:00               118            118              118            119                           1                               True
+27 2020-10-14 18:00:00+00:00 2020-10-14 10:00:00+00:00               227            228              228            228                           1                              False
+46 2021-06-04 08:00:00+00:00 2021-06-02 00:00:00+00:00               400            400              401            402                           2                               True
+56 2021-09-25 13:00:00+00:00 2021-09-25 05:00:00+00:00               485            486              486            486                           1                              False
+63 2022-01-16 22:00:00+00:00 2022-01-16 13:00:00+00:00               577            577              577            578                           1                               True
+71 2022-06-18 03:00:00+00:00 2022-06-17 14:00:00+00:00               690            691              691            691                           1                              False
+90 2023-02-13 18:00:00+00:00 2023-02-13 09:00:00+00:00               873            873              873            874                           1                               True
+  trades whose signalling first test is a rolled failed second test: 21  rolls distribution: {0: 88, 1: 18, 2: 2, 3: 1}
+  of those, box at chain start (original ARMED->TOUCH1 bar) differs from signal box: 15
+  chain spans >1 profile version (chain start, first-test start, low, t2 start vs signal): 37
+  chain length hours (chain start -> signal): median 12 max 64
+  in-chain box switches: 46; all carried: True; |VAL_new - seq_val|/ATR_switch max 0.985 (rule: <= k1+k2 = 1.0)

@@ -1,0 +1,8 @@
+raw IS archive rows 35064 dups 0 missing vs grid 0 placeholder rows 0 zero-volume rows 0
+raw index == parquet IS index: True | values bit-identical: True
+official 4H IS rows 8766 local 8766 common 8766
+  open mismatches: 0 []
+  high mismatches: 0 []
+  low mismatches: 0 []
+  close mismatches: 1 ['2023-11-10 12:00:00+00:00']
+  volume rel diff > 1e-6: [('2022-07-16 04:00:00+00:00', 0.000451), ('2023-11-10 12:00:00+00:00', 0.176457)]

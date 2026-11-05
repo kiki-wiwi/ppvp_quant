@@ -1,0 +1,6 @@
+exit_ref rel diff (CSV vs independent): 4.150155774595987e-10
+SL rel diff (CSV vs signal SL): 4.150155774595987e-10
+SL exact (in-memory trades vs signal SL): True
+gross R before costs, fill-based denominator (published): mean -0.2212; SL trades range [-0.9978, -0.9234]
+gross R before costs, reference denominator q*(close-SL):  mean -0.2257; SL trades range [-1.0000, -1.0000]
+stop distance d_sl: min 0.00261 median 0.01244; trades with d_sl < 0.5%: 3

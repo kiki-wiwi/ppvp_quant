@@ -1,0 +1,18 @@
+IS boxes: 1149; boxes with a POC tie (>=2 bins within 1e-9 of max): 54; VA steps decided by a tie: 12
+VA coverage (share of window volume inside [VAL,VAH] bins): min 0.7000 median 0.7098 max 0.7426
+
+VA two-row (pair) rule vs engine one-bin rule, trade signal boxes (|shift|/ATR):
+  VAL median 0.061 P90 0.215 max 1.205 share!=0 51.4% share>0.5ATR 2.8%
+  VAH median 0.000 P90 0.204 max 0.950 share!=0 49.5% share>0.5ATR 2.8%
+Window extended to available_time (adds the 20 post-pivot 1H bars) vs engine window, trade signal boxes:
+  VAL median 0.406 P90 1.742 max 4.757 share!=0 89.0% share>0.5ATR 46.8%
+  POC median 0.325 P90 2.704 max 10.607 share!=0 81.7% share>0.5ATR 46.8%
+  VAH median 0.543 P90 2.081 max 8.966 share!=0 95.4% share>0.5ATR 52.3%
+  excluded post-pivot hours as share of (window + excluded): median 0.45
+  hours from window_end (last profiled data) to signal close: min 21 median 33 max 70
+
+pivot-pair types of the 109 trades' signal boxes: {'HL': 54, 'LH': 34, 'LL': 11, 'HH': 7, 'HHL': 2, 'LHL': 1}  same-type (HH/LL): 18
+trades whose signal-bar close coincides with the confirmation of the NEXT box (box superseded at the decision moment): 2 of 109 ; signal closes on a 4H boundary: 18
+      box  h_avail_to_signal_open                     signal
+69    719                    27.0  2022-08-04 11:00:00+00:00
+106  1118                    31.0  2023-11-26 19:00:00+00:00

@@ -1,0 +1,3 @@
+reproduced: {'null_mean_r_mean': -0.116329, 'actual_mean_r': -0.330003, 'p_lower': 0.037592}  published: {'null_mean_r_mean': -0.116329, 'actual_mean_r': -0.330003, 'p_lower': 0.037592}
+candidate bars violating a stated rule: 0 ; pool sizes min/median/max 23 738 1371 ; windows used {30: 109}
+real entry bars marked flat_at_close: 0

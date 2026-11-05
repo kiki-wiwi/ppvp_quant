@@ -1,0 +1,5 @@
+vol30d (30 closes)               raw signals   1 of 120 | trades   1 of 109
+SMA200 (200 closes)              raw signals  18 of 120 | trades  15 of 109
+sma200_up (SMA200 shifted 20)    raw signals  19 of 120 | trades  16 of 109
+dd365 / vol30d_pct (365 closes)  raw signals  35 of 120 | trades  32 of 109
+first signal 2020-01-22 20:00:00+00:00 D_last 2020-01-21 -> SMA200 window = 179 spot + 21 perp closes

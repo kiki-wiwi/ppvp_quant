@@ -1,0 +1,9 @@
+[TP] TP exits 44; exit-bar high - TP: min 2.4520; touch-only (penetration < 1 tick): 0; penetration < 1bp of price: 1; < 5bp: 4
+[geometry] d_tp vs fill: min 1.01 bp (all > 0: True); d_sl min 26.1 bp
+[geometry] TP exits with negative net pnl: 4, their d_tp (bp): [1.72, 3.73, 3.53, 1.01]
+[geometry] trades with d_tp < 3 x TP round-trip cost (11 bp): 14
+[sizing] leverage min/max 1.000000/1.000000; capped 0; notional == equity_at_entry: True
+[cost/R] fees 0.0749R, slippage 0.0338R, funding 0.0100R, total 0.1188R
+[next-open entry] total net pnl change (fixed qty & exits): +24.38 USDT on -45633.77; max per-trade |change| 7.94 USDT; max |R change| 0.0113R
+[next-open entry] next open at/below SL or at/above TP: 0
+[ambiguous SL&TP] trade 58 2021-11-22 11:00:00+00:00: worst-case net -832.41 USDT (-1.096R); TP-first alternative 1482.73 USDT (+1.952R); swing 2315.14 USDT

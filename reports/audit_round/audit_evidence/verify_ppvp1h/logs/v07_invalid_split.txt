@@ -1,0 +1,2 @@
+INVALID on first bar: 172 | of which breakdown on that very bar: 23 | inherited at activation (breakdown memory; veto is off in the baseline): 149
+so 'turned INVALID while current' (by a breakdown while the box was current) = 289 of 1149

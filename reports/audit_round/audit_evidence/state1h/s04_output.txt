@@ -1,0 +1,21 @@
+reconstructed running first-test low matches kernel t1_low at all 120 signal bars: False
+
+IS bars (prior state TOUCH1/DEPARTED/TOUCH2) with an intrabar pierce of the first-test low (>=1 tick) or of the band low and a close back at or above max(VAL, first-test low): 345
+state_after    1    2  3   4
+state_before                
+2              1  208  1   0
+3             14   25  4  26
+4             33    1  1  31
+  of which went to INVALID (5): 0 ; breakdown flag set on any of them: 0
+  went to ARMED (1) on such a bar: 48 -> explained by a box switch at that bar: 2 ; otherwise only by a raw signal (not broken down here)
+  any transition to ARMED on such a bar without box switch and without raw signal: 0
+
+transitions into INVALID from ARMED/TOUCH1/DEPARTED/TOUCH2: 292
+{'close-based breakdown bar': 276, 'box switch (memory block)': 16}
+breakdown bars with close >= VAL (should be 0): 0 ; with close >= band low: 0
+
+merges (DEPARTED -> TOUCH1 without separation): 101 ; of which the merged touch set a new lower first-test low: 30
+
+IS bar occupancy by state: {'ARMED': 0.458, 'INVALID': 0.3121, 'DEPARTED': 0.1563, 'TOUCH1': 0.0617, 'TOUCH2': 0.0093, 'NO_BOX': 0.0025}
+active sequences (TOUCH1/DEPARTED/TOUCH2) ended by INVALID: 181 (close-based breakdown bar: 177 , box switch memory block: 4 )
+active sequences reset to ARMED by a non-carry box switch: 94

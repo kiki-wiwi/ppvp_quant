@@ -1,0 +1,4 @@
+S-1 filled bounce<1.10: 12 | of which bounce-only (gap<6): 12
+S-1 filled bounce-only (gap<6): 56
+plain-sense pullback episodes per filled trade (runs of touched bars from chain start to signal): {2: 73, 3: 22, 4: 9, 5: 3, 6: 2}
+trades on exactly the 2nd episode: 73 | >=3 episodes: 36 | >=3 with no roll (merges only): 15

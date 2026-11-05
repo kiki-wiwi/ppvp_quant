@@ -1,0 +1,10 @@
+  return _methods._mean(a, axis=axis, dtype=dtype,
+  ret = ret.dtype.type(ret / rcount)
+start-of-window gap 2020-01-01 00:00 x6h: ratio nan, NaN-volume rows 6, boxes 19, boxes with NaN volume 0, of which VAL==P_low 0, vsma NaN bars after warm-up 5
+  return _methods._mean(a, axis=axis, dtype=dtype,
+  ret = ret.dtype.type(ret / rcount)
+start-of-window gap 2020-01-01 00:00 x24h: ratio nan, NaN-volume rows 24, boxes 19, boxes with NaN volume 0, of which VAL==P_low 0, vsma NaN bars after warm-up 23
+  return _methods._mean(a, axis=axis, dtype=dtype,
+  ret = ret.dtype.type(ret / rcount)
+mid-month, OKX history empty gap 2020-01-15 00:00 x6h: ratio nan, NaN-volume rows 6, boxes 19, boxes with NaN volume 1, of which VAL==P_low 1, vsma NaN bars after warm-up 25
+network attempts 0

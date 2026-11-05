@@ -1,0 +1,4 @@
+bit-identical to production kernel per output: {'state': True, 'sig_raw': True, 'pattern': True, 'breakdown': True, 'need_above': True, 'box_id': True, 'zone_lo': True, 'zone_hi': True, 'sl': True, 'tp': True, 't1_low': True, 't2_low': True, 't1_bar': True, 't2_bar': True, 't2_start': True}
+ALL IDENTICAL: True
+events: {"box_switch": 1149, "carry_keep": 139, "carry_keep_in_state": {"2": 36, "3": 97, "4": 6}, "reset_mid_sequence": 134, "hv_block": 155, "breakdown_active": 283, "breakdown_inv": 514, "merge": 106, "roll": 55, "t2_accept": 207, "t2_accept_by": {"bounce_only": 96, "bars_only": 3, "both": 108}, "activation_req": 108, "signal_req": 120, "t1_start": 428, "t1_start_at_activation_in_band": 83}
+raw signals 120 filled 109

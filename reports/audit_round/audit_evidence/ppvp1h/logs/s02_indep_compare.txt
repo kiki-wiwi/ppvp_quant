@@ -1,0 +1,33 @@
+4H open: max |diff| = 0.0
+4H high: max |diff| = 0.0
+4H low: max |diff| = 0.0
+4H close: max |diff| = 0.0
+4H volume: max |diff| = 1.1641532182693481e-10
+4H index equal: True  available_time equal: True
+4H open times on UTC 4h grid: True
+4H consecutive (no gaps): False
+pivot highs equal: True 576  pivot lows equal: True 583  HL bars: 9  total pivot bars: 1150
+confirm lag (pivot open -> confirm) unique hours: [24]
+n boxes engine / indep: 1149 1149
+  available_time equal: True
+  pivot_a_time equal: True
+  pivot_b_time equal: True
+  window_start equal: True
+  window_end equal: True
+  n_1h equal: True  n_1h == 4*(b-a+1): True
+  types equal: True True
+  VAL: exact-equal 1149/1149, max rel diff 0.000e+00
+  POC: exact-equal 1149/1149, max rel diff 0.000e+00
+  VAH: exact-equal 1149/1149, max rel diff 0.000e+00
+  P_low: exact-equal 1149/1149, max rel diff 0.000e+00
+  P_high: exact-equal 1149/1149, max rel diff 0.000e+00
+available_time == pivot_b open + (R+1)*4h for all: True
+available strictly increasing: True  window_start strictly increasing: True
+window_start == previous box's pivot_b (P=2 chaining): True
+window hours median / P10 / P90 / min / max: 32.0 16.0 56.0 8 152
+update interval hours median: 28.0  min: 4.0
+VA width pct P10/median/P90: 0.0101 0.0269 0.0770
+pivot pairs: {'HL': 457, 'LH': 455, 'LL': 112, 'HH': 107, 'LHL': 6, 'HLH': 5, 'HLL': 4, 'HHL': 3}
+same-type (HH or LL) boxes: 219 of 1149 = 19.060%
+P_low<=VAL<=POC<=VAH<=P_high: True
+zero-range 1H bars in IS: 0

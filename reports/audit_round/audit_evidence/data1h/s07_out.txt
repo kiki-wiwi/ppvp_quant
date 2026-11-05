@@ -1,0 +1,46 @@
+cut 2020-01-04 17:00: prefix bars 89, boxes 1 (full-run boxes available <= cut: 1), box cols differing [], signal cols differing []
+cut 2020-03-12 13:00: prefix bars 1717, boxes 50 (full-run boxes available <= cut: 50), box cols differing [], signal cols differing []
+cut 2021-03-02 02:00: prefix bars 10226, boxes 325 (full-run boxes available <= cut: 325), box cols differing [], signal cols differing []
+cut 2021-05-19 15:00: prefix bars 12111, boxes 388 (full-run boxes available <= cut: 388), box cols differing [], signal cols differing []
+cut 2022-06-18 02:00: prefix bars 21578, boxes 692 (full-run boxes available <= cut: 692), box cols differing [], signal cols differing []
+cut 2022-11-09 23:00: prefix bars 25055, boxes 799 (full-run boxes available <= cut: 799), box cols differing [], signal cols differing []
+cut 2023-11-10 14:00: prefix bars 33830, boxes 1106 (full-run boxes available <= cut: 1106), box cols differing [], signal cols differing []
+cut 2023-12-31 22:00: prefix bars 35062, boxes 1149 (full-run boxes available <= cut: 1149), box cols differing [], signal cols differing []
+
+thin-hour treatment: boxes baseline 1149 vs dropped 1149
+4H 2021-03-02 00:00 baseline: {'open': 49594.99, 'high': 50221.77, 'low': 48848.0, 'close': 48988.38, 'volume': 37421.744, 'n_bars': 4.0}
+4H 2021-03-02 00:00 dropped : {'open': 49594.99, 'high': 50221.77, 'low': 48848.0, 'close': 48988.38, 'volume': 37357.812, 'n_bars': 3.0}
+   sig_raw    rows differing: 0 
+   signal     rows differing: 0 
+   breakdown  rows differing: 0 
+   state      rows differing: 0 
+   box_id     rows differing: 0 
+   sl         rows differing: 2 first 2021-03-13 04:00:00+00:00
+   tp         rows differing: 0 
+   VAL        rows differing: 0 
+   VAH        rows differing: 0 
+   vsma rel diff over next 24h: max 0.1155 ; atr rel diff max 0.0666
+                           v/vsma_base   bear  below_zone  body/atr  state
+open_time                                                                 
+2021-03-02 02:00:00+00:00     0.734724   True       False  0.096944      1
+2021-03-02 03:00:00+00:00     0.631360   True       False  0.412779      1
+2021-03-02 04:00:00+00:00     0.715415  False       False -0.261024      1
+2021-03-02 05:00:00+00:00     0.604657   True       False  0.663234      1
+2021-03-02 06:00:00+00:00     0.857979   True       False  0.067383      1
+2021-03-02 07:00:00+00:00     0.741093   True       False  0.457595      1
+2021-03-02 08:00:00+00:00     0.933017  False       False -0.790992      1
+2021-03-02 09:00:00+00:00     0.601512  False       False -0.380502      1
+2021-03-02 10:00:00+00:00     0.821986   True       False  0.592702      1
+2021-03-02 11:00:00+00:00     0.669188  False       False -0.168809      1
+2021-03-02 12:00:00+00:00     0.920467   True       False  0.041099      1
+2021-03-02 13:00:00+00:00     0.831667  False       False -0.276894      1
+2021-03-02 14:00:00+00:00     2.098400   True       False  0.158614      1
+2021-03-02 15:00:00+00:00     1.321441   True       False  0.347462      1
+2021-03-02 16:00:00+00:00     2.400573   True       False  1.705108      1
+2021-03-02 17:00:00+00:00     1.714467  False       False -0.444743      1
+2021-03-02 18:00:00+00:00     0.923557   True       False  0.223897      1
+2021-03-02 19:00:00+00:00     1.304225   True       False  0.303478      1
+2021-03-02 20:00:00+00:00     1.215624  False       False -0.093733      1
+2021-03-02 21:00:00+00:00     0.867407   True       False  0.182547      1
+2021-03-02 22:00:00+00:00     0.551050  False       False -0.540542      1
+trades entered within [-3d, +5d] of the thin hour: 0 []

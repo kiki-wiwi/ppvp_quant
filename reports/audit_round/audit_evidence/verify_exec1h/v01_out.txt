@@ -1,0 +1,42 @@
+== data
+1H bars 35064 2020-01-01 00:00:00+00:00 2023-12-31 23:00:00+00:00 | same as load_is_market: True
+1H gaps (diff != 1h): 0 | min/max diff h: 1.0 1.0
+funding settlements in window 4383 | all on 8h grid: True | NaN rates in window: 0
+trades 109 {'SL': 65, 'TP': 44}
+== E-1/E-2: engine_path (market mode) vs backtester on the baseline
+equity identical: True
+  entry_bar: identical=True
+  exit_bar: identical=True
+  entry_px: identical=True
+  exit_px: identical=True
+  qty: identical=True
+  fees: identical=True
+  funding: identical=True
+  pnl: identical=True
+  hold_bars: identical=True
+  total funding backtester 1438.810601  engine_path 1438.810601  n_settlements 163
+  settlements mapped to entry_bar+1 (not charged by either engine: entry close == T): 10 | of those, bar entry_bar+1 opens exactly at T: True
+== E-3: gaps between consecutive baseline signals (C1 parents are the tradable baseline signals)
+tradable 117 min gap 5 gaps<=4: 0 | raw 120 min gap 5 gaps<=4: 0
+smallest 5 tradable gaps: [5, 11, 12, 16, 17]
+== E-4: gross R before costs, fill-based vs reference denominator
+mean gross R (fill denom) -0.2212 | (ref denom) -0.2257
+SL trades 65 gapped through SL at exit-bar open: 0
+SL fill-denom range [-0.9978, -0.9234]; ref-denom range [-1.000000, -1.000000]
+tightest-stop SL trade: idx 99 entry 2023-08-26 18:00:00+00:00 d_sl 26.1bp gross_R_fill -0.9234; hand: -(close-SL)/(fill-SL) = -0.9234
+additivity with the common fill denominator: gross -0.2212 - costs 0.1188 = net -0.3400 (ledger net mean -0.3400)
+== E-5: exit-bar ambiguity sets
+left panel 56 strict reached 16
+SL&TP idx: [58] | SL&POC left-panel not-strict idx: [46, 58]
+distinct trades behind the '1 + 2' counts: [np.int64(46), np.int64(58)]
+union SL&TP | SL&POC(any): [6, 46, 58, 82] = 4 / 109 = 3.67%
+  idx 6 entry 2020-04-05 07:00:00+00:00 exit-bar 2020-04-05 17:00:00+00:00 O 6782.48 H 6853.15 L 6668.02 | SL 6713.00 POC 6786.30 TP 6958.80 | strict POC before exit: True
+  idx 46 entry 2021-07-01 05:00:00+00:00 exit-bar 2021-07-01 06:00:00+00:00 O 34311.55 H 34449.00 L 33380.00 | SL 33957.60 POC 34436.28 TP 35349.72 | strict POC before exit: False
+  idx 58 entry 2021-11-22 11:00:00+00:00 exit-bar 2021-11-22 13:00:00+00:00 O 57176.63 H 59624.56 L 56577.00 | SL 56692.22 POC 58487.29 TP 58852.78 | strict POC before exit: False
+  idx 82 entry 2023-02-01 10:00:00+00:00 exit-bar 2023-02-01 19:00:00+00:00 O 23073.30 H 23495.00 L 22747.00 | SL 22884.90 POC 23119.96 TP 23755.71 | strict POC before exit: True
+POC < TP for SL&TP trades: [(58, True, True)]
+== E-6: cost block identities
+gross_at_fill -37805.06 fees 6389.90 funding 1438.81 slippage 2897.01 net -45633.77
+gross_at_fill - fees - funding = -45633.77 (net -45633.77)
+gross_at_fill - fees - funding - slippage = -48530.78 (double count)
+gross_ref = gross_at_fill + slippage = -34908.05 ; gross_ref - slip - fees - funding = -45633.77

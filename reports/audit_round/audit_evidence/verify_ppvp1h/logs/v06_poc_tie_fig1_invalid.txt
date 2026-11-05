@@ -1,0 +1,9 @@
+                    entry  box exit  entry_px  POC_low  POC_high  strict_mfe  above_low  reached_low  above_high  reached_high
+2020-03-01 06:00:00+00:00   41   SL    8595.6   8592.6    8603.1      8762.2      False        False        True          True
+2021-03-13 05:00:00+00:00  334   TP   56951.8  56673.1   57065.8     57720.0      False        False        True          True
+2021-08-17 18:00:00+00:00  457   SL   45824.6  45921.0   46024.8     46220.2       True         True        True          True
+2021-11-06 14:00:00+00:00  519   TP   60612.1  61195.1   61273.9     61534.8       True         True        True          True
+2022-09-06 15:00:00+00:00  748   TP   19832.3  19726.8   19769.5         NaN      False        False       False         False
+2023-06-13 19:00:00+00:00  976   TP   25880.4  25893.5   25917.5     26041.8       True         True        True          True
+Figure-1 left-panel relevant (SL, POC above entry, full bars) flips: 1
+boxes with an INVALID bar while current: 438; INVALID already on their first bar (memory/hv_block or veto): 172; turned INVALID later while current: 266

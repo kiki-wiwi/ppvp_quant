@@ -1,0 +1,83 @@
+raw 120 filled 109 Counter({'filled': 109, 'skipped_position_open': 8, 'blocked_rr_vah_not_above_close': 3})
+
+== S-1 separation ==
+filled: by_bounce 109 | by_bars 53 | bars-only 0 | bounce-only 56
+all 120: bars-only 1                   signal_time                 status    bounce  gap
+105 2023-07-01 05:00:00+00:00  skipped_position_open  0.915532    7
+filled min bounce 1.0032 | <1.10: 12 | <1.05: 9
+filled gap==2 (single departure bar): 15 | n_dep_bars==1: 15
+filled gap quantiles {0.0: 2.0, 0.25: 3.0, 0.5: 5.0}
+filled: bounce vs departure-bar band (own ATR) < 1: 13 | (touch-bar ATR) < 1: 5
+   of those (own ATR) also by_bars: 1 | (touch ATR) also by_bars: 0
+                  signal_time    bounce  bounce_dep_own  bounce_dep_sameatr  gap
+0   2020-01-22 20:00:00+00:00  1.003161        0.968370            0.991314    2
+6   2020-03-22 10:00:00+00:00  1.145516        0.989361            1.093093    5
+13  2020-06-04 09:00:00+00:00  1.221955        0.878392            1.097331    8
+23  2020-09-20 22:00:00+00:00  1.043432        0.976624            1.020810    4
+28  2020-10-17 15:00:00+00:00  1.004609        0.852571            0.948406    5
+34  2020-12-29 14:00:00+00:00  1.028056        0.997163            1.017739    2
+40  2021-03-15 13:00:00+00:00  1.036679        0.982187            1.018297    3
+45  2021-05-22 06:00:00+00:00  1.090991        0.950775            1.042667    4
+56  2021-09-25 14:00:00+00:00  1.017114        0.953026            0.995061    3
+57  2021-10-09 01:00:00+00:00  1.033864        0.919456            0.993564    4
+81  2022-10-12 19:00:00+00:00  1.053424        0.941147            1.014470    4
+92  2023-02-22 03:00:00+00:00  1.009676        0.947012            0.988023    3
+109 2023-08-26 18:00:00+00:00  1.118958        0.917297            1.047815    5
+filled with >=1 merge in chain: 22 {3: 2, 0: 87, 2: 6, 1: 14} | with >=1 merge in final t1: 19
+ledger departure columns match my trace (120): True | qualified_by labels: True
+
+== S-2 carry ==
+filled with >=1 carry in chain: 37 {1: 28, 0: 72, 2: 9} | start box != signal box: 37
+|dVAL|/ATR(sig) max 1.303 median 0.481 | dVAH% min -4.77 max 2.84
+t2 start not a touch of chain-start box band: 10 | of final-seq-start box band: 6
+departure or second touch exists only vs moved band: 7 | dep-only 4 | t2-only 3 | with box switch at that bar: 4
+                  signal_time     d0    t2s  dep_only_moved  dep_switch  t2_only_moved  t2_switch                      d0_t                     t2s_t
+34  2020-12-29 14:00:00+00:00   8724   8725            True        True          False      False 2020-12-29 12:00:00+00:00 2020-12-29 13:00:00+00:00
+53  2021-08-17 18:00:00+00:00  14264  14270           False       False           True      False 2021-08-17 08:00:00+00:00 2021-08-17 14:00:00+00:00
+59  2021-11-06 14:00:00+00:00  16204  16207            True        True          False      False 2021-11-06 04:00:00+00:00 2021-11-06 07:00:00+00:00
+71  2022-06-18 04:00:00+00:00  21576  21577            True       False          False      False 2022-06-18 00:00:00+00:00 2022-06-18 01:00:00+00:00
+93  2023-03-07 01:00:00+00:00  27843  27864           False       False           True       True 2023-03-06 03:00:00+00:00 2023-03-07 00:00:00+00:00
+97  2023-04-24 18:00:00+00:00  29026  29030           False       False           True      False 2023-04-24 10:00:00+00:00 2023-04-24 14:00:00+00:00
+108 2023-08-13 06:00:00+00:00  31668  31685            True        True          False      False 2023-08-12 12:00:00+00:00 2023-08-13 05:00:00+00:00
+t1low above signal-bar band top: 4 | below signal-bar band low: 45
+
+== S-3 roll ==
+filled roll dist {0: 88, 1: 18, 2: 2, 3: 1} | >=1: 21
+earlier lower pullback low in chain: 10 | all have rolls: True | SL gap ATR 0.216-1.432 | % of close 0.114-1.865
+
+== S-4 first test at activation ==
+start_at_activation                  False  True 
+prev_cls                                         
+prev bar fully above band               66     11
+prev close above band, low in/below      1      9
+prev close inside band                   0     22
+filled: activation start with prior close inside band: 22 | of which no roll: 17
+
+== S-5 lag ==
+filled lag dist {0: 35, 1: 32, 2: 20, 3: 12, 4: 5, 5: 2, 6: 3} | lag>=1: 74 | all-120 max lag 8
+
+== S-6 reclaim ==
+filled close<VAL 6 | close<t1low 6 | either 8 | both 4
+
+== S-7 touch geometry ==
+filled: final-t1 bar wholly below band 1 | t2 bar wholly below 1 | any chain test bar wholly below 2
+t1low below signal band low: n 45 max ATR 4.257 | stop dist ATR max 5.168
+
+== S-10 ==
+signals with engulfing 52 | prior low used 0
+
+== S-13 ledger flag ==
+filled ledger flag True: 27 | filled with >=1 carry: 37
+missed: 10 | involve rolls: 7 | switch inside final t1 (no roll): 3
+flag True but no carry: 0
+                  signal_time  n_roll     cs  final_seq_start  t1_last    t2s      carry_bars  start_box  final_seq_box  sig_box
+0   2020-01-22 20:00:00+00:00       0    512              512      520    522           [520]         12             12       13
+27  2020-10-14 19:00:00+00:00       0   6898             6898     6900   6902          [6900]        227            227      228
+28  2020-10-17 15:00:00+00:00       1   6956             6969     6969   6974          [6964]        230            231      231
+39  2021-03-13 05:00:00+00:00       2  10474            10484    10485  10488         [10484]        333            334      334
+53  2021-08-17 18:00:00+00:00       1  14251            14262    14263  14270         [14256]        456            457      457
+56  2021-09-25 14:00:00+00:00       0  15197            15197    15200  15203         [15200]        485            485      486
+62  2021-11-28 15:00:00+00:00       1  16730            16737    16737  16742         [16736]        537            538      538
+69  2022-05-27 07:00:00+00:00       1  20990            21032    21038  21048  [21012, 21024]        674            676      676
+71  2022-06-18 04:00:00+00:00       2  21552            21566    21575  21577         [21572]        690            690      691
+104 2023-06-30 17:00:00+00:00       3  30583            30620    30620  30637  [30588, 30616]        987            989      989

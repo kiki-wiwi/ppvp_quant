@@ -1,0 +1,6 @@
+box prefix cuts: 1149 boxes x 2 cuts, failures: 0  (112s)
+partial 4H bar dropped in every 'before' cut and present in every 'at' cut: True
+random cuts: 60 failures: 0
+mapping boundary: 1149 boxes checked, violations 0; boxes whose available_time has no 1H bar in IS: []
+state-machine box_id == map_boxes_to_1h everywhere: True
+any bar using a box with available_time > open_time: False

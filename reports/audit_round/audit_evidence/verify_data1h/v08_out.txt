@@ -1,0 +1,7 @@
+segment: {'name': 'IS', 'start': '2020-01-01 00:00:00+00:00', 'end_exclusive': '2024-01-01 00:00:00+00:00'} | definition mentions IS: True
+BTCUSDT_perp_1h: keys=['dropped_placeholder_bars_in_file', 'first', 'gap_fills_in_file', 'last', 'path', 'provider', 'rows_total', 'rows_used_in_this_round', 'sha256_actual', 'sha256_recorded', 'use']
+   'last' at/after IS_END: True | rows_total > rows_used: True | post-IS gap-fill record present: True (carries volume ratio: True) | post-IS placeholder present: True
+BTCUSDT_funding: keys=['dropped_placeholder_bars_in_file', 'first', 'gap_fills_in_file', 'last', 'path', 'provider', 'rows_total', 'rows_used_in_this_round', 'sha256_actual', 'sha256_recorded', 'use']
+   'last' at/after IS_END: True | rows_total > rows_used: True | post-IS gap-fill record present: False (carries volume ratio: False) | post-IS placeholder present: False
+BTCUSDT_spot_1h: keys=['dropped_placeholder_bars_in_file', 'first', 'gap_fills_in_file', 'last', 'path', 'provider', 'rows_total', 'rows_used_in_this_round', 'sha256_actual', 'sha256_recorded', 'use']
+   'last' at/after IS_END: True | rows_total > rows_used: True | post-IS gap-fill record present: False (carries volume ratio: False) | post-IS placeholder present: False
