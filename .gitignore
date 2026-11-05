@@ -11,3 +11,6 @@ __pycache__/
 *.log
 tmp/
 
+
+# impulse_study 1m 缓存（约 2.1M 行；由 data/manifest_impulse_1m.json 的 URL + SHA256 重建）
+data/processed_1m/
