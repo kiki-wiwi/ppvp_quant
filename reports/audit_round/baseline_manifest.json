@@ -1,10 +1,10 @@
 {
  "name": "B_original",
- "frozen_at_utc": "2026-11-05T03:55:35+00:00",
+ "frozen_at_utc": "2026-11-05T04:12:01+00:00",
  "definition": "BASELINE_STRATEGY / BASELINE_BACKTEST on the repository code at the commit below, BTCUSDT perp, IS [2020-01-01, 2024-01-01) UTC, data truncated at IS_END before entering the engine",
  "git": {
-  "commit": "b0298f221edd4643b960b8a42947e73a3c5e0fdb",
-  "describe": "b0298f2",
+  "commit": "9f3e1e4031b1500d219f61bcbf995468446059d8",
+  "describe": "9f3e1e4",
   "branch": "claude/sharp-darwin-k34sz1",
   "status_porcelain": "",
   "diff_stat_vs_head": ""
@@ -145,25 +145,7 @@
     "dropped_placeholder_bars_in_file": null
    }
   },
-  "one_minute": {
-   "manifest_path": "data/manifest_1m_is.json",
-   "rows": 2103840,
-   "parquet_sha256": "4bdf6df7f4ccb3935d9d3b4cc14fd8a904a2bf24090370103ce2ec1bb022fb8d",
-   "files": 48,
-   "daily_replacements": [
-    {
-     "day": "2023-11-10",
-     "hours_fixed": [
-      "2023-11-10 15:00:00+00:00",
-      "2023-11-10 16:00:00+00:00"
-     ],
-     "url": "https://data.binance.vision/data/futures/um/daily/klines/BTCUSDT/1m/BTCUSDT-1m-2023-11-10.zip",
-     "sha256": "60fbc08c0a73afa5f04d8bc9b8b960cb782435147c1a1080a2b449714db1ea20",
-     "checksum_verified": true
-    }
-   ],
-   "use": "只用于同根 K 线路径判定、成交量分布近似核对与 C1 限价单成交判定"
-  }
+  "finer_than_1h": "none used. Per the user's supplementary constraint (section 9), intrabar ordering is handled with the pre-declared worst-case rule on 1H bars. 1m archives downloaded before that constraint arrived (commit b0298f2) were deleted unused-for-results; see audit_report.md."
  },
  "seeds": {
   "round_master_seed": 20261105,
@@ -203,7 +185,6 @@
   "phase2_is_winrate_by_rr.png": "4cb25d6d1f044c4ab651b6072ba23c60e3bb538a13ccc0bbaccff965fe129aea"
  },
  "reproduce": [
-  "python -m ppvp_audit.data_1m --build   # 只在需要 1m 数据时；下载 IS 的 48 个月度归档并校验",
   "python -m ppvp_audit.manifest           # 本文件",
   "python -m ppvp_audit.repro_figures      # 五张图的核验版与 figure_checks.json"
  ],
