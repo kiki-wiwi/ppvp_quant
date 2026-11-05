@@ -60,16 +60,39 @@ def ambiguity_split(tr: pd.DataFrame, h: np.ndarray, poc_mode: bool) -> dict:
         limit_fill = ~tr["entry_is_market"].to_numpy(dtype=bool)
         fill_tp = limit_fill & (h[fb] >= tp)
         fill_stop_same = tr["fill_and_exit_same_bar"].to_numpy(dtype=bool)
+        # 成交那根触及止盈、按最坏路径不计，但下一根就按同一止盈价离场且没有资金费：单笔盈亏与先后无关，只差一根的离场时刻
+        same_pnl = fill_tp & (tr["exit_reason"] == "TP").to_numpy() & (xb == fb + 1) & (tr["funding"].to_numpy() == 0.0)
     else:
-        fill_tp = fill_stop_same = np.zeros(len(tr), bool)
+        fill_tp = fill_stop_same = same_pnl = np.zeros(len(tr), bool)
     pnl = exit_sl_tp | fill_tp | ((exit_sl_poc | be_same_bar) if poc_mode else False)
+    strict = pnl & ~(same_pnl & ~exit_sl_tp)
     orig = exit_sl_tp | exit_sl_poc | be_same_bar | fill_tp | fill_stop_same
     return {"n": int(len(tr)), "pnl_relevant": int(pnl.sum()), "pnl_relevant_share": float(pnl.mean()),
+            "pnl_relevant_excluding_same_pnl_fill_bar_tp": int(strict.sum()),
             "as_in_results_json": int(orig.sum()),
             "components": {"exit_bar_stop_and_tp": int(exit_sl_tp.sum()), "exit_bar_stop_and_poc": int(exit_sl_poc.sum()),
                            "partial_and_breakeven_same_bar": int(be_same_bar.sum()), "limit_fill_bar_touches_tp": int(fill_tp.sum()),
+                           "limit_fill_bar_touches_tp_but_same_trade_pnl": int(same_pnl.sum()),
                            "limit_fill_then_stop_same_bar": int(fill_stop_same.sum())},
             "stop_and_poc_counts_for_pnl": bool(poc_mode)}
+
+
+def _logit_lr_test(y: np.ndarray, x_red: np.ndarray, x_extra: np.ndarray) -> dict:
+    """逻辑回归的似然比检验：y ~ x_red + x_extra 对 y ~ x_red（x_red 含截距列）。不依赖 statsmodels。"""
+    from scipy.optimize import minimize
+    from scipy.stats import chi2
+
+    def fit(X):
+        def nll(beta):
+            z = X @ beta
+            return float(np.sum(np.logaddexp(0.0, z) - y * z))
+        r = minimize(nll, np.zeros(X.shape[1]), method="BFGS")
+        return r.x, -r.fun
+    b_red, ll_red = fit(x_red)
+    X = np.column_stack([x_red, x_extra])
+    b_full, ll_full = fit(X)
+    lr = 2.0 * (ll_full - ll_red)
+    return {"coef_extra": float(b_full[-1]), "lr_stat": float(lr), "p_value": float(chi2.sf(lr, 1))}
 
 
 # ---------------------------------------------------------------------------
@@ -106,7 +129,21 @@ def c1_descriptives(base: dict, bcfg) -> dict:
             diffs.append(b["ret"][u].mean() - b["ret"][fl].mean())
     diffs = np.array(diffs)
     imp = np.where(f, e["ret"], 0.0) - b["ret"]
+    # 止盈比例之差的按月聚类区间，以及控制 RR 之后“未成交”是否还解释止盈（逻辑回归似然比检验）
+    rng2 = np.random.default_rng(X.SEED_CLUSTER + 1)
+    tp_diffs = []
+    for _ in range(10000):
+        pick = rng2.choice(months, size=len(months), replace=True)
+        idx = np.concatenate([np.flatnonzero(month == m) for m in pick])
+        u, fl = idx[~f[idx]], idx[f[idx]]
+        if len(u) and len(fl):
+            tp_diffs.append(tp_b[u].mean() - tp_b[fl].mean())
+    ones = np.ones(len(bars))
+    lr_test = _logit_lr_test(tp_b.astype(float), np.column_stack([ones, np.log(rr_base)]), (~f).astype(float))
     return {
+        "tp_share_gap_unfilled_minus_filled": float(tp_b[~f].mean() - tp_b[f].mean()),
+        "tp_share_gap_ci_month_cluster": [float(np.percentile(tp_diffs, 2.5)), float(np.percentile(tp_diffs, 97.5))],
+        "tp_on_unfilled_controlling_log_rr_logit_lr": lr_test,
         "parents": int(len(bars)), "event_level_filled": int(f.sum()), "event_level_unfilled": int((~f).sum()),
         "passive_limits": int(passive.sum()), "marketable_at_placement": int((~passive).sum()),
         "median_limit_below_close_bp_passive": float(np.median((1 - lim[passive] / c[passive]) * 1e4)),

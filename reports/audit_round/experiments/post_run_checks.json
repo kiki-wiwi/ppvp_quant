@@ -6,12 +6,14 @@
    "n": 109,
    "pnl_relevant": 1,
    "pnl_relevant_share": 0.009174311926605505,
+   "pnl_relevant_excluding_same_pnl_fill_bar_tp": 1,
    "as_in_results_json": 4,
    "components": {
     "exit_bar_stop_and_tp": 1,
     "exit_bar_stop_and_poc": 4,
     "partial_and_breakeven_same_bar": 0,
     "limit_fill_bar_touches_tp": 0,
+    "limit_fill_bar_touches_tp_but_same_trade_pnl": 0,
     "limit_fill_then_stop_same_bar": 0
    },
    "stop_and_poc_counts_for_pnl": false
@@ -20,12 +22,14 @@
    "n": 54,
    "pnl_relevant": 1,
    "pnl_relevant_share": 0.018518518518518517,
+   "pnl_relevant_excluding_same_pnl_fill_bar_tp": 1,
    "as_in_results_json": 5,
    "components": {
     "exit_bar_stop_and_tp": 1,
     "exit_bar_stop_and_poc": 5,
     "partial_and_breakeven_same_bar": 0,
     "limit_fill_bar_touches_tp": 0,
+    "limit_fill_bar_touches_tp_but_same_trade_pnl": 0,
     "limit_fill_then_stop_same_bar": 0
    },
    "stop_and_poc_counts_for_pnl": false
@@ -34,12 +38,14 @@
    "n": 86,
    "pnl_relevant": 1,
    "pnl_relevant_share": 0.011627906976744186,
+   "pnl_relevant_excluding_same_pnl_fill_bar_tp": 1,
    "as_in_results_json": 4,
    "components": {
     "exit_bar_stop_and_tp": 1,
     "exit_bar_stop_and_poc": 4,
     "partial_and_breakeven_same_bar": 0,
     "limit_fill_bar_touches_tp": 0,
+    "limit_fill_bar_touches_tp_but_same_trade_pnl": 0,
     "limit_fill_then_stop_same_bar": 0
    },
    "stop_and_poc_counts_for_pnl": false
@@ -48,12 +54,14 @@
    "n": 31,
    "pnl_relevant": 0,
    "pnl_relevant_share": 0.0,
+   "pnl_relevant_excluding_same_pnl_fill_bar_tp": 0,
    "as_in_results_json": 2,
    "components": {
     "exit_bar_stop_and_tp": 0,
     "exit_bar_stop_and_poc": 2,
     "partial_and_breakeven_same_bar": 0,
     "limit_fill_bar_touches_tp": 0,
+    "limit_fill_bar_touches_tp_but_same_trade_pnl": 0,
     "limit_fill_then_stop_same_bar": 0
    },
    "stop_and_poc_counts_for_pnl": false
@@ -62,12 +70,14 @@
    "n": 57,
    "pnl_relevant": 0,
    "pnl_relevant_share": 0.0,
+   "pnl_relevant_excluding_same_pnl_fill_bar_tp": 0,
    "as_in_results_json": 4,
    "components": {
     "exit_bar_stop_and_tp": 0,
     "exit_bar_stop_and_poc": 4,
     "partial_and_breakeven_same_bar": 0,
     "limit_fill_bar_touches_tp": 0,
+    "limit_fill_bar_touches_tp_but_same_trade_pnl": 0,
     "limit_fill_then_stop_same_bar": 0
    },
    "stop_and_poc_counts_for_pnl": false
@@ -76,12 +86,14 @@
    "n": 165,
    "pnl_relevant": 3,
    "pnl_relevant_share": 0.01818181818181818,
+   "pnl_relevant_excluding_same_pnl_fill_bar_tp": 3,
    "as_in_results_json": 10,
    "components": {
     "exit_bar_stop_and_tp": 3,
     "exit_bar_stop_and_poc": 10,
     "partial_and_breakeven_same_bar": 0,
     "limit_fill_bar_touches_tp": 0,
+    "limit_fill_bar_touches_tp_but_same_trade_pnl": 0,
     "limit_fill_then_stop_same_bar": 0
    },
    "stop_and_poc_counts_for_pnl": false
@@ -90,12 +102,14 @@
    "n": 79,
    "pnl_relevant": 5,
    "pnl_relevant_share": 0.06329113924050633,
+   "pnl_relevant_excluding_same_pnl_fill_bar_tp": 3,
    "as_in_results_json": 10,
    "components": {
     "exit_bar_stop_and_tp": 1,
     "exit_bar_stop_and_poc": 6,
     "partial_and_breakeven_same_bar": 0,
     "limit_fill_bar_touches_tp": 4,
+    "limit_fill_bar_touches_tp_but_same_trade_pnl": 2,
     "limit_fill_then_stop_same_bar": 1
    },
    "stop_and_poc_counts_for_pnl": false
@@ -104,12 +118,14 @@
    "n": 109,
    "pnl_relevant": 2,
    "pnl_relevant_share": 0.01834862385321101,
+   "pnl_relevant_excluding_same_pnl_fill_bar_tp": 2,
    "as_in_results_json": 2,
    "components": {
     "exit_bar_stop_and_tp": 1,
     "exit_bar_stop_and_poc": 2,
     "partial_and_breakeven_same_bar": 0,
     "limit_fill_bar_touches_tp": 0,
+    "limit_fill_bar_touches_tp_but_same_trade_pnl": 0,
     "limit_fill_then_stop_same_bar": 0
    },
    "stop_and_poc_counts_for_pnl": true
@@ -118,12 +134,14 @@
    "n": 113,
    "pnl_relevant": 26,
    "pnl_relevant_share": 0.23008849557522124,
+   "pnl_relevant_excluding_same_pnl_fill_bar_tp": 26,
    "as_in_results_json": 26,
    "components": {
     "exit_bar_stop_and_tp": 3,
     "exit_bar_stop_and_poc": 2,
     "partial_and_breakeven_same_bar": 24,
     "limit_fill_bar_touches_tp": 0,
+    "limit_fill_bar_touches_tp_but_same_trade_pnl": 0,
     "limit_fill_then_stop_same_bar": 0
    },
    "stop_and_poc_counts_for_pnl": true
@@ -132,18 +150,30 @@
    "n": 10,
    "pnl_relevant": 0,
    "pnl_relevant_share": 0.0,
+   "pnl_relevant_excluding_same_pnl_fill_bar_tp": 0,
    "as_in_results_json": 2,
    "components": {
     "exit_bar_stop_and_tp": 0,
     "exit_bar_stop_and_poc": 2,
     "partial_and_breakeven_same_bar": 0,
     "limit_fill_bar_touches_tp": 0,
+    "limit_fill_bar_touches_tp_but_same_trade_pnl": 0,
     "limit_fill_then_stop_same_bar": 0
    },
    "stop_and_poc_counts_for_pnl": false
   }
  },
  "c1_descriptives": {
+  "tp_share_gap_unfilled_minus_filled": 0.2257839721254355,
+  "tp_share_gap_ci_month_cluster": [
+   0.021631770086083194,
+   0.41666666666666663
+  ],
+  "tp_on_unfilled_controlling_log_rr_logit_lr": {
+   "coef_extra": 0.6527014231071949,
+   "lr_stat": 1.685736752255437,
+   "p_value": 0.1941639137664788
+  },
   "parents": 117,
   "event_level_filled": 82,
   "event_level_unfilled": 35,
