@@ -243,12 +243,16 @@ def bracket_outcomes(df1h: pd.DataFrame, entry_bar, sl_abs, tp_abs, end_bar: int
 
 def _sample_entry_bars(idx_ns: np.ndarray, entry_bars: np.ndarray, first: int, end_bar: int, n_rep: int,
                        rng: np.random.Generator, window_days: float | None, side: str,
-                       exclude_bars: int | None) -> np.ndarray:
+                       exclude_bars: int | None, pool: np.ndarray | None = None) -> np.ndarray:
     """为每笔交易抽 n_rep 个随机入场 K 线（形状 n_rep × m）。可抽范围 = [first, end_bar - 1)（保证至少一根后续 K 线），
     window_days 给定时再限制为开盘时刻距信号 K 线开盘 ≤ window_days；side='before' / 'after' 只取信号 K 线之前 / 之后；
-    exclude_bars = k 时剔除 |b - 信号 K 线| ≤ k 的 K 线（去掉与真实交易共享路径的入场）。"""
+    exclude_bars = k 时剔除 |b - 信号 K 线| ≤ k 的 K 线（去掉与真实交易共享路径的入场）；
+    pool 给定（升序的 K 线下标）时只在其中抽样，例如“策略此刻可以入场”的 K 线集合。"""
     m = len(entry_bars)
     hi_cap = end_bar - 1
+    if pool is None:
+        pool = np.arange(len(idx_ns), dtype=np.int64)
+    pool = np.asarray(pool, dtype=np.int64)
     if window_days is None:
         lo = np.full(m, first, np.int64)
         hi = np.full(m, hi_cap, np.int64)
@@ -257,30 +261,54 @@ def _sample_entry_bars(idx_ns: np.ndarray, entry_bars: np.ndarray, first: int, e
         t_e = idx_ns[entry_bars]
         lo = np.maximum(np.searchsorted(idx_ns, t_e - w, side="left"), first).astype(np.int64)
         hi = np.minimum(np.searchsorted(idx_ns, t_e + w, side="right"), hi_cap).astype(np.int64)
+    ps = lambda x: np.searchsorted(pool, x, side="left").astype(np.int64)  # noqa: E731  K 线下标 → pool 中的位置
     if side == "both" and exclude_bars is None:
-        if (hi <= lo).any():
+        p_lo, p_hi = ps(lo), ps(np.maximum(hi, lo))
+        if (p_hi <= p_lo).any():
             raise ValueError("a trade's sampling window is empty")
-        return lo[None, :] + np.floor(rng.random((n_rep, m)) * (hi - lo)[None, :]).astype(np.int64)
+        return pool[p_lo[None, :] + np.floor(rng.random((n_rep, m)) * (p_hi - p_lo)[None, :]).astype(np.int64)]
     k = 0 if exclude_bars is None else int(exclude_bars)
-    left_lo, left_hi = lo, np.minimum(hi, entry_bars - k)              # [lo, e - k)
-    right_lo, right_hi = np.maximum(lo, entry_bars + k + 1), hi        # [e + k + 1, hi)
-    n_left = np.where(side in ("both", "before"), np.maximum(left_hi - left_lo, 0), 0)
-    n_right = np.where(side in ("both", "after"), np.maximum(right_hi - right_lo, 0), 0)
+    l_lo, l_hi = ps(lo), ps(np.maximum(np.minimum(hi, entry_bars - k), lo))          # [lo, e - k)
+    r_lo, r_hi = ps(np.minimum(np.maximum(lo, entry_bars + k + 1), hi)), ps(hi)       # [e + k + 1, hi)
+    n_left = np.where(side in ("both", "before"), np.maximum(l_hi - l_lo, 0), 0)
+    n_right = np.where(side in ("both", "after"), np.maximum(r_hi - r_lo, 0), 0)
     tot = n_left + n_right
     if (tot <= 0).any():
         raise ValueError("a trade's sampling pool is empty")
     u = np.floor(rng.random((n_rep, m)) * tot[None, :]).astype(np.int64)
-    return np.where(u < n_left[None, :], left_lo[None, :] + u, right_lo[None, :] + (u - n_left[None, :]))
+    return pool[np.where(u < n_left[None, :], l_lo[None, :] + u, r_lo[None, :] + (u - n_left[None, :]))]
+
+
+def _bracket_levels(tf: pd.DataFrame, bars: np.ndarray, c: np.ndarray, atr: np.ndarray | None, slip: float,
+                    geometry: str) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+    """随机入场 K 线（形状 n_rep × m）上的入场成交价与止损 / 止盈价位。geometry='pct' 保持真实交易相对成交价的
+    百分比距离；'atr' 保持以入场时 ATR 计的距离，随机 K 线用它自己的 ATR（第 i 根开盘时已知的值）。"""
+    m = len(tf)
+    efill = c[bars] * (1.0 + slip)
+    if geometry == "pct":
+        d_sl = tf["d_sl"].to_numpy(dtype=np.float64)
+        d_tp = tf["d_tp"].to_numpy(dtype=np.float64)
+        return efill, efill * (1.0 - d_sl[None, :m]), efill * (1.0 + d_tp[None, :m])
+    a_e = tf["atr"].to_numpy(dtype=np.float64)
+    ep = tf["entry_px"].to_numpy(dtype=np.float64)
+    k_sl = (ep - tf["sl"].to_numpy(dtype=np.float64)) / a_e
+    k_tp = (tf["tp"].to_numpy(dtype=np.float64) - ep) / a_e
+    a_b = atr[bars]
+    return efill, efill - k_sl[None, :] * a_b, efill + k_tp[None, :] * a_b
 
 
 def random_entry_null(df1h: pd.DataFrame, tf: pd.DataFrame, bcfg: BacktestConfig, start: pd.Timestamp,
                       end: pd.Timestamp, n_rep: int = 2000, seed: int = 0, window_days: float | None = None,
-                      side: str = "both", exclude_bars: int | None = None, allow_oos: bool = False) -> dict:
-    """每笔真实交易保持 (d_sl, d_tp) 不变，入场换成 [start, end) 内随机 1H K 线的收盘（抽样范围见 _sample_entry_bars），
+                      side: str = "both", exclude_bars: int | None = None, pool: np.ndarray | None = None,
+                      geometry: str = "pct", atr: np.ndarray | None = None, allow_oos: bool = False) -> dict:
+    """每笔真实交易保持止损 / 止盈几何不变（geometry：'pct' 百分比距离，'atr' 以 ATR 计的距离，需要逐根 ATR 数组 atr），
+    入场换成 [start, end) 内随机 1H K 线的收盘（抽样范围见 _sample_entry_bars，pool 可限定候选 K 线），
     撮合截止于 end 之前的最后一根 K 线。返回零分布与单侧 p 值。
     window_days 足够小且 side='both'、不剔除时只能抽到真实信号 K 线本身，零分布退化为真实结果（测试据此校验）。"""
     if side not in ("both", "before", "after"):
         raise ValueError("side must be 'both', 'before' or 'after'")
+    if geometry not in ("pct", "atr") or (geometry == "atr" and atr is None):
+        raise ValueError("geometry must be 'pct', or 'atr' together with a per-bar atr array")
     _check_trades_extent(tf, allow_oos)
     if end > OOS_START and not allow_oos:
         raise OOSLockedError("random-entry nulls reaching beyond OOS_START require allow_oos=True")
@@ -291,15 +319,15 @@ def random_entry_null(df1h: pd.DataFrame, tf: pd.DataFrame, bcfg: BacktestConfig
         raise ValueError("empty sampling window")
     rng = np.random.default_rng(seed)
     m = len(tf)
-    d_sl = tf["d_sl"].to_numpy(dtype=np.float64)
-    d_tp = tf["d_tp"].to_numpy(dtype=np.float64)
+    if geometry == "atr":                                          # 只在 ATR 已知的 K 线上抽样
+        ok = np.flatnonzero(np.isfinite(np.asarray(atr, dtype=np.float64)))
+        pool = ok if pool is None else np.intersect1d(np.asarray(pool, dtype=np.int64), ok)
     bars = _sample_entry_bars(to_ns(idx), tf["entry_bar"].to_numpy(dtype=np.int64), first, end_bar, n_rep, rng,
-                              window_days, side, exclude_bars)
+                              window_days, side, exclude_bars, pool)
     c = df1h["close"].to_numpy(dtype=np.float64)
-    efill = c[bars.ravel()] * (1.0 + float(bcfg.slippage))
-    sl_abs = efill * (1.0 - np.tile(d_sl, n_rep))
-    tp_abs = efill * (1.0 + np.tile(d_tp, n_rep))
-    _, reason, r = bracket_outcomes(df1h, bars.ravel(), sl_abs, tp_abs, end_bar, bcfg, allow_oos=allow_oos)
+    _, sl_abs, tp_abs = _bracket_levels(tf, bars, c, None if atr is None else np.asarray(atr, dtype=np.float64),
+                                        float(bcfg.slippage), geometry)
+    _, reason, r = bracket_outcomes(df1h, bars.ravel(), sl_abs.ravel(), tp_abs.ravel(), end_bar, bcfg, allow_oos=allow_oos)
     wins = (r > 0).reshape(n_rep, m)
     rr = r.reshape(n_rep, m)
     w_null = wins.sum(axis=1)
@@ -308,7 +336,7 @@ def random_entry_null(df1h: pd.DataFrame, tf: pd.DataFrame, bcfg: BacktestConfig
     r_act = float(tf["r_ex_funding"].mean())
     return {
         "n_trades": m, "n_rep": n_rep, "seed": seed, "window_days": window_days, "side": side,
-        "exclude_bars": exclude_bars,
+        "exclude_bars": exclude_bars, "pool_size": None if pool is None else int(len(pool)), "geometry": geometry,
         "actual_wins": w_act, "actual_mean_r_ex_funding": r_act,
         "null_wins_mean": float(w_null.mean()), "null_wins_p05": float(np.percentile(w_null, 5)),
         "null_wins_p95": float(np.percentile(w_null, 95)),
@@ -322,6 +350,101 @@ def random_entry_null(df1h: pd.DataFrame, tf: pd.DataFrame, bcfg: BacktestConfig
         "per_trade_null_mean_r": rr.mean(axis=0),          # 每笔交易在零假设下的期望 R（用于按组计算超额 R）
         "null_r_dist": r_null, "null_w_dist": w_null,
     }
+
+
+def common_shift_null(df1h: pd.DataFrame, tf: pd.DataFrame, bcfg: BacktestConfig, start: pd.Timestamp,
+                      end: pd.Timestamp, max_shift_bars: int = 360, allow_oos: bool = False) -> dict:
+    """保留入场聚集结构的零假设：把全部真实入场整体平移同一个 s 根（s = ±1..±max_shift_bars，穷举），
+    几何取百分比距离；平移后落到 [start, end) 可撮合范围之外的交易从该次平移中剔除。p = (1 + #{零假设 ≤ 实际}) / (次数 + 1)。"""
+    _check_trades_extent(tf, allow_oos)
+    if end > OOS_START and not allow_oos:
+        raise OOSLockedError("random-entry nulls reaching beyond OOS_START require allow_oos=True")
+    idx = df1h.index
+    first = int(np.searchsorted(idx, start, side="left"))
+    end_bar = int(np.searchsorted(idx, end, side="left"))
+    eb = tf["entry_bar"].to_numpy(dtype=np.int64)
+    c = df1h["close"].to_numpy(dtype=np.float64)
+    shifts = np.array([s for s in range(-max_shift_bars, max_shift_bars + 1) if s != 0], dtype=np.int64)
+    means, kept = np.empty(len(shifts)), np.empty(len(shifts), dtype=np.int64)
+    for j, sh in enumerate(shifts):
+        b = eb + sh
+        ok = (b >= first) & (b < end_bar - 1)
+        _, sl_abs, tp_abs = _bracket_levels(tf[ok], b[ok][None, :], c, None, float(bcfg.slippage), "pct")
+        _, _, r = bracket_outcomes(df1h, b[ok], sl_abs.ravel(), tp_abs.ravel(), end_bar, bcfg, allow_oos=allow_oos)
+        means[j], kept[j] = r.mean(), ok.sum()
+    act = float(tf["r_ex_funding"].mean())
+    return {"n_shifts": int(len(shifts)), "max_shift_bars": max_shift_bars, "actual_mean_r_ex_funding": act,
+            "null_mean_r_mean": float(means.mean()), "null_mean_r_sd": float(means.std(ddof=1)),
+            "null_mean_r_p05": float(np.percentile(means, 5)), "null_mean_r_p95": float(np.percentile(means, 95)),
+            "p_mean_r_le": float((1 + (means <= act + 1e-12).sum()) / (len(shifts) + 1)),
+            "min_trades_kept": int(kept.min()), "null_r_dist": means}
+
+
+def _max_abs_z(values: np.ndarray, labels: list[np.ndarray], min_n: int) -> tuple[float, list[float]]:
+    """每个特征内、笔数 ≥ min_n 的分组两两之间均值差的 Welch z 的最大绝对值；返回全部特征的最大值与逐特征最大值。"""
+    per = []
+    for lab in labels:
+        gs = [values[lab == g] for g in np.unique(lab[lab != -1])]
+        gs = [g for g in gs if len(g) >= min_n]
+        best = 0.0
+        for i in range(len(gs)):
+            for j in range(i + 1, len(gs)):
+                a, b = gs[i], gs[j]
+                se = np.sqrt(a.var(ddof=1) / len(a) + b.var(ddof=1) / len(b))
+                if se > 0:
+                    best = max(best, abs(a.mean() - b.mean()) / se)
+        per.append(best)
+    return (max(per) if per else 0.0), per
+
+
+def max_gap_permutation(tf: pd.DataFrame, groupings: dict, value_col: str, n_perm: int = 2000, min_n: int = 15,
+                        seed: int = 0, z_ref: float = 1.9, allow_oos: bool = False) -> dict:
+    """多重比较的整体检验：在全部分组特征上取“组间均值差 Welch z 的最大绝对值”，与把 value_col 在交易之间随机置换
+    （特征不动，保留特征之间的相关）得到的同一统计量的分布比较。groupings：{特征名: 与 tf 对齐的分组标签 Series}。"""
+    _check_trades_extent(tf, allow_oos)
+    labels = []
+    for ser in groupings.values():
+        codes, _ = pd.factorize(pd.Series(ser).astype(str).where(pd.Series(ser).notna(), None))
+        labels.append(np.asarray(codes))
+    v = tf[value_col].to_numpy(dtype=np.float64)
+    obs, per = _max_abs_z(v, labels, min_n)
+    rng = np.random.default_rng(seed)
+    perm_max, perm_count = np.empty(n_perm), np.empty(n_perm)
+    for i in range(n_perm):
+        mx, pf = _max_abs_z(rng.permutation(v), labels, min_n)
+        perm_max[i], perm_count[i] = mx, sum(z >= z_ref for z in pf)
+    return {"observed_max_z": float(obs), "observed_argmax": list(groupings)[int(np.argmax(per))],
+            "per_feature_max_z": dict(zip(groupings, map(float, per))),
+            "perm_max_z_median": float(np.median(perm_max)), "perm_max_z_p95": float(np.percentile(perm_max, 95)),
+            "p_perm_ge_observed": float((1 + (perm_max >= obs).sum()) / (n_perm + 1)),
+            "n_features_z_ge_ref": int(sum(z >= z_ref for z in per)), "perm_mean_n_features_z_ge_ref": float(perm_count.mean()),
+            "z_ref": z_ref, "min_n": min_n, "n_perm": n_perm, "value_col": value_col}
+
+
+def random_thinning(df1h: pd.DataFrame, signals: pd.DataFrame, bcfg: BacktestConfig, funding: pd.DataFrame | None,
+                    keep: float, start: pd.Timestamp, end: pd.Timestamp, n_rep: int = 200, seed: int = 0,
+                    allow_oos: bool = False) -> dict:
+    """零技能稀释基准：每个可交易信号独立地以概率 keep 保留（其余丢弃），重跑回测，记录 [start, end) 分段的入场笔数与
+    日度夏普。基线夏普为负时，随机减少交易本身就会把夏普推向零（约按 sqrt(保留比例)），过滤器的改进须扣除这一部分。"""
+    from backtester import run_backtest
+    _check_bars_extent(df1h, len(df1h), allow_oos)
+    rng = np.random.default_rng(seed)
+    sig_bars = np.flatnonzero(signals["signal"].to_numpy(dtype=bool))
+    n_tr, sh = np.empty(n_rep, dtype=np.int64), np.empty(n_rep)
+    for i in range(n_rep):
+        s2 = signals.copy()
+        drop = sig_bars[rng.random(len(sig_bars)) >= keep]
+        col = s2["signal"].to_numpy(dtype=bool).copy()
+        col[drop] = False
+        s2["signal"] = col
+        res = run_backtest(df1h, s2, bcfg, funding)
+        tr = res.trades
+        n_tr[i] = int(((tr["entry_time"] >= start) & (tr["entry_time"] < end)).sum())
+        r = segment_daily_returns(res, start, end, allow_oos)
+        sd = r.std(ddof=1)
+        sh[i] = float(r.mean() / sd * np.sqrt(ANN)) if sd > 0 else np.nan
+    return {"keep": keep, "n_rep": n_rep, "seed": seed, "trades": n_tr, "sharpe": sh,
+            "mean_trades": float(n_tr.mean()), "mean_sharpe": float(np.nanmean(sh))}
 
 
 def poisson_binomial_cdf(p: np.ndarray, k: int) -> float:

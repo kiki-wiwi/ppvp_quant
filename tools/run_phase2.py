@@ -44,6 +44,7 @@ FIG = REPORTS / "figures"
 SYMBOL = "BTCUSDT"
 N_NULL = 5000
 N_BOOT = 5000
+N_THIN = 300
 SEED = 20261104
 DAY = pd.Timedelta(days=1)
 
@@ -66,15 +67,21 @@ STRUCT_VARIANTS = {
     "carry_off_roll_off": {"carry_touches_on_box_update": False, "roll_failed_second_touch": False},
 }
 # 随机入场零假设：(键, 时间窗天数, 取样侧, 剔除信号 K 线前后多少根)；分桶的超额 R 以 local_15d_x24 为基准
+# (键, 时间窗天数, 取样侧, 剔除信号 K 线前后多少根, 候选池, 几何)：
+# 候选池 'enterable' = 策略此刻可以入场的 K 线（处理后状态 ∈ {ARMED, TOUCH1, DEPARTED, TOUCH2}、触及支撑带、收盘 ≥ 带下沿）
 NULL_SPECS = (
-    ("global", None, "both", None),
-    ("local_60d", 60, "both", None),
-    ("local_15d", 15, "both", None),
-    ("local_15d_x24", 15, "both", 24),
-    ("local_3d", 3, "both", None),
-    ("before_3d", 3, "before", None),
-    ("after_3d", 3, "after", None),
-    ("after_3d_x24", 3, "after", 24),
+    ("global", None, "both", None, None, "pct"),
+    ("local_60d", 60, "both", None, None, "pct"),
+    ("local_15d", 15, "both", None, None, "pct"),
+    ("local_15d_x24", 15, "both", 24, None, "pct"),
+    ("local_3d", 3, "both", None, None, "pct"),
+    ("before_3d", 3, "before", None, None, "pct"),
+    ("after_3d", 3, "after", None, None, "pct"),
+    ("after_3d_x24", 3, "after", 24, None, "pct"),
+    ("enterable_global", None, "both", None, "enterable", "pct"),
+    ("enterable_15d", 15, "both", None, "enterable", "pct"),
+    ("atr_global", None, "both", None, None, "atr"),
+    ("atr_15d_x24", 15, "both", 24, None, "atr"),
 )
 EXCESS_BASE = "local_15d_x24"
 BUCKETS = {                                   # 左闭右开，事先选定
@@ -330,6 +337,9 @@ def gap(tab: pd.DataFrame, a: tuple, b: tuple) -> dict:
 def _f(x, nd=3, sign=False):
     if x is None or (isinstance(x, float) and not np.isfinite(x)):
         return "—"
+    if round(x, nd) == 0:                       # 取整后为零时不带符号（避免“−0%”）
+        x = 0.0
+        return f"{0:.{nd}f}"
     s = f"{x:+.{nd}f}" if sign else f"{x:.{nd}f}"
     return s.replace("-", "−")
 
@@ -383,28 +393,37 @@ def tables_md(R: dict, ent: pd.DataFrame, reg: pd.DataFrame) -> str:
         L.append(f"| {names[k]} | {_f(v['IS']['sharpe'])} | {_pct(v['IS']['total_return'], 2, True)} | "
                  f"{_f(v['VAL']['sharpe'])} | {_pct(v['VAL']['total_return'], 2, True)} |")
 
-    L += ["", "### T3 carry / roll 四种组合（总体指标；IS 配对夏普差相对基线）", "",
-          "| 状态机扩展 | IS 原始信号 / 入场 | IS 夏普 | IS 配对夏普差 [95%] | IS 累计 | IS 平均 R | VAL 原始信号 / 入场 | VAL 夏普 | VAL 累计 | VAL 平均 R |",
-          "|---|---|---|---|---|---|---|---|---|---|"]
+    L += ["", "### T3 carry / roll 四种组合（总体指标；IS 配对夏普差与零技能稀释基准）", "",
+          "| 状态机扩展 | IS 原始信号 / 入场 | IS 夏普 | IS 配对夏普差 [95%] | IS 稀释基准（经验 / 公式） | IS 扣除稀释后的增量 | 稀释下不差于该变体的概率 | IS 平均 R | VAL 原始信号 / 入场 | VAL 夏普 | VAL 稀释公式基准 | VAL 平均 R |",
+          "|---|---|---|---|---|---|---|---|---|---|---|---|"]
     snames = {"carry_on_roll_on (baseline)": "carry 开、roll 开（基线）", "carry_off": "carry 关", "roll_off": "roll 关",
               "carry_off_roll_off": "二者都关"}
     for k, v in R["struct_variants"].items():
         pdiff = R["struct_paired_is"].get(k)
+        th = R["struct_thinning"].get(k)
         pd_s = "—" if pdiff is None else f"{_f(pdiff['diff'], 3, True)} {_ci(pdiff['lo'], pdiff['hi'])}"
+        th_s = "—" if th is None else f"{_f(th['thinned_mean_sharpe'])} / {_f(th['formula_is'])}"
+        mg_s = "—" if th is None else _f(th["margin_is_vs_empirical"], 3, True)
+        pp_s = "—" if th is None else _f(th["p_thinned_ge_variant"], 3)
+        vf_s = "—" if th is None else _f(th["formula_val"])
         L.append(f"| {snames[k]} | {v['IS']['raw_signals']} / {v['IS']['entries']} | {_f(v['IS']['sharpe'])} | {pd_s} | "
-                 f"{_pct(v['IS']['total_return'], 2, True)} | {_f(v['IS']['avg_r'])} | {v['VAL']['raw_signals']} / "
-                 f"{v['VAL']['entries']} | {_f(v['VAL']['sharpe'])} | {_pct(v['VAL']['total_return'], 2, True)} | "
-                 f"{_f(v['VAL']['avg_r'])} |")
+                 f"{th_s} | {mg_s} | {pp_s} | {_f(v['IS']['avg_r'])} | {v['VAL']['raw_signals']} / {v['VAL']['entries']} | "
+                 f"{_f(v['VAL']['sharpe'])} | {vf_s} | {_f(v['VAL']['avg_r'])} |")
 
     L += ["", "### T4 随机入场零假设（IS，109 笔，各 5,000 次）", "",
           "| 零假设的取样范围 | 零假设平均 R | 零假设 90% 区间 | 单侧 p（平均 R） | 零假设胜笔数（真实 40） | 单侧 p（胜笔数） |",
           "|---|---|---|---|---|---|"]
     nn = {"global": "IS 任意时刻", "local_60d": "信号前后 60 天", "local_15d": "信号前后 15 天",
           "local_15d_x24": "信号前后 15 天，剔除前后 24 根", "local_3d": "信号前后 3 天", "before_3d": "信号前 3 天",
-          "after_3d": "信号后 3 天", "after_3d_x24": "信号后第 25 根至 3 天"}
+          "after_3d": "信号后 3 天", "after_3d_x24": "信号后第 25 根至 3 天",
+          "enterable_global": "可入场 K 线池，IS 任意时刻", "enterable_15d": "可入场 K 线池，信号前后 15 天",
+          "atr_global": "ATR 几何，IS 任意时刻", "atr_15d_x24": "ATR 几何，信号前后 15 天，剔除前后 24 根"}
     for k, v in R["is_null"].items():
         L.append(f"| {nn[k]} | {_f(v['null_mean_r_mean'], 3, True)} | {_ci(v['null_mean_r_p05'], v['null_mean_r_p95'], 3)} | "
                  f"{_f(v['p_mean_r_le'], 3)} | {_f(v['null_wins_mean'], 1)} | {_f(v['p_wins_le'], 3)} |")
+    cs = R["is_null_common_shift"]
+    L.append(f"| 全部入场整体平移 ±1–360 根（保留聚集结构，{cs['n_shifts']} 次） | {_f(cs['null_mean_r_mean'], 3, True)} | "
+             f"{_ci(cs['null_mean_r_p05'], cs['null_mean_r_p95'], 3)} | {_f(cs['p_mean_r_le'], 3)} | — | — |")
 
     def bucket_lines(tab, spec):
         out = []
@@ -675,6 +694,27 @@ def main() -> None:
             r_is = A.segment_daily_returns(o["result"], IS_START, IS_END)
             R["struct_paired_is"][vname] = A.paired_sharpe_diff(r_is, rets["IS"], n_boot=N_BOOT, seed=SEED)
 
+    # 零技能稀释基准：随机丢弃信号到与变体相同的入场笔数（IS 经验分布）；VAL 只用公式 S_ref * sqrt(n / n_ref)
+    n_ref_is = R["struct_variants"]["carry_on_roll_on (baseline)"]["IS"]["entries"]
+    n_ref_val = R["struct_variants"]["carry_on_roll_on (baseline)"]["VAL"]["entries"]
+    s_ref_is, s_ref_val = out["report"]["IS"]["sharpe"], out["report"]["VAL"]["sharpe"]
+    _, fund_research, _ = pipeline.load_market(SYMBOL)
+    R["struct_thinning"] = {}
+    for j, vname in enumerate(k for k in STRUCT_VARIANTS if STRUCT_VARIANTS[k]):
+        v = R["struct_variants"][vname]
+        keep = v["IS"]["entries"] / n_ref_is
+        th = A.random_thinning(df1h, sig, bcfg, fund_research, keep, IS_START, IS_END, n_rep=N_THIN, seed=SEED + 100 + j)
+        R["struct_thinning"][vname] = {
+            "keep": keep, "thinned_mean_trades": th["mean_trades"], "thinned_mean_sharpe": th["mean_sharpe"],
+            "p_thinned_ge_variant": float((1 + (th["sharpe"] >= v["IS"]["sharpe"]).sum()) / (N_THIN + 1)),
+            "formula_is": s_ref_is * np.sqrt(v["IS"]["entries"] / n_ref_is),
+            "margin_is_vs_formula": v["IS"]["sharpe"] - s_ref_is * np.sqrt(v["IS"]["entries"] / n_ref_is),
+            "margin_is_vs_empirical": v["IS"]["sharpe"] - th["mean_sharpe"],
+            "formula_val": s_ref_val * np.sqrt(v["VAL"]["entries"] / n_ref_val),
+            "margin_val_vs_formula": v["VAL"]["sharpe"] - s_ref_val * np.sqrt(v["VAL"]["entries"] / n_ref_val)}
+    th1 = A.random_thinning(df1h, sig, bcfg, fund_research, 1.0, IS_START, IS_END, n_rep=1, seed=SEED)
+    assert abs(th1["sharpe"][0] - s_ref_is) < 1e-12 and th1["trades"][0] == n_ref_is   # keep = 1 复现基线
+
     # ---- 3. IS 交易级归因 ----
     tf = A.trade_frame(res, df1h, out["boxes"], scfg)
     ist = A.segment_trades(tf, IS_START, IS_END).reset_index(drop=True)
@@ -698,6 +738,8 @@ def main() -> None:
         "width_atr_median_all": float(ist["width_atr"].median()),
         "box_position_min_median_max": [float(pos[near.index].min()), float(pos[near.index].median()),
                                         float(pos[near.index].max())],
+        "vah_minus_close_atr_max": float(((ist["VAH"] - ist["entry_px"] / (1 + bcfg.slippage)) / ist["atr"])[near.index].max()),
+        "vah_minus_close_atr_median_all": float(((ist["VAH"] - ist["entry_px"] / (1 + bcfg.slippage)) / ist["atr"]).median()),
         "rr_lt_05_median_d_tp": float(ist.loc[ist["rr_fill"] < 0.5, "d_tp"].median()),
         "rr_lt_05_median_hold": float(ist.loc[ist["rr_fill"] < 0.5, "hold_bars"].median()),
         "rr_lt_05_sum_pnl": float(ist.loc[ist["rr_fill"] < 0.5, "pnl"].sum()),
@@ -705,13 +747,29 @@ def main() -> None:
     R["is_exit_reasons"] = exit_table(ist)
     R["is_costs"] = cost_decomposition(ist)
 
+    sgl = out["signals"]
+    lows = df1h["low"].to_numpy(dtype=np.float64)
+    closes = df1h["close"].to_numpy(dtype=np.float64)
+    st = sgl["state"].to_numpy()
+    with np.errstate(invalid="ignore"):
+        enterable = np.flatnonzero((st >= 1) & (st <= 4) & (lows <= sgl["zone_hi"].to_numpy())
+                                   & (closes >= sgl["zone_lo"].to_numpy()))
+    assert np.isin(ist["entry_bar"].to_numpy(), enterable).all()           # 全部真实入场都在候选池内
+    atr_bar = sgl["atr"].to_numpy(dtype=np.float64)                         # 第 i 根开盘时已知的 ATR
     nulls = {}
-    for j, (key, wd, side, excl) in enumerate(NULL_SPECS):
+    for j, (key, wd, side, excl, pool, geom) in enumerate(NULL_SPECS):
         nulls[key] = A.random_entry_null(df1h, ist, bcfg, IS_START, IS_END, n_rep=N_NULL, seed=SEED + j,
-                                         window_days=wd, side=side, exclude_bars=excl)
+                                         window_days=wd, side=side, exclude_bars=excl,
+                                         pool=enterable if pool == "enterable" else None, geometry=geom,
+                                         atr=atr_bar if geom == "atr" else None)
+    R["is_enterable_pool"] = {"n_bars_is": int(((enterable >= int(np.searchsorted(df1h.index, IS_START)))
+                                                 & (enterable < int(np.searchsorted(df1h.index, IS_END)))).sum()),
+                              "contains_all_entries": True}
+    shift = A.common_shift_null(df1h, ist, bcfg, IS_START, IS_END, max_shift_bars=360)
     ist["null_r"] = nulls[EXCESS_BASE]["per_trade_null_mean_r"]       # 分桶的超额 R 基准：±15 天、剔除前后 24 根
     act = float(ist["r_ex_funding"].mean())
     R["is_null"] = {k: {kk: vv for kk, vv in v.items() if not isinstance(vv, np.ndarray)} for k, v in nulls.items()}
+    R["is_null_common_shift"] = {k: v for k, v in shift.items() if not isinstance(v, np.ndarray)}
     R["is_null_actual_mean_r_ex_funding"] = act
     first_is = int(np.searchsorted(df1h.index, IS_START))
     end_is = int(np.searchsorted(df1h.index, IS_END))
@@ -733,6 +791,11 @@ def main() -> None:
         "overall_excess_r": float((ist["r_ex_funding"] - ist["null_r"]).mean()),
         "spearman_width_atr_vs_rr_fill": float(ist["width_atr"].corr(ist["rr_fill"], method="spearman")),
     }
+    ist["excess_r"] = ist["r_ex_funding"] - ist["null_r"]
+    groupings = {c: pd.cut(ist[c], bins=e, right=False) for c, e in BUCKETS.items()}
+    groupings.update({c: ist[c] for c in CATEGORICAL})
+    groupings.update({c: pd.cut(ist[c], bins=e, right=False) for c, e in REGIME_BUCKETS.items()})
+    R["is_bucket_permutation"] = A.max_gap_permutation(ist, groupings, "excess_r", n_perm=2000, min_n=15, seed=SEED)
     R["is_bucket_gaps"] = [
         gap(ent, ("width_atr", 0.0), ("width_atr", 4.0)), gap(ent, ("rr_fill", 0.0), ("rr_fill", 2.0)),
         gap(ent, ("pivot_pair", "LH"), ("pivot_pair", "HL")), gap(ent, ("pattern_name", "engulfing"), ("pattern_name", "pinbar")),
@@ -791,6 +854,24 @@ def main() -> None:
     lo = ist[~ist["win"]]
     sl_only = ist[ist["exit_reason"] == "SL"]
     wide = ist["d_sl"] >= 0.02
+    # 以损定仓的机制（逐笔、忽略复利与杠杆上限）：固定名义仓位下每笔净值收益 ≈ R × d_sl，等风险下 ≈ R × 常数。
+    # 期望为负时，权重从宽止损组移向窄止损组；逐笔“均值 / 标准差”给出夏普方向的近似判断。
+    ret, rmul, dsl = ist["ret_on_base"], ist["r_multiple"], ist["d_sl"]
+    w_fixed = {name: float(dsl[m].mean() / dsl.mean()) for name, m in
+               (("d_sl<1%", dsl < 0.01), ("1%<=d_sl<2%", (dsl >= 0.01) & (dsl < 0.02)), ("d_sl>=2%", dsl >= 0.02))}
+    R["is_sizing_mechanism"] = {
+        "per_trade_ir_fixed_notional": float(ret.mean() / ret.std(ddof=1)),
+        "per_trade_ir_equal_risk": float(rmul.mean() / rmul.std(ddof=1)),
+        "relative_risk_weight_fixed_notional": w_fixed,
+        "mean_r_by_group": {name: float(rmul[m].mean()) for name, m in
+                            (("d_sl<1%", dsl < 0.01), ("1%<=d_sl<2%", (dsl >= 0.01) & (dsl < 0.02)), ("d_sl>=2%", dsl >= 0.02))},
+    }
+    neg24 = ist["ret24h"] < -0.02
+    worst_bar = ist.loc[ist["pnl"].idxmin(), "entry_bar"]
+    R["is_ret24h_drop_bucket"] = {"n": int(neg24.sum()), "mean_ret": float(ist.loc[neg24, "ret_on_base"].mean()),
+                                  "mean_ret_without_worst_trade": float(ist.loc[neg24 & (ist["entry_bar"] != worst_bar),
+                                                                                "ret_on_base"].mean()),
+                                  "worst_trade_in_bucket": bool(neg24[ist["entry_bar"] == worst_bar].any())}
     R["is_sizing"] = {
         "spearman_dsl_vs_loss_pct_losers": float(lo["d_sl"].corr(-lo["ret_on_base"], method="spearman")),
         "spearman_dsl_vs_loss_pct_sl_only": float(sl_only["d_sl"].corr(-sl_only["ret_on_base"], method="spearman")),

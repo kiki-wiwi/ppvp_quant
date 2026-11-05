@@ -206,6 +206,74 @@ def test_sample_entry_bars_respects_window_side_and_exclusion():
         A._sample_entry_bars(idx_ns, np.array([385]), 10, 390, 10, rng, 3, "after", 24)
 
 
+def test_sample_entry_bars_with_pool():
+    idx_ns = np.arange(400, dtype=np.int64) * np.int64(3600 * 10**9)
+    pool = np.arange(5, 395, 7, dtype=np.int64)                 # 稀疏候选池
+    e = np.array([100, 250], dtype=np.int64)
+    rng = np.random.default_rng(1)
+    for side, excl in (("both", None), ("both", 24), ("after", None), ("before", 10)):
+        b = A._sample_entry_bars(idx_ns, e, 10, 390, 3000, rng, 3, side, excl, pool)
+        assert np.isin(b, pool).all()
+        assert (np.abs(b - e[None, :]) <= 72).all()
+        if excl is not None:
+            assert (np.abs(b - e[None, :]) > excl).all()
+        if side == "after":
+            assert (b > e[None, :]).all()
+        if side == "before":
+            assert (b < e[None, :]).all()
+    full = A._sample_entry_bars(idx_ns, e, 10, 390, 3000, rng, None, "both", None, pool)
+    assert set(np.unique(full)) == set(pool[(pool >= 10) & (pool < 389)])
+
+
+def test_atr_geometry_degenerates_to_actual(base):
+    out, tf = base
+    ist = A.segment_trades(tf, IS_START, IS_END)
+    atr = out["signals"]["atr"].to_numpy()
+    nul = A.random_entry_null(out["df1h"], ist, BASELINE_BACKTEST, IS_START, IS_END, n_rep=5, seed=3,
+                              window_days=1e-6, geometry="atr", atr=atr)
+    assert np.allclose(nul["per_trade_null_mean_r"], ist["r_ex_funding"].to_numpy(), rtol=0, atol=1e-9)
+
+
+def test_common_shift_null_matches_direct_computation(base):
+    out, tf = base
+    df1h = out["df1h"]
+    ist = A.segment_trades(tf, IS_START, IS_END)
+    res = A.common_shift_null(df1h, ist, BASELINE_BACKTEST, IS_START, IS_END, max_shift_bars=3)
+    assert res["n_shifts"] == 6
+    end_bar = int(np.searchsorted(df1h.index, IS_END))
+    c = df1h["close"].to_numpy()
+    for j, sh in enumerate((-3, -2, -1, 1, 2, 3)):
+        b = ist["entry_bar"].to_numpy() + sh
+        ef = c[b] * (1 + BASELINE_BACKTEST.slippage)
+        _, _, r = A.bracket_outcomes(df1h, b, ef * (1 - ist["d_sl"].to_numpy()), ef * (1 + ist["d_tp"].to_numpy()),
+                                     end_bar, BASELINE_BACKTEST)
+        assert np.isclose(res["null_r_dist"][j], r.mean(), rtol=0, atol=1e-12)
+
+
+def test_max_gap_permutation_synthetic():
+    rng = np.random.default_rng(0)
+    n = 120
+    g1 = np.repeat(["a", "b"], n // 2)
+    v = rng.normal(size=n)
+    v[: n // 2] += 1.0                                          # 第一个特征有真实的组间差
+    tf = pd.DataFrame({"x": v, "entry_time": pd.Timestamp("2021-01-01", tz="UTC"),
+                       "exit_time": pd.Timestamp("2021-01-02", tz="UTC")})
+    res = A.max_gap_permutation(tf, {"g1": pd.Series(g1), "g2": pd.Series(rng.integers(0, 3, n))}, "x",
+                                n_perm=200, min_n=15, seed=1)
+    a, b = v[: n // 2], v[n // 2:]
+    z = abs(a.mean() - b.mean()) / np.sqrt(a.var(ddof=1) / len(a) + b.var(ddof=1) / len(b))
+    assert np.isclose(res["per_feature_max_z"]["g1"], z) and res["observed_argmax"] == "g1"
+    assert res["p_perm_ge_observed"] < 0.02
+
+
+def test_random_thinning_keep_one_reproduces_baseline(base):
+    out, _ = base
+    _, fund, _ = pipeline.load_market("BTCUSDT")
+    th = A.random_thinning(out["df1h"], out["signals"], BASELINE_BACKTEST, fund, 1.0, IS_START, IS_END, n_rep=1)
+    assert th["trades"][0] == PINNED["IS"]["trades"]
+    assert abs(th["sharpe"][0] - PINNED["IS"]["sharpe"]) < 1e-12
+
+
 def test_poisson_binomial_cdf_matches_enumeration():
     p = np.array([0.1, 0.5, 0.9, 0.3, 0.7])
     outs = np.array(np.meshgrid(*[[0, 1]] * 5, indexing="ij")).reshape(5, -1).T

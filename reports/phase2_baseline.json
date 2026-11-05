@@ -1,10 +1,10 @@
 {
  "meta": {
   "symbol": "BTCUSDT",
-  "git_describe": "f85c142-dirty",
+  "git_describe": "c571fbc-dirty",
   "sha256_16": {
-   "attribution.py": "63e9934556699069",
-   "tools/run_phase2.py": "e6bc9471d433336c",
+   "attribution.py": "00d3c8ab3d9ed3b2",
+   "tools/run_phase2.py": "ab7dbf541a8cf703",
    "config.py": "858ff5a924a9555c",
    "pipeline.py": "0dfcf1cf61161e44",
    "backtester.py": "6dd67439db79fe98",
@@ -21,7 +21,7 @@
   "n_boot": 5000,
   "seed": 20261104,
   "policy": "IS-only trade-level attribution; VAL headline only (plus the carry/roll variants pre-committed in Phase 1); no OOS; no ETH runs",
-  "runtime_s": 5.340896
+  "runtime_s": 34.267687
  },
  "headline": {
   "IS": {
@@ -402,6 +402,41 @@
    "n_boot": 5000
   }
  },
+ "struct_thinning": {
+  "carry_off": {
+   "keep": 0.834862,
+   "thinned_mean_trades": 92.11,
+   "thinned_mean_sharpe": -1.102525,
+   "p_thinned_ge_variant": 0.358804,
+   "formula_is": -1.072755,
+   "margin_is_vs_formula": 0.029234,
+   "margin_is_vs_empirical": 0.059004,
+   "formula_val": -0.46999,
+   "margin_val_vs_formula": -0.206064
+  },
+  "roll_off": {
+   "keep": 0.87156,
+   "thinned_mean_trades": 95.476667,
+   "thinned_mean_sharpe": -1.102913,
+   "p_thinned_ge_variant": 0.189369,
+   "formula_is": -1.096078,
+   "margin_is_vs_formula": 0.134952,
+   "margin_is_vs_empirical": 0.141787,
+   "formula_val": -0.498499,
+   "margin_val_vs_formula": 0.163747
+  },
+  "carry_off_roll_off": {
+   "keep": 0.779817,
+   "thinned_mean_trades": 86.27,
+   "thinned_mean_sharpe": -1.055195,
+   "p_thinned_ge_variant": 0.222591,
+   "formula_is": -1.036786,
+   "margin_is_vs_formula": 0.126178,
+   "margin_is_vs_empirical": 0.144586,
+   "formula_val": -0.460094,
+   "margin_val_vs_formula": -0.069835
+  }
+ },
  "is_log_identity": {
   "sum_log1p_ret_on_base": -0.609427,
   "log_is_equity_ratio": -0.609427
@@ -451,6 +486,8 @@
    0.797544,
    0.988627
   ],
+  "vah_minus_close_atr_max": 0.770703,
+  "vah_minus_close_atr_median_all": 2.529536,
   "rr_lt_05_median_d_tp": 0.002513,
   "rr_lt_05_median_hold": 1.0,
   "rr_lt_05_sum_pnl": 880.130209
@@ -486,6 +523,10 @@
   "mean_fee_r": 0.07495,
   "mean_funding_r": 0.010004
  },
+ "is_enterable_pool": {
+  "n_bars_is": 2909,
+  "contains_all_entries": true
+ },
  "is_null": {
   "global": {
    "n_trades": 109,
@@ -494,6 +535,8 @@
    "window_days": null,
    "side": "both",
    "exclude_bars": null,
+   "pool_size": null,
+   "geometry": "pct",
    "actual_wins": 40,
    "actual_mean_r_ex_funding": -0.330003,
    "null_wins_mean": 46.9552,
@@ -513,6 +556,8 @@
    "window_days": 60,
    "side": "both",
    "exclude_bars": null,
+   "pool_size": null,
+   "geometry": "pct",
    "actual_wins": 40,
    "actual_mean_r_ex_funding": -0.330003,
    "null_wins_mean": 47.2248,
@@ -532,6 +577,8 @@
    "window_days": 15,
    "side": "both",
    "exclude_bars": null,
+   "pool_size": null,
+   "geometry": "pct",
    "actual_wins": 40,
    "actual_mean_r_ex_funding": -0.330003,
    "null_wins_mean": 45.7308,
@@ -551,6 +598,8 @@
    "window_days": 15,
    "side": "both",
    "exclude_bars": 24,
+   "pool_size": null,
+   "geometry": "pct",
    "actual_wins": 40,
    "actual_mean_r_ex_funding": -0.330003,
    "null_wins_mean": 46.2598,
@@ -570,6 +619,8 @@
    "window_days": 3,
    "side": "both",
    "exclude_bars": null,
+   "pool_size": null,
+   "geometry": "pct",
    "actual_wins": 40,
    "actual_mean_r_ex_funding": -0.330003,
    "null_wins_mean": 42.5826,
@@ -589,6 +640,8 @@
    "window_days": 3,
    "side": "before",
    "exclude_bars": null,
+   "pool_size": null,
+   "geometry": "pct",
    "actual_wins": 40,
    "actual_mean_r_ex_funding": -0.330003,
    "null_wins_mean": 38.8332,
@@ -608,6 +661,8 @@
    "window_days": 3,
    "side": "after",
    "exclude_bars": null,
+   "pool_size": null,
+   "geometry": "pct",
    "actual_wins": 40,
    "actual_mean_r_ex_funding": -0.330003,
    "null_wins_mean": 46.4544,
@@ -627,6 +682,8 @@
    "window_days": 3,
    "side": "after",
    "exclude_bars": 24,
+   "pool_size": null,
+   "geometry": "pct",
    "actual_wins": 40,
    "actual_mean_r_ex_funding": -0.330003,
    "null_wins_mean": 47.3486,
@@ -638,7 +695,102 @@
    "p_wins_le": 0.042192,
    "p_mean_r_le": 0.010798,
    "unresolved_frac": 0.0
+  },
+  "enterable_global": {
+   "n_trades": 109,
+   "n_rep": 5000,
+   "seed": 20261112,
+   "window_days": null,
+   "side": "both",
+   "exclude_bars": null,
+   "pool_size": 3762,
+   "geometry": "pct",
+   "actual_wins": 40,
+   "actual_mean_r_ex_funding": -0.330003,
+   "null_wins_mean": 44.9046,
+   "null_wins_p05": 37.0,
+   "null_wins_p95": 52.05,
+   "null_mean_r_mean": -0.143132,
+   "null_mean_r_p05": -0.340133,
+   "null_mean_r_p95": 0.064946,
+   "p_wins_le": 0.175565,
+   "p_mean_r_le": 0.059588,
+   "unresolved_frac": 0.000769
+  },
+  "enterable_15d": {
+   "n_trades": 109,
+   "n_rep": 5000,
+   "seed": 20261113,
+   "window_days": 15,
+   "side": "both",
+   "exclude_bars": null,
+   "pool_size": 3762,
+   "geometry": "pct",
+   "actual_wins": 40,
+   "actual_mean_r_ex_funding": -0.330003,
+   "null_wins_mean": 43.4318,
+   "null_wins_p05": 36.0,
+   "null_wins_p95": 51.0,
+   "null_mean_r_mean": -0.197253,
+   "null_mean_r_p05": -0.37815,
+   "null_mean_r_p95": -0.005164,
+   "p_wins_le": 0.253949,
+   "p_mean_r_le": 0.120576,
+   "unresolved_frac": 0.0
+  },
+  "atr_global": {
+   "n_trades": 109,
+   "n_rep": 5000,
+   "seed": 20261114,
+   "window_days": null,
+   "side": "both",
+   "exclude_bars": null,
+   "pool_size": 48177,
+   "geometry": "atr",
+   "actual_wins": 40,
+   "actual_mean_r_ex_funding": -0.330003,
+   "null_wins_mean": 47.0844,
+   "null_wins_p05": 39.0,
+   "null_wins_p95": 55.0,
+   "null_mean_r_mean": -0.087888,
+   "null_mean_r_p05": -0.287197,
+   "null_mean_r_p95": 0.117199,
+   "p_wins_le": 0.077984,
+   "p_mean_r_le": 0.024195,
+   "unresolved_frac": 0.000512
+  },
+  "atr_15d_x24": {
+   "n_trades": 109,
+   "n_rep": 5000,
+   "seed": 20261115,
+   "window_days": 15,
+   "side": "both",
+   "exclude_bars": 24,
+   "pool_size": 48177,
+   "geometry": "atr",
+   "actual_wins": 40,
+   "actual_mean_r_ex_funding": -0.330003,
+   "null_wins_mean": 45.7688,
+   "null_wins_p05": 38.0,
+   "null_wins_p95": 54.0,
+   "null_mean_r_mean": -0.106829,
+   "null_mean_r_p05": -0.297952,
+   "null_mean_r_p95": 0.09735,
+   "p_wins_le": 0.126975,
+   "p_mean_r_le": 0.028394,
+   "unresolved_frac": 0.000572
   }
+ },
+ "is_null_common_shift": {
+  "n_shifts": 720,
+  "max_shift_bars": 360,
+  "actual_mean_r_ex_funding": -0.330003,
+  "null_mean_r_mean": -0.128471,
+  "null_mean_r_sd": 0.145182,
+  "null_mean_r_p05": -0.395639,
+  "null_mean_r_p95": 0.083979,
+  "p_mean_r_le": 0.080444,
+  "min_trades_kept": 108
  },
  "is_null_actual_mean_r_ex_funding": -0.330003,
  "is_forward_drift": [
@@ -2643,6 +2795,40 @@
   "overall_excess_r": -0.213281,
   "spearman_width_atr_vs_rr_fill": 0.728783
  },
+ "is_bucket_permutation": {
+  "observed_max_z": 2.254341,
+  "observed_argmax": "rr_fill",
+  "per_feature_max_z": {
+   "rr_fill": 2.254341,
+   "width_atr": 1.890371,
+   "sl_atr": 0.802881,
+   "d_sl": 1.127698,
+   "entry_vs_val_atr": 0.298518,
+   "touch_gap_bars": 0.522904,
+   "pattern_lag_bars": 1.22155,
+   "box_age_h": 0.974695,
+   "pattern_name": 0.963364,
+   "sfp": 0.580257,
+   "pivot_pair": 1.327368,
+   "reentry_after_loss_same_zone": 0.0,
+   "above_sma200": 0.523766,
+   "sma200_up": 0.089863,
+   "mom20d": 0.41133,
+   "vol30d_pct": 0.849186,
+   "dd365": 0.946865,
+   "hours_since_crash": 0.67649,
+   "ret24h": 0.99288
+  },
+  "perm_max_z_median": 2.396357,
+  "perm_max_z_p95": 3.531521,
+  "p_perm_ge_observed": 0.606197,
+  "n_features_z_ge_ref": 1,
+  "perm_mean_n_features_z_ge_ref": 1.976,
+  "z_ref": 1.9,
+  "min_n": 15,
+  "n_perm": 2000,
+  "value_col": "excess_r"
+ },
  "is_bucket_gaps": [
   {
    "a": "width_atr=0.0",
@@ -2841,6 +3027,26 @@
   "max_consecutive_losses": 10,
   "loss_runs_ge_3": 9,
   "loss_runs_ge_5": 4
+ },
+ "is_sizing_mechanism": {
+  "per_trade_ir_fixed_notional": -0.263326,
+  "per_trade_ir_equal_risk": -0.317582,
+  "relative_risk_weight_fixed_notional": {
+   "d_sl<1%": 0.421911,
+   "1%<=d_sl<2%": 0.784228,
+   "d_sl>=2%": 2.174268
+  },
+  "mean_r_by_group": {
+   "d_sl<1%": -0.439642,
+   "1%<=d_sl<2%": -0.226462,
+   "d_sl>=2%": -0.457179
+  }
+ },
+ "is_ret24h_drop_bucket": {
+  "n": 21,
+  "mean_ret": -0.005638,
+  "mean_ret_without_worst_trade": -0.001405,
+  "worst_trade_in_bucket": true
  },
  "is_sizing": {
   "spearman_dsl_vs_loss_pct_losers": 0.823895,
