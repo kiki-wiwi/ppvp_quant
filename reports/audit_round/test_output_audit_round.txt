@@ -27,5 +27,5 @@ test_audit_round.py::test_missing_cache_raises_instead_of_rebuilding PASSED [ 90
 test_audit_round.py::test_engine_path_charges_funding_inside_a_gap_like_the_backtester PASSED [ 95%]
 test_audit_round.py::test_engine_path_rejects_unsupported_configs_and_honours_funding_switch PASSED [100%]
 
-============================== 21 passed in 6.04s ==============================
+============================== 21 passed in 6.67s ==============================
 exit=0

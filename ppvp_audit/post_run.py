@@ -17,7 +17,7 @@ ppvp_audit/post_run.py — 实验运行之后的补充核算（审计复核的�
 8. 描述性核对（复核 LC-2、LC-3、LC-6）：B_audited 按入场高度分组的平均净 R；亏损月份的价格走势与 2022 年的对照；
    过滤类版本按运行时的保留概率与种子重建 300 次随机保留，统计零技能保留通过判定 (2)、(4)、(5)、(6) 的比例。
 7. 判定第 (3) 条对 K 线内先后的敏感性（复核 LC-1）：第 (3) 条比较“真实信号上的改善”与“同一规则在随机时刻上的改善”，
-   两边都按最坏路径撮合；随机时刻更常遇到 D2 的“同根分批后回落到保本”，最坏路径对这一差值并不保守。这里用一个
+   两边都按最坏路径撮合，最坏路径对单笔是悲观的，但对这一差值并不保守。这里用一个
    可切换先后的单事件撮合副本（最坏路径时与 event_sim 逐位一致）重算 C1 / D1 / D2 的匹配随机对照：只把同根分批与
    保本按有利顺序处理（先低后高），以及把全部歧义 K 线都按有利顺序处理（止损与止盈 / POC 同根时先到高点、限价成交
    那一根先成交后止盈）。
@@ -138,6 +138,21 @@ def c1_descriptives(base: dict, bcfg) -> dict:
             diffs.append(b["ret"][u].mean() - b["ret"][fl].mean())
     diffs = np.array(diffs)
     imp = np.where(f, e["ret"], 0.0) - b["ret"]
+    # “穿价”与“触价”两种成交口径的差别只可能来自低点恰好落在 (L − tick, L] 的 K 线；按 tick 网格精确计数（价格取到 tick 的整数倍）
+    lo_all = df1h["low"].to_numpy()
+    tk = tick_size(df1h.index)
+    within, at_one_tick, within_after_fill = 0, 0, 0
+    for jj, bb in enumerate(bars):
+        if not passive[jj]:
+            continue
+        for ii in range(bb + 1, min(bb + 1 + V.C1_VALID_BARS, len(df1h))):
+            d_ticks = round((lim[jj] - lo_all[ii]) / tk[bb], 6)
+            if 0 <= d_ticks < 1:
+                within += 1
+                if f[jj] and e["fill_bar"][jj] < ii:
+                    within_after_fill += 1
+            if d_ticks == 1:
+                at_one_tick += 1
     # 止盈比例之差的按月聚类区间，以及控制 RR 之后“未成交”是否还解释止盈（逻辑回归似然比检验）
     rng2 = np.random.default_rng(X.SEED_CLUSTER + 1)
     tp_diffs = []
@@ -150,6 +165,9 @@ def c1_descriptives(base: dict, bcfg) -> dict:
     ones = np.ones(len(bars))
     lr_test = _logit_lr_test(tp_b.astype(float), np.column_stack([ones, np.log(rr_base)]), (~f).astype(float))
     return {
+        "touch_vs_through_scan": {"bars_with_low_in_(L-tick,L]": within, "of_which_after_the_order_filled": within_after_fill,
+                                  "bars_with_low_exactly_L_minus_one_tick": at_one_tick,
+                                  "note": "within the 3-bar validity window of each passive order; tick of the signal bar"},
         "tp_share_gap_unfilled_minus_filled": float(tp_b[~f].mean() - tp_b[f].mean()),
         "tp_share_gap_ci_month_cluster": [float(np.percentile(tp_diffs, 2.5)), float(np.percentile(tp_diffs, 97.5))],
         "tp_on_unfilled_controlling_log_rr_logit_lr": lr_test,
@@ -271,7 +289,8 @@ FAV_BE_SAME_BAR, FAV_HIGH_FIRST, FAV_FILL_THEN_TP = 1, 2, 8
 @njit(cache=False)
 def _events_order(o, h, l, c, dec_bar, sl_a, tp_a, poc_a, lim_a, tick_a, valid, through, partial, frac, move_be,
                   taker, maker, slip, end_bar, fav):
-    """event_sim._events 的副本，fav = 0 时逐位相同。fav 位：1 = 同根分批后回落到保本价按“先低后高”处理（不离场）；
+    """event_sim._events 的副本，fav = 0 时逐位相同。fav 位：1 = 同根分批后回落到保本价按“先低后高”处理（不离场；
+    只在该根收盘高于保本价时可行，否则仍按保本离场）；
     2 = 同一根同时触及止损与止盈 / POC 时，若开盘在止损之上，按“先到高点”处理（先分批 / 止盈，余仓再按止损价离场）；
     8 = 限价成交那一根也触及止盈时按“先成交、后止盈”处理。"""
     m = dec_bar.shape[0]
@@ -353,7 +372,8 @@ def _events_order(o, h, l, c, dec_bar, sl_a, tp_a, poc_a, lim_a, tick_a, valid, 
                 part = True
                 if move_be:
                     stop = efill
-                    if l[i] <= stop and (fav & 1) == 0:
+                    # 有利顺序“先低后高”只有在该根收盘高于保本价时才可能；收盘不高于保本价时，到达 POC 之后的回落必然触发保本
+                    if l[i] <= stop and ((fav & 1) == 0 or c[i] <= stop):
                         px = stop * (1.0 - slip)
                         pnl += q * (px - efill) - q * px * taker
                         done = True
@@ -438,7 +458,9 @@ def entry_height_outcomes() -> dict:
 
     def grp(name, mask):
         out[name] = {"n": int(mask.sum()), "mean_net_R": float(t.loc[mask, "net_R"].mean()),
-                     "n_other": int((~mask).sum()), "mean_net_R_other": float(t.loc[~mask, "net_R"].mean())}
+                     "n_other": int((~mask).sum()), "mean_net_R_other": float(t.loc[~mask, "net_R"].mean()),
+                     "mean_gross_R_ref": float(t.loc[mask, "gross_R_ref"].mean()),
+                     "mean_gross_R_ref_other": float(t.loc[~mask, "gross_R_ref"].mean())}
     grp("rr_fill_lt_1", t["rr_fill"] < 1)
     grp("normalized_entry_position_gt_0.5", t["normalized_entry_position"] > 0.5)
     grp("entry_above_poc", t["entry_px"] > t["POC"])
@@ -532,14 +554,19 @@ def thinning_criteria_pass_rates(base: dict, base_s: dict, bcfg, res: dict) -> d
 # ---------------------------------------------------------------------------
 # 4. D1 / D2 适用性
 # ---------------------------------------------------------------------------
-def d_applicability(v: str) -> dict:
+def d_applicability(v: str, df1h: pd.DataFrame) -> dict:
     t = pd.read_csv(EXP / f"{v}_trades.csv")
     app = (t["poc"] > t["entry_px"]) & (t["poc"] < t["tp"])
     part = t["partial_bar"] >= 0
     be = t["exit_reason"] == "BE"
+    same = part & be & (t["partial_bar"] == t["exit_bar"])
+    close_x = df1h["close"].to_numpy()[t["exit_bar"].to_numpy(dtype=np.int64)]
+    # 同根分批后保本：若该根收盘不高于入场成交价，即使“先低后高”，到达 POC 之后的回落也会触发保本，有利顺序不可行
+    infeasible = same & (close_x <= t["entry_px"].to_numpy())
     return {"trades": int(len(t)), "applicable": int(app.sum()), "not_applicable": int((~app).sum()),
             "partial_filled": int(part.sum()), "breakeven_exits": int(be.sum()),
-            "partial_and_breakeven_same_bar": int((part & be & (t["partial_bar"] == t["exit_bar"])).sum()),
+            "partial_and_breakeven_same_bar": int(same.sum()),
+            "same_bar_breakeven_where_favourable_order_is_infeasible": int(infeasible.sum()),
             "exit_reasons": t["exit_reason"].value_counts().to_dict()}
 
 
@@ -601,7 +628,7 @@ def run() -> dict:
         "results_json_sha256": sha256_file(EXP / "results.json"),
         "intrabar_ambiguity": amb,
         "c1_descriptives": c1_descriptives(base, bcfg),
-        "d_applicability": {v: d_applicability(v) for v in ("D1", "D2")},
+        "d_applicability": {v: d_applicability(v, base["df1h"]) for v in ("D1", "D2")},
         "clustering_and_like_for_like": clustering_and_like_for_like(base, bcfg, res),
         "criterion3_intrabar_order_sensitivity": order_sensitivity(base, bcfg, res),
         "entry_height_outcomes_B_audited": entry_height_outcomes(),

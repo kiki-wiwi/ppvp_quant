@@ -7,6 +7,6 @@ deselected (reads real BTCUSDT data incl. VAL): test_audit_regressions.py::test_
 deselected (reads real BTCUSDT data incl. VAL): test_audit_regressions.py::test_ex4_4_cache_isolated_from_box_rangeindex_writes
 ........................................................................ [ 55%]
 ..........................................................               [100%]
-130 passed, 6 deselected in 2.14s
+130 passed, 6 deselected in 2.29s
 exit=0
 not run this round (compute on VAL/OOS/ETH): test_attribution.py, test_lookahead.py

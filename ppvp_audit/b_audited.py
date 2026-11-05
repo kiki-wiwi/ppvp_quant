@@ -20,7 +20,7 @@ from pathlib import Path
 
 from .common import OUT, ROOT, git_state, write_json
 
-# 修复清单（审计报告第 6 节）：只有被证实的实现错误；策略与定义问题一律不在此列
+# 修复清单（审计报告第 6 节）：4 个被证实的实现错误 + D-4 一项不影响结果的流程保护；策略定义问题与其余设计选择一律不在此列
 B_AUDITED_FIXES = [
     {"id": "D-1", "file": "data_loader.py", "kind": "implementation error (latent; IS unaffected)",
      "what": "缺口补齐会把清洗阶段剔除的维护占位小时当作归档遗漏，用 OKX 数据补回，违反“维护期保持缺失”的成文规则",
