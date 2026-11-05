@@ -1,7 +1,7 @@
 {
  "name": "B_original",
  "frozen_at_utc": "2026-11-05T04:12:01+00:00",
- "regenerated_at_utc": "2026-11-05T05:51:41+00:00",
+ "regenerated_at_utc": "2026-11-05T06:57:26+00:00",
  "regeneration_note": "data block restricted to the rows read in this round (audit D-12); B_audited block added. B_original definition, configs, ledger and its hash are unchanged.",
  "definition": "BASELINE_STRATEGY / BASELINE_BACKTEST on the repository code at the commit below, BTCUSDT perp, IS [2020-01-01, 2024-01-01) UTC, data truncated at IS_END before entering the engine",
  "git": {
@@ -12,8 +12,8 @@
   "note": "B_original is defined as the code at this commit"
  },
  "generated_from_git": {
-  "commit": "aa1ecb44a43c847119c0fff5ccf4928d3754734c",
-  "describe": "aa1ecb4-dirty",
+  "commit": "ac11241906dabf701c87dd60fa1c1fa635590295",
+  "describe": "ac11241-dirty",
   "branch": "claude/sharp-darwin-k34sz1",
   "status_porcelain": "M reports/audit_round/b_audited_check.json",
   "diff_stat_vs_head": "reports/audit_round/b_audited_check.json | 10 +++++-----\n 1 file changed, 5 insertions(+), 5 deletions(-)"
@@ -184,10 +184,11 @@
  "reproduce": [
   "python -m ppvp_audit.b_audited          # B_audited 与 B_original 的逐位核验（b_audited_check.json）",
   "python -m ppvp_audit.manifest           # 本文件",
-  "python -m ppvp_audit.repro_figures      # 五张图的核验版与 figure_checks.json",
+  "python -m ppvp_audit.repro_figures      # 图 1、2、4、5 的核验图与 figure_checks.json（图 3 只核验分组数值）",
   "python -m ppvp_audit.run_ledgers --version B_audited   # 账本、核对表、切片",
   "python -m ppvp_audit.nulls              # 随机基准复核",
-  "python -m ppvp_audit.experiments        # 9 个预注册版本"
+  "python -m ppvp_audit.experiments        # 9 个预注册版本（results.json、实验台账 R01–R09）",
+  "python -m ppvp_audit.post_run           # 运行后的补充核算与补记运行（post_run_checks.json、台账 R10–R21）"
  ],
  "exposure_register": [
   {
@@ -205,7 +206,7 @@
    "segment": "IS+VAL (research period)",
    "symbols": "BTC, ETH",
    "kind": "outcome counts and aggregate equity (debug output)",
-   "what": "中间版本的研究期离场原因计数（BTC 止损 85 / 止盈 60，ETH 止损 104 / 止盈 56）；研究期若干配置的期末净值（显示基线明显亏损）；破位离场计数（22 次中 12 次）；第一轮审计中的亏损止盈交易计数",
+   "what": "中间版本的研究期离场原因计数（BTC 与 ETH）；研究期若干配置的期末净值（显示基线明显亏损）；破位离场计数；第一轮审计中的亏损止盈交易计数（本登记只描述看过什么，不重复任何 VAL / ETH 数值）",
    "influenced_decisions": "记录称未据此改动代码或参数（用于核对重构前后一致性）"
   },
   {
@@ -223,7 +224,7 @@
    "segment": "IS+VAL+OOS",
    "symbols": "BTC, ETH",
    "kind": "pass/fail look-ahead gate; structural counts",
-   "what": "防未来函数闸门在 2020-2026 全量数据上截断比对（只输出通过 / 失败）；耗时基准记录全量 K 线数与箱体数；研究期结构计数（箱体 1,579 / 1,558，原始信号 193 / 202，消融表中的可交易 / 成交笔数，INVALID 时间占比）",
+   "what": "防未来函数闸门在 2020-2026 全量数据上截断比对（只输出通过 / 失败）；耗时基准记录全量 K 线数与箱体数；研究期结构计数（BTC 与 ETH 的箱体数、原始信号数、消融表中的可交易 / 成交笔数、INVALID 时间占比）",
    "influenced_decisions": "闸门失败会触发引擎修复（未来函数类缺陷），不涉及绩效"
   },
   {
@@ -232,7 +233,7 @@
    "segment": "VAL",
    "symbols": "BTC",
    "kind": "performance (headline)",
-   "what": "基线 VAL 夏普 −0.525（区间 [−1.93, +1.11]）、累计 −6.9%、最大回撤 −13.59%、30 笔（32 个原始信号）、胜率 / 盈亏比 / 平均 R、买入持有 VAL 夏普 1.47；6 个成本对照的 VAL 指标；carry / roll 三个变体的 VAL 夏普（−0.68 至 −0.33）与平均 R；草稿图（a59f783、f85c142）画出过 VAL 日度净值路径；test_attribution.py 把 VAL 夏普钉为常量",
+   "what": "基线 VAL 总体指标（夏普及其区间、累计收益、最大回撤、成交笔数与原始信号数、胜率 / 盈亏比 / 平均 R）、买入持有 VAL 夏普；6 个成本对照的 VAL 指标；carry / roll 三个变体的 VAL 夏普与平均 R；草稿图（a59f783、f85c142）画出过 VAL 日度净值路径；test_attribution.py 把 VAL 夏普钉为常量（数值见 Phase 2 记录，本登记不重复）",
    "influenced_decisions": "用于 Phase 2 第 3b 节按事先规则否决 carry / roll 变体，以及 Phase 3 判定规则的设计讨论；VAL 因此不再是未见数据"
   },
   {
@@ -264,10 +265,10 @@
   }
  ],
  "b_audited": {
-  "definition": "current working tree code (only proven implementation-error fixes relative to B_original, listed below) with the B_original configs; BTCUSDT perp IS [2020-01-01, 2024-01-01)",
+  "definition": "current working tree code with the B_original configs: B_original plus the four proven implementation-error fixes (D-1, D-5, E-1, E-2) and one result-neutral process safeguard (D-4, a design choice changed to satisfy the section 9 no-download constraint); all other definition questions and design choices unchanged; BTCUSDT perp IS [2020-01-01, 2024-01-01)",
   "git": {
-   "commit": "aa1ecb44a43c847119c0fff5ccf4928d3754734c",
-   "describe": "aa1ecb4",
+   "commit": "ac11241906dabf701c87dd60fa1c1fa635590295",
+   "describe": "ac11241",
    "branch": "claude/sharp-darwin-k34sz1",
    "status_porcelain": "",
    "diff_stat_vs_head": ""
@@ -290,9 +291,9 @@
     "test": "test_audit_round.py::test_gap_fill_refuses_without_pre_gap_overlap"
    },
    {
-    "id": "D-8",
+    "id": "D-4",
     "file": "data_loader.py",
-    "kind": "process safeguard (section 9 constraint)",
+    "kind": "process safeguard required by the section 9 constraint (a design choice changed, not an implementation-error fix; no effect on any result)",
     "what": "缓存缺失时静默联网重建全部缓存（含 1m 日度归档的裁决）",
     "fix": "缓存缺失时报 FileNotFoundError，只有显式 python data_loader.py --build 才联网",
     "test": "test_audit_round.py::test_missing_cache_raises_instead_of_rebuilding"

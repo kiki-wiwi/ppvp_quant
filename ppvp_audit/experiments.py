@@ -86,7 +86,11 @@ def _daily(res):
 
 
 def ambiguity(out: dict, v: str) -> dict:
-    """K 线内路径歧义（最坏路径已处理）：离场那根同时触及止损与止盈 / 未成交的 POC；同根分批后保本离场；限价成交那根即止损或触及止盈。"""
+    """K 线内路径歧义（最坏路径已处理）：离场那根同时触及止损与止盈 / 未成交的 POC；同根分批后保本离场；限价成交那根即止损或触及止盈。
+
+    已知口径问题（结果复核 EC-1、EC-2）：“止损 + POC 同根”对没有 POC 分批的版本不影响盈亏，C1 的“成交即同根止损”在成交那根
+    没有触及止盈时先后是确定的，因此这里的计数偏多。为了让 2026-11-05 那次运行的 results.json 可逐位复现，这里保持运行时的
+    写法；影响盈亏的口径见 ppvp_audit/post_run.py 的 ambiguity_split 与 experiments/post_run_checks.json。"""
     tr = out["result"].trades
     tr = tr[tr["exit_reason"] != "OPEN"]
     h = out["df1h"]["high"].to_numpy(dtype=np.float64)
@@ -224,7 +228,11 @@ def opportunity_pairs(base: dict, bcfg, v: str, fill_rule: str = "through") -> d
 
 
 def matched_random_improvement(base: dict, bcfg, v: str, fill_rule: str = "through") -> dict | None:
-    """C1 / D1 / D2：同一执行 / 出场规则用在匹配的随机时刻上；比较真实父信号上的改善与随机时刻上的改善。"""
+    """C1 / D1 / D2：同一执行 / 出场规则用在匹配的随机时刻上；比较真实父信号上的改善与随机时刻上的改善。
+
+    已知口径问题（结果复核 EC-3、EC-4）：C1 在随机时刻上的挂单价 (high + low) / 2 有近一半不低于收盘、按市价处理、改善恒为 0，
+    而真实信号几乎都是被动挂单；按月聚类用的是信号 K 线开盘所在月份，计划写的是入场月份。为了让 results.json 可逐位复现，
+    这里保持运行时的写法；只用被动随机挂单与按入场月份聚类的结果见 ppvp_audit/post_run.py 与 experiments/post_run_checks.json。"""
     if v not in ("C1", "D1", "D2"):
         return None
     df1h, sig = base["df1h"], base["signals"]

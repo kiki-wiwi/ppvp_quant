@@ -12,4 +12,4 @@
 | `exec1h/` | 成交、路径与记账：独立重写的回测、资金费、盯市净值、成本分解、路径撮合器（E-1 至 E-6） |
 | `verify_*` | 对应方向的对抗式复核：另一个代理尝试推翻每条发现，并用自己的脚本复算 |
 
-脚本中的路径是当时的临时目录；在仓库根目录下运行时需把输出路径改到本地可写目录，并设置 `NUMBA_CACHE_DIR`。脚本读取数据的方式只有三种：经 `ppvp_audit.common`（数据在进入引擎前截断在 2024-01-01 之前）；只读 parquet 的模式而不读行值；或读取 IS 月份（现货为 2019 年）的本地原始归档。输出中没有 2024-01-01 及以后的任何数值，也没有 ETH 的任何数值（`data1h/s02_out.txt` 只列出了 `data/manifest.json` 的数据集名称）。
+脚本中的路径是当时的临时目录；在仓库根目录下运行时需把输出路径改到本地可写目录，并设置 `NUMBA_CACHE_DIR`。脚本读取数据的方式有四种：经 `ppvp_audit.common`（数据在进入引擎前截断在 2024-01-01 之前）；读取 IS 月份（现货为 2019 年）的本地原始归档；以及 `data1h/s01_schema.py`、`s03_is_1h_4h.py`、`s04_thin_hours.py`、`s05_raw_archives.py`、`s10_venue_wicks.py`、`s11_spot_holes.py` 与 `verify_data1h/_setup.py`、`v06_warmup.py`、`v09_spot_holes.py`、`v12_raw_is.py` 用 `pd.read_parquet` 读入整个 BTC 缓存文件（文件含 2024–2026 的行），读入内存后立即截断到 2024-01-01 之前再计算，截断之前不打印、不计算任何行值。审计说明允许这种读法。输出中没有 2024-01-01 及以后的任何数值，也没有 ETH 的任何数值（`data1h/s02_out.txt` 只列出了 `data/manifest.json` 的数据集名称）。

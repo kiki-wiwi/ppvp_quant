@@ -1,0 +1,31 @@
+============================= test session starts ==============================
+platform linux -- Python 3.13.18, pytest-9.2.0, pluggy-1.7.0 -- /usr/local/bin/python
+cachedir: .pytest_cache
+rootdir: /home/user/ppvp_quant
+plugins: anyio-4.15.1
+collecting ... collected 21 items
+
+test_audit_round.py::test_4h_uses_utc_boundaries_and_counts_incomplete_bars PASSED [  4%]
+test_audit_round.py::test_box_availability_and_versions_on_is PASSED     [  9%]
+test_audit_round.py::test_entry_at_close_and_immediate_stop_on_next_bar PASSED [ 14%]
+test_audit_round.py::test_gap_below_stop_fills_at_open_and_same_bar_sl_tp_is_stop PASSED [ 19%]
+test_audit_round.py::test_mark_to_market_equity_includes_unrealised_pnl PASSED [ 23%]
+test_audit_round.py::test_funding_boundaries PASSED                      [ 28%]
+test_audit_round.py::test_poc_partial_then_breakeven_same_bar_is_worst_case PASSED [ 33%]
+test_audit_round.py::test_engine_path_reproduces_backtester_on_is PASSED [ 38%]
+test_audit_round.py::test_limit_order_rules PASSED                       [ 42%]
+test_audit_round.py::test_event_sim_reproduces_backtester_on_is PASSED   [ 47%]
+test_audit_round.py::test_b1_copy_disabled_is_identical_on_is PASSED     [ 52%]
+test_audit_round.py::test_b1_requires_sfp_and_tolerates_the_wick[last0] PASSED [ 57%]
+test_audit_round.py::test_b1_requires_sfp_and_tolerates_the_wick[last1] PASSED [ 61%]
+test_audit_round.py::test_filter_definitions_hand_computed PASSED        [ 66%]
+test_audit_round.py::test_is_boundary_assertion PASSED                   [ 71%]
+test_audit_round.py::test_prefix_truncation_consistency_within_is PASSED [ 76%]
+test_audit_round.py::test_gap_fill_keeps_placeholder_maintenance_missing PASSED [ 80%]
+test_audit_round.py::test_gap_fill_refuses_without_pre_gap_overlap PASSED [ 85%]
+test_audit_round.py::test_missing_cache_raises_instead_of_rebuilding PASSED [ 90%]
+test_audit_round.py::test_engine_path_charges_funding_inside_a_gap_like_the_backtester PASSED [ 95%]
+test_audit_round.py::test_engine_path_rejects_unsupported_configs_and_honours_funding_switch PASSED [100%]
+
+============================== 21 passed in 6.04s ==============================
+exit=0

@@ -1,0 +1,12 @@
+command: python -m pytest -q test_audit_regressions.py --deselect <6 real-data tests below>
+deselected (reads real BTCUSDT data incl. VAL): test_audit_regressions.py::test_metrics3_get_boxes_lock_checked_before_cache
+deselected (reads real BTCUSDT data incl. VAL): test_audit_regressions.py::test_metrics10_mutating_run_output_does_not_poison_cache
+deselected (reads real BTCUSDT data incl. VAL): test_audit_regressions.py::test_execr3_cache_isolated_from_array_writes
+deselected (reads real BTCUSDT data incl. VAL): test_audit_regressions.py::test_ex3_8_first_day_regime_and_short_4h_inputs
+deselected (reads real BTCUSDT data incl. VAL): test_audit_regressions.py::test_doc3_6_cache_isolated_from_index_writes
+deselected (reads real BTCUSDT data incl. VAL): test_audit_regressions.py::test_ex4_4_cache_isolated_from_box_rangeindex_writes
+........................................................................ [ 55%]
+..........................................................               [100%]
+130 passed, 6 deselected in 2.14s
+exit=0
+not run this round (compute on VAL/OOS/ETH): test_attribution.py, test_lookahead.py
