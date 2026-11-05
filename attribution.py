@@ -341,7 +341,10 @@ def random_entry_null(df1h: pd.DataFrame, tf: pd.DataFrame, bcfg: BacktestConfig
     c = df1h["close"].to_numpy(dtype=np.float64)
     _, sl_abs, tp_abs = _bracket_levels(tf, bars, c, None if atr is None else np.asarray(atr, dtype=np.float64),
                                         float(bcfg.slippage), geometry)
-    _, reason, r = bracket_outcomes(df1h, bars.ravel(), sl_abs.ravel(), tp_abs.ravel(), end_bar, bcfg, allow_oos=allow_oos)
+    xb, reason, r = bracket_outcomes(df1h, bars.ravel(), sl_abs.ravel(), tp_abs.ravel(), end_bar, bcfg, allow_oos=allow_oos)
+    hi = df1h["high"].to_numpy(dtype=np.float64)
+    same_bar = (reason == 1) & (hi[np.maximum(xb, 0)] >= tp_abs.ravel())    # 止损离场的那根 K 线也触及了止盈
+    eb_act = tf["entry_bar"].to_numpy(dtype=np.int64)[None, :]
     wins = (r > 0).reshape(n_rep, m)
     rr = r.reshape(n_rep, m)
     w_null = wins.sum(axis=1)
@@ -360,15 +363,26 @@ def random_entry_null(df1h: pd.DataFrame, tf: pd.DataFrame, bcfg: BacktestConfig
         "p_wins_le": float((1 + (w_null <= w_act).sum()) / (n_rep + 1)),
         "p_mean_r_le": float((1 + (r_null <= r_act + 1e-12).sum()) / (n_rep + 1)),   # 容差：只影响数值上的并列
         "unresolved_frac": float((reason == 0).mean()),
+        # 撮合规则敏感度：止损离场且离场 K 线同时触及止盈的比例（全部零假设交易为分母；真实交易见 trade_frame 的
+        # ambiguous_exit_bar）；抽样重放真实交易的程度：抽到真实信号 K 线本身、以及落在其前后 24 根以内的比例
+        "same_bar_sl_tp_frac": float(same_bar.mean()),
+        "draw_share_own_bar": float((bars == eb_act).mean()),
+        "draw_share_within_24": float((np.abs(bars - eb_act) <= 24).mean()),
         "per_trade_null_win_rate": wins.mean(axis=0),
         "per_trade_null_mean_r": rr.mean(axis=0),          # 每笔交易在零假设下的期望 R（用于按组计算超额 R）
         "null_r_dist": r_null, "null_w_dist": w_null,
     }
 
 
-def executable_bars(df1h: pd.DataFrame, signals: pd.DataFrame) -> np.ndarray:
+def executable_bars(df1h: pd.DataFrame, signals: pd.DataFrame, scfg: StrategyConfig,
+                    allow_oos: bool = False) -> np.ndarray:
     """若在该根出现看涨形态即会在收盘发出信号的 K 线下标：处理后状态为 TOUCH2、触及支撑带（low ≤ 带上沿）且收盘
-    ≥ 带下沿，或本身就是原始信号 K 线（信号消费序列后状态回到 ARMED）。用于“策略可执行范围”的随机入场零假设。"""
+    ≥ 带下沿，或本身就是原始信号 K 线（信号消费序列后状态回到 ARMED）。用于“策略可执行范围”的随机入场零假设。
+    这一判定只在 scfg.max_pattern_lag_bars 为 None（基线：第 2 次测试在带内期间任意一根都可确认）时精确，
+    设了形态滞后上限时直接报错；df1h 延伸到 OOS_START 之后时须 allow_oos=True。"""
+    if scfg.max_pattern_lag_bars is not None:
+        raise ValueError("executable_bars is exact only when max_pattern_lag_bars is None")
+    _check_bars_extent(df1h, len(df1h), allow_oos)
     st = signals["state"].to_numpy()
     with np.errstate(invalid="ignore"):
         touch = ((df1h["low"].to_numpy(dtype=np.float64) <= signals["zone_hi"].to_numpy(dtype=np.float64))
@@ -563,7 +577,7 @@ def bucket_stats(tf: pd.DataFrame, by, n_boot: int = 2000, seed: int = 0, allow_
     """按 by（列名或与 tf 对齐的 Series）分组的交易统计。
 
     * 净胜率（pnl > 0，Wilson 95%）与止盈命中率（exit_reason == 'TP'，Wilson 95%）。与无漂移随机游走理论值
-      rw_win_rate（组内 d_sl/(d_sl+d_tp) 的均值，即“先触及止盈”的概率，不含成本）可比的是止盈命中率。
+      rw_win_rate（组内 p_rw = (信号收盘 − SL)/(TP − SL) 的均值，即“先触及止盈”的概率，不含成本）可比的是止盈命中率。
     * 平均 R（含资金费，自助法 95%）；tf 含 r_ex_funding 时另给不含资金费的平均 R（mean_r_xf，自助法 95%）。
     * 净值口径：每笔占入场净值的平均盈亏 mean_ret（ret_on_base）与组内对数收益之和 sum_log_ret
       （复利、单仓位下 IS 期末/期初净值的对数 = 全部交易 log(1+ret_on_base) 之和）。
@@ -635,20 +649,31 @@ def stationary_bootstrap_sharpe(r: pd.Series, n_boot: int = 5000, mean_block: fl
 
 
 def paired_sharpe_diff(r_new: pd.Series, r_ref: pd.Series, n_boot: int = 5000, mean_block: float = 10.0, seed: int = 0,
-                       allow_oos: bool = False) -> dict:
-    """同一时段两条日度收益序列的夏普差 Sharpe(new) - Sharpe(ref)：两者用同一组平稳自助法下标重抽样，
-    保留同日相关性（同一批信号的两个变体高度相关，单独的置信区间会严重高估差值的不确定性）。"""
+                       benchmark_factor: float = 1.0, allow_oos: bool = False) -> dict:
+    """同一时段两条日度收益序列的夏普差 Sharpe(new) - B：两者用同一组平稳自助法下标重抽样，保留同日相关性
+    （同一批信号的两个变体高度相关，单独的置信区间会严重高估差值的不确定性）。
+
+    基准 B = max(S_ref, f · S_ref)，f = benchmark_factor ∈ (0, 1]，在每次重抽样中用同一组下标重算。f = 1 时 B = S_ref，
+    即普通的配对夏普差。f = √(min(n_new, n_ref) / max(n_new, n_ref)) 时 B 就是 PHASE2_baseline.md 第 11 节规则 4 的
+    零技能基准：S_ref < 0 时，随机去掉交易或加入零期望交易都会把夏普按约 f 推向零，候选须超过 f · S_ref；
+    S_ref ≥ 0 时零技能的增减只会降低夏普，B = S_ref。p_gt0 = P(Sharpe(new) - B > 0)。"""
     _check_series_extent(r_new, allow_oos)
     _check_series_extent(r_ref, allow_oos)
     if not r_new.index.equals(r_ref.index):
         raise ValueError("paired series must share the same daily index")
+    if not 0.0 < benchmark_factor <= 1.0:
+        raise ValueError("benchmark_factor must lie in (0, 1]")
     a, b = r_new.to_numpy(dtype=np.float64), r_ref.to_numpy(dtype=np.float64)
     idx = _stationary_indices(len(a), n_boot, mean_block, seed)
-    d = _ann_sharpe_rows(a[idx]) - _ann_sharpe_rows(b[idx])
+    sb = _ann_sharpe_rows(b[idx])
+    d = _ann_sharpe_rows(a[idx]) - np.maximum(sb, benchmark_factor * sb)
     d = d[np.isfinite(d)]
-    point = float((a.mean() / a.std(ddof=1) - b.mean() / b.std(ddof=1)) * np.sqrt(ANN))
+    s_ref = float(b.mean() / b.std(ddof=1) * np.sqrt(ANN))
+    bench = max(s_ref, benchmark_factor * s_ref)
+    point = float(a.mean() / a.std(ddof=1) * np.sqrt(ANN) - bench)
     return {"diff": point, "lo": float(np.percentile(d, 2.5)), "hi": float(np.percentile(d, 97.5)),
-            "p_gt0": float((d > 0).mean()), "n_days": len(a), "mean_block": mean_block, "n_boot": n_boot}
+            "p_gt0": float((d > 0).mean()), "benchmark": bench, "benchmark_factor": benchmark_factor,
+            "n_days": len(a), "mean_block": mean_block, "n_boot": n_boot}
 
 
 def segment_trades(tf: pd.DataFrame, start: pd.Timestamp, end: pd.Timestamp, allow_oos: bool = False) -> pd.DataFrame:

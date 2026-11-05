@@ -92,6 +92,9 @@ def test_local_null_with_tiny_window_degenerates_to_actual(base):
     assert np.allclose(nul["null_r_dist"], nul["actual_mean_r_ex_funding"], rtol=0, atol=1e-12)
     assert np.allclose(nul["per_trade_null_mean_r"], ist["r_ex_funding"].to_numpy(), rtol=0, atol=1e-12)
     assert nul["p_mean_r_le"] == 1.0
+    # 退化为真实交易时：同根触及止损与止盈的比例等于真实交易的 ambiguous_exit_bar 比例，抽样全部是信号 K 线本身
+    assert np.isclose(nul["same_bar_sl_tp_frac"], ist["ambiguous_exit_bar"].mean(), rtol=0, atol=1e-12)
+    assert nul["draw_share_own_bar"] == 1.0 and nul["draw_share_within_24"] == 1.0
 
 
 def test_null_is_seeded_and_bounded(base):
@@ -123,6 +126,22 @@ def test_regime_features_are_causal(base):
             x, y = full[col].iloc[j], part[col].iloc[0]
             same = (x == y) or (pd.isna(x) and pd.isna(y))
             assert same, (col, str(idx[b]))
+
+
+def test_regime_features_spot_warmup_lock(base):
+    """现货预热序列延伸到 OOS_START 时报错；止于其前一天时不报错，且结果与原预热相同（预热只用永续首日之前的日线）。"""
+    out, _ = base
+    cut = out["df1h"].iloc[:2000]
+    spot = pipeline.spot_daily_warmup("BTCUSDT")
+    bars = np.array([500, 1500, 1999])
+    ref = A.regime_features(cut, build_4h(cut), spot, bars)
+    one_day = lambda t: pd.Series([spot.iloc[-1]], index=pd.DatetimeIndex([t]).as_unit(spot.index.unit))  # noqa: E731
+    ok = pd.concat([spot, one_day(OOS_START - pd.Timedelta(days=1))])
+    pd.testing.assert_frame_equal(A.regime_features(cut, build_4h(cut), ok, bars), ref)
+    bad = pd.concat([spot, one_day(OOS_START)])
+    with pytest.raises(OOSLockedError):
+        A.regime_features(cut, build_4h(cut), bad, bars)
+    pd.testing.assert_frame_equal(A.regime_features(cut, build_4h(cut), bad, bars, allow_oos=True), ref)
 
 
 # ---------------------------------------------------------------------------
@@ -295,7 +314,9 @@ def test_executable_bars_match_the_state_machine_counterfactually(base):
     from strategy_state_machine import _run_state_machine, state_machine_args
     out, _ = base
     df1h, sig, boxes = out["df1h"], out["signals"], out["boxes"]
-    ex = A.executable_bars(df1h, sig)
+    ex = A.executable_bars(df1h, sig, BASELINE_STRATEGY)
+    with pytest.raises(ValueError):                             # 设了形态滞后上限时判定不再精确
+        A.executable_bars(df1h, sig, BASELINE_STRATEGY.with_(max_pattern_lag_bars=2))
     args = list(state_machine_args(df1h, BASELINE_STRATEGY, boxes))
     pin = np.asarray(args[12]).copy()
     end_is = int(np.searchsorted(df1h.index, IS_END))
@@ -346,6 +367,29 @@ def test_paired_sharpe_diff_properties(base):
     assert np.isclose(ab["lo"], -ba["hi"]) and np.isclose(ab["hi"], -ba["lo"])
     with pytest.raises(ValueError):
         A.paired_sharpe_diff(r.iloc[1:], r)
+
+
+def test_paired_sharpe_diff_zero_skill_benchmark(base):
+    """benchmark_factor f：B = max(S_ref, f·S_ref)。f = 1 与普通配对差逐位一致；S_ref < 0 时基准上移为 f·S_ref，
+    P(差 > 0) 只会变小；S_ref > 0 时 f 不起作用。"""
+    out, _ = base
+    r = A.segment_daily_returns(out["result"], IS_START, IS_END)
+    r2 = r * 0.5 + 0.0002
+    assert sharpe(r) < 0
+    plain = A.paired_sharpe_diff(r2, r, n_boot=400, seed=4)
+    one = A.paired_sharpe_diff(r2, r, n_boot=400, seed=4, benchmark_factor=1.0)
+    assert plain == one and plain["benchmark"] == sharpe(r)
+    f = np.sqrt(109 / 123)
+    z = A.paired_sharpe_diff(r2, r, n_boot=400, seed=4, benchmark_factor=f)
+    assert np.isclose(z["benchmark"], f * sharpe(r)) and np.isclose(z["diff"], sharpe(r2) - f * sharpe(r))
+    assert z["diff"] < plain["diff"] and z["p_gt0"] <= plain["p_gt0"] and z["hi"] <= plain["hi"]
+    pos = -r                                                    # 夏普为正的参照
+    a = A.paired_sharpe_diff(r2, pos, n_boot=400, seed=4)
+    b = A.paired_sharpe_diff(r2, pos, n_boot=400, seed=4, benchmark_factor=f)
+    assert np.isclose(a["diff"], b["diff"]) and np.isclose(b["benchmark"], sharpe(pos))
+    for bad in (0.0, 1.2):
+        with pytest.raises(ValueError):
+            A.paired_sharpe_diff(r2, r, n_boot=10, benchmark_factor=bad)
 
 
 def test_bucket_stats_wilson():
@@ -403,6 +447,8 @@ def test_attribution_respects_oos_lock():
         A.max_gap_permutation(tfo, {"g": tfo["exit_reason"]}, "r_multiple", n_perm=5)
     with pytest.raises(OOSLockedError):
         A.paired_sharpe_diff(pd.Series(0.01, index=idx), pd.Series(0.02, index=idx), n_boot=5)
+    with pytest.raises(OOSLockedError):
+        A.executable_bars(df, pd.DataFrame(), BASELINE_STRATEGY)
     with pytest.raises(OOSLockedError):
         A.segment_daily_returns(res, idx[0].floor("D"), idx[0].floor("D") + pd.Timedelta(days=1))
     sig_df = pd.DataFrame({"signal": False, "sl": np.nan, "tp": np.nan, "poc_tp": np.nan}, index=idx)

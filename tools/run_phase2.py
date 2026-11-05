@@ -38,6 +38,7 @@ import pipeline  # noqa: E402
 from config import (BASELINE_BACKTEST, BASELINE_STRATEGY, IS_END, IS_START, SEGMENTS, VAL_END,  # noqa: E402
                     VAL_START)
 from metrics import daily_equity, drawdown_series, monthly_returns  # noqa: E402
+from ppvp_engine import to_ns  # noqa: E402
 
 REPORTS = ROOT / "reports"
 FIG = REPORTS / "figures"
@@ -83,7 +84,10 @@ NULL_SPECS = (
     ("enterable_15d", 15, "both", None, "enterable", "pct"),
     ("atr_global", None, "both", None, None, "atr"),
     ("atr_15d_x24", 15, "both", 24, None, "atr"),
+    ("enterable_15d_xown", 15, "both", 0, "enterable", "pct"),      # 第三轮复核补充：去掉每笔交易自身的信号 K 线
 )
+NULL_DISPLAY_ORDER = ("global", "local_60d", "local_15d", "local_15d_x24", "local_3d", "before_3d", "after_3d",
+                      "after_3d_x24", "enterable_global", "enterable_15d", "enterable_15d_xown", "atr_global", "atr_15d_x24")
 EXCESS_BASE = "local_15d_x24"
 BUCKETS = {                                   # 左闭右开，事先选定
     "rr_fill": [0.0, 0.5, 1.0, 2.0, np.inf],
@@ -167,7 +171,7 @@ def signal_budget(sig: pd.DataFrame, trades: pd.DataFrame) -> dict:
 
 
 def expectancy(tf: pd.DataFrame, bcfg) -> dict:
-    """期望值结构与随机游走对照。p_rw = d_sl/(d_sl+d_tp) 是无漂移连续随机游走“先触及止盈”的概率，不含成本，
+    """期望值结构与随机游走对照。p_rw = (信号收盘 − SL)/(TP − SL) 是无漂移连续随机游走“先触及止盈”的概率，不含成本，
     因此与之同口径的是止盈离场笔数；含成本的口径把“止盈也净亏”的交易的 p_rw 置 0，再与净盈利笔数比较。"""
     w, lo = tf[tf["win"]], tf[~tf["win"]]
     aw, al = float(w["r_multiple"].mean()), float(lo["r_multiple"].mean())
@@ -420,8 +424,11 @@ def tables_md(R: dict, ent: pd.DataFrame, reg: pd.DataFrame) -> str:
           "local_15d_x24": "信号前后 15 天，剔除前后 24 根", "local_3d": "信号前后 3 天", "before_3d": "信号前 3 天",
           "after_3d": "信号后 3 天", "after_3d_x24": "信号后第 25 根至 3 天",
           "enterable_global": "可执行 K 线池，IS 任意时刻", "enterable_15d": "可执行 K 线池，信号前后 15 天",
+          "enterable_15d_xown": "可执行 K 线池，信号前后 15 天，剔除信号 K 线本身",
           "atr_global": "ATR 几何，IS 任意时刻", "atr_15d_x24": "ATR 几何，信号前后 15 天，剔除前后 24 根"}
-    for k, v in R["is_null"].items():
+    assert sorted(NULL_DISPLAY_ORDER) == sorted(R["is_null"])
+    for k in NULL_DISPLAY_ORDER:
+        v = R["is_null"][k]
         L.append(f"| {nn[k]} | {_f(v['null_mean_r_mean'], 3, True)} | {_ci(v['null_mean_r_p05'], v['null_mean_r_p95'], 3)} | "
                  f"{_f(v['p_mean_r_le'], 3)} | {_f(v['null_wins_mean'], 1)} | {_f(v['p_wins_le'], 3)} |")
     cs = R["is_null_common_shift"]
@@ -758,7 +765,7 @@ def main() -> None:
     lows = df1h["low"].to_numpy(dtype=np.float64)
     closes = df1h["close"].to_numpy(dtype=np.float64)
     st = sgl["state"].to_numpy()
-    enterable = A.executable_bars(df1h, sgl)
+    enterable = A.executable_bars(df1h, sgl, scfg)
     assert np.isin(ist["entry_bar"].to_numpy(), enterable).all()           # 全部真实入场都在候选池内
     atr_bar = sgl["atr"].to_numpy(dtype=np.float64)                         # 第 i 根开盘时已知的 ATR
     nulls = {}
@@ -767,9 +774,16 @@ def main() -> None:
                                          window_days=wd, side=side, exclude_bars=excl,
                                          pool=enterable if pool == "enterable" else None, geometry=geom,
                                          atr=atr_bar if geom == "atr" else None)
-    R["is_enterable_pool"] = {"n_bars_is": int(((enterable >= int(np.searchsorted(df1h.index, IS_START)))
-                                                 & (enterable < int(np.searchsorted(df1h.index, IS_END)))).sum()),
-                              "contains_all_entries": True}
+    first_is_bar, end_is_bar = int(np.searchsorted(df1h.index, IS_START)), int(np.searchsorted(df1h.index, IS_END))
+    ex_is = enterable[(enterable >= first_is_bar) & (enterable < end_is_bar - 1)]      # 与零假设的可抽范围一致
+    t_ex, t_ent = to_ns(df1h.index[ex_is]), to_ns(df1h.index[ist["entry_bar"].to_numpy()])
+    w15 = np.int64(15 * 86400 * 10**9)
+    pool15 = np.searchsorted(t_ex, t_ent + w15, side="right") - np.searchsorted(t_ex, t_ent - w15, side="left")
+    R["is_enterable_pool"] = {"n_bars_is": int(((enterable >= first_is_bar) & (enterable < end_is_bar)).sum()),
+                              "contains_all_entries": True,
+                              "pool_15d_per_trade": {"median": float(np.median(pool15)), "min": int(pool15.min()),
+                                                     "max": int(pool15.max()),
+                                                     "mean_inverse_size": float(np.mean(1.0 / pool15))}}
     shift = A.common_shift_null(df1h, ist, bcfg, IS_START, IS_END, max_shift_bars=360, min_shift_bars=25)
     ist["null_r"] = nulls[EXCESS_BASE]["per_trade_null_mean_r"]       # 分桶的超额 R 基准：±15 天、剔除前后 24 根
     act = float(ist["r_ex_funding"].mean())
@@ -877,6 +891,7 @@ def main() -> None:
         "equal_avg_risk_mean_fixed": float(x_fixed.mean()), "equal_avg_risk_sd_fixed": float(x_fixed.std(ddof=1)),
         "equal_avg_risk_mean_equal": float(rmul.mean()), "equal_avg_risk_sd_equal": float(rmul.std(ddof=1)),
         "dsl_weighted_mean_r_by_group": {name: float((rmul[m] * dsl[m]).sum() / dsl[m].sum()) for name, m in groups},
+        "spearman_dsl_vs_r_by_group": {name: float(dsl[m].corr(rmul[m], method="spearman")) for name, m in groups},
         "relative_risk_weight_fixed_notional": w_fixed,
         "mean_r_by_group": {name: float(rmul[m].mean()) for name, m in
                             (("d_sl<1%", dsl < 0.01), ("1%<=d_sl<2%", (dsl >= 0.01) & (dsl < 0.02)), ("d_sl>=2%", dsl >= 0.02))},

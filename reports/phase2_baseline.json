@@ -1,10 +1,10 @@
 {
  "meta": {
   "symbol": "BTCUSDT",
-  "git_describe": "c8b44c0-dirty",
+  "git_describe": "6792914-dirty",
   "sha256_16": {
-   "attribution.py": "3b15f58b78cd105a",
-   "tools/run_phase2.py": "e666efd319deb647",
+   "attribution.py": "1c7165769eef97fb",
+   "tools/run_phase2.py": "f8769464b57e91ed",
    "config.py": "858ff5a924a9555c",
    "pipeline.py": "0dfcf1cf61161e44",
    "backtester.py": "6dd67439db79fe98",
@@ -21,7 +21,7 @@
   "n_boot": 5000,
   "seed": 20261104,
   "policy": "IS-only trade-level attribution; VAL headline only (plus the carry/roll variants pre-committed in Phase 1); no OOS; no ETH runs",
-  "runtime_s": 73.776897
+  "runtime_s": 83.587891
  },
  "headline": {
   "IS": {
@@ -379,6 +379,8 @@
    "lo": -0.124388,
    "hi": 0.419094,
    "p_gt0": 0.8408,
+   "benchmark": -1.174067,
+   "benchmark_factor": 1.0,
    "n_days": 1461,
    "mean_block": 10.0,
    "n_boot": 5000
@@ -388,6 +390,8 @@
    "lo": -0.03174,
    "hi": 0.555449,
    "p_gt0": 0.9492,
+   "benchmark": -1.174067,
+   "benchmark_factor": 1.0,
    "n_days": 1461,
    "mean_block": 10.0,
    "n_boot": 5000
@@ -397,6 +401,8 @@
    "lo": -0.006457,
    "hi": 0.601589,
    "p_gt0": 0.9728,
+   "benchmark": -1.174067,
+   "benchmark_factor": 1.0,
    "n_days": 1461,
    "mean_block": 10.0,
    "n_boot": 5000
@@ -528,7 +534,13 @@
  },
  "is_enterable_pool": {
   "n_bars_is": 440,
-  "contains_all_entries": true
+  "contains_all_entries": true,
+  "pool_15d_per_trade": {
+   "median": 10.0,
+   "min": 2,
+   "max": 24,
+   "mean_inverse_size": 0.116474
+  }
  },
  "is_null": {
   "global": {
@@ -550,7 +562,10 @@
    "null_mean_r_p95": 0.127573,
    "p_wins_le": 0.085383,
    "p_mean_r_le": 0.021196,
-   "unresolved_frac": 0.001204
+   "unresolved_frac": 0.001204,
+   "same_bar_sl_tp_frac": 0.018837,
+   "draw_share_own_bar": 3.1e-05,
+   "draw_share_within_24": 0.00133
   },
   "local_60d": {
    "n_trades": 109,
@@ -571,7 +586,10 @@
    "null_mean_r_p95": 0.128434,
    "p_wins_le": 0.075585,
    "p_mean_r_le": 0.022595,
-   "unresolved_frac": 0.000261
+   "unresolved_frac": 0.000261,
+   "same_bar_sl_tp_frac": 0.009938,
+   "draw_share_own_bar": 0.000356,
+   "draw_share_within_24": 0.017283
   },
   "local_15d": {
    "n_trades": 109,
@@ -592,7 +610,10 @@
    "null_mean_r_p95": 0.070502,
    "p_wins_le": 0.125375,
    "p_mean_r_le": 0.045591,
-   "unresolved_frac": 7.9e-05
+   "unresolved_frac": 7.9e-05,
+   "same_bar_sl_tp_frac": 0.009319,
+   "draw_share_own_bar": 0.001334,
+   "draw_share_within_24": 0.067719
   },
   "local_15d_x24": {
    "n_trades": 109,
@@ -613,7 +634,10 @@
    "null_mean_r_p95": 0.08392,
    "p_wins_le": 0.103979,
    "p_mean_r_le": 0.032394,
-   "unresolved_frac": 5.1e-05
+   "unresolved_frac": 5.1e-05,
+   "same_bar_sl_tp_frac": 0.00935,
+   "draw_share_own_bar": 0.0,
+   "draw_share_within_24": 0.0
   },
   "local_3d": {
    "n_trades": 109,
@@ -634,7 +658,10 @@
    "null_mean_r_p95": -0.029545,
    "p_wins_le": 0.327534,
    "p_mean_r_le": 0.162767,
-   "unresolved_frac": 0.0
+   "unresolved_frac": 0.0,
+   "same_bar_sl_tp_frac": 0.010723,
+   "draw_share_own_bar": 0.006806,
+   "draw_share_within_24": 0.338394
   },
   "before_3d": {
    "n_trades": 109,
@@ -655,7 +682,10 @@
    "null_mean_r_p95": -0.151163,
    "p_wins_le": 0.654669,
    "p_mean_r_le": 0.476105,
-   "unresolved_frac": 0.0
+   "unresolved_frac": 0.0,
+   "same_bar_sl_tp_frac": 0.007521,
+   "draw_share_own_bar": 0.0,
+   "draw_share_within_24": 0.333872
   },
   "after_3d": {
    "n_trades": 109,
@@ -676,7 +706,10 @@
    "null_mean_r_p95": 0.072865,
    "p_wins_le": 0.082783,
    "p_mean_r_le": 0.018796,
-   "unresolved_frac": 0.0
+   "unresolved_frac": 0.0,
+   "same_bar_sl_tp_frac": 0.013576,
+   "draw_share_own_bar": 0.0,
+   "draw_share_within_24": 0.33405
   },
   "after_3d_x24": {
    "n_trades": 109,
@@ -697,7 +730,10 @@
    "null_mean_r_p95": 0.089289,
    "p_wins_le": 0.042192,
    "p_mean_r_le": 0.010798,
-   "unresolved_frac": 0.0
+   "unresolved_frac": 0.0,
+   "same_bar_sl_tp_frac": 0.015213,
+   "draw_share_own_bar": 0.0,
+   "draw_share_within_24": 0.0
   },
   "enterable_global": {
    "n_trades": 109,
@@ -718,7 +754,10 @@
    "null_mean_r_p95": 0.137178,
    "p_wins_le": 0.05199,
    "p_mean_r_le": 0.012597,
-   "unresolved_frac": 0.001231
+   "unresolved_frac": 0.001231,
+   "same_bar_sl_tp_frac": 0.018339,
+   "draw_share_own_bar": 0.002288,
+   "draw_share_within_24": 0.007149
   },
   "enterable_15d": {
    "n_trades": 109,
@@ -739,7 +778,10 @@
    "null_mean_r_p95": 0.023699,
    "p_wins_le": 0.113577,
    "p_mean_r_le": 0.045191,
-   "unresolved_frac": 0.0
+   "unresolved_frac": 0.0,
+   "same_bar_sl_tp_frac": 0.008268,
+   "draw_share_own_bar": 0.116092,
+   "draw_share_within_24": 0.330484
   },
   "atr_global": {
    "n_trades": 109,
@@ -760,7 +802,10 @@
    "null_mean_r_p95": 0.117199,
    "p_wins_le": 0.077984,
    "p_mean_r_le": 0.024195,
-   "unresolved_frac": 0.000512
+   "unresolved_frac": 0.000512,
+   "same_bar_sl_tp_frac": 0.006194,
+   "draw_share_own_bar": 2.8e-05,
+   "draw_share_within_24": 0.001459
   },
   "atr_15d_x24": {
    "n_trades": 109,
@@ -781,7 +826,34 @@
    "null_mean_r_p95": 0.09735,
    "p_wins_le": 0.126975,
    "p_mean_r_le": 0.028394,
-   "unresolved_frac": 0.000572
+   "unresolved_frac": 0.000572,
+   "same_bar_sl_tp_frac": 0.005969,
+   "draw_share_own_bar": 0.0,
+   "draw_share_within_24": 0.0
+  },
+  "enterable_15d_xown": {
+   "n_trades": 109,
+   "n_rep": 5000,
+   "seed": 20261116,
+   "window_days": 15,
+   "side": "both",
+   "exclude_bars": 0,
+   "pool_size": 567,
+   "geometry": "pct",
+   "actual_wins": 40,
+   "actual_mean_r_ex_funding": -0.330003,
+   "null_wins_mean": 45.6146,
+   "null_wins_p05": 39.0,
+   "null_wins_p95": 52.0,
+   "null_mean_r_mean": -0.140443,
+   "null_mean_r_p05": -0.304036,
+   "null_mean_r_p95": 0.032226,
+   "p_wins_le": 0.09898,
+   "p_mean_r_le": 0.029794,
+   "unresolved_frac": 0.0,
+   "same_bar_sl_tp_frac": 0.007686,
+   "draw_share_own_bar": 0.0,
+   "draw_share_within_24": 0.248011
   }
  },
  "is_null_common_shift": {
@@ -3061,6 +3133,11 @@
    "d_sl<1%": -0.356983,
    "1%<=d_sl<2%": -0.23722,
    "d_sl>=2%": -0.33942
+  },
+  "spearman_dsl_vs_r_by_group": {
+   "d_sl<1%": 0.557661,
+   "1%<=d_sl<2%": 0.253024,
+   "d_sl>=2%": 0.577692
   },
   "relative_risk_weight_fixed_notional": {
    "d_sl<1%": 0.421911,

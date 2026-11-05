@@ -21,10 +21,12 @@ sys.path.insert(0, str(ROOT))
 
 import numpy as np  # noqa: E402
 
+import attribution as A  # noqa: E402
 import pipeline  # noqa: E402
-from config import BASELINE_BACKTEST, BASELINE_STRATEGY, IS_END  # noqa: E402
+from config import BASELINE_BACKTEST, BASELINE_STRATEGY, IS_END, IS_START  # noqa: E402
 
 SYMBOL = "BTCUSDT"
+N_BOOT, SEED = 5000, 20261104          # 与 tools/run_phase2.py 相同的配对自助法设定
 
 # (组, 名称, 策略参数改动, 回测参数改动)
 CHECKS = (
@@ -53,24 +55,38 @@ CHECKS = (
 def main() -> None:
     t0 = time.time()
     rows = []
-    ref = None
+    ref = ref_r = ref_keys = None
     for group, name, skw, bkw in CHECKS:
         out = pipeline.run(SYMBOL, BASELINE_STRATEGY.with_(**skw), BASELINE_BACKTEST.with_(**bkw), end=IS_END, segments=("IS",))
         rep = out["report"]["IS"]
+        r_is = A.segment_daily_returns(out["result"], IS_START, IS_END)
+        tr = out["result"].trades
+        keys = set(zip(tr["entry_time"], tr["exit_time"], tr["exit_reason"]))
         row = {"group": group, "name": name, "strategy": skw, "backtest": bkw, "is_sharpe": rep["sharpe"],
                "is_trades": rep["trades"], "is_total_return": rep["total_return"], "is_max_dd": rep["max_dd"],
                "is_win_rate": rep["win_rate"], "is_avg_r": rep["avg_r"]}
         if ref is None:
-            ref = row
-        n_ratio = rep["trades"] / ref["is_trades"]
-        row["formula_benchmark"] = ref["is_sharpe"] * np.sqrt(n_ratio) if n_ratio < 1 else ref["is_sharpe"]
+            ref, ref_r, ref_keys = row, r_is, keys
+        # 第 11 节规则 3 / 4 的零技能公式基准 B = max(S_ref, f·S_ref)，f = √(min(n, n_ref) / max(n, n_ref))
+        f = np.sqrt(min(rep["trades"], ref["is_trades"]) / max(rep["trades"], ref["is_trades"]))
+        row["benchmark_factor"] = f
+        row["formula_benchmark"] = max(ref["is_sharpe"], f * ref["is_sharpe"])
         row["margin_vs_benchmark"] = rep["sharpe"] - row["formula_benchmark"]
         row["delta_vs_baseline"] = rep["sharpe"] - ref["is_sharpe"]
+        # 与基线的 IS 配对夏普差（f = 1，即普通配对差）及其 95% 区间宽度；与基线不同的交易笔数（按入场、离场时刻与原因）
+        pdiff = A.paired_sharpe_diff(r_is, ref_r, n_boot=N_BOOT, seed=SEED)
+        row.update({"paired_diff": pdiff["diff"], "paired_lo": pdiff["lo"], "paired_hi": pdiff["hi"],
+                    "paired_width": pdiff["hi"] - pdiff["lo"], "paired_p_gt0": pdiff["p_gt0"],
+                    "trades_differing_from_baseline": len(keys ^ ref_keys)})
         rows.append(row)
     assert abs(ref["is_sharpe"] - (-1.174067431234681)) < 1e-9 and ref["is_trades"] == 109   # IS 截断运行复现基线
     payload = {"symbol": SYMBOL, "segment": "IS only (data truncated at 2024-01-01)", "n_checks": len(rows),
                "note": "IS-only checks run during the Phase 2 review; not used for adoption decisions",
-               "benchmark": "formula S_ref*sqrt(n/n_ref) when the variant has fewer IS trades, else S_ref",
+               "benchmark": "zero-skill formula B = max(S_ref, f*S_ref), f = sqrt(min(n, n_ref)/max(n, n_ref)) "
+                            "(rules 3-4 of PHASE2_baseline.md section 11; on IS, rule 4 uses simulated thinning "
+                            "instead when the trade count falls by more than 5% and S_ref < 0)",
+               "paired": f"paired_sharpe_diff vs baseline on IS daily returns, benchmark_factor 1, "
+                         f"n_boot {N_BOOT}, seed {SEED}, mean block 10 days",
                "rows": rows, "runtime_s": time.time() - t0}
 
     def clean(x):
