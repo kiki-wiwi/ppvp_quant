@@ -14,6 +14,13 @@ ppvp_audit/post_run.py — 实验运行之后的补充核算（审计复核的�
    但没有逐笔落盘；这里用同一代码与配置重算并落盘，核对夏普与 results.json 逐位一致，向实验台账追加记录。
 6. 按入场月份聚类（复核 EC-4）：计划写“按入场月份聚类”，运行时用的是信号 K 线开盘所在月份；这里按入场时刻
    （信号 K 线收盘）重算机会配对与匹配随机的区间，并核对原口径能逐位复现 results.json。
+8. 描述性核对（复核 LC-2、LC-3、LC-6）：B_audited 按入场高度分组的平均净 R；亏损月份的价格走势与 2022 年的对照；
+   过滤类版本按运行时的保留概率与种子重建 300 次随机保留，统计零技能保留通过判定 (2)、(4)、(5)、(6) 的比例。
+7. 判定第 (3) 条对 K 线内先后的敏感性（复核 LC-1）：第 (3) 条比较“真实信号上的改善”与“同一规则在随机时刻上的改善”，
+   两边都按最坏路径撮合；随机时刻更常遇到 D2 的“同根分批后回落到保本”，最坏路径对这一差值并不保守。这里用一个
+   可切换先后的单事件撮合副本（最坏路径时与 event_sim 逐位一致）重算 C1 / D1 / D2 的匹配随机对照：只把同根分批与
+   保本按有利顺序处理（先低后高），以及把全部歧义 K 线都按有利顺序处理（止损与止盈 / POC 同根时先到高点、限价成交
+   那一根先成交后止盈）。
 
 用法：python -m ppvp_audit.post_run
 输出：reports/audit_round/experiments/post_run_checks.json、experiments/rematerialised/*.csv，实验台账追加 R10 起的行。
@@ -25,6 +32,8 @@ import json
 import numpy as np
 import pandas as pd
 from scipy.stats import fisher_exact
+
+from numba_compat import njit
 
 from metrics import segment_report
 
@@ -254,6 +263,273 @@ def clustering_and_like_for_like(base: dict, bcfg, res: dict) -> dict:
 
 
 # ---------------------------------------------------------------------------
+# 7. K 线内先后敏感性：可切换先后的单事件撮合副本
+# ---------------------------------------------------------------------------
+FAV_BE_SAME_BAR, FAV_HIGH_FIRST, FAV_FILL_THEN_TP = 1, 2, 8
+
+
+@njit(cache=False)
+def _events_order(o, h, l, c, dec_bar, sl_a, tp_a, poc_a, lim_a, tick_a, valid, through, partial, frac, move_be,
+                  taker, maker, slip, end_bar, fav):
+    """event_sim._events 的副本，fav = 0 时逐位相同。fav 位：1 = 同根分批后回落到保本价按“先低后高”处理（不离场）；
+    2 = 同一根同时触及止损与止盈 / POC 时，若开盘在止损之上，按“先到高点”处理（先分批 / 止盈，余仓再按止损价离场）；
+    8 = 限价成交那一根也触及止盈时按“先成交、后止盈”处理。"""
+    m = dec_bar.shape[0]
+    ret = np.zeros(m)
+    filled = np.zeros(m, np.bool_)
+    for j in range(m):
+        b = dec_bar[j]
+        sl = sl_a[j]
+        tp = tp_a[j]
+        poc = poc_a[j]
+        lim = lim_a[j]
+        if lim != lim or lim >= c[b]:
+            e_ref = c[b]
+            efill = c[b] * (1.0 + slip)
+            fee_in = taker
+            fb = b
+            start = b + 1
+        else:
+            fb = -1
+            last = min(b + valid, end_bar - 1)
+            for i in range(b + 1, last + 1):
+                hit = (l[i] <= lim - tick_a[j]) if through else (l[i] <= lim)
+                if hit:
+                    fb = i
+                    break
+            if fb < 0:
+                continue
+            e_ref = lim
+            efill = lim * (1.0 + slip)
+            fee_in = maker
+            start = fb
+        if not efill > sl:
+            continue
+        filled[j] = True
+        q = 1.0
+        stop = sl
+        part = False
+        pnl = -efill * fee_in
+        done = False
+        for i in range(start, end_bar):
+            first = (i == fb) and (lim == lim and lim < c[b])
+            elig = partial and (not part) and poc > efill and poc < tp and h[i] >= poc
+            if first and (fav & 8) != 0 and h[i] >= tp:
+                px = tp * (1.0 - slip)
+                pnl += q * (px - efill) - q * px * maker
+                done = True
+                break
+            if (fav & 2) != 0 and (not first) and l[i] <= stop and o[i] > stop and (h[i] >= tp or elig):
+                if elig:
+                    q1 = q * frac
+                    px = poc * (1.0 - slip)
+                    pnl += q1 * (px - efill) - q1 * px * maker
+                    q -= q1
+                    part = True
+                    if move_be:
+                        stop = efill
+                if h[i] >= tp:
+                    px = tp * (1.0 - slip)
+                    pnl += q * (px - efill) - q * px * maker
+                    done = True
+                    break
+                px = stop * (1.0 - slip)
+                pnl += q * (px - efill) - q * px * taker
+                done = True
+                break
+            if l[i] <= stop:
+                px_ref = stop if first else min(o[i], stop)
+                px = px_ref * (1.0 - slip)
+                pnl += q * (px - efill) - q * px * taker
+                done = True
+                break
+            if first:
+                continue
+            if elig:
+                q1 = q * frac
+                px = poc * (1.0 - slip)
+                pnl += q1 * (px - efill) - q1 * px * maker
+                q -= q1
+                part = True
+                if move_be:
+                    stop = efill
+                    if l[i] <= stop and (fav & 1) == 0:
+                        px = stop * (1.0 - slip)
+                        pnl += q * (px - efill) - q * px * taker
+                        done = True
+                        break
+            if h[i] >= tp:
+                px = tp * (1.0 - slip)
+                pnl += q * (px - efill) - q * px * maker
+                done = True
+                break
+        if not done:
+            i = end_bar - 1
+            px = c[i] * (1.0 - slip)
+            pnl += q * (px - efill) - q * px * taker
+        ret[j] = pnl / efill
+    return filled, ret
+
+
+def _sim_order(df1h, dec, sl, tp, poc=None, limit=None, tick=None, valid=3, partial=False, frac=0.5, move_be=False,
+               bcfg=None, fav=0):
+    m = len(dec)
+    f = lambda x, fill: np.full(m, fill) if x is None else np.asarray(x, dtype=np.float64)  # noqa: E731
+    return _events_order(df1h["open"].to_numpy(np.float64), df1h["high"].to_numpy(np.float64),
+                         df1h["low"].to_numpy(np.float64), df1h["close"].to_numpy(np.float64), np.asarray(dec, dtype=np.int64),
+                         f(sl, np.nan), f(tp, np.nan), f(poc, np.nan), f(limit, np.nan), f(tick, 0.0), int(valid), True,
+                         bool(partial), float(frac), bool(move_be), float(bcfg.taker_fee), float(bcfg.maker_fee),
+                         float(bcfg.slippage), int(len(df1h)), int(fav))
+
+
+def order_sensitivity(base: dict, bcfg, res: dict) -> dict:
+    df1h, sig = base["df1h"], base["signals"]
+    c = df1h["close"].to_numpy(dtype=np.float64)
+    h, l = df1h["high"].to_numpy(dtype=np.float64), df1h["low"].to_numpy(dtype=np.float64)
+    bars = np.flatnonzero(sig["signal"].to_numpy())
+    ep = c[bars] * (1 + bcfg.slippage)
+    d_sl = 1 - sig["sl"].to_numpy()[bars] / ep
+    d_tp = sig["tp"].to_numpy()[bars] / ep - 1
+    d_poc = sig["poc_tp"].to_numpy()[bars] / ep - 1
+    pools, _ = N.candidate_sets(bars, N.bar_features(base), df1h)
+    ticks = tick_size(df1h.index)
+    month = df1h.index[bars].strftime("%Y-%m").to_numpy()      # 与运行时相同的口径，便于和 results.json 对照
+
+    def improvement(v, dec, dsl, dtp, dpoc, fav_v, fav_b):
+        e = c[dec] * (1 + bcfg.slippage)
+        sl_, tp_, poc_ = e * (1 - dsl), e * (1 + dtp), e * (1 + dpoc)
+        _, rb = _sim_order(df1h, dec, sl_, tp_, poc_, bcfg=bcfg, fav=fav_b)
+        if v == "C1":
+            fv, rv = _sim_order(df1h, dec, sl_, tp_, poc_, limit=0.5 * (h[dec] + l[dec]), tick=ticks[dec],
+                                valid=V.C1_VALID_BARS, bcfg=bcfg, fav=fav_v)
+            rv = np.where(fv, rv, 0.0)
+        else:
+            _, rv = _sim_order(df1h, dec, sl_, tp_, poc_, partial=True, frac=V.D_PARTIAL_FRAC, move_be=(v == "D2"),
+                               bcfg=bcfg, fav=fav_v)
+        return rv - rb
+
+    def matched(v, fav_v, fav_b):
+        real = improvement(v, bars, d_sl, d_tp, d_poc, fav_v, fav_b)
+        rnd = np.array([improvement(v, pool, np.full(len(pool), d_sl[j]), np.full(len(pool), d_tp[j]),
+                                    np.full(len(pool), d_poc[j]), fav_v, fav_b).mean() for j, pool in enumerate(pools)])
+        ci = N.cluster_bootstrap_mean(real - rnd, month, seed=X.SEED_MATCH)
+        return {"mean_improvement_real": float(real.mean()), "mean_improvement_random": float(rnd.mean()),
+                "real_minus_random": ci["mean"], "ci": [ci["lo"], ci["hi"]], "passes_criterion_3": bool(ci["lo"] > 0)}
+    out = {}
+    all_fav = FAV_BE_SAME_BAR | FAV_HIGH_FIRST | FAV_FILL_THEN_TP
+    for v in ("C1", "D1", "D2"):
+        w = matched(v, 0, 0)
+        ref = res[v]["matched_random"]
+        if not (w["real_minus_random"] == ref["real_minus_random"] and w["ci"] == ref["ci_month_cluster"]):
+            raise RuntimeError(f"order-switchable copy does not reproduce results.json for {v}")
+        out[v] = {"worst_case_as_run": w, "all_ambiguous_bars_favourable": matched(v, all_fav, FAV_HIGH_FIRST)}
+        if v == "D2":
+            out[v]["only_same_bar_partial_then_breakeven_favourable"] = matched(v, FAV_BE_SAME_BAR, 0)
+    return out
+
+
+# ---------------------------------------------------------------------------
+# 8. 机制假设的描述性核对（复核 LC-2、LC-3）与过滤类版本的零技能判定通过率（复核 LC-6）
+# ---------------------------------------------------------------------------
+def entry_height_outcomes() -> dict:
+    """B_audited 109 笔按入场高度分组的平均净 R（含资金费）：检验“入场偏高导致亏损”的说法是否与账本一致。"""
+    t = pd.read_csv(OUT / "trades.csv")
+    out = {}
+
+    def grp(name, mask):
+        out[name] = {"n": int(mask.sum()), "mean_net_R": float(t.loc[mask, "net_R"].mean()),
+                     "n_other": int((~mask).sum()), "mean_net_R_other": float(t.loc[~mask, "net_R"].mean())}
+    grp("rr_fill_lt_1", t["rr_fill"] < 1)
+    grp("normalized_entry_position_gt_0.5", t["normalized_entry_position"] > 0.5)
+    grp("entry_above_poc", t["entry_px"] > t["POC"])
+    grp("entry_above_band_top", t["entry_above_band"].astype(bool))
+    q = t["confirmation_range_atr"].quantile([1 / 3, 2 / 3]).to_numpy()
+    terc = np.digitize(t["confirmation_range_atr"], q)
+    out["confirmation_range_atr_terciles"] = [
+        {"median_atr": float(t.loc[terc == k, "confirmation_range_atr"].median()), "n": int((terc == k).sum()),
+         "mean_net_R": float(t.loc[terc == k, "net_R"].mean())} for k in range(3)]
+    return out
+
+
+def loss_period_composition(df1h: pd.DataFrame) -> dict:
+    """亏损月份的价格走势与 2022 年的对照（描述 H2 时只用实测量）。月收益 = 月末收盘 / 上月末收盘 − 1（2020-01 用首根开盘）。"""
+    close_m = df1h["close"].resample("MS").last()
+    prev = close_m.shift(1)
+    prev.iloc[0] = float(df1h["open"].iloc[0])
+    mret = close_m / prev - 1.0
+    mret.index = mret.index.strftime("%Y-%m")
+    t = pd.read_csv(OUT / "trades.csv", parse_dates=["entry_time"])
+    t["m"] = t["entry_time"].dt.strftime("%Y-%m")
+    total = float(t["net_pnl"].sum())
+    pnl_m = t.groupby("m")["net_pnl"].sum()
+    loss5 = list(X.LOSS_MONTHS)
+    w = t[t["m"].isin(loss5)]
+    worst10 = mret.nsmallest(10)
+    neg = mret[mret < 0].index
+    y22 = t[t["entry_time"].dt.year == 2022]
+    return {
+        "btc_month_return_loss_months": {m: float(mret[m]) for m in loss5},
+        "loss_month_trades": int(len(w)), "loss_month_pnl": float(w["net_pnl"].sum()),
+        "loss_month_trades_above_sma200": int(w["regime_above_sma200"].fillna(0).astype(bool).sum()),
+        "trades_2022": int(len(y22)), "pnl_2022": float(y22["net_pnl"].sum()), "share_of_total_loss_2022": float(y22["net_pnl"].sum() / total),
+        "mean_net_R_2022": float(y22["net_R"].mean()), "btc_return_2022": float(close_m["2022-12"].iloc[0] / close_m["2021-12"].iloc[0] - 1.0),
+        "worst10_btc_months": {m: float(r) for m, r in worst10.items()},
+        "pnl_in_each_worst10_month": {m: float(pnl_m.get(m, 0.0)) for m in worst10.index},
+        "trades_in_each_worst10_month": {m: int((t["m"] == m).sum()) for m in worst10.index},
+        "worst10_months_also_loss_months": [m for m in worst10.index if m in loss5],
+        "pnl_in_worst10_months_outside_loss_months": float(pnl_m.reindex([m for m in worst10.index if m not in loss5]).fillna(0).sum()),
+        "share_of_total_loss_in_negative_return_months": float(pnl_m.reindex(neg).fillna(0).sum() / total),
+        "n_negative_return_months": int(len(neg)), "total_net_pnl": total,
+    }
+
+
+def thinning_criteria_pass_rates(base: dict, base_s: dict, bcfg, res: dict) -> dict:
+    """过滤类版本：用运行时同样的保留概率与种子重建 300 次随机保留，统计零技能保留能否通过判定 (2)、(4)、(5)、(6)。"""
+    import attribution as A
+    from backtester import run_backtest
+    from metrics import daily_returns
+    from .common import load_is_market
+    _, fund, _ = load_is_market()
+    sig = base["signals"]
+    sig_bars = np.flatnonzero(sig["signal"].to_numpy(dtype=bool))
+    rb_ret = res["base"]["total_net_return"]
+    sb = X.stressed(bcfg)
+
+    def sh(r):
+        a = daily_returns(X._daily(r)).to_numpy(dtype=np.float64)
+        return float(a.mean() / a.std(ddof=1) * np.sqrt(A.ANN))
+    sh_base_s = sh(base_s["result"])
+    out = {}
+    for v in ("A1", "A2", "A3", "E1"):
+        k = V.VERSIONS.index(v)
+        keep = res[v]["matched_random"]["keep"]
+        rng = np.random.default_rng(X.SEED_THIN + k)
+        u = rng.random((300, len(sig_bars)))
+        c2 = c4 = c5 = c6 = allc = 0
+        n_tr = []
+        for i in range(300):
+            col = sig["signal"].to_numpy(dtype=bool).copy()
+            col[sig_bars[u[i] >= keep]] = False
+            s_i = sig.assign(signal=col)
+            r = run_backtest(base["df1h"], s_i, bcfg, fund)
+            rs = run_backtest(base["df1h"], s_i, sb, fund)
+            rep = segment_report(r, ("IS",))["IS"]
+            per = {x["period"]: x for x in X.period_table(r, base["result"])}
+            bc = X.box_concentration(r, base["result"], s_i, sig)
+            ok2 = rep["total_return"] - rb_ret > 0
+            ok4 = per["2020-2021"]["sharpe_diff"] > 0 and per["2022-2023"]["sharpe_diff"] > 0
+            ok5 = sh(rs) - sh_base_s > 0
+            ncl = int((r.trades["exit_reason"] != "OPEN").sum())
+            ok6 = ncl >= 30 and bc["pnl_diff_without_top3"] > 0
+            c2 += ok2; c4 += ok4; c5 += ok5; c6 += ok6; allc += ok2 and ok4 and ok5 and ok6
+            n_tr.append(ncl)
+        out[v] = {"keep": keep, "seed": X.SEED_THIN + k, "reps": 300, "mean_trades": float(np.mean(n_tr)),
+                  "share_pass_2": c2 / 300, "share_pass_4": c4 / 300, "share_pass_5": c5 / 300, "share_pass_6": c6 / 300,
+                  "share_pass_2_4_5_6": allc / 300}
+    return out
+
+
+# ---------------------------------------------------------------------------
 # 4. D1 / D2 适用性
 # ---------------------------------------------------------------------------
 def d_applicability(v: str) -> dict:
@@ -327,6 +603,10 @@ def run() -> dict:
         "c1_descriptives": c1_descriptives(base, bcfg),
         "d_applicability": {v: d_applicability(v) for v in ("D1", "D2")},
         "clustering_and_like_for_like": clustering_and_like_for_like(base, bcfg, res),
+        "criterion3_intrabar_order_sensitivity": order_sensitivity(base, bcfg, res),
+        "entry_height_outcomes_B_audited": entry_height_outcomes(),
+        "loss_period_composition": loss_period_composition(base["df1h"]),
+        "filter_versions_zero_skill_pass_rates": thinning_criteria_pass_rates(base, base_s, bcfg, res),
         "rematerialised_runs": rows,
     }
     write_json(EXP / "post_run_checks.json", out)

@@ -441,6 +441,234 @@
    "pool_size_min": 13
   }
  },
+ "criterion3_intrabar_order_sensitivity": {
+  "C1": {
+   "worst_case_as_run": {
+    "mean_improvement_real": 0.002031378812026502,
+    "mean_improvement_random": 0.0002782784882031358,
+    "real_minus_random": 0.0017531003238233666,
+    "ci": [
+     -0.0003093716043581295,
+     0.0036335817617200315
+    ],
+    "passes_criterion_3": false
+   },
+   "all_ambiguous_bars_favourable": {
+    "mean_improvement_real": 0.002155636180035791,
+    "mean_improvement_random": 0.0003662879961151217,
+    "real_minus_random": 0.0017893481839206687,
+    "ci": [
+     -0.0002177009472014993,
+     0.003613284903375701
+    ],
+    "passes_criterion_3": false
+   }
+  },
+  "D1": {
+   "worst_case_as_run": {
+    "mean_improvement_real": 0.0005670172938588585,
+    "mean_improvement_random": -0.00010349745347840697,
+    "real_minus_random": 0.0006705147473372656,
+    "ci": [
+     -0.000152683982265603,
+     0.001534729717018711
+    ],
+    "passes_criterion_3": false
+   },
+   "all_ambiguous_bars_favourable": {
+    "mean_improvement_real": 0.0006006665482857626,
+    "mean_improvement_random": -3.217703511941294e-05,
+    "real_minus_random": 0.0006328435834051756,
+    "ci": [
+     -0.00020891153912934665,
+     0.0015021010563180304
+    ],
+    "passes_criterion_3": false
+   }
+  },
+  "D2": {
+   "worst_case_as_run": {
+    "mean_improvement_real": 0.0008497459275357783,
+    "mean_improvement_random": -0.000807411786680937,
+    "real_minus_random": 0.001657157714216715,
+    "ci": [
+     0.0003956392606660211,
+     0.002958802105695227
+    ],
+    "passes_criterion_3": true
+   },
+   "all_ambiguous_bars_favourable": {
+    "mean_improvement_real": 0.0010345161355608437,
+    "mean_improvement_random": 9.638307522652816e-06,
+    "real_minus_random": 0.001024877828038191,
+    "ci": [
+     -0.00024935901940125105,
+     0.0023301741616799125
+    ],
+    "passes_criterion_3": false
+   },
+   "only_same_bar_partial_then_breakeven_favourable": {
+    "mean_improvement_real": 0.0009250589930085295,
+    "mean_improvement_random": -0.0001578936733582396,
+    "real_minus_random": 0.0010829526663667694,
+    "ci": [
+     -0.00018797776371843182,
+     0.002393136933510635
+    ],
+    "passes_criterion_3": false
+   }
+  }
+ },
+ "entry_height_outcomes_B_audited": {
+  "rr_fill_lt_1": {
+   "n": 40,
+   "mean_net_R": -0.11295517246725,
+   "n_other": 69,
+   "mean_net_R_other": -0.4716324504188405
+  },
+  "normalized_entry_position_gt_0.5": {
+   "n": 19,
+   "mean_net_R": -0.05893905354157894,
+   "n_other": 90,
+   "mean_net_R_other": -0.3993444884477777
+  },
+  "entry_above_poc": {
+   "n": 26,
+   "mean_net_R": -0.16734005792653844,
+   "n_other": 83,
+   "mean_net_R_other": -0.39409643941566264
+  },
+  "entry_above_band_top": {
+   "n": 86,
+   "mean_net_R": -0.31342572439639543,
+   "n_other": 23,
+   "mean_net_R_other": -0.43940146432608707
+  },
+  "confirmation_range_atr_terciles": [
+   {
+    "median_atr": 0.7904484624,
+    "n": 36,
+    "mean_net_R": -0.532868892995
+   },
+   {
+    "median_atr": 1.1220773904999999,
+    "n": 36,
+    "mean_net_R": -0.4815954482358334
+   },
+   {
+    "median_atr": 1.696931613,
+    "n": 37,
+    "mean_net_R": -0.014598099818378377
+   }
+  ]
+ },
+ "loss_period_composition": {
+  "btc_month_return_loss_months": {
+   "2020-02": -0.0889026761677868,
+   "2020-03": -0.24904887259463793,
+   "2021-04": -0.019097648520828292,
+   "2021-05": -0.354356897976845,
+   "2021-06": -0.05939283706258669
+  },
+  "loss_month_trades": 13,
+  "loss_month_pnl": -33558.518998,
+  "loss_month_trades_above_sma200": 5,
+  "trades_2022": 21,
+  "pnl_2022": -4310.338944197001,
+  "share_of_total_loss_2022": 0.09445502977841481,
+  "mean_net_R_2022": -0.2556039087909524,
+  "btc_return_2022": -0.6421250900227135,
+  "worst10_btc_months": {
+   "2022-06": -0.3734314952606784,
+   "2021-05": -0.354356897976845,
+   "2020-03": -0.24904887259463793,
+   "2021-12": -0.1889326897762177,
+   "2022-04": -0.17341669230431156,
+   "2022-01": -0.16817627832253057,
+   "2022-11": -0.16251830875891027,
+   "2022-05": -0.15463983304310835,
+   "2022-08": -0.13948415850511586,
+   "2023-08": -0.1126868532004599
+  },
+  "pnl_in_each_worst10_month": {
+   "2022-06": 1015.482024,
+   "2021-05": -10426.765681,
+   "2020-03": -7267.914029,
+   "2021-12": 0.0,
+   "2022-04": -1843.0089134999998,
+   "2022-01": -1026.201921,
+   "2022-11": -1007.7042381000001,
+   "2022-05": 2502.5707377,
+   "2022-08": -640.4425700500001,
+   "2023-08": -534.42236359
+  },
+  "trades_in_each_worst10_month": {
+   "2022-06": 2,
+   "2021-05": 2,
+   "2020-03": 3,
+   "2021-12": 0,
+   "2022-04": 2,
+   "2022-01": 1,
+   "2022-11": 3,
+   "2022-05": 3,
+   "2022-08": 2,
+   "2023-08": 3
+  },
+  "worst10_months_also_loss_months": [
+   "2021-05",
+   "2020-03"
+  ],
+  "pnl_in_worst10_months_outside_loss_months": -1533.7272445400001,
+  "share_of_total_loss_in_negative_return_months": 0.909736484837834,
+  "n_negative_return_months": 21,
+  "total_net_pnl": -45633.768305497
+ },
+ "filter_versions_zero_skill_pass_rates": {
+  "A1": {
+   "keep": 0.474609375,
+   "seed": 20261130,
+   "reps": 300,
+   "mean_trades": 53.95333333333333,
+   "share_pass_2": 1.0,
+   "share_pass_4": 0.44666666666666666,
+   "share_pass_5": 0.8866666666666667,
+   "share_pass_6": 0.8566666666666667,
+   "share_pass_2_4_5_6": 0.44666666666666666
+  },
+  "A2": {
+   "keep": 0.779296875,
+   "seed": 20261131,
+   "reps": 300,
+   "mean_trades": 86.04,
+   "share_pass_2": 0.9333333333333333,
+   "share_pass_4": 0.43333333333333335,
+   "share_pass_5": 0.7733333333333333,
+   "share_pass_6": 0.43666666666666665,
+   "share_pass_2_4_5_6": 0.33
+  },
+  "A3": {
+   "keep": 0.275390625,
+   "seed": 20261132,
+   "reps": 300,
+   "mean_trades": 31.446666666666665,
+   "share_pass_2": 1.0,
+   "share_pass_4": 0.49666666666666665,
+   "share_pass_5": 0.9233333333333333,
+   "share_pass_6": 0.66,
+   "share_pass_2_4_5_6": 0.3333333333333333
+  },
+  "E1": {
+   "keep": 0.087890625,
+   "seed": 20261138,
+   "reps": 300,
+   "mean_trades": 9.926666666666666,
+   "share_pass_2": 1.0,
+   "share_pass_4": 0.5633333333333334,
+   "share_pass_5": 0.9933333333333333,
+   "share_pass_6": 0.0,
+   "share_pass_2_4_5_6": 0.0
+  }
+ },
  "rematerialised_runs": [
   {
    "run_id": "R10",
