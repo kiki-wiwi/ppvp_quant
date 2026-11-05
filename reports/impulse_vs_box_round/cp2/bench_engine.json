@@ -1,0 +1,70 @@
+{
+ "minutes": 2103840,
+ "numba": true,
+ "python": "3.13.18",
+ "cpu_count": 4,
+ "machine": "x86_64",
+ "timing_s": {
+  "synthetic_grid_s": 2.952931217999776,
+  "features_context_s": 3.1051936220001153,
+  "version_inputs_10_s": 6.261720923999974,
+  "first_run_incl_compile_s": 0.14725244300007034,
+  "all_80_runs_s": 12.350102596999932,
+  "matched_random_events_s": 3.8014271900001404
+ },
+ "per_version_main_config": {
+  "A1_box_opt": {
+   "seconds": 0.13330957000016497,
+   "signals": 4085,
+   "trades": 908
+  },
+  "A2_box_origin": {
+   "seconds": 0.16489941999998337,
+   "signals": 4085,
+   "trades": 932
+  },
+  "A3_box_half": {
+   "seconds": 0.16779024499987827,
+   "signals": 4085,
+   "trades": 993
+  },
+  "A4_box_flush": {
+   "seconds": 0.16074268699981076,
+   "signals": 4381,
+   "trades": 919
+  },
+  "A5_box_origin_z": {
+   "seconds": 0.12448797399997602,
+   "signals": 1832,
+   "trades": 510
+  },
+  "B1_pure_long": {
+   "seconds": 0.2108636180000758,
+   "signals": 67044,
+   "trades": 11553
+  },
+  "B2_pure_long_sl": {
+   "seconds": 0.16492297400009193,
+   "signals": 67044,
+   "trades": 11868
+  },
+  "B3_pure_bi_mom": {
+   "seconds": 0.2593809169998167,
+   "signals": 132575,
+   "trades": 16809
+  },
+  "B4_pure_1bar": {
+   "seconds": 0.14082343099994432,
+   "signals": 67044,
+   "trades": 11649
+  },
+  "B5_pure_bi_mom_z": {
+   "seconds": 0.19271832300000824,
+   "signals": 53976,
+   "trades": 10177
+  }
+ },
+ "runs_in_grid": 80,
+ "matched_random_events": 1680900,
+ "note": "synthetic data only; real market data is locked out of the matching engine at Checkpoint 2"
+}
