@@ -10,3 +10,6 @@ __pycache__/
 # 临时产物
 *.log
 tmp/
+
+# 本轮 1m 数据缓存（可由 data/manifest_1m_is.json 重新下载复现）
+data/processed_1m/
