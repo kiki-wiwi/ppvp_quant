@@ -379,7 +379,7 @@ Phase 4 也按同样思路比较：最终配置的 OOS 夏普，要与把基线�
   - 抽样窗口、候选池与剔除规则，ATR 几何与整体平移零假设，置换检验，稀释基准在保留比例为 1 时复现基线，泊松二项分布，配对夏普差的性质；
   - 每个入口的 OOS 锁，以及 ETH 结构性运行不调用回测；
   - 基线 IS/VAL 指标钉在测试内的常量上，防止引擎被无意改动。
-- 全套测试：`test_lookahead.py`、`test_audit_regressions.py` 与 `test_attribution.py` 共 200 项，结果在 `reports/test_output_phase2.txt`。
+- 全套测试：`test_lookahead.py`、`test_audit_regressions.py` 与 `test_attribution.py` 共 200 项，全部通过（127 秒）。`test_lookahead.py` 会改写 Phase 1 的报告文件，因此全套测试在仓库的临时副本中运行，输出在 `reports/test_output_phase2.txt`。
 - 图表：`phase2_equity_underwater.png`、`phase2_is_winrate_by_rr.png`、`phase2_is_null_test.png`、`phase2_is_exit_paths.png`、`phase2_is_regime.png`，全部只画 IS。颜色取自已校验的调色板（蓝、橙，色觉缺陷下可分），所有数值同时在本记录的表格或 JSON 中给出。
 
 ## 13. 复核记录
