@@ -291,6 +291,18 @@ def main() -> dict:
                           "near_threshold_minutes_abs_diff_lt_1e-9": int(sum(
                               (np.abs(np.abs(f[k].to_numpy()) - S.THR[k]) < 1e-9).sum() for k in ("r1", "r5", "r15")))}
 
+    # 维护占位端点屏蔽：若直接用占位分钟的（冻结）收盘价计算收益率，会在可交易窗口内多出哪些触发
+    rawc = D.minute_grid(df)["close"]
+    rc = {k: (rawc / rawc.shift(k) - 1.0).to_numpy() for k in (1, 5, 15)}
+    with np.errstate(invalid="ignore"):
+        up_raw = ((rc[1] >= S.THR["r1"]) & (rc[5] >= S.THR["r5"])) | (rc[15] >= S.THR["r15"])
+        dn_raw = ((rc[1] <= -S.THR["r1"]) & (rc[5] <= -S.THR["r5"])) | (rc[15] <= -S.THR["r15"])
+    pc = rules["pct"]
+    supp = win & ((up_raw & ~(pc["up1"] | pc["up2"])) | (dn_raw & ~(pc["dn1"] | pc["dn2"])))
+    res["eligibility"]["triggers_suppressed_by_placeholder_endpoint_masking"] = [
+        {"minute": str(f.index[j]), "direction": "up" if up_raw[j] else "down",
+         "r1": float(rc[1][j]), "r5_raw": float(rc[5][j]), "r15_raw": float(rc[15][j])} for j in np.flatnonzero(supp)]
+
     counts, sched_sets, boxes = {}, {}, {}
     for r, c in rules.items():
         counts[r] = {}
@@ -326,6 +338,24 @@ def main() -> dict:
             **{f"accepted_in_up_{k}": int((both & v).sum()) for k, v in sched_sets[(r, "up")].items() if not k.startswith("box")},
             **{f"accepted_in_dn_{k}": int((both & v).sum()) for k, v in sched_sets[(r, "dn")].items() if not k.startswith("box")}}
     res["daily_state_main"]["box_ok_minute_share_all_IS_minutes"] = float(boxes[("pct", "up")].mean())
+    # 分钟末尾漏记的分钟（QA 定位）与触发的时间关系（只看时间戳，不读价格）：回看窗口 [T−15, T]、最长持仓窗口 [T+1, T+30]
+    om_ns = np.asarray(pd.DatetimeIndex([pd.Timestamp(m["minute"]) for m in loc["minutes"] if m["class"] == "tail_omission"])
+                       .as_unit("ns").asi8)
+    mn = 60_000_000_000
+
+    def _covers(mask, a_min, b_min):
+        """触发 K 线 T 的时间窗 [T + a_min, T + b_min]（分钟，两端都含）内有漏记分钟的触发个数。"""
+        t = tns[mask]
+        return int(sum(((o >= t + a_min * mn) & (o <= t + b_min * mn)).sum() for o in om_ns))
+    res["tail_omission_exposure"] = {"omission_minutes": [str(pd.Timestamp(o, tz="UTC")) for o in om_ns]}
+    for d in ("up", "dn"):
+        m = (rules["pct"][d + "1"] | rules["pct"][d + "2"]) & base
+        a45 = sched_sets[("pct", d)]["sched45"]
+        res["tail_omission_exposure"][d] = {
+            "trigger_minutes_lookback_covers_omission": _covers(m, -15, 0),
+            "trigger_minutes_max_holding_covers_omission": _covers(m, 1, 30),
+            "sched45_lookback_covers_omission": _covers(a45, -15, 0),
+            "sched45_max_holding_covers_omission": _covers(a45, 1, 30)}
     timing["counts_s"] = time.time() - t0
 
     # 箱体口径敏感性（只计数）

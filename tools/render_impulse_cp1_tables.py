@@ -140,6 +140,13 @@ def render(r: dict) -> str:
                      or "相同", "是" if t["kline_is_exact_prefix"] else f'否（残差 {t["prefix_volume_residual"]:+.3f}）'])
     s.append(table(["分钟", "被截掉的逐笔聚合笔数", "被截掉的成交量（BTC）", "截掉部分在分钟内的时刻（秒）",
                     "收盘价 K 线 → 逐笔", "最高 / 最低价 K 线 → 逐笔", "恰为前缀"], rows))
+    ex = r["tail_omission_exposure"]
+    s.append("\n这些分钟与触发的时间关系（只看时间戳）：回看窗口 [T−15, T] 含漏记分钟的触发分钟 Up "
+             f'{ex["up"]["trigger_minutes_lookback_covers_omission"]} / Down {ex["dn"]["trigger_minutes_lookback_covers_omission"]}'
+             f'（其中被 sched45 接受的 {ex["up"]["sched45_lookback_covers_omission"]} / {ex["dn"]["sched45_lookback_covers_omission"]}），'
+             f'最长持仓窗口 [T+1, T+30] 含漏记分钟的触发分钟 Up {ex["up"]["trigger_minutes_max_holding_covers_omission"]} / '
+             f'Down {ex["dn"]["trigger_minutes_max_holding_covers_omission"]}（被 sched45 接受的 '
+             f'{ex["up"]["sched45_max_holding_covers_omission"]} / {ex["dn"]["sched45_max_holding_covers_omission"]}）。')
     d = r["qa_daily_available_time"]
     s.append("\n### 表 6　UTC 日线可用时间\n")
     s.append(table(["检查项", "结果"], [
