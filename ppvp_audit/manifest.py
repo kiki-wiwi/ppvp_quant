@@ -86,7 +86,6 @@ def freeze() -> dict:
                               "BTCUSDT_spot_1h": "只用 2020 年之前的日线收盘做慢速价格指标预热（不含成交量）"}[name],
                       "provider": meta.get("provider"), "gap_fills_in_file": meta.get("gap_fills"),
                       "dropped_placeholder_bars_in_file": meta.get("dropped_placeholder_bars")}
-    m1 = json.loads((ROOT / "data" / "manifest_1m_is.json").read_text())
     rep = out["report"]["IS"]
     manifest = {
         "name": "B_original",
@@ -100,10 +99,10 @@ def freeze() -> dict:
         "segment": {"name": "IS", "start": str(IS_START), "end_exclusive": str(IS_END)},
         "data": {"manifest_path": "data/manifest.json", "manifest_sha256": sha256_file(ROOT / "data" / "manifest.json"),
                  "datasets_used": used,
-                 "one_minute": {"manifest_path": "data/manifest_1m_is.json", "rows": m1["rows"],
-                                "parquet_sha256": m1["parquet_sha256"], "files": len(m1["files"]),
-                                "daily_replacements": m1["daily_replacements"],
-                                "use": "只用于同根 K 线路径判定、成交量分布近似核对与 C1 限价单成交判定"}},
+                 "finer_than_1h": "none used. Per the user's supplementary constraint (section 9), intrabar ordering is "
+                                  "handled with the pre-declared worst-case rule on 1H bars. 1m archives downloaded "
+                                  "before that constraint arrived (commit b0298f2) were deleted unused-for-results; "
+                                  "see audit_report.md."},
         "seeds": {"round_master_seed": SEED, "phase2_seed_used_for_figure_reproduction": 20261104},
         "is_headline": {k: rep[k] for k in ("sharpe", "sortino", "cagr", "total_return", "max_dd", "calmar", "trades",
                                             "win_rate", "profit_factor", "avg_r", "avg_hold_bars", "fees", "funding",
@@ -111,8 +110,7 @@ def freeze() -> dict:
         "ledger": {"path": "reports/audit_round/ledgers/trades_B_original_raw.csv", "rows": int(len(tr)),
                    "sha256": sha256_file(led / "trades_B_original_raw.csv")},
         "phase2_figures": {f: sha256_file(ROOT / "reports" / "figures" / f) for f in PHASE2_FIGURES},
-        "reproduce": ["python -m ppvp_audit.data_1m --build   # 只在需要 1m 数据时；下载 IS 的 48 个月度归档并校验",
-                      "python -m ppvp_audit.manifest           # 本文件",
+        "reproduce": ["python -m ppvp_audit.manifest           # 本文件",
                       "python -m ppvp_audit.repro_figures      # 五张图的核验版与 figure_checks.json"],
         "exposure_register": EXPOSURE_REGISTER,
     }

@@ -17,14 +17,12 @@ from metrics import daily_equity, monthly_returns
 from . import ledgers as L
 from . import slices as S
 from .common import FIG, OUT, is_run, write_json
-from .data_1m import load_1m
 
 
 def build(version: str, scfg=BASELINE_STRATEGY, bcfg=BASELINE_BACKTEST, out: dict | None = None, plots: bool = True) -> dict:
     out = out if out is not None else is_run(scfg, bcfg)
-    m1 = load_1m()
     op = L.opportunities(out, scfg, bcfg, version)
-    tl = L.trade_ledger(out, scfg, bcfg, m1, version)
+    tl = L.trade_ledger(out, scfg, bcfg, version)
     add = op[op["status"] == "filled"].set_index("signal_bar")
     keep = ["profile_id_at_t1", "profile_id_at_t2_start", "profile_changed_between_tests", "departure_bar",
             "departure_height_atr", "second_test_qualified_by", "touch_gap_bars_from_t1_last", "confirmation_range_atr",
@@ -50,7 +48,7 @@ def build(version: str, scfg=BASELINE_STRATEGY, bcfg=BASELINE_BACKTEST, out: dic
     cols = ["entry_time", "exit_time", "exit_reason", "rr_fill", "d_sl", "d_tp", "width_atr", "sl_atr",
             "departure_height_atr", "profile_changed_between_tests", "pattern_name", "sfp", "regime_above_sma200",
             "regime_mom20d", "regime_ret24h", "regime_hours_since_crash", "net_pnl", "return_on_equity", "net_R",
-            "exit_reason_1m_path"]
+            "ambiguous_exit_sl_and_tp", "ambiguous_exit_sl_and_poc"]
     worst[cols].to_csv(OUT / f"worst_month_trades{sfx}.csv", index=False, float_format="%.10g")
     post = S.post_stop_paths(tl, out["df1h"])
     post.to_csv(OUT / f"post_stop_paths{sfx}.csv", index=False, float_format="%.10g")
@@ -71,10 +69,15 @@ def build(version: str, scfg=BASELINE_STRATEGY, bcfg=BASELINE_BACKTEST, out: dic
         "filled_departure_height_atr_quantiles": op.loc[op["status"] == "filled", "departure_height_atr"].quantile(
             [0, 0.1, 0.25, 0.5, 0.75, 0.9, 1]).to_dict(),
         "next_open_vs_close_bp_filled": op.loc[op["status"] == "filled", "next_open_vs_close_bp"].describe().to_dict(),
-        "exit_reason_matches_1m_path": int(tl["exit_reason_matches_1m"].sum()), "trades": int(len(tl)),
-        "exit_reason_1m_path_counts": tl["exit_reason_1m_path"].value_counts().to_dict(),
+        "trades": int(len(tl)),
+        "intrabar_path_ambiguity": {
+            "exit_bar_touches_sl_and_tp": int(tl["ambiguous_exit_sl_and_tp"].sum()),
+            "exit_bar_touches_sl_and_poc": int(tl["ambiguous_exit_sl_and_poc"].sum()),
+            "any": int((tl["ambiguous_exit_sl_and_tp"] | tl["ambiguous_exit_sl_and_poc"]).sum()),
+            "share_any": float((tl["ambiguous_exit_sl_and_tp"] | tl["ambiguous_exit_sl_and_poc"]).mean()),
+            "entry_and_exit_same_bar": int((tl["exit_bar"] == tl["entry_bar"]).sum()),
+            "rule": "worst case: stop-loss first; POC/TP touched inside the exit bar is not counted as reached"},
         "fig1_exclusions": rc["excluded_from_fig1_because"].replace("", "included").value_counts().to_dict(),
-        "poc_before_sl_in_exit_bar_1m": int(rc["poc_reached_in_exit_bar_before_sl_1m"].sum()),
         "cost_decomposition_usd": tl[["gross_pnl_ref", "slippage_impact", "commission", "funding_cashflow", "net_pnl"]].sum().to_dict(),
         "worst5_months": months, "worst5_trades": int(len(worst)),
         "worst5_exit_reasons": worst["exit_reason"].value_counts().to_dict(),

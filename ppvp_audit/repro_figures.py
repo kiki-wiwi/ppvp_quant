@@ -1,7 +1,7 @@
 """
 ppvp_audit/repro_figures.py — 在 IS 截断数据上从原始输出复现 Phase 2 的五张诊断图，并补算截图未给出的精确数值。
 
-只读 IS（ppvp_audit.common.is_run）。随机入场零假设沿用 Phase 2 的种子（20261104 + 规格序号），以便逐位复现原图。
+只读 IS（ppvp_audit.common.is_run），只用本地 1H 数据（第 9 节补充约束）。随机入场零假设沿用 Phase 2 的种子（20261104 + 规格序号），以便逐位复现原图。
 输出：reports/audit_round/figure_checks.json 与 reports/audit_round/figures/fig{1..5}_*.png（核验版）。
 """
 from __future__ import annotations
@@ -27,38 +27,18 @@ def baseline_frames():
     return out, tf
 
 
-def resolve_exit_bar_poc_with_1m(tf: pd.DataFrame, df1m: pd.DataFrame) -> pd.DataFrame:
-    """止损交易离场 K 线内是否先到 POC、再到 SL：用 1m 路径判定（同一分钟内同时触及记为“不可判定”）。"""
-    rows = []
-    for _, r in tf[tf["exit_reason"] == "SL"].iterrows():
-        t0 = r["exit_bar_open"]
-        m = df1m[(df1m.index >= t0) & (df1m.index < t0 + pd.Timedelta(hours=1))]
-        hit_sl = np.flatnonzero(m["low"].to_numpy() <= r["sl"])
-        hit_poc = np.flatnonzero(m["high"].to_numpy() >= r["poc"]) if r["poc"] > r["entry_px"] else np.array([], int)
-        hit_tp = np.flatnonzero(m["high"].to_numpy() >= r["tp"])
-        first_sl = int(hit_sl[0]) if len(hit_sl) else -1
-        first_poc = int(hit_poc[0]) if len(hit_poc) else -1
-        first_tp = int(hit_tp[0]) if len(hit_tp) else -1
-        def order(a, b):
-            if a < 0:
-                return "never"
-            if b < 0 or a < b:
-                return "before_sl"
-            return "same_minute" if a == b else "after_sl"
-        rows.append({"entry_time": r["entry_time"], "poc_in_exit_bar_vs_sl": order(first_poc, first_sl),
-                     "tp_in_exit_bar_vs_sl": order(first_tp, first_sl), "sl_minute": first_sl})
-    return pd.DataFrame(rows)
-
-
-def fig1_numbers(tf: pd.DataFrame, df1m: pd.DataFrame) -> dict:
+def fig1_numbers(tf: pd.DataFrame, df1h: pd.DataFrame) -> dict:
+    """图 1 的计数。只用 1H 数据：离场 K 线内的先后未知时按最坏路径处理（止损优先、离场 K 线内到过 POC 不算“止损前已到”），
+    并单独披露这类歧义交易的笔数。"""
+    h = df1h["high"].to_numpy(dtype=np.float64)
     sl = tf[tf["exit_reason"] == "SL"]
     tp = tf[tf["exit_reason"] == "TP"]
     sl_poc = sl[sl["poc_above_entry"]]
     sl_plot = sl_poc[sl_poc["mfe_r_strict"].notna()]
-    exb = resolve_exit_bar_poc_with_1m(tf, df1m)
-    m = sl.merge(exb, on="entry_time", how="left")
-    in_plot = m["poc_above_entry"] & m["mfe_r_strict"].notna()
-    not_strict = in_plot & ~m["reached_poc_strict"]
+    xb = sl["exit_bar"].to_numpy(dtype=np.int64)
+    poc_in_exit_bar = sl["poc_above_entry"].to_numpy() & (h[xb] >= sl["poc"].to_numpy())
+    in_plot = sl["poc_above_entry"].to_numpy() & sl["mfe_r_strict"].notna().to_numpy()
+    not_strict = in_plot & ~sl["reached_poc_strict"].to_numpy(dtype=bool)
     return {
         "trades": int(len(tf)), "sl_trades": int(len(sl)), "tp_trades": int(len(tp)),
         "sl_poc_above_entry": int(len(sl_poc)), "sl_poc_not_above_entry": int((~sl["poc_above_entry"]).sum()),
@@ -68,10 +48,9 @@ def fig1_numbers(tf: pd.DataFrame, df1m: pd.DataFrame) -> dict:
         "tp_with_full_bar_for_strict_mae": int(tp["mae_r_strict"].notna().sum()),
         "tp_exit_on_first_bar_after_entry": int((tp["exit_bar"] - tp["entry_bar"] == 1).sum()),
         "entry_and_exit_same_bar": int((tf["exit_bar"] == tf["entry_bar"]).sum()),
-        "sl_exit_bar_also_touches_tp": int(tf["ambiguous_exit_bar"].sum()),
-        "sl_exit_bar_tp_order_1m": m.loc[m["tp_in_exit_bar_vs_sl"] != "never", "tp_in_exit_bar_vs_sl"].value_counts().to_dict(),
-        # 严格口径未计入、但离场 K 线内到过 POC 的止损交易：用 1m 判定先后
-        "left_panel_not_strict_but_poc_in_exit_bar_1m": m.loc[not_strict, "poc_in_exit_bar_vs_sl"].value_counts().to_dict(),
+        # 1H 内路径歧义（最坏路径处理）：离场 K 线同时触及 SL 与 TP → 记为止损；同时触及 SL 与 POC → 不算到过 POC
+        "ambiguous_exit_bar_sl_and_tp": int(tf["ambiguous_exit_bar"].sum()),
+        "ambiguous_exit_bar_sl_and_poc_in_left_panel_not_strict": int((not_strict & poc_in_exit_bar).sum()),
         "share_reached_poc_strict": float(sl_plot["reached_poc_strict"].mean()),
     }
 
@@ -161,14 +140,12 @@ def fig5_numbers(out: dict, tf: pd.DataFrame) -> tuple[dict, pd.Series, pd.Serie
     return num, d_is, d_free, fq["daily"]
 
 
-def run(df1m: pd.DataFrame | None = None) -> dict:
-    from .data_1m import load_1m
-    df1m = load_1m() if df1m is None else df1m
+def run() -> dict:
     out, tf = baseline_frames()
     rep = out["report"]["IS"]
     res = {"is_headline": {k: rep[k] for k in ("sharpe", "trades", "total_return", "max_dd", "win_rate", "avg_r",
                                                "profit_factor", "exit_reasons", "trades_open_at_end")}}
-    res["fig1"] = fig1_numbers(tf, df1m)
+    res["fig1"] = fig1_numbers(tf, out["df1h"])
     # ---- 图 2：随机入场零假设（Phase 2 的方法、种子与 5,000 次重抽样）----
     nulls = {}
     for key, j, wd, excl in (("global", 0, None, None), ("local_15d_x24", 3, 15, 24)):

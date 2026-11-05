@@ -26,15 +26,8 @@
   "tp_with_full_bar_for_strict_mae": 29,
   "tp_exit_on_first_bar_after_entry": 15,
   "entry_and_exit_same_bar": 0,
-  "sl_exit_bar_also_touches_tp": 1,
-  "sl_exit_bar_tp_order_1m": {
-   "after_sl": 1
-  },
-  "left_panel_not_strict_but_poc_in_exit_bar_1m": {
-   "never": 38,
-   "before_sl": 1,
-   "after_sl": 1
-  },
+  "ambiguous_exit_bar_sl_and_tp": 1,
+  "ambiguous_exit_bar_sl_and_poc_in_left_panel_not_strict": 2,
   "share_reached_poc_strict": 0.2857142857142857
  },
  "fig2": {

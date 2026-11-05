@@ -128,9 +128,8 @@ def opportunities(out: dict, scfg: StrategyConfig, bcfg: BacktestConfig, version
     return df
 
 
-def trade_ledger(out: dict, scfg: StrategyConfig, bcfg: BacktestConfig, df1m: pd.DataFrame | None,
-                 version: str = "B_original") -> pd.DataFrame:
-    """成交级账本：成本分解（毛盈亏 / 手续费 / 滑点影响 / 资金费 / 净盈亏）、R 的分母、账户口径，以及 1m 路径核对。"""
+def trade_ledger(out: dict, scfg: StrategyConfig, bcfg: BacktestConfig, version: str = "B_original") -> pd.DataFrame:
+    """成交级账本：成本分解（毛盈亏 / 手续费 / 滑点影响 / 资金费 / 净盈亏）、R 的分母、账户口径，以及 1H 内路径歧义标记。"""
     res, df1h = out["result"], out["df1h"]
     tf = A.trade_frame(res, df1h, out["boxes"], scfg)
     slip = float(bcfg.slippage)
@@ -151,37 +150,13 @@ def trade_ledger(out: dict, scfg: StrategyConfig, bcfg: BacktestConfig, df1m: pd
     tf["return_on_notional"] = tf["net_pnl"] / tf["notional"]
     tf["return_on_equity"] = tf["net_pnl"] / tf["equity_at_entry"]
     tf["hold_hours"] = tf["hold_bars"]
-    if df1m is not None:
-        tf = tf.join(path_check_1m(tf, df1m))
+    h = df1h["high"].to_numpy(dtype=np.float64)
+    xb = tf["exit_bar"].to_numpy(dtype=np.int64)
+    sl_exit = (tf["exit_reason"] == "SL").to_numpy()
+    # 1H 内路径歧义：离场 K 线内的先后未知，按最坏路径记账（止损优先）。逐笔标记，供披露歧义占比。
+    tf["ambiguous_exit_sl_and_tp"] = sl_exit & (h[xb] >= tf["tp"].to_numpy())
+    tf["ambiguous_exit_sl_and_poc"] = sl_exit & tf["poc_above_entry"].to_numpy() & (h[xb] >= tf["poc"].to_numpy())
     return tf
-
-
-def path_check_1m(tf: pd.DataFrame, df1m: pd.DataFrame) -> pd.DataFrame:
-    """离场 K 线内的 1m 路径：首次触及 SL / TP / POC 的分钟，按 1m 路径的离场原因（同一分钟同时触及 SL 与 TP 记为 ambiguous）。"""
-    rows = []
-    lo_, hi_ = df1m["low"].to_numpy(), df1m["high"].to_numpy()
-    t_ns = df1m.index.as_unit("ns").asi8
-    for _, r in tf.iterrows():
-        t0 = pd.Timestamp(r["exit_bar_open"]).as_unit("ns").value
-        a = int(np.searchsorted(t_ns, t0))
-        b = a + 60
-        lo, hi = lo_[a:b], hi_[a:b]
-        f_sl = np.flatnonzero(lo <= r["sl"])
-        f_tp = np.flatnonzero(hi >= r["tp"])
-        f_poc = np.flatnonzero(hi >= r["poc"]) if r["poc"] > r["entry_px"] else np.array([], int)
-        m_sl = int(f_sl[0]) if len(f_sl) else -1
-        m_tp = int(f_tp[0]) if len(f_tp) else -1
-        if m_sl >= 0 and (m_tp < 0 or m_sl < m_tp):
-            reason = "SL"
-        elif m_tp >= 0 and (m_sl < 0 or m_tp < m_sl):
-            reason = "TP"
-        elif m_sl >= 0 and m_sl == m_tp:
-            reason = "ambiguous_same_minute"
-        else:
-            reason = "none_in_exit_bar"
-        rows.append({"exit_minute_sl": m_sl, "exit_minute_tp": m_tp, "exit_minute_poc": int(f_poc[0]) if len(f_poc) else -1,
-                     "exit_reason_1m_path": reason, "exit_reason_matches_1m": reason == r["exit_reason"]})
-    return pd.DataFrame(rows, index=tf.index)
 
 
 def reconciliation(tl: pd.DataFrame) -> pd.DataFrame:
@@ -198,12 +173,9 @@ def reconciliation(tl: pd.DataFrame) -> pd.DataFrame:
           np.where(sl & tl["poc_above_entry"] & tl["mfe_r_strict"].isna(), "SL: exit on the first bar after entry (no full bar)",
           np.where(tp & tl["mae_r_strict"].isna(), "TP: exit on the first bar after entry (no full bar)", "")))
     r["excluded_from_fig1_because"] = why
-    r["exit_bar_touches_tp_and_sl"] = tl["ambiguous_exit_bar"]
-    for k in ("exit_reason_1m_path", "exit_reason_matches_1m", "exit_minute_sl", "exit_minute_tp", "exit_minute_poc"):
-        if k in tl.columns:
-            r[k] = tl[k]
-    if "exit_minute_poc" in tl.columns:
-        r["poc_reached_in_exit_bar_before_sl_1m"] = sl & tl["poc_above_entry"] & (tl["exit_minute_poc"] >= 0) & \
-            ((tl["exit_minute_poc"] < tl["exit_minute_sl"]) | (tl["exit_minute_sl"] < 0))
+    r["exit_bar_touches_tp_and_sl"] = tl["ambiguous_exit_sl_and_tp"]
+    r["exit_bar_touches_poc_and_sl"] = tl["ambiguous_exit_sl_and_poc"]
+    r["path_rule_applied"] = np.where(tl["ambiguous_exit_sl_and_tp"] | tl["ambiguous_exit_sl_and_poc"],
+                                      "worst case: stop first; POC/TP in the exit bar not counted", "")
     r["entry_and_exit_same_bar"] = tl["exit_bar"] == tl["entry_bar"]
     return r

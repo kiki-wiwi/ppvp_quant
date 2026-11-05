@@ -35,11 +35,14 @@
   "75%": 0.008806700841912374,
   "max": 0.8569007486780578
  },
- "exit_reason_matches_1m_path": 109,
  "trades": 109,
- "exit_reason_1m_path_counts": {
-  "SL": 65,
-  "TP": 44
+ "intrabar_path_ambiguity": {
+  "exit_bar_touches_sl_and_tp": 1,
+  "exit_bar_touches_sl_and_poc": 4,
+  "any": 4,
+  "share_any": 0.03669724770642202,
+  "entry_and_exit_same_bar": 0,
+  "rule": "worst case: stop-loss first; POC/TP touched inside the exit bar is not counted as reached"
  },
  "fig1_exclusions": {
   "included": 85,
@@ -47,7 +50,6 @@
   "SL: POC not above entry (no POC target to reach)": 8,
   "SL: exit on the first bar after entry (no full bar)": 1
  },
- "poc_before_sl_in_exit_bar_1m": 1,
  "cost_decomposition_usd": {
   "gross_pnl_ref": -34908.04854088743,
   "slippage_impact": 2897.012588351239,
