@@ -40,6 +40,13 @@ BASELINE_WINDOWS, BAR_MIN = 20, 15    # 基准成交量：入场前紧邻的 20 
 MAX_BARS = 2                          # 合成 15m 持仓棒上限（30 分钟）
 COOLDOWN_MIN = 15                     # 平仓后冷却 15 分钟：下一次入场时刻 ≥ 离场时刻 + 15min
 SEED_BASE = 20261106                  # 第 3 / 4 阶段全部随机抽样的主种子（用途偏移见实验计划第 8 节）
+BOX_STATE_VARIANT = "S6_reentry_above_poc"   # A 组主口径：daily.build_box_states 的 S6（features.s6_box_ok 只认这一口径）
+
+# Checkpoint 1 表 5b：官方 1m K 线把该分钟末尾成交漏记的 10 个分钟（UTC 开盘时刻）。只用于打标 has_archive_gap /
+# signal_lookback_has_archive_gap，不修补价格；解锁后真实上下文必须恰好标记这 10 个分钟（engine._require_real_inputs）。
+ARCHIVE_GAP_MINUTES = ("2021-01-12 06:10", "2021-05-15 00:23", "2022-06-18 20:07", "2022-06-22 11:28",
+                       "2022-06-23 19:09", "2022-06-24 11:31", "2022-07-04 11:54", "2022-07-16 05:59",
+                       "2022-08-19 00:21", "2022-08-21 08:10")
 
 
 @dataclass(frozen=True)
@@ -118,7 +125,8 @@ def _hash(obj) -> str:
 def frozen_key() -> str:
     """全部版本、成本、仓位与常数的哈希（实验计划记录冻结时的值）。"""
     consts = {k: v for k, v in globals().items() if k.isupper() and isinstance(v, (int, float, str))}
-    consts.update({"MAIN_START": str(MAIN_START), "MAIN_END": str(MAIN_END), "LAST_TRIGGER": str(LAST_TRIGGER)})
+    consts.update({"MAIN_START": str(MAIN_START), "MAIN_END": str(MAIN_END), "LAST_TRIGGER": str(LAST_TRIGGER),
+                   "ARCHIVE_GAP_MINUTES": list(ARCHIVE_GAP_MINUTES)})
     return _hash({"versions": {k: asdict(v) for k, v in VERSIONS.items()},
                   "costs": {k: asdict(v) for k, v in COSTS.items()},
                   "sizings": {k: asdict(v) for k, v in SIZINGS.items()}, "constants": consts})

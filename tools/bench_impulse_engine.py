@@ -68,7 +68,12 @@ def main() -> dict:
     tr = E.run_portfolio(ctx, vins["B3_pure_bi_mom"], VS.COSTS["main_17bp"], VS.SIZINGS["risk_0.5pct"]).trades
     rng = np.random.default_rng(2)
     reps = 100
-    cand = np.flatnonzero(ctx.window & np.isfinite(ctx.atr["atr_at"]) & ~ctx.bad)
+    # 候选池与实验计划第 8.3 节的资格一致：窗口内、无维护污染、ATR 已就绪、入场 K 线有效、基准有定义，且不是自身口径的触发分钟
+    c = ctx.cond["pct"]
+    entry_ok = np.r_[~ctx.bad[1:], False]
+    trig = c["up1"] | c["up2"] | c["dn1"] | c["dn2"]
+    cand = np.flatnonzero(ctx.window & ~ctx.frame["contaminated"].to_numpy() & np.isfinite(ctx.atr["atr_at"]) & entry_ok
+                          & np.isfinite(ctx.base_med) & ~trig)
     idx = rng.choice(cand, size=len(tr) * reps)
     side = np.repeat(tr["side"].to_numpy(), reps).astype(float)
     eref = ctx.C[idx]

@@ -8,6 +8,7 @@ tools/run_impulse_cp2_features.py — Checkpoint 2：真实 IS 数据上的因�
 """
 from __future__ import annotations
 
+import hashlib
 import json
 import subprocess
 import sys
@@ -20,7 +21,6 @@ sys.path.insert(0, str(ROOT))
 import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
 
-from impulse_study import daily as DY  # noqa: E402
 from impulse_study import data_1m as D  # noqa: E402
 from impulse_study import features as F  # noqa: E402
 from impulse_study import signals as S  # noqa: E402
@@ -31,16 +31,25 @@ OUT = ROOT / "reports" / "impulse_vs_box_round" / "cp2"
 CUTS = ("2020-03-12 13:37", "2021-06-26 13:37", "2022-11-09 00:00", "2023-12-31 23:59")
 
 
+FROZEN_CODE = ("impulse_study/engine.py", "impulse_study/features.py", "impulse_study/versions.py",
+               "impulse_study/synthetic.py", "impulse_study/signals.py", "impulse_study/daily.py",
+               "impulse_study/data_1m.py", "impulse_study/scope.py", "numba_compat.py", "ppvp_engine.py", "config.py",
+               "data_loader.py")
+
+
 def real_context(df1m, s1d, cut=None):
     end = IS_END if cut is None else pd.Timestamp(cut, tz="UTC")
     df = df1m[df1m.index < end]
     grid = D.minute_grid(df, IS_START, end)
-    st = DY.build_box_states(df, s1d, variants=("S6_reentry_above_poc",))["S6_reentry_above_poc"]
-    box = DY.minute_box_ok(np.asarray(grid.index.as_unit("ns").asi8), grid["close"].to_numpy(), st)
+    box, st = F.s6_box_ok(df, s1d, grid)                       # 冻结口径 versions.BOX_STATE_VARIANT
     last = VS.LAST_TRIGGER if cut is None else min(VS.LAST_TRIGGER, end - pd.Timedelta(minutes=31))
+    return F.make_context(grid, box, "binance_is", last_trigger=last, archive_gap_minutes=VS.ARCHIVE_GAP_MINUTES), st
+
+
+def table_5b_minutes() -> list[str]:
     r1 = json.loads((ROOT / "reports" / "impulse_vs_box_round" / "cp1" / "cp1_results.json").read_text())
-    gaps = [m["minute"] for m in r1["qa_volume_discrepancies_localized"]["minutes"] if m["class"] == "tail_omission"]
-    return F.make_context(grid, box, "binance_is", last_trigger=last, archive_gap_minutes=pd.DatetimeIndex(gaps)), st
+    return sorted(str(pd.Timestamp(m["minute"])) for m in r1["qa_volume_discrepancies_localized"]["minutes"]
+                  if m["class"] == "tail_omission")
 
 
 def q(x, ps=(0.05, 0.25, 0.5, 0.75, 0.95)):
@@ -55,10 +64,16 @@ def main() -> dict:
     run = lambda *a: subprocess.run(["git", *a], cwd=ROOT, capture_output=True, text=True).stdout.strip()
     res = {"git": {"commit": run("rev-parse", "HEAD"), "dirty_files": run("status", "--porcelain").splitlines()},
            "scope": "BTCUSDT perp IS features only; the matching engine is not called; no prices after any trigger",
-           "frozen_key": VS.frozen_key(), "version_keys": VS.version_keys()}
+           "frozen_key": VS.frozen_key(), "version_keys": VS.version_keys(),
+           "code_sha256": {p: hashlib.sha256((ROOT / p).read_bytes()).hexdigest() for p in FROZEN_CODE}}
+    gaps = table_5b_minutes()
+    if gaps != sorted(str(pd.Timestamp(m, tz="UTC")) for m in VS.ARCHIVE_GAP_MINUTES):
+        raise SystemExit("versions.ARCHIVE_GAP_MINUTES differs from Checkpoint 1 table 5b")
     df = D.load_perp_1m()
     s1d = D.load_spot_warmup("1d")
     ctx, st6 = real_context(df, s1d)
+    res["archive_gap_minutes_flagged"] = [str(t) for t in ctx.index[ctx.archive_gap]]
+    res["box_ok_sha256"] = hashlib.sha256(np.ascontiguousarray(ctx.box_ok).tobytes()).hexdigest()
     a = ctx.atr
     nv = a["n_valid"]
     first_atr = int(np.flatnonzero(np.isfinite(a["atr"]))[0])
@@ -80,7 +95,7 @@ def main() -> dict:
         m = vin.entry_dir != 0
         dist = np.abs(vin.eref - vin.sl) / vin.eref
         rec = {"entry_signals": int(m.sum()), "long": int((vin.entry_dir == 1).sum()), "short": int((vin.entry_dir == -1).sum()),
-               "skipped_in_window": vin.skipped,
+               "skipped_in_window": vin.skipped, "skipped_in_window_exclusive": vin.skipped_exclusive,
                "category_share": {k: float((vin.cat[m] == c).mean()) for k, c in (("only1", 1), ("only2", 2), ("both", 3))},
                "w_share": {"5": float((vin.w[m] == 5).mean()), "15": float((vin.w[m] == 15).mean())} if spec.stop != "A" else {},
                "stop_distance_bps_quantiles": q(dist[m] * 1e4),

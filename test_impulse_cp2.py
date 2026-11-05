@@ -6,6 +6,10 @@ test_impulse_cp2.py — 脉冲研究 Checkpoint 2：多空双向撮合引擎、�
 """
 from __future__ import annotations
 
+import dataclasses
+import json
+from pathlib import Path
+
 import numpy as np
 import pandas as pd
 import pytest
@@ -386,6 +390,11 @@ def test_ambiguous_minutes_skipped_only_in_bidirectional_versions():
     assert F.build_version_inputs(ctx, VS.VERSIONS["B5_pure_bi_mom_z"]).entry_dir[t] == 0
     ctx.cond["z"] = {"up1": z, "up2": z, "dn1": z, "dn2": one}
     assert F.build_version_inputs(ctx, VS.VERSIONS["B5_pure_bi_mom_z"]).entry_dir[t] == -1
+    # 单方向版本只检查自身方向：方向不明分钟上 A4（只看向下）与 A1（只看向上）照常做多
+    ctx.box_ok[:] = True
+    assert F.build_version_inputs(ctx, VS.VERSIONS["A4_box_flush"]).entry_dir[t] == 1
+    assert F.build_version_inputs(ctx, VS.VERSIONS["A1_box_opt"]).entry_dir[t] == 1
+    assert F.build_version_inputs(ctx, VS.VERSIONS["A4_box_flush"]).cat[t] == 2           # 类别取向下脉冲的指标（仅 ②）
 
 
 # ----------------------------------------------------------------------------
@@ -687,18 +696,514 @@ def test_event_simulation_matches_portfolio_per_trade_returns():
                            tr["e_ref"].to_numpy(), False, MAIN)
     np.testing.assert_allclose(ev["net_bps"], tr["net_bps"], rtol=1e-9, atol=1e-9)
     np.testing.assert_allclose(ev["gross_bps"], tr["gross_bps"], rtol=1e-9, atol=1e-9)
+    np.testing.assert_allclose(ev["net_R"], tr["net_R"], rtol=1e-9, atol=1e-9)
+    np.testing.assert_allclose(ev["mae_bps"], tr["mae_px"] / tr["e_ref"] * 1e4, rtol=1e-9, atol=1e-9)
+    np.testing.assert_allclose(ev["mfe_bps"], tr["mfe_px"] / tr["e_ref"] * 1e4, rtol=1e-9, atol=1e-9)
     assert (ev["reason"].to_numpy().astype(int) == tr["reason"].to_numpy()).all()
+    assert (ev["cont"].to_numpy().astype(int) == tr["cont"].to_numpy()).all()
+    assert (ev["exit_bar"].to_numpy().astype(int) == tr["exit_bar"].to_numpy()).all()
 
 
-def test_engine_refuses_real_data_in_checkpoint2():
+# ----------------------------------------------------------------------------
+# 10. 独立复核后补充：数量口径、基准中位数、起点极值、S6 反弹线、镜像止损、资格规则、等号边界、资金费与停机约定、
+#     输入校验与台账结构（每个测试都对应复核中存活的违规变异或复核发现的缺陷）
+# ----------------------------------------------------------------------------
+def test_caps_and_notional_use_eref_not_entry_open_and_are_flagged():
+    O, H, L, C, V = bars(spread=0.0)
+    O[E0] = H[E0] = 10_050.0                                   # O_{t+1} ≠ E_ref = C_t = 10,000
+    t = run(ctx_from(O, H, L, C, V), {I0: (1, P0 - 5.0)}, cost=GROSS).trades.iloc[0]
+    assert t["qty"] == pytest.approx(20.0, rel=1e-13)         # 2.0·Equity / E_ref（按 O_{t+1} 会是 19.90）
+    assert t["cap_bound"] and t["floor_bound"]
+    t = run(ctx_from(O, H, L, C, V), {I0: (1, P0 - 5.0)}, sizing=NOTIONAL).trades.iloc[0]
+    assert t["qty"] == pytest.approx(10.0, rel=1e-13) and not t["cap_bound"] and not t["floor_bound"]
+    t = run(ctx_from(O, H, L, C, V), {I0: (1, P0 - 5.0)}).trades.iloc[0]
+    assert t["qty"] == pytest.approx(500.0 / 32.0, rel=1e-13) and t["floor_bound"] and not t["cap_bound"]
+    t = run(ctx_from(O, H, L, C, V), {I0: (1, P0 - 100.0)}).trades.iloc[0]
+    assert not t["floor_bound"] and not t["cap_bound"]
+
+
+def test_second_trade_sized_from_current_equity():
+    O, H, L, C, V = bars()
+    L[E0 + 3] = 9_890.0                                        # 第一笔盘中止损，亏损
+    for sizing in (RISK, NOTIONAL):
+        res = run(ctx_from(O, H, L, C, V), {I0: (1, P0 - 100), I0 + 200: (1, P0 - 100)}, sizing=sizing)
+        t1, t2 = res.trades.iloc[0], res.trades.iloc[1]
+        eq = VS.INITIAL_CAPITAL + t1["net_pnl"]
+        assert t1["reason_name"] == "stop_intrabar" and eq < VS.INITIAL_CAPITAL
+        assert t2["equity_at_signal"] == pytest.approx(eq, rel=1e-13)
+        assert res.equity.iloc[I0 + 200] == pytest.approx(eq, rel=1e-13)
+        want = 0.005 * eq / (100.0 + 0.0017 * P0) if sizing is RISK else eq / P0
+        assert t2["qty"] == pytest.approx(want, rel=1e-13)
+
+
+def _baseline_fixture(t=1000, n=1500, spikes=True):
+    """20 个窗口和：k = 0（含 t）为 150，k = 19（含 t−299）为 165，k = 1..9 为 15，k = 10..18 为 3,000。
+    中位数 = (150 + 165) / 2 = 157.5，均值 = 1,372.5；t+1 与 t−300 放极端成交量（都不在 [T−299, T+1) 内）。"""
+    V = np.full(n, 10.0)
+    sums = {0: 150.0, 19: 165.0}
+    sums.update({k: 15.0 for k in range(1, 10)})
+    sums.update({k: 3000.0 for k in range(10, 19)})
+    for k, s in sums.items():
+        V[t + 1 - 15 * (k + 1): t + 1 - 15 * k] = s / 15.0
+    if spikes:
+        V[t + 1] = 1e6
+        V[t - 300] = 1e6
+    return V
+
+
+def test_baseline_window_count_and_median():
+    t, n = 1000, 1500
+    V = _baseline_fixture(t, n)
+    nb = np.zeros(n, bool)
+    assert F.baseline_median(V, nb)[t] == pytest.approx(157.5, rel=1e-13)
+    for idx, moved in ((t + 1, False), (t - 300, False), (t, True), (t - 299, True)):
+        V2 = V.copy()
+        V2[idx] += 5.0
+        assert (F.baseline_median(V2, nb)[t] != pytest.approx(157.5, rel=1e-13)) == moved, idx
+    # 引擎层面：第 1 根成交量 210 → v1 = 210 / 157.5 = 1.33（按均值会是 0.15，按 19 个窗口会是另一数值）
+    O, H, L, C, _ = bars()
+    V = _baseline_fixture(I0, 1500, spikes=False)
+    V[E0:E0 + 15] = 14.0
+    C[E0 + 14] = 10_004.0
+    tr = run(ctx_from(O, H, L, C, V), {I0: (1, P0 - 100)}).trades.iloc[0]
+    assert tr["v1"] == pytest.approx(210.0 / 157.5, rel=1e-13) and tr["reason_name"] == "time_bar2"
+
+
+def test_origin_close_term_binds():
+    """L_origin = min(C_{t−W}, min L_{t−W+1..t})：跳空上行时 C_{t−W} 是更低的一项（空头镜像同理）。"""
+    t = 1000
+    z = np.zeros(1500, bool)
+    one = z.copy()
+    one[t] = True
+    O, H, L, C, V = bars()
+    C[t - 5] = 9_990.0
+    L[t - 4:t + 1] = [9_995.0, 9_996.0, 9_997.0, 9_998.0, 10_000.0]
+    C[t], H[t] = 10_050.0, 10_060.0
+    ctx = ctx_from(O, H, L, C, V)
+    ctx.cond["pct"] = {"up1": one, "up2": z, "dn1": z, "dn2": z}
+    atr = ctx.atr["atr_at"][t]
+    assert F.build_version_inputs(ctx, VS.VERSIONS["B2_pure_long_sl"]).sl[t] == pytest.approx(9_990.0 - 0.1 * atr)
+    ctx.box_ok[:] = True
+    assert F.build_version_inputs(ctx, VS.VERSIONS["A3_box_half"]).sl[t] == pytest.approx(10_050.0 - 0.5 * 60.0)
+    O, H, L, C, V = bars()
+    C[t - 5] = 10_030.0
+    H[t - 4:t + 1] = [10_020.0, 10_010.0, 10_008.0, 10_006.0, 10_002.0]
+    C[t], L[t] = 9_960.0, 9_950.0
+    ctx2 = ctx_from(O, H, L, C, V)
+    ctx2.cond["pct"] = {"up1": z, "up2": z, "dn1": one, "dn2": z}
+    assert F.build_version_inputs(ctx2, B3).sl[t] == pytest.approx(10_030.0 + 0.1 * ctx2.atr["atr_at"][t])
+
+
+def test_s6_bounce_level_and_strict_poc():
+    """S6 的 j2 必须同时满足 High ≥ VAL + 1.3·ATR 与 High > POC（严格大于）；分别在 POC 低于与高于反弹线时检验。"""
+    nd = 40
+    lo, hi = np.full(nd, 112.0), np.full(nd, 114.0)
+    lo[nd - 10], hi[nd - 10] = 100.5, 101.5                     # 触及 [99, 101]
+    lo[nd - 9:], hi[nd - 9:] = 100.8, 101.6
+    atr = pd.Series(2.0, index=_daily(lo, hi).index)
+    as_of = _daily(lo, hi).index[-1] + pd.Timedelta(days=1)
+
+    def primed(hi_j, poc):
+        h = hi.copy()
+        h[nd - 4] = hi_j
+        prof = pd.DataFrame({"POC": poc, "VAL": 100.0, "VAH": 120.0, "P_low": 90.0, "P_high": 130.0, "n_bars": 1},
+                            index=pd.DatetimeIndex([as_of]))
+        return bool(DY.box_state(_daily(lo, h), prof, atr, exit_above_poc=True)["primed"].iloc[0])
+
+    assert not primed(102.0, 101.8)          # 高于 POC 但低于反弹线 102.6
+    assert primed(102.7, 101.8)
+    assert not primed(110.0, 110.0)          # 恰等于 POC：不满足严格大于
+    assert primed(110.5, 110.0)
+
+
+def test_short_gap_stop_during_holding():
+    O, H, L, C, V = bars()
+    O[E0 + 3], H[E0 + 3] = 10_150.0, 10_160.0
+    t = run(ctx_from(O, H, L, C, V), {I0: (-1, P0 + 100)}).trades.iloc[0]
+    assert t["reason_name"] == "stop_gap_open" and t["exit_time_idx"] == E0 + 3 and t["exit_bar"] == E0 + 3
+    assert t["exit_fill"] == pytest.approx(10_150.0 * 1.0002)
+
+
+def test_mirror_symmetry_with_gap_and_intrabar_stops():
+    """镜像路径上的多空对称，且覆盖持仓中跳空止损与盘中止损（止损距离 0.30%–0.45%，零成本下 0.15% 下限与 2.0x 上限都不触发）。"""
+    g = SY.random_grid(3000, start=str(START.tz_localize(None)), seed=7, impulse_rate=0.0)
+    O, H, L, C, V = (g[c].to_numpy().copy() for c in ("open", "high", "low", "close", "volume"))
+    rng = np.random.default_rng(5)
+    sig_a, sig_b = {}, {}
+    K = 2.0 * float(C.mean())
+    for k, i in enumerate(range(500, 2800, 97)):
+        d = float(rng.uniform(0.0030, 0.0045)) * C[i]
+        sl = C[i] - d
+        e = i + 1
+        if k % 3 == 0:                                         # 持仓第 3 分钟开盘跳空越过止损
+            O[e + 2] = sl - 0.5 * d
+            H[e + 2], L[e + 2] = max(H[e + 2], O[e + 2]), min(L[e + 2], O[e + 2])
+        elif k % 3 == 1:                                       # 持仓第 5 分钟盘中刺穿止损
+            L[e + 4] = min(L[e + 4], sl - 0.5 * d)
+        sig_a[i] = (1, sl)
+        sig_b[i] = (-1, K - sl)
+    ra = run(ctx_from(O, H, L, C, V, start_idx=400, last_idx=2900), sig_a, cost=GROSS)
+    rb = run(ctx_from(K - O, K - L, K - H, K - C, V, start_idx=400, last_idx=2900), sig_b, cost=GROSS)
+    ta, tb = ra.trades, rb.trades
+    assert len(ta) == len(tb) > 10
+    assert {"stop_gap_open", "stop_intrabar"} <= set(ta["reason_name"])
+    assert (ta["reason"].to_numpy() == tb["reason"].to_numpy()).all()
+    assert (ta["exit_bar"].to_numpy() == tb["exit_bar"].to_numpy()).all()
+    assert not ta["cap_bound"].any() and not ta["floor_bound"].any() and not tb["cap_bound"].any()
+    np.testing.assert_allclose(ta["qty"], tb["qty"], rtol=1e-12)
+    np.testing.assert_allclose(ta["net_pnl"], tb["net_pnl"], rtol=1e-9, atol=1e-9)
+    np.testing.assert_allclose(ra.equity.dropna(), rb.equity.dropna(), rtol=1e-12)
+
+
+@pytest.mark.parametrize("bad_at,counter", [(-7, "contaminated"), (-15, "contaminated"), (1, "entry_bar_bad"),
+                                            (-16, None)])
+def test_contamination_and_bad_entry_bar_void_the_signal(bad_at, counter):
+    t = 1000
+    z = np.zeros(1500, bool)
+    one = z.copy()
+    one[t] = True
+    O, H, L, C, V = bars()
+    bad = np.zeros(1500, bool)
+    bad[t + bad_at] = True
+    ctx = ctx_from(O, H, L, C, V, bad=bad)
+    ctx.cond["pct"] = {"up1": one, "up2": z, "dn1": z, "dn2": z}
+    vin = F.build_version_inputs(ctx, B1)
+    if counter is None:                                        # T−16 不在回看窗口 [T−15, T] 内
+        assert vin.entry_dir[t] == 1
+    else:
+        assert vin.entry_dir[t] == 0 and vin.skipped[counter] == 1 and vin.skipped_exclusive[counter] == 1
+        assert (vin.entry_dir[t + 1:t + 3] == 0).all()        # 作废，不顺延
+
+
+def test_baseline_undefined_excludes_and_is_counted():
+    O, H, L, C, V = bars(n=800)
+    ctx = ctx_from(O, H, L, C, V, start_idx=200, last_idx=700)
+    up = np.zeros(800, bool)
+    up[[250, 500]] = True
+    z = np.zeros(800, bool)
+    ctx.cond["pct"] = {"up1": up, "up2": z, "dn1": z, "dn2": z}
+    vin = F.build_version_inputs(ctx, B1)
+    assert np.isfinite(ctx.atr["atr_at"][250]) and np.isnan(ctx.base_med[250])     # ATR 已就绪、基准尚无定义
+    assert vin.entry_dir[250] == 0 and vin.entry_dir[500] == 1
+    assert vin.skipped["baseline_undefined"] == 1 and vin.skipped_exclusive["baseline_undefined"] == 1
+
+
+def test_exclusive_exclusion_counts_reconcile_with_signals():
+    # 同一分钟既方向不明又维护污染：逐项计数各记一次，互斥计数只记排在前面的“方向不明”
+    t = 1000
+    z = np.zeros(1500, bool)
+    one = z.copy()
+    one[t] = True
+    O, H, L, C, V = bars()
+    bad = np.zeros(1500, bool)
+    bad[t - 7] = True
+    ctx = ctx_from(O, H, L, C, V, bad=bad)
+    ctx.cond["pct"] = {"up1": one, "up2": z, "dn1": z, "dn2": one}
+    vin = F.build_version_inputs(ctx, B3)
+    assert vin.skipped["ambiguous"] == vin.skipped["contaminated"] == 1
+    assert vin.skipped_exclusive["ambiguous"] == 1 and vin.skipped_exclusive["contaminated"] == 0
+    # 随机网格上的 10 个版本：窗口内自身方向触发分钟 = 入场信号 + 互斥排除之和
+    g = SY.random_grid(30_000, start=str(START.tz_localize(None)), seed=2, impulse_rate=3e-3,
+                       halts=((5_000, 20), (17_000, 59)))
+    box = (np.arange(len(g)) // 500) % 3 == 0
+    ctx = SY.synthetic_context(g, g.index[250], g.index[len(g) - 40], box_ok=box)
+    for spec in VS.VERSIONS.values():
+        c = ctx.cond[spec.trigger_rule]
+        up, dn = c["up1"] | c["up2"], c["dn1"] | c["dn2"]
+        trig = (up | dn) if spec.direction == "bi" else (up if spec.direction == "up_long" else dn)
+        vin = F.build_version_inputs(ctx, spec)
+        assert int((ctx.window & trig).sum()) == int((vin.entry_dir != 0).sum()) + sum(vin.skipped_exclusive.values())
+        assert all(vin.skipped_exclusive[k] <= vin.skipped[k] for k in vin.skipped)
+
+
+def test_equality_boundaries_of_stops_continuation_and_flags():
+    # 入场开盘恰等于 SL → 入场开盘跳空离场
+    O, H, L, C, V = bars()
+    O[E0] = L[E0] = P0 - 100
+    assert run(ctx_from(O, H, L, C, V), {I0: (1, P0 - 100)}).trades.iloc[0]["reason_name"] == "stop_gap_at_entry_open"
+    # 持仓中开盘恰等于 SL → 跳空止损
+    O, H, L, C, V = bars()
+    O[E0 + 3] = L[E0 + 3] = P0 - 100
+    t = run(ctx_from(O, H, L, C, V), {I0: (1, P0 - 100)}).trades.iloc[0]
+    assert t["reason_name"] == "stop_gap_open" and t["exit_bar"] == E0 + 3
+    # 盘中最低恰等于 SL（多头）/ 最高恰等于 SL（空头）→ 盘中止损
+    O, H, L, C, V = bars()
+    L[E0 + 3] = P0 - 100
+    assert run(ctx_from(O, H, L, C, V), {I0: (1, P0 - 100)}).trades.iloc[0]["reason_name"] == "stop_intrabar"
+    O, H, L, C, V = bars()
+    H[E0 + 3] = P0 + 100
+    assert run(ctx_from(O, H, L, C, V), {I0: (-1, P0 + 100)}).trades.iloc[0]["reason_name"] == "stop_intrabar"
+    # v1 恰为 1.3、k1 恰为 0.10 → 继续持有第 2 根
+    O, H, L, C, V = bars()
+    V[E0:E0 + 15] = 13.0                                       # v1 = 195 / 150
+    C[E0 + 14] = 10_000.5                                      # k1 = (2·10,000.5 − 10,005 − 9,995) / 10
+    t = run(ctx_from(O, H, L, C, V), {I0: (1, P0 - 100)}).trades.iloc[0]
+    assert t["v1"] == VS.V1_MIN and t["k1"] == VS.K1_MIN and t["cont"] == 1 and t["reason_name"] == "time_bar2"
+    # 漏记分钟恰为离场分钟 → 打标；在离场分钟之后 → 不打标
+    O, H, L, C, V = bars()
+    t = run(ctx_from(O, H, L, C, V, gaps=[START + pd.Timedelta(minutes=E0 + 14)]), {I0: (1, P0 - 100)}).trades.iloc[0]
+    assert t["reason_name"] == "time_bar1" and t["has_archive_gap"]
+    t = run(ctx_from(O, H, L, C, V, gaps=[START + pd.Timedelta(minutes=E0 + 15)]), {I0: (1, P0 - 100)}).trades.iloc[0]
+    assert not t["has_archive_gap"]
+
+
+def test_atr15_partial_bucket_close_is_last_valid_close():
+    """部分有效的桶：收盘价取最后一根有效分钟的收盘，桶末尾的维护占位价格（即使离谱）不进入下一根桶的 TR。"""
+    trs = [2.0] * 20
+    O, H, L, C, V, bad = _bucket_bars(trs, partial=(16, [12, 13, 14]))
+    C[16 * 15 + 11] = H[16 * 15 + 11] = 103.0
+    for a in (O, H, L, C):
+        a[16 * 15 + 12:16 * 15 + 15] = 777.0
+    a = F.atr15_natural(O, H, L, C, bad, int(START.value))
+    assert a["n_valid"][16] == 12 and a["close"][16] == 103.0
+    assert a["tr"][17] == pytest.approx(4.0)                    # max(101 − 99, |101 − 103|, |99 − 103|)
+
+
+def test_cont_records_bar1_test_outcome_and_v1_k1_independently():
+    O, H, L, C, V = _continuation_bars()
+    t = run(ctx_from(O, H, L, C, V), {I0: (1, P0 - 100)}, spec=B4).trades.iloc[0]
+    assert t["reason_name"] == "time_bar1" and t["cont"] == 1                # B4 照常检验，只作诊断
+    assert t["v1"] == pytest.approx(2.0) and t["k1"] == pytest.approx(0.8)
+    O, H, L, C, V = _continuation_bars(strong=False)
+    assert run(ctx_from(O, H, L, C, V), {I0: (1, P0 - 100)}, spec=B4).trades.iloc[0]["cont"] == 0
+    O, H, L, C, V = _continuation_bars()
+    V[:E0] = 0.0                                                             # B_t = 0：v1 无定义，k1 照常记录
+    t = run(ctx_from(O, H, L, C, V), {I0: (1, P0 - 100)}).trades.iloc[0]
+    assert t["cont"] == 0 and np.isnan(t["v1"]) and t["k1"] == pytest.approx(0.8)
+    O, H, L, C, V = _continuation_bars()
+    H[E0:E0 + 15] = L[E0:E0 + 15] = C[E0:E0 + 15] = O[E0:E0 + 15] = P0     # H = L：k1 无定义，v1 照常记录
+    t = run(ctx_from(O, H, L, C, V), {I0: (1, P0 - 100)}).trades.iloc[0]
+    assert t["cont"] == 0 and np.isnan(t["k1"]) and t["v1"] == pytest.approx(2.0)
+    O, H, L, C, V = _continuation_bars()
+    L[E0 + 14] = 9_890.0                                                     # t+15 分钟内止损：未检验
+    t = run(ctx_from(O, H, L, C, V), {I0: (1, P0 - 100)}).trades.iloc[0]
+    assert t["reason_name"] == "stop_intrabar" and t["cont"] == -1 and np.isnan(t["v1"]) and np.isnan(t["k1"])
+
+
+def test_funding_any_number_of_settlements_per_trade():
+    """结算次数不设上限（每分钟一次结算的合成情形）：持满 2 根收付 30 次；停机路径逐次收付；下一笔的净值与数量随之正确。"""
+    rates = 1e-5 * (1 + np.arange(40))
+    fund = pd.Series(rates, index=START + pd.to_timedelta(np.arange(E0, E0 + 40), unit="min"))   # τ_k = 入场时刻 + k 分钟
+    q = 500.0 / 117.0
+    O, H, L, C, V = _continuation_bars()                       # 持满 2 根：time_bar2，离场收盘时刻 = τ_30
+    ctx = ctx_from(O, H, L, C, V, funding=fund)
+    res = run(ctx, {I0: (1, P0 - 100), I0 + 200: (1, P0 - 100)})
+    t1, t2 = res.trades.iloc[0], res.trades.iloc[1]
+    unit = sum(-O[E0 + k] * rates[k] for k in range(1, 30)) - C[E0 + 29] * rates[30]
+    assert t1["reason_name"] == "time_bar2" and t1["n_funding"] == 30
+    assert t1["funding"] == pytest.approx(q * unit, rel=1e-12)
+    assert t2["equity_at_signal"] == pytest.approx(VS.INITIAL_CAPITAL + t1["net_pnl"], rel=1e-13)
+    assert t2["qty"] == pytest.approx(0.005 * t2["equity_at_signal"] / 117.0, rel=1e-13)
+    ev = E.simulate_events(ctx, np.array([I0]), np.array([1.0]), np.array([P0 - 100]), np.array([P0]), False, MAIN)
+    assert ev["net_bps"].iloc[0] == pytest.approx(t1["net_bps"], rel=1e-12)
+    # 停机路径：t+5 起停机 26 分钟（越过 t+30），停机占位分钟按其开盘价（停机前最后收盘价）收付，恢复开盘按该开盘价
+    O, H, L, C, V = bars()
+    bad = np.zeros(len(C), bool)
+    bad[E0 + 5:E0 + 31] = True
+    C[E0 + 4] = 10_003.0
+    for a in (O, H, L, C):
+        a[E0 + 5:E0 + 31] = 10_003.0
+    O[E0 + 31], H[E0 + 31], L[E0 + 31], C[E0 + 31] = 10_020.0, 10_030.0, 10_015.0, 10_025.0
+    t = run(ctx_from(O, H, L, C, V, bad=bad, funding=fund), {I0: (1, P0 - 100)}).trades.iloc[0]
+    assert t["reason_name"] == "halt_forced_exit" and t["exit_bar"] == E0 + 31 and t["n_funding"] == 31
+    assert t["funding"] == pytest.approx(q * sum(-O[E0 + k] * rates[k] for k in range(1, 32)), rel=1e-12)
+    assert t["minutes_held"] == 31                             # 停机使持仓超过 30 分钟
+
+
+def test_settlement_enters_equity_of_the_minute_it_opens():
+    O, H, L, C, V = bars()
+    r = 2e-4
+    res = run(ctx_from(O, H, L, C, V, funding=pd.Series([r], index=[START + pd.Timedelta(minutes=E0 + 5)])),
+              {I0: (1, P0 - 100)})
+    q = 500.0 / 117.0
+    fill = P0 * 1.0005
+    cash0 = VS.INITIAL_CAPITAL - 0.0005 * q * fill
+    assert res.equity.iloc[E0 + 4] == pytest.approx(cash0 + q * (P0 - fill), rel=1e-13)
+    assert res.equity.iloc[E0 + 5] == pytest.approx(cash0 - q * P0 * r + q * (P0 - fill), rel=1e-13)
+
+
+def test_halt_and_time_exit_conventions():
+    q = 500.0 / 117.0
+    # 停机恢复开盘已越过 SL：仍记 halt_forced_exit；停机占位分钟（即使价格离谱）不计入 MAE / MFE
+    O, H, L, C, V = bars()
+    bad = np.zeros(len(C), bool)
+    bad[E0 + 3:E0 + 8] = True
+    for a in (O, H, L, C):
+        a[E0 + 3:E0 + 8] = 10_050.0
+    O[E0 + 8], H[E0 + 8], L[E0 + 8], C[E0 + 8] = 9_880.0, 9_890.0, 9_870.0, 9_885.0
+    t = run(ctx_from(O, H, L, C, V, bad=bad), {I0: (1, P0 - 100)}).trades.iloc[0]
+    assert t["reason_name"] == "halt_forced_exit" and t["exit_ref"] == 9_880.0
+    assert t["mfe_px"] == pytest.approx(5.0) and t["mae_px"] == pytest.approx(-120.0)
+    # 时间离场的收盘时刻恰为 τ、下一分钟是价格不同的占位分钟：按离场分钟收盘价收付
+    O, H, L, C, V = bars()
+    C[E0 + 14] = 10_002.0
+    bad = np.zeros(len(C), bool)
+    bad[E0 + 15:E0 + 20] = True
+    for a in (O, H, L, C):
+        a[E0 + 15:E0 + 20] = 10_050.0
+    fund = pd.Series([2e-4], index=[START + pd.Timedelta(minutes=E0 + 15)])
+    t = run(ctx_from(O, H, L, C, V, bad=bad, funding=fund), {I0: (1, P0 - 100)}).trades.iloc[0]
+    assert t["reason_name"] == "time_bar1" and t["funding"] == pytest.approx(-q * 10_002.0 * 2e-4, rel=1e-12)
+
+
+def test_bars_held_and_minutes_held():
+    cases = []
+    O, H, L, C, V = bars()
+    O[E0], L[E0] = 9_880.0, 9_870.0
+    cases.append((O, H, L, C, V, None, "stop_gap_at_entry_open", 1, 0))
+    O, H, L, C, V = bars()
+    O[E0 + 3], L[E0 + 3] = 9_850.0, 9_840.0
+    cases.append((O, H, L, C, V, None, "stop_gap_open", 4, 3))
+    O, H, L, C, V = bars()
+    L[E0 + 3] = 9_890.0
+    cases.append((O, H, L, C, V, None, "stop_intrabar", 4, 4))
+    O, H, L, C, V = bars()
+    cases.append((O, H, L, C, V, None, "time_bar1", 15, 15))
+    O, H, L, C, V = bars()
+    bad = np.zeros(len(C), bool)
+    bad[E0 + 3:E0 + 8] = True
+    cases.append((O, H, L, C, V, bad, "halt_forced_exit", 9, 8))
+    for O, H, L, C, V, bad, reason, bars_held, minutes_held in cases:
+        t = run(ctx_from(O, H, L, C, V, bad=bad), {I0: (1, P0 - 100)}).trades.iloc[0]
+        assert (t["reason_name"], t["bars_held"], t["minutes_held"]) == (reason, bars_held, minutes_held)
+
+
+def test_zero_trade_run_returns_full_ledger_schema():
     O, H, L, C, V = bars()
     ctx = ctx_from(O, H, L, C, V)
-    ctx.source = "binance_is"
+    full = run(ctx, {I0: (1, P0 - 100)}).trades
+    empty = run(ctx, {}).trades
+    assert len(empty) == 0 and list(empty.columns) == list(full.columns)
+    assert (empty.dtypes == full.dtypes).all()
+    assert np.isnan(empty["net_bps"].mean())
+
+
+def test_run_portfolio_and_event_simulation_reject_invalid_inputs():
+    O, H, L, C, V = bars()
+    bad = np.zeros(len(C), bool)
+    bad[1200:1203] = True
+    ctx = ctx_from(O, H, L, C, V, bad=bad)
+    n = len(C)
+
+    def sim(i, side=1.0, sl=P0 - 100, eref=P0):
+        return E.simulate_events(ctx, np.array([i]), np.array([side]), np.array([sl]), np.array([eref]), False, MAIN)
+
+    assert len(sim(I0)) == 1 and len(E.simulate_events(ctx, np.array([], np.int64), [], [], [], False, MAIN)) == 0
+    for call in (lambda: sim(n - 1), lambda: sim(n - 35), lambda: sim(300),        # 网格末端 / 窗口之外
+                 lambda: sim(1199), lambda: sim(1205),                                # 入场 K 线为 bad / 维护污染
+                 lambda: sim(I0, sl=P0 + 100), lambda: sim(I0, sl=np.nan), lambda: sim(I0, side=0.0),
+                 lambda: E.simulate_events(ctx, np.array([1000.0]), [1.0], [P0 - 100], [P0], False, MAIN),
+                 lambda: E.simulate_events(ctx, np.array([I0, I0 + 50]), [1.0], [P0 - 100], [P0], False, MAIN)):
+        with pytest.raises(ValueError):
+            call()
+    with pytest.raises(ValueError):                                                   # 入场 K 线为 bad 的手工信号
+        run(ctx, {1199: (1, P0 - 100)})
+    with pytest.raises(ValueError):                                                   # 止损在盈利一侧
+        run(ctx, {I0: (1, P0 + 100)})
+    with pytest.raises(ValueError):
+        run(ctx, {I0: (2, P0 - 100)})
+
+
+def test_trade_reaching_end_of_data_raises():
+    """计划没有定义“数据末端”离场：停机延续到网格末端时引擎报错（IS 内最后一次停机在 2023-09-12，不会发生）。"""
+    n = 1400
+    O, H, L, C, V = bars(n=n)
+    bad = np.zeros(n, bool)
+    bad[n - 20:] = True
+    g = SY.grid_from_arrays(START, O, H, L, C, V, bad)
+    ctx = SY.synthetic_context(g, g.index[400], g.index[n - 31])
+    with pytest.raises(ValueError):
+        E.run_portfolio(ctx, SY.manual_inputs(ctx, B1, {n - 31: (1, P0 - 100)}), MAIN, RISK)
+    with pytest.raises(ValueError):
+        E.simulate_events(ctx, np.array([n - 31]), [1.0], [P0 - 100], [P0], False, MAIN)
+
+
+CP2_ONLY =pytest.mark.skipif(E.REAL_DATA_UNLOCKED, reason="Checkpoint 2 lock test; the approved CP3 unlock commit "
+                                                              "makes it inapplicable (see experiment plan section 10)")
+
+
+@CP2_ONLY
+def test_engine_refuses_real_data_in_checkpoint2():
+    O, H, L, C, V = bars()
+    ctx0 = ctx_from(O, H, L, C, V)
+    with pytest.raises(dataclasses.FrozenInstanceError):         # 上下文标签不能被就地改写
+        ctx0.source = "synthetic"
+    ctx = dataclasses.replace(ctx0, source="binance_is")
     with pytest.raises(E.EngineLockedError):
         run(ctx, {I0: (1, P0 - 100)})
     with pytest.raises(E.EngineLockedError):
         E.simulate_events(ctx, np.array([I0]), np.array([1.0]), np.array([P0 - 100]), np.array([P0]), False, MAIN)
     assert E.REAL_DATA_UNLOCKED is False
+
+
+def test_synthetic_label_requires_synthetic_grid():
+    """source = 'synthetic' 只接受 synthetic.grid_from_arrays 构造（带合成数据标记）的网格；切片后标记保留。"""
+    O, H, L, C, V = bars()
+    g = SY.grid_from_arrays(START, O, H, L, C, V)
+    assert g.attrs["provenance"] == "synthetic" and g.iloc[:900].attrs["provenance"] == "synthetic"
+    untagged = g.copy()
+    untagged.attrs.clear()
+    with pytest.raises(ValueError):
+        SY.synthetic_context(untagged, g.index[400], g.index[1400])
+    with pytest.raises(ValueError):
+        F.make_context(untagged, np.zeros(len(g), bool), "synthetic")
+
+
+def test_unlocked_real_context_requires_funding_and_frozen_gap_minutes():
+    """解锁之后的输入完整性检查（不翻转锁：直接调用检查函数；数据是合成的）。网格覆盖表 5b 的 2021-01-12 06:10。"""
+    n = 1500
+    O, H, L, C, V = bars(n=n)
+    g = SY.grid_from_arrays(pd.Timestamp("2021-01-12 00:00", tz="UTC"), O, H, L, C, V)
+    fund = pd.Series([1e-4, 1e-4], index=pd.DatetimeIndex(["2021-01-12 08:00", "2021-01-12 16:00"], tz="UTC"))
+    box = np.zeros(n, bool)
+    no_fund = F.make_context(g, box, "binance_is", g.index[400], g.index[n - 40], VS.ARCHIVE_GAP_MINUTES)
+    with pytest.raises(ValueError):
+        E._require_real_inputs(no_fund)
+    wrong_gaps = F.make_context(g, box, "binance_is", g.index[400], g.index[n - 40], (), fund)
+    with pytest.raises(ValueError):
+        E._require_real_inputs(wrong_gaps)
+    ok = F.make_context(g, box, "binance_is", g.index[400], g.index[n - 40], VS.ARCHIVE_GAP_MINUTES, fund)
+    E._require_real_inputs(ok)
+    assert ok.funding_supplied and ok.n_funding_mapped == 2 and int(ok.archive_gap.sum()) == 1
+    assert ok.index[ok.archive_gap][0] == pd.Timestamp("2021-01-12 06:10", tz="UTC")
+
+
+def test_context_rejects_bad_funding_and_off_grid_gap_minutes():
+    O, H, L, C, V = bars()
+    t1, t2 = START + pd.Timedelta(minutes=500), START + pd.Timedelta(minutes=980)
+    with pytest.raises(ValueError):                                       # 重复的结算时间戳
+        ctx_from(O, H, L, C, V, funding=pd.Series([1e-4, 3e-4], index=pd.DatetimeIndex([t1, t1])))
+    with pytest.raises(ValueError):                                       # 非有限费率
+        ctx_from(O, H, L, C, V, funding=pd.Series([1e-4, np.nan], index=pd.DatetimeIndex([t1, t2])))
+    with pytest.raises(ValueError):                                       # 网格范围内、但不在分钟开盘时刻上的漏记分钟
+        ctx_from(O, H, L, C, V, gaps=[START + pd.Timedelta(seconds=90)])
+    ctx = ctx_from(O, H, L, C, V, funding=pd.Series([1e-4, 3e-4], index=pd.DatetimeIndex([t1, t2])))
+    assert ctx.funding_supplied and ctx.n_funding_mapped == 2
+
+
+CP1_RESULTS = Path(__file__).resolve().parent / "reports" / "impulse_vs_box_round" / "cp1" / "cp1_results.json"
+FROZEN_KEY = "fc0d37b9d198ff85"                     # 与实验计划第 13 节一致；任何版本、成本、仓位或常数的改动都会改变它
+FROZEN_VERSION_KEYS = {"A1_box_opt": "95c0b1a6d42b785e", "A2_box_origin": "011121615297f5a8",
+                       "A3_box_half": "d5268a55772d6fea", "A4_box_flush": "716a23042e451fbd",
+                       "A5_box_origin_z": "db69c6f1e7545906", "B1_pure_long": "c0db58c7ec8ea580",
+                       "B2_pure_long_sl": "a9952888c80053d9", "B3_pure_bi_mom": "afb2d6775f44d7b6",
+                       "B4_pure_1bar": "68866f7f8bfbf3fa", "B5_pure_bi_mom_z": "88eeb9c392542a21"}
+
+
+def test_frozen_identifiers_and_constants():
+    assert VS.frozen_key() == FROZEN_KEY
+    assert VS.version_keys() == FROZEN_VERSION_KEYS
+    assert VS.MAIN_START == pd.Timestamp("2020-03-01", tz="UTC")
+    assert VS.LAST_TRIGGER == pd.Timestamp("2023-12-31 23:29", tz="UTC")
+    assert (VS.BASELINE_WINDOWS, VS.BAR_MIN, VS.ATR15_LEN, VS.COOLDOWN_MIN) == (20, 15, 14, 15)
+    assert (VS.V1_MIN, VS.K1_MIN, VS.SL_A_MULT, VS.SL_B_BUFFER, VS.SL_C_FRAC) == (1.3, 0.10, 2.5, 0.1, 0.5)
+    assert (VS.RISK_FRACTION, VS.MIN_DIST_FRAC, VS.LEVERAGE_CAP, VS.EQUAL_NOTIONAL) == (0.005, 0.0015, 2.0, 1.0)
+    assert VS.BOX_STATE_VARIANT == "S6_reentry_above_poc" and VS.SEED_BASE == 20261106
+    if CP1_RESULTS.exists():                                       # 冻结的漏记分钟 = Checkpoint 1 表 5b
+        r1 = json.loads(CP1_RESULTS.read_text())
+        t5b = sorted(pd.Timestamp(m["minute"]) for m in r1["qa_volume_discrepancies_localized"]["minutes"]
+                     if m["class"] == "tail_omission")
+        assert t5b == sorted(pd.Timestamp(m, tz="UTC") for m in VS.ARCHIVE_GAP_MINUTES) and len(t5b) == 10
 
 
 def test_frozen_versions_inheritance():
@@ -728,10 +1233,9 @@ def _real_ctx(df1m, s1d, cut=None):
     end = IS_END if cut is None else cut
     df = df1m[df1m.index < end]
     grid = D.minute_grid(df, IS_START, end)
-    st = DY.build_box_states(df, s1d, variants=("S6_reentry_above_poc",))["S6_reentry_above_poc"]
-    box = DY.minute_box_ok(np.asarray(grid.index.as_unit("ns").asi8), grid["close"].to_numpy(), st)
+    box, _ = F.s6_box_ok(df, s1d, grid)                                  # 冻结的 S6 口径（versions.BOX_STATE_VARIANT）
     last = VS.LAST_TRIGGER if cut is None else min(VS.LAST_TRIGGER, cut - pd.Timedelta(minutes=31))
-    return F.make_context(grid, box, "binance_is", last_trigger=last)
+    return F.make_context(grid, box, "binance_is", last_trigger=last, archive_gap_minutes=VS.ARCHIVE_GAP_MINUTES)
 
 
 @pytest.mark.skipif(not CACHE.exists(), reason="1m cache not built (python -m impulse_study.data_1m --rebuild)")
@@ -753,6 +1257,7 @@ def test_real_data_features_are_causal_under_prefix_truncation():
             np.testing.assert_array_equal(b.sl[:k], a.sl[:k])
 
 
+@CP2_ONLY
 @pytest.mark.skipif(not CACHE.exists(), reason="1m cache not built")
 def test_real_data_context_is_locked_out_of_the_engine():
     df = D.load_perp_1m()

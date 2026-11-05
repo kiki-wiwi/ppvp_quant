@@ -20,7 +20,11 @@ ATR_15m(14) 规则
 每个窗口的有效成交量（缺失记 0，维护占位本身成交量为 0）之和，取 20 个窗口和的中位数（偶数个取中间两个的平均）。
 
 脉冲起点极值（SL_B / SL_C）：多头 L_origin = min(C_{t−W}, min L_{t−W+1..t})；空头 H_origin = max(C_{t−W}, max H_{t−W+1..t})。
-W 只看该版本自身阈值口径、该笔入场方向的指标：该方向指标 ② 成立（含 ① + ②）→ W = 15；仅指标 ① → W = 5。
+W 与触发类别只看该版本自身阈值口径、该信号所依据的脉冲方向的指标（A4 为向下脉冲，其余版本与入场方向相同）：
+该方向指标 ② 成立（含 ① + ②）→ W = 15；仅指标 ① → W = 5。
+
+入场资格的排除计数有两种：``skipped`` 逐项计数（可重叠），``skipped_exclusive`` 按实验计划第 2.4 节的顺序取第一个
+不满足的条件（互斥，窗口内自身方向触发分钟数 = 入场信号数 + 各项之和）。
 """
 from __future__ import annotations
 
@@ -160,9 +164,15 @@ def origin_extremes(close, low, high, w: int) -> tuple[np.ndarray, np.ndarray]:
 # ----------------------------------------------------------------------------
 # 上下文与版本输入
 # ----------------------------------------------------------------------------
-@dataclass
+SYNTHETIC_TAG = "synthetic"      # synthetic.grid_from_arrays 写入 grid.attrs["provenance"]
+
+
+@dataclass(frozen=True)
 class Context:
-    """一份分钟网格上的全部因果特征（真实或合成数据）。source = 'synthetic' / 'binance_is'。"""
+    """一份分钟网格上的全部因果特征（真实或合成数据）。source = 'synthetic' / 'binance_is'。
+
+    字段不可重新赋值（数组内容仍可在测试中改写）；改标签只能经 make_context 或 dataclasses.replace 显式进行。
+    """
     index: pd.DatetimeIndex
     O: np.ndarray
     H: np.ndarray
@@ -179,11 +189,19 @@ class Context:
     archive_gap: np.ndarray      # CP1 表 5b 的归档末尾漏记分钟
     funding_rate_open: np.ndarray  # 开盘时刻恰为资金费结算时点的分钟 → 费率（否则 NaN）
     source: str
+    funding_supplied: bool = False   # 构造时是否传入了资金费序列
+    n_funding_mapped: int = 0        # 落在分钟网格上的结算次数
 
 
 def make_context(grid: pd.DataFrame, box_ok: np.ndarray, source: str, main_start=VS.MAIN_START,
                  last_trigger=VS.LAST_TRIGGER, archive_gap_minutes=(), funding: pd.Series | None = None) -> Context:
-    """grid = data_1m.minute_grid(...)（完整分钟网格 + bad 标记）。funding：以结算时刻为索引的费率序列。"""
+    """grid = data_1m.minute_grid(...)（完整分钟网格 + bad 标记）。funding：以结算时刻为索引的费率序列。
+
+    source = 'synthetic' 只接受带合成数据标记的网格（synthetic.grid_from_arrays）。资金费时间戳不得重复、费率必须有限，
+    网格范围内的结算与漏记分钟都必须恰在分钟开盘时刻上，否则报错。
+    """
+    if source == SYNTHETIC_TAG and grid.attrs.get("provenance") != SYNTHETIC_TAG:
+        raise ValueError("source='synthetic' requires a grid built by impulse_study.synthetic (provenance tag missing)")
     idx = pd.DatetimeIndex(grid.index).as_unit("ns")
     ns = np.asarray(idx.asi8)
     O, H, L, C, V = (grid[c].to_numpy(dtype=float, copy=True) for c in ("open", "high", "low", "close", "volume"))
@@ -195,16 +213,39 @@ def make_context(grid: pd.DataFrame, box_ok: np.ndarray, source: str, main_start
     window = (ns >= int(pd.Timestamp(main_start).value)) & (ns <= int(pd.Timestamp(last_trigger).value))
     gap = np.zeros(len(ns), dtype=bool)
     if len(archive_gap_minutes):
-        gap = np.isin(ns, np.asarray(pd.DatetimeIndex(archive_gap_minutes).as_unit("ns").asi8))
+        gi = np.asarray(pd.DatetimeIndex(pd.to_datetime(list(archive_gap_minutes), utc=True)).as_unit("ns").asi8)
+        inside = (gi >= ns[0]) & (gi <= ns[-1])
+        if not np.isin(gi[inside], ns).all():
+            raise ValueError("archive-gap minutes fall off the minute grid")
+        gap = np.isin(ns, gi)
     fr = np.full(len(ns), np.nan)
+    n_mapped = 0
     if funding is not None and len(funding):
         fi = np.asarray(pd.DatetimeIndex(funding.index).as_unit("ns").asi8)
+        rates = np.asarray(funding.to_numpy(dtype=float))
+        if len(np.unique(fi)) != len(fi):
+            raise ValueError("duplicated funding timestamps")
+        if not np.isfinite(rates).all():
+            raise ValueError("non-finite funding rate")
         pos = np.searchsorted(ns, fi)
         ok = (pos < len(ns)) & (ns[np.minimum(pos, len(ns) - 1)] == fi)
         if (~ok & (fi >= ns[0]) & (fi <= ns[-1])).any():
             raise ValueError("funding timestamps fall off the minute grid")
-        fr[pos[ok]] = np.asarray(funding.to_numpy(dtype=float))[ok]
-    return Context(idx, O, H, L, C, V, bad, f, cond, np.asarray(box_ok, dtype=bool), atr, base, window, gap, fr, source)
+        fr[pos[ok]] = rates[ok]
+        n_mapped = int(ok.sum())
+    return Context(idx, O, H, L, C, V, bad, f, cond, np.asarray(box_ok, dtype=bool), atr, base, window, gap, fr, source,
+                   funding is not None, n_mapped)
+
+
+def s6_box_ok(df1m: pd.DataFrame, spot_1d: pd.DataFrame, grid: pd.DataFrame) -> tuple[np.ndarray, pd.DataFrame]:
+    """冻结的 A 组箱体条件（versions.BOX_STATE_VARIANT = S6）在分钟网格上的逐分钟布尔值，以及日度状态表。
+
+    第 3 阶段与本阶段的真实数据脚本都必须经由这里构造 box_ok，不得自行选择口径。
+    """
+    from . import daily as DY                                        # 延迟导入：daily 依赖 ppvp_engine，合成测试不需要
+    st = DY.build_box_states(df1m, spot_1d, variants=(VS.BOX_STATE_VARIANT,))[VS.BOX_STATE_VARIANT]
+    box = DY.minute_box_ok(np.asarray(pd.DatetimeIndex(grid.index).as_unit("ns").asi8), grid["close"].to_numpy(), st)
+    return np.asarray(box, dtype=bool), st
 
 
 @dataclass
@@ -214,9 +255,10 @@ class VersionInputs:
     sl: np.ndarray               # 冻结的止损价（无信号处 NaN）
     eref: np.ndarray             # 下单参考价 E_ref = C_t
     w: np.ndarray                # int8：止损回溯窗口（SL_A 为 0）
-    cat: np.ndarray              # int8：入场方向的触发类别 1 仅① / 2 仅② / 3 ①+②
+    cat: np.ndarray              # int8：触发类别 1 仅① / 2 仅② / 3 ①+②（信号所依据的脉冲方向、版本自身阈值口径）
     atr_at: np.ndarray
-    skipped: dict                # 被各项资格条件排除的触发计数（审计用）
+    skipped: dict                # 各项资格条件的排除计数（逐项计数，可重叠；invalid_stop 只计其余条件都满足的分钟）
+    skipped_exclusive: dict = None   # 按第 2.4 节顺序取第一个不满足条件的互斥计数：窗口内触发分钟 = 信号 + 各项之和
 
 
 def build_version_inputs(ctx: Context, spec: VS.VersionSpec) -> VersionInputs:
@@ -276,13 +318,24 @@ def build_version_inputs(ctx: Context, spec: VS.VersionSpec) -> VersionInputs:
         else:
             raise ValueError(spec.stop)
     bad_sl = (d != 0) & ~(np.isfinite(sl) & (s * (eref - sl) > 0))
-    skipped = {"invalid_stop": int(bad_sl.sum())}
     d[bad_sl] = 0
     trig_any = (up | dn) if spec.direction == "bi" else (up if spec.direction == "up_long" else dn)
     w_mask = ctx.window & trig_any
-    skipped.update({"contaminated": int((w_mask & contam).sum()), "atr_not_ready": int((w_mask & ~np.isfinite(atr_at)).sum()),
-                    "entry_bar_bad": int((w_mask & ~entry_ok).sum()),
-                    "ambiguous": int((w_mask & up & dn).sum()) if spec.direction == "bi" else 0,
-                    "box_rejected": int((w_mask & ~ctx.box_ok).sum()) if spec.box else 0})
+    # 第 2.4 节的条件顺序（窗口与自身方向触发之后）：方向不明（仅双向）→ 维护污染 → ATR 未就绪 → 入场 K 线 bad →
+    # 基准成交量无定义 → S6 箱体（仅 A 组）→ 止损无效
+    fails = [("ambiguous", (up & dn) if spec.direction == "bi" else np.zeros(n, dtype=bool)),
+             ("contaminated", contam), ("atr_not_ready", ~np.isfinite(atr_at)), ("entry_bar_bad", ~entry_ok),
+             ("baseline_undefined", ~np.isfinite(ctx.base_med)),
+             ("box_rejected", ~ctx.box_ok if spec.box else np.zeros(n, dtype=bool)), ("invalid_stop", bad_sl)]
+    skipped = {k: int((w_mask & m).sum()) for k, m in fails[:-1]}
+    skipped["invalid_stop"] = int(bad_sl.sum())                     # 只在其余条件都满足的分钟上定义
+    remaining = w_mask.copy()
+    skipped_exclusive = {}
+    for k, m in fails:
+        hit = remaining & m
+        skipped_exclusive[k] = int(hit.sum())
+        remaining &= ~m
+    if int(remaining.sum()) != int((d != 0).sum()):                  # 对账：窗口内触发分钟 = 信号 + 互斥排除之和
+        raise AssertionError("eligibility reconciliation failed")
     return VersionInputs(spec, d, np.where(d != 0, sl, np.nan), eref, np.where(d != 0, w, 0).astype(np.int8),
-                         np.where(d != 0, cat, 0).astype(np.int8), atr_at, skipped)
+                         np.where(d != 0, cat, 0).astype(np.int8), atr_at, skipped, skipped_exclusive)
