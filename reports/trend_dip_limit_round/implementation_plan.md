@@ -1,0 +1,32 @@
+# Trend dip / limit implementation plan
+
+Goal: implement the approved experiment with synthetic inputs only. Spec: `approved_plan.md`, SHA256 df36ec579c750ef7580b828148d9ead00c22d69c4eea3ed073036b5730c671a3.
+
+Architecture: independent `dip_limit_study` package, immutable Context, closed-bar features, independent execution and calendar inference. Existing source is read-only. Python/pandas/NumPy from the existing external pandas 3.0.5 environment; no dependency changes.
+
+Global constraints: BTC IS only, independent REAL_DATA_UNLOCKED=False, no market reads, no real runs, no edits to any baseline-tracked file. All strategy parameters, costs, seeds and gates come verbatim from the approved spec. Pure synthetic fixes are permitted; any spec conflict or frozen inconsistency stops work. No full-repository pytest collection (contains forbidden real-data tests).
+
+Tasks:
+
+- [x] Register exact approved plan and default-locked context/data adapter. Test rejection before I/O, provenance, UTC units, immutable snapshots and frozen-source checks.
+- [x] Implement features plus meaningful synthetic tests: previous-hour ATR/mean, closed daily/4H trend, full-hour validity, rounded order prices, main/end boundaries, prefix invariance.
+- [x] Implement execution plus hand-calculated synthetic tests: common risk sizing and quantity rounding, post-only activation rejection versus later gap fill, expiry/cooldown boundaries, entry-minute stop, next-open mean exit, absolute deadline, funding and maintenance. Add paired independent event diagnostics with unfilled zero.
+- [x] Implement fixed monthly inference and Q1–Q7 with synthetic mathematical checks: same-day pairing, fixed family 3, empty/degenerate cases, month draw hashes, shared bootstrap, conditional limited-fill qualification.
+- [x] Integrate default-check/locked-real runner, deterministic full-calendar synthetic fixture, eight combinations, event pairs and three figures. Run one guarded synthetic integration and relevant existing pure regressions; inspect figures.
+- [x] Pin new-file SHA256 and environment, verify baseline has additions only, write concise phase log, commit and stop. Do not unlock or read real input.
+
+Interface contract (read before implementation):
+
+`config.py`: IS_START, MAIN_START, IS_END, LAST_DECISION (2023-12-30 23:00 UTC), HALF; INITIAL_CAPITAL=100000, RISK_FRACTION=.005, MIN_DIST_FRAC=.0015, LEVERAGE_CAP=2, PRICE_TICK=.10, QTY_STEP=.001, HOLD_MINUTES=1440, TTL_MINUTES=60, COOLDOWN_MINUTES=240; VERSIONS=('M_market','L_limit'), COSTS keys gross/main/harsh. Cost fields taker, maker, entry_slip, exit_slip, budget, include_funding. Stress allowed only L main/harsh; entry fee taker, one-minute delay, extra penetration, original deadline unchanged.
+
+`scope.py`: own Context(index,O,H,L,C,V,bad,archive_gap,funding_rate,source,symbol); immutable arrays and UTC ns; make_context(frame,funding=None,source='synthetic',symbol='BTCUSDT'), require_synthetic(ctx), require_real_authorization(), ScopeError. Synthetic frame needs attrs['provenance']='synthetic'. Context continuous minute grid within IS; real always rejected while lock false. No borrowing unlocked old Context gate.
+
+`features.py`: Features(hours,references), build_features(ctx), build_signals(ctx,features=None). Shared signal table indexed by decision_time d, one row per completed natural hour. Required columns: signal_time=h, decision_time=d, deadline=d+24h, eref=C_h, atr=prior-hour ATR, sl, limit, target=prior20 SMA, eligible(bool), skip_reason(str), signal_lookback_has_archive_gap(bool). References may be a combined long-format daily/4H snapshot. Never inspect entry minute to decide signal eligibility. `_aggregate` and `_atr` from breakout_study may be imported read-only as pure utilities after checking this package's own gate.
+
+`engine.py`: Result(trades,equity,daily_equity,daily_returns,decisions,orders,metadata). run_portfolio(ctx,signals,version,cost,*,stress=False). Equity covers supplied grid at/after MAIN_START, no EOF liquidation; unresolved position/order at context end raises. Ledger required: signal_time,decision_time,entry_time,exit_time,eref,sl,target,limit,q,qty,signal_equity,risk_budget,reference_notional,entry_price,exit_price,fees,funding_cashflow,net_pnl,gross_bps,net_bps,net_R,minutes_held,risk_budget_exceeded,actual_leverage_exceeds_cap,has_archive_gap,halt_in_holding,overrun_24h,exit_reason. Additional audit columns encouraged only for registered requirements. Metadata contains version,cost,stress,source,symbol,failed,failure_reason,n_signals,n_trades. `simulate_events(ctx,signals)` returns one row per eligible main-window father; columns decision_time, M_net_bps, L_net_bps, difference_bps, L_filled, L_status, L_wait_minutes. Independent constant100000 common sizing, main/base only; no fake portfolio Sharpe.
+
+`statistics.py`: analyze(main_returns,main_trades,harsh_returns,harsh_trades,stress_returns,stress_trades,events,*,failed_versions=None). Return JSON-safe summary including tests, intervals, metrics, gates, conclusions, seeds, draw_hashes, disclosures. First four arguments follow prior structure with columns/keys M_market,L_limit. Stress returns DataFrame and stress trades mapping have main/harsh keys, only L. Events as above. Exact calendar1401/46; fixed Webb seed2026110801 B99999 and month seed2026110802 B10000; no public seed/count overrides. Can import old pure statistical primitives read-only but no monkeypatch/replace globals. Q7 requires both stress arms100trades/24months/positive total and meanbps plus stress-main minus M-main positive daily mean. Failure aggregation must include stress cases for L. Monthly event CI uses decision month and all father rows including unfilled zero.
+
+`runtime.py`: execute(ctx,output,input_metadata=None) exact full IS grid; six primary runs M gross/main/harsh then L gross/main/harsh, L stress main/harsh, paired events, stats, outputs/three figures. Output directory must not exist; errors preserve STOPPED.json, no retry. Synthetic outputs outside repo. Real CLI rejects before output or read.
+
+Verification emphasis: accepted-order gap losses must not become post-only rejections; no future ATR or changed target; exact funding at boundary exits; all unfilled father outcomes remain; Q7 and any-cost bankruptcy cannot be hidden by primary profitability. No repeated review matrix; finish after relevant synthetic evidence passes.
