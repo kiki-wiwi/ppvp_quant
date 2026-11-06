@@ -51,7 +51,7 @@ from numba_compat import njit
 from . import versions as VS
 from .features import Context, VersionInputs, input_key
 
-REAL_DATA_UNLOCKED = False
+REAL_DATA_UNLOCKED = True
 
 # 离场原因（计划没有定义“数据末端”离场：持仓走到网格末端仍未离场时引擎直接报错）
 GAP_ENTRY, GAP_STOP, STOP, TIME1, TIME2, HALT = 1, 2, 3, 4, 5, 6
