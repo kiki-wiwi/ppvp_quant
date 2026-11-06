@@ -1,0 +1,8 @@
+............................................................ [ 45%]
+................................................................ [ 93%]
+........                                                                 [100%]
+132 passed, 1 deselected, 20 subtests passed in 20.73s
+
+Final control-flow replacement: 1 passed in 0.44s
+Full synthetic integration: 1 passed in 64.53s (0:01:04)
+Final statistics/figures on same invented ledgers: passed; 0 execution reruns, unchanged p-values and matrices.

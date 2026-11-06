@@ -1,0 +1,1735 @@
+{
+  "scope": "synthetic_only_no_market_reads",
+  "guard": "channel_random_study.testing_guard",
+  "focused": {
+    "command": [
+      "/home/ubuntu/Documents/Codex/2026-11-06/github-ppvp-quant-agent-2-checkpoint/work/diag_env/pandas3.0.5_py314/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "-p",
+      "channel_random_study.testing_guard",
+      "tests/test_channel_random_data.py",
+      "tests/test_channel_random_runtime.py",
+      "tests/test_channel_random_features.py",
+      "tests/test_channel_random_matching.py",
+      "tests/test_channel_random_engine.py",
+      "tests/test_channel_random_statistics.py",
+      "test_breakout_features.py",
+      "test_breakout_statistics.py",
+      "test_breakout_data.py",
+      "-k",
+      "not test_each_public_loader_is_locked_before_any_io"
+    ],
+    "exit_code": 0,
+    "elapsed_seconds": 21.685631275177002
+  },
+  "focused_result": "132 passed, 1 deselected, 20 subtests passed in 20.73s",
+  "final_control_flow_replacement": {
+    "reason": "replace tautological jobs check with first-error/no-retry/no-overwrite test",
+    "command": "python -m pytest -q -p channel_random_study.testing_guard tests/test_channel_random_runtime.py::test_first_error_preserves_logs_and_does_not_retry_or_match",
+    "result": "1 passed in 0.44s"
+  },
+  "integration": {
+    "command": "python -m pytest -q -p channel_random_study.testing_guard tests/test_channel_random_integration.py --basetemp=/tmp/channel_random_implementation/integration_validation",
+    "result": "1 passed in 64.53s",
+    "source": "synthetic",
+    "minute_count": 2103840,
+    "combination_count": 203,
+    "source_folder": "/tmp/channel_random_implementation/integration_validation/test_complete_synthetic_fixed_0/synthetic_outputs",
+    "all_schedules_frozen_at": "2026-11-06T17:42:34.315893+00:00",
+    "first_matching_at": "2026-11-06T17:42:34.317486+00:00",
+    "completed_at": "2026-11-06T17:43:30.447861+00:00",
+    "schedule_metadata": {
+      "seed": 2026110901,
+      "bit_generator": "PCG64",
+      "count": 200,
+      "time_encoding": "ascending UTC ns int64 little-endian C-order",
+      "candidate_time_sha256": "dceafd657e4e01aa72c6894addcd1d8f674cc977df9547d53f41c6c504cb9d48",
+      "parent_time_sha256": "d0515d236ef073d83de296fec434dd216380b4d48f9808ae8d0b1f55dfe73883",
+      "replicates": [
+        {
+          "version": "R_000",
+          "spawn_key": [
+            0
+          ],
+          "time_sha256": "b5a25296a000e154a088d12f8bc5261650cc3ca71b50f98f16228cf71a1f7861",
+          "count": 46
+        },
+        {
+          "version": "R_001",
+          "spawn_key": [
+            1
+          ],
+          "time_sha256": "ed54e00ca447b3e328441028b59a2deec1934c8ca60407eebdac5dd707a3fb3b",
+          "count": 46
+        },
+        {
+          "version": "R_002",
+          "spawn_key": [
+            2
+          ],
+          "time_sha256": "9442d73a6cb06fe4e43784ddfc3f1988537266bb3a92608e5c784f98f9faaeca",
+          "count": 46
+        },
+        {
+          "version": "R_003",
+          "spawn_key": [
+            3
+          ],
+          "time_sha256": "8518bd83328d225d019a164591de7b0760dcf28df1a23d62cb2a1e3a6fb02daf",
+          "count": 46
+        },
+        {
+          "version": "R_004",
+          "spawn_key": [
+            4
+          ],
+          "time_sha256": "b8c97459ab890652754b219a4d96ee94ffe6e52cb06f0c7e746fb03c81ef39cc",
+          "count": 46
+        },
+        {
+          "version": "R_005",
+          "spawn_key": [
+            5
+          ],
+          "time_sha256": "a8c927886e716849f6b5c803e3de957990c1f53f436d4c5c2a130779a1c4f4aa",
+          "count": 46
+        },
+        {
+          "version": "R_006",
+          "spawn_key": [
+            6
+          ],
+          "time_sha256": "f068e451f9308dc564a73daf081d19d4ddd5c2506e38398fe8da356fbbc2b933",
+          "count": 46
+        },
+        {
+          "version": "R_007",
+          "spawn_key": [
+            7
+          ],
+          "time_sha256": "0b5b87a4202ac0364596b19d8a48bdff304bcc9d4529a0efece355d3c50d6d3e",
+          "count": 46
+        },
+        {
+          "version": "R_008",
+          "spawn_key": [
+            8
+          ],
+          "time_sha256": "be35afc9fbd11c71aa8a80e92cd2a63453909027b42b2770bdede37ff257317f",
+          "count": 46
+        },
+        {
+          "version": "R_009",
+          "spawn_key": [
+            9
+          ],
+          "time_sha256": "668ad46d1f264aaecb0b5b611d80718e64dfd1cc51bdf2972cd5e1c6c750ffd8",
+          "count": 46
+        },
+        {
+          "version": "R_010",
+          "spawn_key": [
+            10
+          ],
+          "time_sha256": "dde6e2af55d36da1df6c5f7b87b5232f75468c36c993d3d5c19228be8587af3a",
+          "count": 46
+        },
+        {
+          "version": "R_011",
+          "spawn_key": [
+            11
+          ],
+          "time_sha256": "f405515a572cac01c939bbc1c5ce2a7ef45ce0234962a87bf81672332d862612",
+          "count": 46
+        },
+        {
+          "version": "R_012",
+          "spawn_key": [
+            12
+          ],
+          "time_sha256": "38a3431ba4444d622d72ff13d68d6011d7630e307c42f2b8fea6b09db852065f",
+          "count": 46
+        },
+        {
+          "version": "R_013",
+          "spawn_key": [
+            13
+          ],
+          "time_sha256": "4032c637391a6c65ed91f03cba24839354d22b8300aa03738187d33fc768f6b2",
+          "count": 46
+        },
+        {
+          "version": "R_014",
+          "spawn_key": [
+            14
+          ],
+          "time_sha256": "6e0cc7d78ecd399da67183bfd321b79f1e2a68e7912788b6fdac75977ab2f08c",
+          "count": 46
+        },
+        {
+          "version": "R_015",
+          "spawn_key": [
+            15
+          ],
+          "time_sha256": "60b8736de8b21a4294e2719ab517f4bf91b688e6ddf637193a156f89f529d741",
+          "count": 46
+        },
+        {
+          "version": "R_016",
+          "spawn_key": [
+            16
+          ],
+          "time_sha256": "06d315d826efb23686abca6cd8c10b2e6e81169b1d9eae19a17171543dac8ffc",
+          "count": 46
+        },
+        {
+          "version": "R_017",
+          "spawn_key": [
+            17
+          ],
+          "time_sha256": "2fa3fe7277a6f8316b4c8ac0ee6ee389303a72dcacffcbb4d37e9a3464aa0cad",
+          "count": 46
+        },
+        {
+          "version": "R_018",
+          "spawn_key": [
+            18
+          ],
+          "time_sha256": "a89a7e7c10c2c653f4c5db453534527b274cc608c949e694c99eac30a8e59859",
+          "count": 46
+        },
+        {
+          "version": "R_019",
+          "spawn_key": [
+            19
+          ],
+          "time_sha256": "b1a866f25c85027c6ca1e58116ea6f71f9dd4ffed9f284330b8c490bceabb047",
+          "count": 46
+        },
+        {
+          "version": "R_020",
+          "spawn_key": [
+            20
+          ],
+          "time_sha256": "797b94e86710c1a3b83be69d0b56ce647753a251e0e4f156c1f9dd57491655a8",
+          "count": 46
+        },
+        {
+          "version": "R_021",
+          "spawn_key": [
+            21
+          ],
+          "time_sha256": "268282bf4ec56c5063f94d2804f3a609be2353044e530dcf631d66938a802308",
+          "count": 46
+        },
+        {
+          "version": "R_022",
+          "spawn_key": [
+            22
+          ],
+          "time_sha256": "3c35c5f3026d7b4df40ea15c7d5e84dabe76b1bf6be04076d00a1058ec9d52de",
+          "count": 46
+        },
+        {
+          "version": "R_023",
+          "spawn_key": [
+            23
+          ],
+          "time_sha256": "2c199d7006d9db722d90bdfbea997e31cee3816fee10774058e12fd964c6912e",
+          "count": 46
+        },
+        {
+          "version": "R_024",
+          "spawn_key": [
+            24
+          ],
+          "time_sha256": "b3796af9cc5d32a81f69f867bfafed6e4221b9da4831d2e8665e69a627e48fd3",
+          "count": 46
+        },
+        {
+          "version": "R_025",
+          "spawn_key": [
+            25
+          ],
+          "time_sha256": "43758af8a9aea7e88eeee93e42e71bae28e191adee8655782fdb3540f26fc153",
+          "count": 46
+        },
+        {
+          "version": "R_026",
+          "spawn_key": [
+            26
+          ],
+          "time_sha256": "cdfaf34709061a1e20637334ddbc889b6b9efa57160a914e9f595dfb1b59a4a0",
+          "count": 46
+        },
+        {
+          "version": "R_027",
+          "spawn_key": [
+            27
+          ],
+          "time_sha256": "a7a5541d14ea7ed72df40adfd0947e156e744b6e36cfec95ef0d08b4111cc3bc",
+          "count": 46
+        },
+        {
+          "version": "R_028",
+          "spawn_key": [
+            28
+          ],
+          "time_sha256": "2506c0b0340593a7c8c784eb8cbdcae144d2a6de686cb75139ef37f640e0a39d",
+          "count": 46
+        },
+        {
+          "version": "R_029",
+          "spawn_key": [
+            29
+          ],
+          "time_sha256": "2e01d7a747545d1bd94e8f1b3c7e404b1038364b342df614b9712ae691a8ea31",
+          "count": 46
+        },
+        {
+          "version": "R_030",
+          "spawn_key": [
+            30
+          ],
+          "time_sha256": "0892517ce8e5e1af5ff0be0c1f08a8e491584e7ea829d226c1a0639099892c8b",
+          "count": 46
+        },
+        {
+          "version": "R_031",
+          "spawn_key": [
+            31
+          ],
+          "time_sha256": "73c5868b20d8a230b58d78bd2c5181c59a658fa9804f13106cfa29c529c8e227",
+          "count": 46
+        },
+        {
+          "version": "R_032",
+          "spawn_key": [
+            32
+          ],
+          "time_sha256": "fad1190afef91243d01ab3a624053897bc2728b8452a761629bb67dcdd55de4f",
+          "count": 46
+        },
+        {
+          "version": "R_033",
+          "spawn_key": [
+            33
+          ],
+          "time_sha256": "8970b26322ef09b381c4ec43ffb857b192da18e3221b3511b9ffdd698be0ad8a",
+          "count": 46
+        },
+        {
+          "version": "R_034",
+          "spawn_key": [
+            34
+          ],
+          "time_sha256": "9dab28e1562797300cff4f614ba39bd001788fd3dad3eb33790caab97c1bf4a1",
+          "count": 46
+        },
+        {
+          "version": "R_035",
+          "spawn_key": [
+            35
+          ],
+          "time_sha256": "dcbc7944eff43aee9211a8ee38a363592c12c8ac842e7f50fd09dc6f6d257d75",
+          "count": 46
+        },
+        {
+          "version": "R_036",
+          "spawn_key": [
+            36
+          ],
+          "time_sha256": "ed6ad90ec246780e5137b4ad985ad530dc9cdae9c3fad1ad339192b130d94ff7",
+          "count": 46
+        },
+        {
+          "version": "R_037",
+          "spawn_key": [
+            37
+          ],
+          "time_sha256": "8a7419569b693f036b225445759a08c691b52be202a215130c789e66df659d68",
+          "count": 46
+        },
+        {
+          "version": "R_038",
+          "spawn_key": [
+            38
+          ],
+          "time_sha256": "fdc6ca44ce209bae2b337300c000ee05a7c7c38d9f98cf013692717ca48af7c8",
+          "count": 46
+        },
+        {
+          "version": "R_039",
+          "spawn_key": [
+            39
+          ],
+          "time_sha256": "f619116d3de8430b2510a1fbbd42e7a7172021e5e609ba84b7a4511a4e2d779d",
+          "count": 46
+        },
+        {
+          "version": "R_040",
+          "spawn_key": [
+            40
+          ],
+          "time_sha256": "eb189a6ebbcf3162b308c3ca721c204d77ba0acafc5e3788c86c42bfb55ef627",
+          "count": 46
+        },
+        {
+          "version": "R_041",
+          "spawn_key": [
+            41
+          ],
+          "time_sha256": "8dbd530d56c3c7c5ff436f8d964e6f99dd555419ebc8d03eb330c2ec3d172d8b",
+          "count": 46
+        },
+        {
+          "version": "R_042",
+          "spawn_key": [
+            42
+          ],
+          "time_sha256": "a3e7d9c423d55d9fb572c254231fadca4817e3e1e099c1ad59b840430eec1bf0",
+          "count": 46
+        },
+        {
+          "version": "R_043",
+          "spawn_key": [
+            43
+          ],
+          "time_sha256": "e60bbb54873f4d0b046f7bd40e911ee22fc238a2984f9093376acf3d5648efee",
+          "count": 46
+        },
+        {
+          "version": "R_044",
+          "spawn_key": [
+            44
+          ],
+          "time_sha256": "b71318d6d8523095c763a4ec0205a470a86b36a99cb0001cc14ff87eeecdba12",
+          "count": 46
+        },
+        {
+          "version": "R_045",
+          "spawn_key": [
+            45
+          ],
+          "time_sha256": "f2e6f206580d28ef1c5c4e5270525850087105d7784e770a8de3d9577a0c5f19",
+          "count": 46
+        },
+        {
+          "version": "R_046",
+          "spawn_key": [
+            46
+          ],
+          "time_sha256": "31b1ab779f16a25b56d60ec508cfc46021d2b886621a4b1ce521184e65dc1e56",
+          "count": 46
+        },
+        {
+          "version": "R_047",
+          "spawn_key": [
+            47
+          ],
+          "time_sha256": "8af9d4371e3a1ea90cac620477928d1b0a6d6855100d7bbd89702d2c5076c979",
+          "count": 46
+        },
+        {
+          "version": "R_048",
+          "spawn_key": [
+            48
+          ],
+          "time_sha256": "c1506227bcaa5fe134eb53c6cc60fe5002a29c5b9e3cca6fa9b627f183c86b9b",
+          "count": 46
+        },
+        {
+          "version": "R_049",
+          "spawn_key": [
+            49
+          ],
+          "time_sha256": "950289e8d08f4c426f06847eb80be61f4c551c02e1d0423da7308ef37378199b",
+          "count": 46
+        },
+        {
+          "version": "R_050",
+          "spawn_key": [
+            50
+          ],
+          "time_sha256": "dd75a43eca0f26758d018b4790c75c1f587e15b8a92d4eb19e3fd75568242adc",
+          "count": 46
+        },
+        {
+          "version": "R_051",
+          "spawn_key": [
+            51
+          ],
+          "time_sha256": "517037ccf621795ae5a9a03c70cbd173a407bd5c10944df3055df27369c475e8",
+          "count": 46
+        },
+        {
+          "version": "R_052",
+          "spawn_key": [
+            52
+          ],
+          "time_sha256": "ce12e199392998081b51a575e4f3a18db97d51543cc9a2c6cd63c55e90bc8331",
+          "count": 46
+        },
+        {
+          "version": "R_053",
+          "spawn_key": [
+            53
+          ],
+          "time_sha256": "020b74d3172d6a592f43840bdd4c648509c8ef66130b74966040a1b58f0acf27",
+          "count": 46
+        },
+        {
+          "version": "R_054",
+          "spawn_key": [
+            54
+          ],
+          "time_sha256": "3112b6ef6e9e658b1b462177b8574542591d11a47f5b26eb6b4cfc147b21a619",
+          "count": 46
+        },
+        {
+          "version": "R_055",
+          "spawn_key": [
+            55
+          ],
+          "time_sha256": "0d13c67d58d5976b9088925219f2209ea93c2915eb553d4072aa6186c76f4161",
+          "count": 46
+        },
+        {
+          "version": "R_056",
+          "spawn_key": [
+            56
+          ],
+          "time_sha256": "2c988ea18d8d1c3d8c18ebdf6cb15ea9163fae3798a465837c1b71124729a227",
+          "count": 46
+        },
+        {
+          "version": "R_057",
+          "spawn_key": [
+            57
+          ],
+          "time_sha256": "fe2177c7a5b1ff69f395eeb39ac116124de6a5311b2b9f574ea59c574ea73326",
+          "count": 46
+        },
+        {
+          "version": "R_058",
+          "spawn_key": [
+            58
+          ],
+          "time_sha256": "e37ac186d52721dcb5bb92b8d328dc25d1b173c3d0612e0f779d9511af07f860",
+          "count": 46
+        },
+        {
+          "version": "R_059",
+          "spawn_key": [
+            59
+          ],
+          "time_sha256": "e46af09f95bd71f6683247f8a6f9738417617c14b48dd5b1f34dd427499d6f45",
+          "count": 46
+        },
+        {
+          "version": "R_060",
+          "spawn_key": [
+            60
+          ],
+          "time_sha256": "be9cda0cce8482d9814b860d6690fd5b815535ff7d7348481bfb0b65e84c6fb7",
+          "count": 46
+        },
+        {
+          "version": "R_061",
+          "spawn_key": [
+            61
+          ],
+          "time_sha256": "15d6755daf9b79d182f99ece662845836403e7d482bae02d542f8248140d5f59",
+          "count": 46
+        },
+        {
+          "version": "R_062",
+          "spawn_key": [
+            62
+          ],
+          "time_sha256": "0f7d4090303ba1945842ed9295d81cada69c64d384b828789a4e34d46cc55cd8",
+          "count": 46
+        },
+        {
+          "version": "R_063",
+          "spawn_key": [
+            63
+          ],
+          "time_sha256": "bf3294ec1e43249a79b5890e8a289a5058a261ea518dfefe69269c7efe607c1e",
+          "count": 46
+        },
+        {
+          "version": "R_064",
+          "spawn_key": [
+            64
+          ],
+          "time_sha256": "f183dfdd7ea4637b05590e8ba4d69e3c0eca05e73f34136adfc96a2715eaddae",
+          "count": 46
+        },
+        {
+          "version": "R_065",
+          "spawn_key": [
+            65
+          ],
+          "time_sha256": "00edf493e735023293650488e0eaccb6d34a8e5cae54c1bd7ddfcfcb5f4a4608",
+          "count": 46
+        },
+        {
+          "version": "R_066",
+          "spawn_key": [
+            66
+          ],
+          "time_sha256": "d456c541d51254f654786ddf359767a47b17f865783c2e08df5b4a4ee0800255",
+          "count": 46
+        },
+        {
+          "version": "R_067",
+          "spawn_key": [
+            67
+          ],
+          "time_sha256": "116e70696f1b1c11a0e9bd5e27bae400693f610dd8943affe3cbe9adcab36f65",
+          "count": 46
+        },
+        {
+          "version": "R_068",
+          "spawn_key": [
+            68
+          ],
+          "time_sha256": "9ff0f4b018f8a4fb04d918b8926e16efa9f5e0945268627d4192dd61e467ca09",
+          "count": 46
+        },
+        {
+          "version": "R_069",
+          "spawn_key": [
+            69
+          ],
+          "time_sha256": "a62ad6257a231b3f40bfbb241d75183224733e4643f6d06899657ab373dec2de",
+          "count": 46
+        },
+        {
+          "version": "R_070",
+          "spawn_key": [
+            70
+          ],
+          "time_sha256": "3494ff63576ff159bfe4e849de71fdc60440f6f752b07869dd01874f74e93cbf",
+          "count": 46
+        },
+        {
+          "version": "R_071",
+          "spawn_key": [
+            71
+          ],
+          "time_sha256": "82bc3775bd7f5451236f3a3da32cce3159c21d4d23eea6080343896c6b43b612",
+          "count": 46
+        },
+        {
+          "version": "R_072",
+          "spawn_key": [
+            72
+          ],
+          "time_sha256": "6acad87c7d949a3136c321cc44ab850521b9c2577f7b3c57aba50d27b15330cf",
+          "count": 46
+        },
+        {
+          "version": "R_073",
+          "spawn_key": [
+            73
+          ],
+          "time_sha256": "e3eaef337bceb4b6aaaebda068bbcb587d986dd83c5aea46564ed59341567e81",
+          "count": 46
+        },
+        {
+          "version": "R_074",
+          "spawn_key": [
+            74
+          ],
+          "time_sha256": "aa5ac4d0e332bdded6ca42f67e1d1c956821a1b35134547f1a62b762ef3b1cb0",
+          "count": 46
+        },
+        {
+          "version": "R_075",
+          "spawn_key": [
+            75
+          ],
+          "time_sha256": "5ab586782a2eac555697a0032e00c45d03b254cb26e8665ad24d01ed76e09299",
+          "count": 46
+        },
+        {
+          "version": "R_076",
+          "spawn_key": [
+            76
+          ],
+          "time_sha256": "351f69d70407bae1ab09664d0f57706ecb936adfae455cbe5c368f0acc735e1e",
+          "count": 46
+        },
+        {
+          "version": "R_077",
+          "spawn_key": [
+            77
+          ],
+          "time_sha256": "49d8babebb87785140b548bea9162b0be6f42cf5aed7956578e6e626d803de89",
+          "count": 46
+        },
+        {
+          "version": "R_078",
+          "spawn_key": [
+            78
+          ],
+          "time_sha256": "af2a51bc983230c50852f1949b7d9af5821b8474a1546dde1951a1eb3c7acb32",
+          "count": 46
+        },
+        {
+          "version": "R_079",
+          "spawn_key": [
+            79
+          ],
+          "time_sha256": "7e65e07f52418042d63863b27d97c5f85f1a1704129eca3bf3dbe92cc247eb5e",
+          "count": 46
+        },
+        {
+          "version": "R_080",
+          "spawn_key": [
+            80
+          ],
+          "time_sha256": "2b9bd96ec082184cdf97a86074892b3607c87785962bd9ca34f0934602e9ec1f",
+          "count": 46
+        },
+        {
+          "version": "R_081",
+          "spawn_key": [
+            81
+          ],
+          "time_sha256": "042fef8723fab7b60f348ecf9d4c258f72ec654beae807fdd9fe9e4a29ea382f",
+          "count": 46
+        },
+        {
+          "version": "R_082",
+          "spawn_key": [
+            82
+          ],
+          "time_sha256": "32fe7d1737173597771cd58b831e325d578dbad840a1fedcbbe712f676aabed8",
+          "count": 46
+        },
+        {
+          "version": "R_083",
+          "spawn_key": [
+            83
+          ],
+          "time_sha256": "9da76ddb03fb514f8a2e0951c0f5ca6f8de27c5521e001ff29e106b825aedf23",
+          "count": 46
+        },
+        {
+          "version": "R_084",
+          "spawn_key": [
+            84
+          ],
+          "time_sha256": "ca24496c66b6a2123af0e5aca05e9a83556f9fc15de7e713daf2038ca6cd8a74",
+          "count": 46
+        },
+        {
+          "version": "R_085",
+          "spawn_key": [
+            85
+          ],
+          "time_sha256": "b6d4cbe89df95224fdc03039733ad58063a47d20e6ec89e7e8dc32cbe33f9103",
+          "count": 46
+        },
+        {
+          "version": "R_086",
+          "spawn_key": [
+            86
+          ],
+          "time_sha256": "42957f325a130d4dca81363aaed58ad0f45ef65fd3ec326c021ac31b8d0761c3",
+          "count": 46
+        },
+        {
+          "version": "R_087",
+          "spawn_key": [
+            87
+          ],
+          "time_sha256": "978dc6358e69d17b6eab23a16da8901d73fdd81c303ee7ea27c4ceac4fa492fd",
+          "count": 46
+        },
+        {
+          "version": "R_088",
+          "spawn_key": [
+            88
+          ],
+          "time_sha256": "5ef7dfea14a89a9b302a51d16bde2981c77b3d11b24f3ed1c8939569e808486f",
+          "count": 46
+        },
+        {
+          "version": "R_089",
+          "spawn_key": [
+            89
+          ],
+          "time_sha256": "b1649f9be8ebeeff670db78a6b862ea9e2d5c90a4414dcb2bac202c618101dfd",
+          "count": 46
+        },
+        {
+          "version": "R_090",
+          "spawn_key": [
+            90
+          ],
+          "time_sha256": "bcbe40da74ddd9608e91926dc239e789bb9d3a5b06112b43a62f50e984ad7b12",
+          "count": 46
+        },
+        {
+          "version": "R_091",
+          "spawn_key": [
+            91
+          ],
+          "time_sha256": "24bc08d1ad60a0b3d7993d5d6f8be0bb73a095dc94c1b81feb47d8d40b7690dd",
+          "count": 46
+        },
+        {
+          "version": "R_092",
+          "spawn_key": [
+            92
+          ],
+          "time_sha256": "4e23234c1d380c06d546117a6d64ffbb6a0b6366379499f8e2b981d8674cfd35",
+          "count": 46
+        },
+        {
+          "version": "R_093",
+          "spawn_key": [
+            93
+          ],
+          "time_sha256": "12fbf5ad7b0b48607ee34a4c26155dd279da60253037f0dbe8b219041c7e3ce6",
+          "count": 46
+        },
+        {
+          "version": "R_094",
+          "spawn_key": [
+            94
+          ],
+          "time_sha256": "be528581fb870b7a457575f492883f0fe30f88ae616670e05acbc02d0a52e45e",
+          "count": 46
+        },
+        {
+          "version": "R_095",
+          "spawn_key": [
+            95
+          ],
+          "time_sha256": "8512ed004b7dd543a61f1e860ad839dfefc7531c3ac4890e6e922e0cfd6d7e33",
+          "count": 46
+        },
+        {
+          "version": "R_096",
+          "spawn_key": [
+            96
+          ],
+          "time_sha256": "bce910c874b4239fad03978910020bdc277ff1abe0ac20e097b9228914a348e8",
+          "count": 46
+        },
+        {
+          "version": "R_097",
+          "spawn_key": [
+            97
+          ],
+          "time_sha256": "d31517496de187a5b8853b5425fe3e7a71abcc493d266d59d8e2638b7aa75f76",
+          "count": 46
+        },
+        {
+          "version": "R_098",
+          "spawn_key": [
+            98
+          ],
+          "time_sha256": "9dd9db1098931bed3ecfd2394ef0e4d723bd011ece415405dde99d06104b333a",
+          "count": 46
+        },
+        {
+          "version": "R_099",
+          "spawn_key": [
+            99
+          ],
+          "time_sha256": "f1adfdbfc70cc52b8f073b7a801dcd11d198fadb9b33fa9e3196b53ab7d19a7e",
+          "count": 46
+        },
+        {
+          "version": "R_100",
+          "spawn_key": [
+            100
+          ],
+          "time_sha256": "1e9a409c2ab4f230b46f88b7f522a8cac3672070e26237a341c3f21931e18a53",
+          "count": 46
+        },
+        {
+          "version": "R_101",
+          "spawn_key": [
+            101
+          ],
+          "time_sha256": "a25af06a450cc2d5639708b93834e68d1c0818b0f2b5cf2313f975779a6d47e9",
+          "count": 46
+        },
+        {
+          "version": "R_102",
+          "spawn_key": [
+            102
+          ],
+          "time_sha256": "446b900fc650dc661ce1f078ce1f71cf71e4d61d7bd8f29ba1e84ff2be9b6156",
+          "count": 46
+        },
+        {
+          "version": "R_103",
+          "spawn_key": [
+            103
+          ],
+          "time_sha256": "4bb5ded62bf7f5b443ed771dcd426d22a2d14bf40f4d189542b61eb8a1f4ca9d",
+          "count": 46
+        },
+        {
+          "version": "R_104",
+          "spawn_key": [
+            104
+          ],
+          "time_sha256": "9959043df6c7afdb7bd4859d7ea2bc6a8d800931e3698d2e6091f9ec0c8b34b4",
+          "count": 46
+        },
+        {
+          "version": "R_105",
+          "spawn_key": [
+            105
+          ],
+          "time_sha256": "77b1dc953f354b8f264bce61c0028394230e62147911099d711a48812535bcc8",
+          "count": 46
+        },
+        {
+          "version": "R_106",
+          "spawn_key": [
+            106
+          ],
+          "time_sha256": "d719d3e774207a08c0b3eea90dea1eb86df4e669e658385434122db9fa967285",
+          "count": 46
+        },
+        {
+          "version": "R_107",
+          "spawn_key": [
+            107
+          ],
+          "time_sha256": "7567bd0460931bca7ae2e9a219a32cbd65897eb4ea0bed2c657cd4036caabfd9",
+          "count": 46
+        },
+        {
+          "version": "R_108",
+          "spawn_key": [
+            108
+          ],
+          "time_sha256": "569d6471820de6378f2436706e04fdac5c55ec33bb09d8eee490a11d63311649",
+          "count": 46
+        },
+        {
+          "version": "R_109",
+          "spawn_key": [
+            109
+          ],
+          "time_sha256": "efe171bac17958f0748e39f12e487d57d2b1da67d9a082881374a04411adc1ce",
+          "count": 46
+        },
+        {
+          "version": "R_110",
+          "spawn_key": [
+            110
+          ],
+          "time_sha256": "abe5f6c5c7cec97bbc7a8e2ebc6c63539d225e44b19097febeb7babb9f5efcf8",
+          "count": 46
+        },
+        {
+          "version": "R_111",
+          "spawn_key": [
+            111
+          ],
+          "time_sha256": "0b924f187d10d5840c118f197676ed187e6e9b762ec5df521eaa89e6da1040d9",
+          "count": 46
+        },
+        {
+          "version": "R_112",
+          "spawn_key": [
+            112
+          ],
+          "time_sha256": "2a99e91cea3d2cb992e06c6abdab94c11fec7ac55f7a56a8a949dc9efa61ed4b",
+          "count": 46
+        },
+        {
+          "version": "R_113",
+          "spawn_key": [
+            113
+          ],
+          "time_sha256": "a79f1ee9d383515df822d61c7d9296b9f5191f979c248a1d1320995c9c1effdc",
+          "count": 46
+        },
+        {
+          "version": "R_114",
+          "spawn_key": [
+            114
+          ],
+          "time_sha256": "cb60f8247250076ad05662145f6fe4ca725dc19b64b0524828fe450612a0b460",
+          "count": 46
+        },
+        {
+          "version": "R_115",
+          "spawn_key": [
+            115
+          ],
+          "time_sha256": "411c7ff51bdd962b268c897ccb3cb06b6e1b48a3f92e181bc8b824334895fdbe",
+          "count": 46
+        },
+        {
+          "version": "R_116",
+          "spawn_key": [
+            116
+          ],
+          "time_sha256": "74bea2d5c18d686367decd5e4ac2d5d32e749090f7d55aa354bf879269db861d",
+          "count": 46
+        },
+        {
+          "version": "R_117",
+          "spawn_key": [
+            117
+          ],
+          "time_sha256": "d46fc09e90f81bcb964e7d5e073396cfd79a191af7b5e442335ee1b27d249b7a",
+          "count": 46
+        },
+        {
+          "version": "R_118",
+          "spawn_key": [
+            118
+          ],
+          "time_sha256": "88c4388810c53aa3cde092ed8245aa9e48b1d72bdb965584ac01b37dd73be9e2",
+          "count": 46
+        },
+        {
+          "version": "R_119",
+          "spawn_key": [
+            119
+          ],
+          "time_sha256": "2a9ae3ab134a2de796a895fc601ed406ca65c7edbf80108caf8baf7a3f444f2c",
+          "count": 46
+        },
+        {
+          "version": "R_120",
+          "spawn_key": [
+            120
+          ],
+          "time_sha256": "fb307e6b352546b6e11867aac24f943701bbbc058187b638732fbccb41178367",
+          "count": 46
+        },
+        {
+          "version": "R_121",
+          "spawn_key": [
+            121
+          ],
+          "time_sha256": "8c7fe88fc4367753fead00577612e38095d74fed8ebc94ca4733a1e4c550df35",
+          "count": 46
+        },
+        {
+          "version": "R_122",
+          "spawn_key": [
+            122
+          ],
+          "time_sha256": "6daf7fb823fc25c6d8988f287d0497e64eb016009a36b23e7761b4caf2dbaddc",
+          "count": 46
+        },
+        {
+          "version": "R_123",
+          "spawn_key": [
+            123
+          ],
+          "time_sha256": "5123fae5fccfa5f9934808d90d511fca1660ec998c19913979814bcd83b58e01",
+          "count": 46
+        },
+        {
+          "version": "R_124",
+          "spawn_key": [
+            124
+          ],
+          "time_sha256": "1801b9b98313fcdaa8d5effa7c59497cea91cde4a020378359f5e63c55871720",
+          "count": 46
+        },
+        {
+          "version": "R_125",
+          "spawn_key": [
+            125
+          ],
+          "time_sha256": "a254ee1bea8c55df4a0472e3e25cf4fec9e38a1832fb4a523369b844a4f01437",
+          "count": 46
+        },
+        {
+          "version": "R_126",
+          "spawn_key": [
+            126
+          ],
+          "time_sha256": "0c050b16ad8faf784047f7d6cfcd0a91a50d156e45300b54eb54f363f51e43e0",
+          "count": 46
+        },
+        {
+          "version": "R_127",
+          "spawn_key": [
+            127
+          ],
+          "time_sha256": "a6963ed8d74565765482a68de866a47ee40acdd7b553711dee0e190fab83c79d",
+          "count": 46
+        },
+        {
+          "version": "R_128",
+          "spawn_key": [
+            128
+          ],
+          "time_sha256": "8fb64007beb2d33899e25f195d1877c28ceb8dc129bfb4ec478f864bda28be36",
+          "count": 46
+        },
+        {
+          "version": "R_129",
+          "spawn_key": [
+            129
+          ],
+          "time_sha256": "e41f40c97cda7bcecfa458e8eef466480c8295f724b3a6220d2020103eb014f3",
+          "count": 46
+        },
+        {
+          "version": "R_130",
+          "spawn_key": [
+            130
+          ],
+          "time_sha256": "c10cf49aca9020cc2b89686f307fc74762c309bc87482cf64fb06a054f12d32b",
+          "count": 46
+        },
+        {
+          "version": "R_131",
+          "spawn_key": [
+            131
+          ],
+          "time_sha256": "fc2fddeab654d4e12ce5fd240ac8f7195233b8ddb01716b4c457cc85e5d8a645",
+          "count": 46
+        },
+        {
+          "version": "R_132",
+          "spawn_key": [
+            132
+          ],
+          "time_sha256": "721717b68ef8cdb00457e8d7b2ce222693a1042d4912199d45b4f645bcca8f75",
+          "count": 46
+        },
+        {
+          "version": "R_133",
+          "spawn_key": [
+            133
+          ],
+          "time_sha256": "6563665e6e052d7d9ec38d5accf22c4ec2a66e5457ffbd8688793004917f2ab7",
+          "count": 46
+        },
+        {
+          "version": "R_134",
+          "spawn_key": [
+            134
+          ],
+          "time_sha256": "ce02f6f4b9a70b22d82c0ce9d261b6881b32da1628ea11df098a6c9efc5ffb94",
+          "count": 46
+        },
+        {
+          "version": "R_135",
+          "spawn_key": [
+            135
+          ],
+          "time_sha256": "65536c76f35da4ed5ec3b2e3744b24697c7af08fb8d2de29a17d08662944f17a",
+          "count": 46
+        },
+        {
+          "version": "R_136",
+          "spawn_key": [
+            136
+          ],
+          "time_sha256": "03ab7a0a4dad545ceb7922035d8ea13f50c699613fa4a14778d9ab288f4025cd",
+          "count": 46
+        },
+        {
+          "version": "R_137",
+          "spawn_key": [
+            137
+          ],
+          "time_sha256": "9058eac6ae688dc089832777d9dd098ea264d41f93875adb3d90631371337727",
+          "count": 46
+        },
+        {
+          "version": "R_138",
+          "spawn_key": [
+            138
+          ],
+          "time_sha256": "ca75c695bfb44d7be48c3f4981c661fab0f314798ab6980d36b0034d8c671fb6",
+          "count": 46
+        },
+        {
+          "version": "R_139",
+          "spawn_key": [
+            139
+          ],
+          "time_sha256": "14029aa0e5dcef8134091cb126d23ded2623698cba6e5ccd3c80984c4ec9434d",
+          "count": 46
+        },
+        {
+          "version": "R_140",
+          "spawn_key": [
+            140
+          ],
+          "time_sha256": "0bb437a5098c4978e73d00cd61c4faf421b3f02f26df26f5069b4f93c39564b7",
+          "count": 46
+        },
+        {
+          "version": "R_141",
+          "spawn_key": [
+            141
+          ],
+          "time_sha256": "46cd41b17e84160a45b84fb5f4c938381ef27b5a86c2f9b5ed1a321c65693d99",
+          "count": 46
+        },
+        {
+          "version": "R_142",
+          "spawn_key": [
+            142
+          ],
+          "time_sha256": "4feb7f181bd2ad7b45e6ab03fa38ac1f0dadac1e4e713e63bbac7245d30c2576",
+          "count": 46
+        },
+        {
+          "version": "R_143",
+          "spawn_key": [
+            143
+          ],
+          "time_sha256": "129f26e46dc15d9a39d6769296c4a71dfaed0890fd26b716ebd7f7943cdd6496",
+          "count": 46
+        },
+        {
+          "version": "R_144",
+          "spawn_key": [
+            144
+          ],
+          "time_sha256": "8e6cf1940b5eb8f7d6850b0747051ff611a0570d022799955493250810192270",
+          "count": 46
+        },
+        {
+          "version": "R_145",
+          "spawn_key": [
+            145
+          ],
+          "time_sha256": "2f45759267cdad8408b7944209400ef9e17ad1288f6583148cbef6a17e3598b6",
+          "count": 46
+        },
+        {
+          "version": "R_146",
+          "spawn_key": [
+            146
+          ],
+          "time_sha256": "ec31ba7d0486e2914a279e001c517aa2e386e1f38d3f1852ebf82744f73b5ac1",
+          "count": 46
+        },
+        {
+          "version": "R_147",
+          "spawn_key": [
+            147
+          ],
+          "time_sha256": "98e85a35e91d147b406887697e1af15dfa49da0864c0bfcda36931c330957ac4",
+          "count": 46
+        },
+        {
+          "version": "R_148",
+          "spawn_key": [
+            148
+          ],
+          "time_sha256": "e4e3b3d588a4b70c563669783be14dd53cfd61dd4b8a2f3cdd423f9b9f085473",
+          "count": 46
+        },
+        {
+          "version": "R_149",
+          "spawn_key": [
+            149
+          ],
+          "time_sha256": "1c19e4587634aec0bd18e0cd59f75e846ff80461f976be996c05cafcb7700bb0",
+          "count": 46
+        },
+        {
+          "version": "R_150",
+          "spawn_key": [
+            150
+          ],
+          "time_sha256": "1d21bafab06bc5c09c91acc96f4d97cbb0ad6f744be617baf72aaa4cfb1bb647",
+          "count": 46
+        },
+        {
+          "version": "R_151",
+          "spawn_key": [
+            151
+          ],
+          "time_sha256": "1f66cb93d8fe73c5f13c36deeff35b4afaba372e668c770bb4ad74bf15615a36",
+          "count": 46
+        },
+        {
+          "version": "R_152",
+          "spawn_key": [
+            152
+          ],
+          "time_sha256": "d64e29fbaa6382845232675bfd04483b3351cf8b86b8eed75c2186fee4a5e0bc",
+          "count": 46
+        },
+        {
+          "version": "R_153",
+          "spawn_key": [
+            153
+          ],
+          "time_sha256": "0b5e298cd5c40954c6ef1868f1a17b56a66e370bfbe1e0861d0d881d6fb3e433",
+          "count": 46
+        },
+        {
+          "version": "R_154",
+          "spawn_key": [
+            154
+          ],
+          "time_sha256": "8a82c4a67fab1575b89fb1654fedc4a12fa189afc6226822499895f0119b7d71",
+          "count": 46
+        },
+        {
+          "version": "R_155",
+          "spawn_key": [
+            155
+          ],
+          "time_sha256": "1f847f4c56edae98ce7f6f2adf932ef7643656affd8e82dfad4891498d8de8f3",
+          "count": 46
+        },
+        {
+          "version": "R_156",
+          "spawn_key": [
+            156
+          ],
+          "time_sha256": "ac6bbccec79d884428a221c4abf209c33cdedca33d736fe0d6a1a94ef7455d90",
+          "count": 46
+        },
+        {
+          "version": "R_157",
+          "spawn_key": [
+            157
+          ],
+          "time_sha256": "ed7b5990822b7c7215271749149e7c2221047cc0907bfc10dcc9fef26b651626",
+          "count": 46
+        },
+        {
+          "version": "R_158",
+          "spawn_key": [
+            158
+          ],
+          "time_sha256": "85fc7ce4e0587e74cfbd0bfa6371ad50e8c95a9f8647f73f207eefa9af4ce5f4",
+          "count": 46
+        },
+        {
+          "version": "R_159",
+          "spawn_key": [
+            159
+          ],
+          "time_sha256": "a372b5b834f8d281ca61eb27590f2028ba88e31a06e542a69c6c3a061c8b4a19",
+          "count": 46
+        },
+        {
+          "version": "R_160",
+          "spawn_key": [
+            160
+          ],
+          "time_sha256": "f3d8322ae7bd8cd33c9e31ff37bc4f5bff538b74954bb57a840a00ee5f849c93",
+          "count": 46
+        },
+        {
+          "version": "R_161",
+          "spawn_key": [
+            161
+          ],
+          "time_sha256": "a9fe9d5fc4ed07d53e02e3e8961d3249180d6f3d7db11eb2d0622887fa5e51dc",
+          "count": 46
+        },
+        {
+          "version": "R_162",
+          "spawn_key": [
+            162
+          ],
+          "time_sha256": "89d1d188e7ae9e59fb44c78c6d3215f600f10d019c4725b44979b0223e9a26b4",
+          "count": 46
+        },
+        {
+          "version": "R_163",
+          "spawn_key": [
+            163
+          ],
+          "time_sha256": "3871780e2ee9d9967399cf59d79a43589aa9ddf829549bf9a2d0f840cbe08f3f",
+          "count": 46
+        },
+        {
+          "version": "R_164",
+          "spawn_key": [
+            164
+          ],
+          "time_sha256": "ec22730c7e4b3af29ce345c721224be673bb058d19a1d581c236a17037838615",
+          "count": 46
+        },
+        {
+          "version": "R_165",
+          "spawn_key": [
+            165
+          ],
+          "time_sha256": "c73caaaf5626dd403203261a823cdfaabe733946bd5b69345013d1ee4176054a",
+          "count": 46
+        },
+        {
+          "version": "R_166",
+          "spawn_key": [
+            166
+          ],
+          "time_sha256": "904fa961ac0e630c817e3f5fe73d59f4da270bf6fb514f55641504834722de96",
+          "count": 46
+        },
+        {
+          "version": "R_167",
+          "spawn_key": [
+            167
+          ],
+          "time_sha256": "7d849864337a383d0ad86f6480c772471d76b28ba65f32ddbe8ee2944a1a55d0",
+          "count": 46
+        },
+        {
+          "version": "R_168",
+          "spawn_key": [
+            168
+          ],
+          "time_sha256": "2f7c5032b552f076f1b762acd457f49957ce59a0e12c43b9366e7fa09d9ff923",
+          "count": 46
+        },
+        {
+          "version": "R_169",
+          "spawn_key": [
+            169
+          ],
+          "time_sha256": "b917e9d695f8f1046e3a63a3c1959c6ece89614e3308b18e29e03c46e2d335eb",
+          "count": 46
+        },
+        {
+          "version": "R_170",
+          "spawn_key": [
+            170
+          ],
+          "time_sha256": "9bca3d911a2af408449577d53466a0fb829cc5d0a54a524b64e9da497e8a69f3",
+          "count": 46
+        },
+        {
+          "version": "R_171",
+          "spawn_key": [
+            171
+          ],
+          "time_sha256": "63c9eb92b68f2d0ff552662fa4a30294d391e959007d4dcb7a95c7d16cdee8e3",
+          "count": 46
+        },
+        {
+          "version": "R_172",
+          "spawn_key": [
+            172
+          ],
+          "time_sha256": "eb7fe668be47b6ae37c1466d0ddd93d58375ec668555d1b183fdf3d9e29647d6",
+          "count": 46
+        },
+        {
+          "version": "R_173",
+          "spawn_key": [
+            173
+          ],
+          "time_sha256": "275a0d1afb4bdec99ef08e98beac7cf38a2fc63f4755ce64d46508e87eeac639",
+          "count": 46
+        },
+        {
+          "version": "R_174",
+          "spawn_key": [
+            174
+          ],
+          "time_sha256": "9a315d76457f9dd81825701473ebe155383fc1de4b8bf8a40244b14c4b133221",
+          "count": 46
+        },
+        {
+          "version": "R_175",
+          "spawn_key": [
+            175
+          ],
+          "time_sha256": "4bd298049e6ae936c9de8681fe2db9d18461000c05c69121dbca61a2e5275cc9",
+          "count": 46
+        },
+        {
+          "version": "R_176",
+          "spawn_key": [
+            176
+          ],
+          "time_sha256": "09077075c2dbf3c029124abb122bbe282b032ba36228bb4816c4d097e818a7af",
+          "count": 46
+        },
+        {
+          "version": "R_177",
+          "spawn_key": [
+            177
+          ],
+          "time_sha256": "0a3bf9cee1f65b5f729dc7b85fcb4a2a5dcd9685c2b4cabd2ac4cace498cdc8c",
+          "count": 46
+        },
+        {
+          "version": "R_178",
+          "spawn_key": [
+            178
+          ],
+          "time_sha256": "5d7a29ac9ea310e26032ee15751560dc804731d36d79aa34ed8a4d3e7c80163b",
+          "count": 46
+        },
+        {
+          "version": "R_179",
+          "spawn_key": [
+            179
+          ],
+          "time_sha256": "61096302ec4c4bf5ec0e65f38163da68acfd48dfa11944cc34204f3713205901",
+          "count": 46
+        },
+        {
+          "version": "R_180",
+          "spawn_key": [
+            180
+          ],
+          "time_sha256": "d5e54029a64167969e6929d32e4acea753d51b5534d8881a0e841e022fbd28c9",
+          "count": 46
+        },
+        {
+          "version": "R_181",
+          "spawn_key": [
+            181
+          ],
+          "time_sha256": "d6f1ef5eb802a0535cc3ac7191e68dc28022ca171de9b6a4b51c87f63887c48f",
+          "count": 46
+        },
+        {
+          "version": "R_182",
+          "spawn_key": [
+            182
+          ],
+          "time_sha256": "80952c71f7fcb83025d8b11bbafdcd4322d0f60dabc38a0829f70eb0e7fa648d",
+          "count": 46
+        },
+        {
+          "version": "R_183",
+          "spawn_key": [
+            183
+          ],
+          "time_sha256": "3654b5a613fd0a9e29ef08890cd423c814f6a6cd99d44724775cb2ea14e68bae",
+          "count": 46
+        },
+        {
+          "version": "R_184",
+          "spawn_key": [
+            184
+          ],
+          "time_sha256": "378cbdfed359b346795a45ebf841103612fdf753d910936284f9225c4cba7491",
+          "count": 46
+        },
+        {
+          "version": "R_185",
+          "spawn_key": [
+            185
+          ],
+          "time_sha256": "8718908c2ff266b4775f8ec3ecea78ca5f5590339b70f04f3cc661bdd0cdaa53",
+          "count": 46
+        },
+        {
+          "version": "R_186",
+          "spawn_key": [
+            186
+          ],
+          "time_sha256": "b945bb0255d076cbfd46f55440341520c7f092c81010168e67096fdf15b486ab",
+          "count": 46
+        },
+        {
+          "version": "R_187",
+          "spawn_key": [
+            187
+          ],
+          "time_sha256": "bca0077888e103e490d49fd2f54daed4aa66bb0ca447a37ac774095ebe6650ea",
+          "count": 46
+        },
+        {
+          "version": "R_188",
+          "spawn_key": [
+            188
+          ],
+          "time_sha256": "7ff40a9e4a731ab3b6814b3c3e397e9748cf268b977929ae4b7631b5c9c92cfe",
+          "count": 46
+        },
+        {
+          "version": "R_189",
+          "spawn_key": [
+            189
+          ],
+          "time_sha256": "3a7454503fa978ced9889c0e6a409877ed5872f10f081ebf0dc7a3609a01788e",
+          "count": 46
+        },
+        {
+          "version": "R_190",
+          "spawn_key": [
+            190
+          ],
+          "time_sha256": "c67405d79489564d1262e56e947278e9047933e5ecf206bd8fe74e2359dcd208",
+          "count": 46
+        },
+        {
+          "version": "R_191",
+          "spawn_key": [
+            191
+          ],
+          "time_sha256": "1af804016fff48fe5f7adc46eae90913b3f1e8b362c52fb6d4e277fab192e3dc",
+          "count": 46
+        },
+        {
+          "version": "R_192",
+          "spawn_key": [
+            192
+          ],
+          "time_sha256": "3eb68b55c5d823de47ffa602427b403457fa631647d1ebc4e3a1e7e363521b9c",
+          "count": 46
+        },
+        {
+          "version": "R_193",
+          "spawn_key": [
+            193
+          ],
+          "time_sha256": "2c67d2a65a47e268e662cfa6eb5e11a0679d957a648c3892177c2bbbfc472e0d",
+          "count": 46
+        },
+        {
+          "version": "R_194",
+          "spawn_key": [
+            194
+          ],
+          "time_sha256": "de8fc9cbc689f6c800c1d5ad4fcf1851c410c1e917a3959f415d321fcbe220de",
+          "count": 46
+        },
+        {
+          "version": "R_195",
+          "spawn_key": [
+            195
+          ],
+          "time_sha256": "0538c070e3e28d27151d61eb7e4b5aa0dfddd961a663cb522c8947aca8ffe8ca",
+          "count": 46
+        },
+        {
+          "version": "R_196",
+          "spawn_key": [
+            196
+          ],
+          "time_sha256": "1581e4c5d89993d63537b445db09342cb6d7795662c81ea30c1107801763edc0",
+          "count": 46
+        },
+        {
+          "version": "R_197",
+          "spawn_key": [
+            197
+          ],
+          "time_sha256": "d2d1ae77ad17f36508664512809a44949b0fb356c91916e14f8bd93323fbc044",
+          "count": 46
+        },
+        {
+          "version": "R_198",
+          "spawn_key": [
+            198
+          ],
+          "time_sha256": "e1f1a7d19654740ba790647d3a9daa3c26e172c3d0072845278da8f443db579f",
+          "count": 46
+        },
+        {
+          "version": "R_199",
+          "spawn_key": [
+            199
+          ],
+          "time_sha256": "d1e4fe8b1bdbe99c37bc2cdbe42a450ccc5a3aa83b62e14f8de4a612cbe29571",
+          "count": 46
+        }
+      ]
+    },
+    "schedule_counters": {
+      "candidate_count": 4194,
+      "parent_count": 46,
+      "stratum_count": 276,
+      "saturated_stratum_count": 0,
+      "saturated_parent_count": 0,
+      "nonsaturated_parent_count": 46,
+      "missing_vol_parent_count": 0,
+      "nonsaturated_parent_fraction": 1.0,
+      "finite_positive_vol_parent_fraction": 1.0
+    },
+    "statistical_matrix_metadata": {
+      "webb_weights": {
+        "shape": [
+          99999,
+          46
+        ],
+        "dtype": "float64",
+        "dtype_string": "<f8",
+        "order": "C",
+        "sha256": "3560ba758427e357588494b371ca30349c1d9bf56bc57abcde7fcb02e4412296",
+        "seed": 2026110902,
+        "generator": "Generator(PCG64)"
+      },
+      "month_indices": {
+        "shape": [
+          10000,
+          46
+        ],
+        "dtype": "int64",
+        "dtype_string": "<i8",
+        "order": "C",
+        "sha256": "27d2d948284d3b347c173dc028672abda0ba4ef188e693865a9f160f5cfc5cee",
+        "seed": 2026110903,
+        "generator": "Generator(PCG64)"
+      }
+    },
+    "output_manifest_sha256": "27daf97d704602828d9c036b7ffdbebef7471c77aefe5817bde0661127f15386",
+    "figures_sha256": {
+      "figure_1_equity.png": "1d4b9e93838c95abbf0ecccb9f42b30758021493a14be0f6d81e7fad2b59a7f3",
+      "figure_2_annual.png": "0cec4f7c097b0e3455ca167696bdacc3d5578624b6f0530ec69a429fcc5a653e",
+      "figure_3_cost_and_months.png": "20666f4b4192df35f0ad33682b08a0d0809766727c64e949521cceae8904de31"
+    }
+  },
+  "distinct_final_tests": 133,
+  "subtests": 20,
+  "existing_pure_regressions": 35,
+  "excluded_tests": [
+    "test_breakout_data.py::test_each_public_loader_is_locked_before_any_io"
+  ],
+  "exclusion_reason": "Old breakout study is already unlocked at baseline; its pre-unlock-only test is not applicable. New independent lock tests pass.",
+  "technical_notes": [
+    "Initial integration setup lacked the external temporary parent directory; pytest stopped before the test body. Created only that external parent and ran the integration once.",
+    "New statistical Sharpe uses direct std(ddof=1) per sampled month sequence to preserve representable nonzero variance; a nearconstant regression verifies this. Seeds, draws and statistical definitions unchanged."
+  ],
+  "final_statistics_validation": {
+    "reason": "Direct-ddof1 Sharpe implementation finalized while the single synthetic batch was executing; validate the final statistics and figures from the same invented ledgers without repeating any portfolio.",
+    "verification": {
+      "source": "synthetic",
+      "reused_execution": true,
+      "execution_reruns": 0,
+      "input_directory": "/tmp/channel_random_implementation/integration_validation/test_complete_synthetic_fixed_0/synthetic_outputs",
+      "raw_p_unchanged": true,
+      "holm_p_unchanged": true,
+      "matrices_unchanged": true,
+      "sharpe_method": "direct_daily_std_ddof_1_per_shared_whole_month_draw_no_variance_epsilon",
+      "files_sha256": {
+        "daily.csv": "d32c2c884ec586714a65da123bb883bf9847586e57d6222a298cf7300d81b493",
+        "figure_1_equity.png": "1d4b9e93838c95abbf0ecccb9f42b30758021493a14be0f6d81e7fad2b59a7f3",
+        "figure_2_annual.png": "0cec4f7c097b0e3455ca167696bdacc3d5578624b6f0530ec69a429fcc5a653e",
+        "figure_3_cost_and_months.png": "20666f4b4192df35f0ad33682b08a0d0809766727c64e949521cceae8904de31",
+        "gates.csv": "d17c740008658c44d3af04506b3a3baf2e7f8fa6d3d3ab5de5bb02cd3da941b0",
+        "intervals.csv": "21a593bc2c74d11a73a4b423951e1ad1242b8d118f2f4bec34c3a979f803a099",
+        "metadata.json": "82ccb6027b68a3a39ab2520702bfc69cecf03e067b2998e84625a6d35c641e8a",
+        "monthly.csv": "3c1ad5c102846f05acbeb32b52c40fd84ea80e6c173c8a5c048ce7ad114de260",
+        "random_distribution.csv": "e3b2b8697a1639abd610872456857906e0d8b3a916ab195bd8d387d12d1ae780",
+        "random_summary.csv": "aea6b5a6a108566e543a6a5404b445b6c6a06a4e80042ad8a48f948f84ea513b",
+        "tests.csv": "3151850349b83813a3a541660c260ad9263326d86ee2da16d6cf4a92f54992f2"
+      }
+    },
+    "verification_sha256": "c9fa2d66a9c1e631435a981c4d2d36a708c15d6f9c094e8e264c9595386beb1e"
+  }
+}

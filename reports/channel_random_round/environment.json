@@ -1,0 +1,14 @@
+{
+  "versions": {
+    "python": "3.14.4",
+    "pandas": "3.0.5",
+    "numpy": "2.5.4",
+    "pyarrow": "26.0.1",
+    "numba": "0.68.1",
+    "scipy": "1.18.1",
+    "matplotlib": "3.11.2",
+    "pytest": "9.2.0"
+  },
+  "executable": "/home/ubuntu/Documents/Codex/2026-11-06/github-ppvp-quant-agent-2-checkpoint/work/diag_env/pandas3.0.5_py314/bin/python",
+  "changed_dependencies": false
+}
