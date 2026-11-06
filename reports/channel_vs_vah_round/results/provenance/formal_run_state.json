@@ -1,0 +1,16 @@
+{
+  "command": [
+    "/home/ubuntu/Documents/Codex/2026-11-06/github-ppvp-quant-agent-2-checkpoint/work/diag_env/pandas3.0.5_py314/bin/python",
+    "-u",
+    "tools/run_breakout_study.py",
+    "--real"
+  ],
+  "start_utc": "2026-11-06T15:39:29.595881+00:00",
+  "automatic_retry": false,
+  "run_attempt": 1,
+  "commit": "5f7b2e6fe24aa41b64035b98f07c9116341fd035",
+  "starting_worktree_status": "",
+  "exit_code": 0,
+  "end_utc": "2026-11-06T15:42:21.337795+00:00",
+  "status": "completed"
+}

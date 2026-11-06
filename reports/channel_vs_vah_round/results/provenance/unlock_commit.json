@@ -1,0 +1,7 @@
+{
+  "sha": "5f7b2e6fe24aa41b64035b98f07c9116341fd035",
+  "parent": "570da8356464af5ae678cd8a5e5e6e492e1e4f2d",
+  "tree": "88f8a3d178b719dae7bb45fa5628eaab93e43170",
+  "working_tree_status": "",
+  "only_change": "breakout_study/scope.py REAL_DATA_UNLOCKED False -> True"
+}

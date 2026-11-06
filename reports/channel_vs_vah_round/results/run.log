@@ -1,0 +1,9 @@
+2026-11-06T15:39:31.121821+00:00 source=real; building fixed closed-bar features
+2026-11-06T15:39:43.182544+00:00 executing P_channel__gross_0
+2026-11-06T15:40:08.725667+00:00 executing P_channel__main_17
+2026-11-06T15:40:34.159199+00:00 executing P_channel__harsh_34
+2026-11-06T15:41:02.280687+00:00 executing V_vah__gross_0
+2026-11-06T15:41:27.970375+00:00 executing V_vah__main_17
+2026-11-06T15:41:53.565948+00:00 executing V_vah__harsh_34
+2026-11-06T15:42:19.267535+00:00 computing registered Webb/Holm and shared-month intervals
+2026-11-06T15:42:20.823539+00:00 completed all six combinations; stop before independent validation

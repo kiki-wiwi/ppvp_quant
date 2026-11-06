@@ -1,0 +1,1 @@
+{"status": "passed", "perp_rows": 2103840, "minute_grid": 2103840, "funding": 4383, "archive_gaps": 10, "legacy_frozen_files": 27, "new_registered_files": 23, "perp_content_sha256": "1e26dd7ecfe6ee03dc2814dcb0041ef2d5724ff7018b2b7f20ae6364d99f5a33", "log": "/tmp/channel_vah_run_570da83_n93t7yvq/preflight.json"}

@@ -1,0 +1,9 @@
+source=real; building fixed closed-bar features
+executing P_channel__gross_0
+executing P_channel__main_17
+executing P_channel__harsh_34
+executing V_vah__gross_0
+executing V_vah__main_17
+executing V_vah__harsh_34
+computing registered Webb/Holm and shared-month intervals
+completed all six combinations; stop before independent validation

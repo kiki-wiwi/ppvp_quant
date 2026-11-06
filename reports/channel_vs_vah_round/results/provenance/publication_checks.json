@@ -1,0 +1,19 @@
+{
+  "checked_at": "2026-11-06T15:48:59.593020+00:00",
+  "status": "passed",
+  "formal_attempts": 1,
+  "expected_combinations": 6,
+  "original_outputs": 48,
+  "original_outputs_sha256_verified": true,
+  "legacy_frozen_files_verified": 27,
+  "new_registered_files_verified": 23,
+  "source_check": "verify_registered_assets() after successful run; no market read",
+  "tracked_diff_after_run": "",
+  "figures_visually_inspected": 3,
+  "external_audit_directory": "/tmp/channel_vah_run_570da83_n93t7yvq",
+  "external_backup": {
+    "path": "/tmp/channel_vah_run_570da83_n93t7yvq/complete_run_outputs.tar.xz",
+    "sha256": "4a64f050814a667f6cb0b9190bdab5be21a11535f048e3829bf74ce685004cfe",
+    "bytes": 57573332
+  }
+}

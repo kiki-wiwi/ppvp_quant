@@ -1,0 +1,6 @@
+{
+  "method": "symlink_existing_IS_cache",
+  "source": "/home/ubuntu/Documents/Codex/2026-11-06/github-ppvp-quant-agent-2-checkpoint/work/ppvp_quant/data/processed_1m/BTCUSDT_perp_1m_IS.parquet",
+  "target": "/home/ubuntu/.codex/worktrees/channel-vah-prereg/ppvp_quant/data/processed_1m/BTCUSDT_perp_1m_IS.parquet",
+  "source_bytes": 85415317
+}

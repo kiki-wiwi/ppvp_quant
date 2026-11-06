@@ -1,0 +1,592 @@
+{
+  "status": "completed",
+  "source": "real",
+  "started_at": "2026-11-06T15:39:31.121704+00:00",
+  "ended_at": "2026-11-06T15:42:20.822437+00:00",
+  "combination_count": 6,
+  "input_metadata": {
+    "minute_count": 2103840,
+    "funding_count": 4383,
+    "archive_gap_count": 10,
+    "perp_content_hash_verified": true,
+    "source": "real",
+    "symbol": "BTCUSDT",
+    "commit": "5f7b2e6fe24aa41b64035b98f07c9116341fd035",
+    "starting_worktree_status": "",
+    "registration": {
+      "baseline_commit": "cee29ef2c9356f4d23da1f94ec0dc44fe2cd30b6",
+      "approved_plan_sha256": "fb661ffc51245092b209a53073e4e57340d335bd5333cc37595af11b6e3075af",
+      "legacy_frozen_key": "fc0d37b9d198ff85",
+      "legacy_frozen_files": {
+        "impulse_study/__init__.py": "638e5da61906c4d4454c5af0c18b5bc99d7d7a0862c695124c79c3183e23f747",
+        "impulse_study/engine.py": "bb45fc65f18b784df0207fae59f8fb172d73b6942a92e9e58de9f681242dbfad",
+        "impulse_study/features.py": "345870dd82d17b813f45e42c6525349791e2cbe00e082653aa74168186901d21",
+        "impulse_study/versions.py": "a95d63037379f83765591a4f5eda3d11f52d3f128f02b347836cd82f1109c76a",
+        "impulse_study/synthetic.py": "c55ead6d2fcc6bc00cf87a8b44d40512f205cee562c784458ea7a4cbee6bf147",
+        "impulse_study/signals.py": "2fb18affd57d5be3b79839c0e06639cb03a4b1532f6a4fc155c27bb68d2fa0e3",
+        "impulse_study/daily.py": "79272474bcb6c08d6e3f5485a4ec743fd16481cc6e424b49f67209b4872803d1",
+        "impulse_study/data_1m.py": "c0123f787a0b9f8b353108179648ed580cebb148a8fb068126c3e5f21e40fe84",
+        "impulse_study/scope.py": "ecc6b5d31f572a07488af2fbd04e96283ec3439f1715ebc98b66bcd7b36be9dc",
+        "impulse_study/qa.py": "6ecb9553768eedfda060c60762644c6b6d44f70d0d9849d7454333376960ce29",
+        "numba_compat.py": "fadd3ecc7e5b9f91637e513db77e673a24d4b5a6dd8de191a57729b28f8e28de",
+        "ppvp_engine.py": "6c498886be2731c96b3e8b1e50394859788fda8e17555c540120ee038cd0a2b2",
+        "config.py": "858ff5a924a9555c950a96d30054642144dbe4a1e2d6f055e769540879beb429",
+        "data_loader.py": "92f88c5aabf4340c6bf186fb52cf483f20e5d399edd36da9a295467c720598c1",
+        "ppvp_audit/__init__.py": "365d600d3f7064c8e12527c379886db839edb78a0f1187df9f0bba9bf38109d7",
+        "ppvp_audit/nulls.py": "cd47c6ca9da7a2cf51ff02a76a10d5f07f7cda9eb3235002fb3c20356226c46b",
+        "ppvp_audit/experiments.py": "af5ddba064faf9320ec33a014394cae78828a63ee9d8a68273a648c5e6a71415",
+        "ppvp_audit/common.py": "1ac48d73df21389ebbfeb830158de96015c508ed8a34d2a8ddc263b0e9697eeb",
+        "ppvp_audit/engine_path.py": "79c5a9d041b194bde16c951ae11ae4f8c5b1c0cb375dd213855e7d396791d8e6",
+        "ppvp_audit/event_sim.py": "6b57c86ed402b24c24f88e70c8f0fb8a22daa14a8841f076ec36b16e44ee7cfa",
+        "ppvp_audit/variants.py": "288e0f9b953aff7cd3baedb8d57dd06837403299c4b26d7daa51652f8340b339",
+        "attribution.py": "1c7165769eef97fb86d1ef010e4dc3cdeef381f4ab52290bd7cfffe488c7357c",
+        "metrics.py": "13d16204f0724ff54e5a42f2ed3c1d8fd7a7661cd2955b949f17e6b5ef86e52b",
+        "backtester.py": "6dd67439db79fe983bad7a3343bc7dcef118e012d7560499ced91756a8177568",
+        "pipeline.py": "0dfcf1cf61161e449c747a5cf2f6b904bb7b04fbb73194b1e0ee100e74e9e6d7",
+        "strategy_state_machine.py": "790ad492a9c96b2188148e0de61f53cce9cbca19fb31ab86eb4690e4cffb3e2a",
+        "test_impulse_cp2.py": "c9252c84fa769eda305385978bab8aba2935b2aded786e1b8bb683928fc774a4"
+      },
+      "legacy_plan_sha256": "1103cfcdece166b24adfadec27b3cfbf54e05a5eb7277733b7304dd9635b0519",
+      "legacy_manifest_sha256": "7e0cb4af7c8a377a530aee4910d20e3339dc50db7c0734f6c21fea3b627d3666",
+      "authorization": "implementation_and_synthetic_validation_only",
+      "real_data_authorized": false,
+      "new_files_verified": 23
+    }
+  },
+  "statistics": {
+    "schema_version": 1,
+    "calendar": {
+      "start": "2020-03-01T00:00:00+00:00",
+      "end_exclusive": "2024-01-01T00:00:00+00:00",
+      "days": 1401,
+      "months": 46,
+      "month_order": [
+        "2020-03",
+        "2020-04",
+        "2020-05",
+        "2020-06",
+        "2020-07",
+        "2020-08",
+        "2020-09",
+        "2020-10",
+        "2020-11",
+        "2020-12",
+        "2021-01",
+        "2021-02",
+        "2021-03",
+        "2021-04",
+        "2021-05",
+        "2021-06",
+        "2021-07",
+        "2021-08",
+        "2021-09",
+        "2021-10",
+        "2021-11",
+        "2021-12",
+        "2022-01",
+        "2022-02",
+        "2022-03",
+        "2022-04",
+        "2022-05",
+        "2022-06",
+        "2022-07",
+        "2022-08",
+        "2022-09",
+        "2022-10",
+        "2022-11",
+        "2022-12",
+        "2023-01",
+        "2023-02",
+        "2023-03",
+        "2023-04",
+        "2023-05",
+        "2023-06",
+        "2023-07",
+        "2023-08",
+        "2023-09",
+        "2023-10",
+        "2023-11",
+        "2023-12"
+      ]
+    },
+    "estimand": "full_calendar_portfolio_mean_daily_return",
+    "family": [
+      "P",
+      "V",
+      "D"
+    ],
+    "family_size": 3,
+    "family_alpha": 0.05,
+    "tests": {
+      "P": {
+        "mean": 2.0545341014294938e-05,
+        "se": 4.996526615430944e-05,
+        "t": 0.4111924661993005,
+        "p_raw": 0.34463,
+        "mcse": 0.0015028719896392282,
+        "tail": "one_sided_positive",
+        "bootstrap_replicates": 99999,
+        "finite_mc_denominator": 100000,
+        "tail_exceedances": 34462,
+        "zero_bootstrap_se_count": 0,
+        "forced_p_one_reasons": [],
+        "hypothesis": "mean(P_channel)<=0",
+        "rank": 2,
+        "p_holm": 0.68926,
+        "holm_threshold": 0.025,
+        "reject": false,
+        "mc_boundary_sensitive": false
+      },
+      "V": {
+        "mean": 7.31673170055711e-05,
+        "se": 8.128903680071502e-05,
+        "t": 0.9000883745854338,
+        "p_raw": 0.19404,
+        "mcse": 0.0012505600437420948,
+        "tail": "one_sided_positive",
+        "bootstrap_replicates": 99999,
+        "finite_mc_denominator": 100000,
+        "tail_exceedances": 19403,
+        "zero_bootstrap_se_count": 0,
+        "forced_p_one_reasons": [],
+        "hypothesis": "mean(V_vah)<=0",
+        "rank": 1,
+        "p_holm": 0.58212,
+        "holm_threshold": 0.016666666666666666,
+        "reject": false,
+        "mc_boundary_sensitive": false
+      },
+      "D": {
+        "mean": 5.262197599127616e-05,
+        "se": 7.01773305585613e-05,
+        "t": 0.7498429417654234,
+        "p_raw": 0.45958,
+        "mcse": 0.0015759717868257441,
+        "tail": "two_sided_absolute",
+        "bootstrap_replicates": 99999,
+        "finite_mc_denominator": 100000,
+        "tail_exceedances": 45957,
+        "zero_bootstrap_se_count": 0,
+        "forced_p_one_reasons": [],
+        "hypothesis": "mean(V_vah-P_channel)=0",
+        "rank": 3,
+        "p_holm": 0.68926,
+        "holm_threshold": 0.05,
+        "reject": false,
+        "mc_boundary_sensitive": false
+      }
+    },
+    "intervals": {
+      "daily_mean": {
+        "P_channel": {
+          "estimate": 2.0545341014294938e-05,
+          "lower": -7.152097698686658e-05,
+          "upper": 0.00012161285602147433,
+          "resamples": 10000,
+          "valid_resamples": 10000,
+          "discarded": 0,
+          "fraction_below_zero": 0.3405
+        },
+        "V_vah": {
+          "estimate": 7.31673170055711e-05,
+          "lower": -7.26984595959199e-05,
+          "upper": 0.000238347506960737,
+          "resamples": 10000,
+          "valid_resamples": 10000,
+          "discarded": 0,
+          "fraction_below_zero": 0.1776
+        }
+      },
+      "paired_difference": {
+        "estimate": 5.262197599127616e-05,
+        "lower": -8.021793000704804e-05,
+        "upper": 0.00019076423107430447,
+        "resamples": 10000,
+        "valid_resamples": 10000,
+        "discarded": 0,
+        "fraction_below_zero": 0.226
+      },
+      "annualized_sharpe": {
+        "P_channel": {
+          "estimate": 0.18995352920054462,
+          "lower": -0.8080643179014817,
+          "upper": 0.9592582098022522,
+          "resamples": 10000,
+          "valid_resamples": 10000,
+          "discarded": 0,
+          "fraction_below_zero": 0.3405
+        },
+        "V_vah": {
+          "estimate": 0.5335239715704218,
+          "lower": -0.6217980421875597,
+          "upper": 1.4895277065560864,
+          "resamples": 10000,
+          "valid_resamples": 10000,
+          "discarded": 0,
+          "fraction_below_zero": 0.1776
+        }
+      },
+      "trade_net_bps": {
+        "P_channel": {
+          "estimate": 8.115176418481871,
+          "lower": -42.65286391313304,
+          "upper": 66.35711443295376,
+          "resamples": 10000,
+          "valid_resamples": 10000,
+          "discarded": 0,
+          "fraction_below_zero": 0.3835
+        },
+        "V_vah": {
+          "estimate": 26.204414911318338,
+          "lower": -27.009774495600585,
+          "upper": 87.5175137369748,
+          "resamples": 10000,
+          "valid_resamples": 10000,
+          "discarded": 0,
+          "fraction_below_zero": 0.189
+        }
+      }
+    },
+    "metrics": {
+      "P_channel": {
+        "daily_mean": 2.0545341014294938e-05,
+        "annualized_sharpe": 0.18995352920054462,
+        "total_return": 0.02616032382906841,
+        "final_equity": 102616.03238290684,
+        "bankrupt": false,
+        "equity_numerically_undefined": false,
+        "first_nonpositive_equity_day": null,
+        "zero_return_days": 1238,
+        "trade_count": 86,
+        "entry_month_count": 40,
+        "mean_net_bps": 8.115176418481877,
+        "half_trade_counts": [
+          48,
+          38
+        ],
+        "half_trade_mean_bps": [
+          -12.292294909947842,
+          33.89303493860361
+        ],
+        "removed_best_months": [
+          "2022-02",
+          "2020-04",
+          "2021-02"
+        ],
+        "remaining_trade_count": 77,
+        "remaining_trade_mean_bps": -28.920048277044202,
+        "cross_month_trade_count": 3,
+        "cross_month_trade_fraction": 0.03488372093023256,
+        "N3": false,
+        "N4": false
+      },
+      "V_vah": {
+        "daily_mean": 7.31673170055711e-05,
+        "annualized_sharpe": 0.5335239715704219,
+        "total_return": 0.10267534313278626,
+        "final_equity": 110267.53431327862,
+        "bankrupt": false,
+        "equity_numerically_undefined": false,
+        "first_nonpositive_equity_day": null,
+        "zero_return_days": 1187,
+        "trade_count": 120,
+        "entry_month_count": 44,
+        "mean_net_bps": 26.204414911318338,
+        "half_trade_counts": [
+          55,
+          65
+        ],
+        "half_trade_mean_bps": [
+          50.886527524101496,
+          5.3195503928095205
+        ],
+        "removed_best_months": [
+          "2020-04",
+          "2022-02",
+          "2023-12"
+        ],
+        "remaining_trade_count": 112,
+        "remaining_trade_mean_bps": -10.26366949878239,
+        "cross_month_trade_count": 4,
+        "cross_month_trade_fraction": 0.03333333333333333,
+        "N3": true,
+        "N4": false
+      }
+    },
+    "harsh_metrics": {
+      "P_channel": {
+        "daily_mean": -1.0690455811926243e-05,
+        "annualized_sharpe": -0.10942351145287867,
+        "total_return": -0.01724615913595462,
+        "final_equity": 98275.38408640453,
+        "bankrupt": false,
+        "equity_numerically_undefined": false,
+        "first_nonpositive_equity_day": null,
+        "zero_return_days": 1238,
+        "trade_count": 86,
+        "entry_month_count": 40,
+        "mean_net_bps": -8.911748684956535,
+        "half_trade_counts": [
+          48,
+          38
+        ],
+        "half_trade_mean_bps": [
+          -29.307919775497194,
+          16.85183585046325
+        ],
+        "removed_best_months": [
+          "2022-02",
+          "2020-04",
+          "2021-02"
+        ],
+        "remaining_trade_count": 77,
+        "remaining_trade_mean_bps": -45.919585478131346,
+        "cross_month_trade_count": 3,
+        "cross_month_trade_fraction": 0.03488372093023256,
+        "N3": false,
+        "N4": false
+      },
+      "V_vah": {
+        "daily_mean": 1.8157689297105047e-05,
+        "annualized_sharpe": 0.14711598982999288,
+        "total_return": 0.02180797310968141,
+        "final_equity": 102180.79731096815,
+        "bankrupt": false,
+        "equity_numerically_undefined": false,
+        "first_nonpositive_equity_day": null,
+        "zero_return_days": 1187,
+        "trade_count": 120,
+        "entry_month_count": 44,
+        "mean_net_bps": 9.16615630583357,
+        "half_trade_counts": [
+          55,
+          65
+        ],
+        "half_trade_mean_bps": [
+          33.82807124558222,
+          -11.70161787395374
+        ],
+        "removed_best_months": [
+          "2020-04",
+          "2022-02",
+          "2023-12"
+        ],
+        "remaining_trade_count": 112,
+        "remaining_trade_mean_bps": -27.27657201194159,
+        "cross_month_trade_count": 4,
+        "cross_month_trade_fraction": 0.03333333333333333,
+        "N3": false,
+        "N4": false
+      }
+    },
+    "gates": {
+      "P_channel": {
+        "N1": {
+          "passed": false,
+          "trade_count": 86,
+          "entry_month_count": 40,
+          "minimum_trades": 100,
+          "minimum_entry_months": 24
+        },
+        "N2": {
+          "passed": false,
+          "p_holm": 0.68926,
+          "total_return": 0.02616032382906841,
+          "mean_net_bps": 8.115176418481877
+        },
+        "N3": {
+          "passed": false,
+          "half_trade_mean_bps": [
+            -12.292294909947842,
+            33.89303493860361
+          ],
+          "half_trade_counts": [
+            48,
+            38
+          ]
+        },
+        "N4": {
+          "passed": false,
+          "removed_best_months": [
+            "2022-02",
+            "2020-04",
+            "2021-02"
+          ],
+          "remaining_trade_mean_bps": -28.920048277044202,
+          "remaining_trade_count": 77
+        },
+        "N5": {
+          "passed": false,
+          "harsh_total_return": -0.01724615913595462,
+          "harsh_mean_net_bps": -8.911748684956535
+        },
+        "N6": {
+          "passed": false,
+          "p_holm": 0.68926,
+          "half_mean_paired_differences": [
+            0.00013145392602729975,
+            -1.9838624658274297e-05
+          ],
+          "directional_version": "V_vah"
+        }
+      },
+      "V_vah": {
+        "N1": {
+          "passed": true,
+          "trade_count": 120,
+          "entry_month_count": 44,
+          "minimum_trades": 100,
+          "minimum_entry_months": 24
+        },
+        "N2": {
+          "passed": false,
+          "p_holm": 0.58212,
+          "total_return": 0.10267534313278626,
+          "mean_net_bps": 26.204414911318338
+        },
+        "N3": {
+          "passed": true,
+          "half_trade_mean_bps": [
+            50.886527524101496,
+            5.3195503928095205
+          ],
+          "half_trade_counts": [
+            55,
+            65
+          ]
+        },
+        "N4": {
+          "passed": false,
+          "removed_best_months": [
+            "2020-04",
+            "2022-02",
+            "2023-12"
+          ],
+          "remaining_trade_mean_bps": -10.26366949878239,
+          "remaining_trade_count": 112
+        },
+        "N5": {
+          "passed": true,
+          "harsh_total_return": 0.02180797310968141,
+          "harsh_mean_net_bps": 9.16615630583357
+        },
+        "N6": {
+          "passed": false,
+          "p_holm": 0.68926,
+          "half_mean_paired_differences": [
+            0.00013145392602729975,
+            -1.9838624658274297e-05
+          ],
+          "directional_version": "V_vah"
+        }
+      }
+    },
+    "execution_failed_versions": {
+      "P_channel": false,
+      "V_vah": false
+    },
+    "conclusions": {
+      "versions": {
+        "P_channel": "insufficient_evidence",
+        "V_vah": "not_candidate"
+      },
+      "relative": {
+        "status": "stop_current_hypothesis",
+        "N6": false,
+        "statistically_significant": false,
+        "directional_version": "V_vah",
+        "qualified_winner": null,
+        "mean_paired_difference": 5.262197599127616e-05,
+        "half_mean_paired_differences": [
+          0.00013145392602729975,
+          -1.9838624658274297e-05
+        ],
+        "half_directions_agree": false,
+        "directional_version_failed_gates": [
+          "N2",
+          "N4"
+        ],
+        "directional_version_bankrupt": false,
+        "stop_current_hypothesis": true
+      },
+      "candidate_label": "值得后续独立验证的 IS 探索性候选",
+      "cost_sensitive_label": "成本敏感候选，不具备本轮成本稳健资格",
+      "no_sharpe_winner_selection": true
+    },
+    "seeds": {
+      "webb": 2026110701,
+      "month_indices": 2026110702,
+      "generator": "NumPy Generator(PCG64)"
+    },
+    "draw_hashes": {
+      "webb": "dc707c0384c48c71e3b0b76d55ffdf67589b2a201a26fb997ca22af625c48b9a",
+      "month_indices": "3d0bae5fee73a447eb16b8069e9e9e6a0c6ee3fa67547673d3f1f882029c9bfb"
+    },
+    "draw_metadata": {
+      "webb_shape": [
+        99999,
+        46
+      ],
+      "webb_dtype": "float64",
+      "month_indices_shape": [
+        10000,
+        46
+      ],
+      "month_indices_dtype": "int64",
+      "byte_order": "little",
+      "hash_serialization": "ndarray.tobytes(order=C)"
+    },
+    "environment": {
+      "python": "3.14.4",
+      "numpy": "2.5.4",
+      "pandas": "3.0.5",
+      "platform": "Linux-7.0.0-1015-oracle-aarch64-with-glibc2.43"
+    },
+    "disclosures": {
+      "interval_p_disagreements": [
+        {
+          "hypothesis": "P",
+          "interval_supports_test_direction": false,
+          "holm_rejects": false,
+          "disagrees": false
+        },
+        {
+          "hypothesis": "V",
+          "interval_supports_test_direction": false,
+          "holm_rejects": false,
+          "disagrees": false
+        },
+        {
+          "hypothesis": "D",
+          "interval_supports_test_direction": false,
+          "holm_rejects": false,
+          "disagrees": false
+        }
+      ],
+      "mc_boundary_sensitive_hypotheses": [],
+      "mcse_formula": "sqrt(p_raw*(1-p_raw)/99999)",
+      "mc_boundary_rule": "abs(p_raw-step_threshold)<2*MCSE",
+      "no_resampling_refill": true,
+      "intervals_are_not_significance_gates": true,
+      "cross_month_trade_fraction": {
+        "P_channel": 0.03488372093023256,
+        "V_vah": 0.03333333333333333
+      },
+      "cluster_limitation": "Month clustering permits within-month dependence; cross-month holdings and market dependence remain. This is exploratory IS evidence, not unconditional market alpha.",
+      "sample_minimum_is_not_power_guarantee": true,
+      "independent_validation_required": true
+    }
+  },
+  "signal_count_by_version": {
+    "P_channel": 35064,
+    "V_vah": 35064
+  },
+  "trade_counts": {
+    "P_channel__gross_0": 86,
+    "P_channel__main_17": 86,
+    "P_channel__harsh_34": 86,
+    "V_vah__gross_0": 120,
+    "V_vah__main_17": 120,
+    "V_vah__harsh_34": 120
+  }
+}
