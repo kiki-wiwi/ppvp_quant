@@ -10,6 +10,7 @@ from __future__ import annotations
 import json
 import os
 import platform
+import subprocess
 import sys
 import time
 from pathlib import Path
@@ -85,7 +86,9 @@ def main() -> dict:
     t0 = time.perf_counter()
     ev = E.simulate_events(ctx, idx, side, eref - side * dist, eref, False, VS.COSTS["main_17bp"])
     t["matched_random_events_s"] = time.perf_counter() - t0
-    res = {"minutes": N, "numba": HAVE_NUMBA, "python": sys.version.split()[0], "cpu_count": os.cpu_count(),
+    git = lambda *a: subprocess.run(["git", *a], cwd=ROOT, capture_output=True, text=True).stdout.strip()
+    res = {"git": {"commit": git("rev-parse", "HEAD"), "dirty_files": git("status", "--porcelain").splitlines()},
+           "minutes": N, "numba": HAVE_NUMBA, "python": sys.version.split()[0], "cpu_count": os.cpu_count(),
            "machine": platform.machine(), "timing_s": t, "per_version_main_config": per_version, "runs_in_grid": n_runs,
            "matched_random_events": int(len(ev)), "note": "synthetic data only; real market data is locked out of the "
                                                          "matching engine at Checkpoint 2"}
