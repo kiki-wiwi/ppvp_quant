@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 from .config import IS_START, IS_END
 
-REAL_DATA_UNLOCKED = False
+REAL_DATA_UNLOCKED = True
 MINUTE_NS = 60_000_000_000
 
 
