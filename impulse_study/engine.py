@@ -24,12 +24,20 @@ impulse_study/engine.py — Checkpoint 2：多空双向撮合与记账引擎（1
        下一次入场时刻 ≥ 离场时刻 + 15min，即下一个可接受的触发 K 线索引 ≥ 离场时刻索引 + 14。持仓期间忽略新信号。
 盯市   持仓分钟的净值 = 现金 + s·q·(C_m − Entry_fill)（现金已扣入场费，并已计入 τ ≤ 该分钟开盘的资金费）；离场分钟净值 =
        平仓后现金（含恰在离场收盘时刻 τ 的结算）。
-台账   cont 为第 1 根合成棒满时延续检验的结果：1 满足、0 不满足（含 B_t ≤ 0 或 H = L）、−1 未检验（在 t+15 收盘之前已离场）；
-       B4 照常检验、只作诊断。v1、k1 各自在可计算时记录（B_t > 0 / H > L）。cap_bound、floor_bound 记录以损定仓时 2.0x
-       上限与 0.15% 下限是否决定了数量。
+台账   cont 为第 1 根合成棒满时延续检验的结果：1 满足、0 不满足（含 B_t ≤ 0 或 H = L）、−1 未检验（在 t+15 收盘之前已离场，
+       或停机覆盖 t+15）；B4 照常检验、只作诊断。v1、k1 各自在可计算时记录（B_t > 0 / H > L）。以损定仓时 cap_bound =
+       2.0x 上限严格小于以损定仓数量（上限决定了数量），floor_bound = |E_ref − SL| 严格小于 0.15%·E_ref（下限在仓位分母中
+       生效，不论上限是否同时约束）；恰好相等记为假，等名义口径恒为假。funding_last_boundary 为资金费窗口内最后一个分钟开盘
+       的索引（诊断列）。
+输入   版本输入必须由同一个上下文对象构造（features.build_version_inputs / synthetic.manual_inputs 记录 vin.context），
+       构造之后该上下文的交易窗口、该版本的触发条件与（A 组）箱体没有被原地改动（vin.input_key），
+       各数组为一维且与分钟网格等长；entry_dir 整列只能取 −1 / 0 / +1；窗口内信号的入场 K 线有效、E_ref 与 SL 有限且 SL
+       位于亏损一侧、基准成交量有定义；交易窗口最后一个可触发分钟之后至少还有 30 分钟数据。不满足即报错，不静默处理。
 
-真实行情锁：Checkpoint 2 只允许合成数据进入撮合（Context.source = 'synthetic'，且网格带合成数据标记）。
-REAL_DATA_UNLOCKED 只能在第 3 阶段经审批的提交中改为 True；解锁后真实上下文还必须带有资金费序列与冻结的漏记分钟清单。
+真实行情锁：Checkpoint 2 只允许合成数据进入撮合（Context.source = 'synthetic'）。合成标签在 features.make_context 构造上下文时
+核对（网格必须带 synthetic.grid_from_arrays 写入的合成数据标记）；dataclasses.replace 仍可显式改写标签——锁防的是误用，
+不防有意改标签。REAL_DATA_UNLOCKED 只能在第 3 阶段经审批的提交中改为 True；解锁后真实上下文还必须带有完整的资金费结算
+（网格内全部 UTC 00:00 / 08:00 / 16:00 分钟，IS 全网格 4,383 次，不多不少）与冻结的漏记分钟清单。
 """
 from __future__ import annotations
 
@@ -41,7 +49,7 @@ import pandas as pd
 from numba_compat import njit
 
 from . import versions as VS
-from .features import Context, VersionInputs
+from .features import Context, VersionInputs, input_key
 
 REAL_DATA_UNLOCKED = False
 
@@ -326,12 +334,20 @@ class PortfolioResult:
     meta: dict
 
 
+_SETTLEMENT_NS = 8 * 3_600_000_000_000          # Binance USDⓈ-M BTCUSDT 在 IS 内的结算间隔：UTC 00:00 / 08:00 / 16:00
+
+
 def _require_real_inputs(ctx: Context) -> None:
-    """解锁之后真实上下文的输入完整性：必须带资金费序列与冻结的漏记分钟清单（第 3 阶段运行脚本另核对 4,383 次结算）。"""
-    if not ctx.funding_supplied:
-        raise ValueError("a real-data context must be built with the funding-rate series")
-    want = pd.DatetimeIndex(pd.to_datetime(list(VS.ARCHIVE_GAP_MINUTES), utc=True)).as_unit("ns").asi8
+    """解锁之后真实上下文的输入完整性（实验计划第 10 节）：
+    1. 资金费：构造时传入了资金费序列，且映射到网格上的结算恰为网格内全部 UTC 00:00 / 08:00 / 16:00 分钟（不多不少；
+       IS 全网格即 4,383 次。原始 calc_time 的毫秒抖动须先由运行脚本取整到分钟）；
+    2. 漏记分钟：网格范围内标记的漏记分钟恰为 versions.ARCHIVE_GAP_MINUTES 中落在网格内的分钟。"""
     ns = np.asarray(ctx.index.asi8)
+    sched = ns[ns % _SETTLEMENT_NS == 0]
+    if not ctx.funding_supplied or not np.array_equal(ns[np.isfinite(ctx.funding_rate_open)], sched):
+        raise ValueError("a real-data context must carry a funding settlement at exactly the UTC 00:00/08:00/16:00 "
+                         "minutes of the grid")
+    want = pd.DatetimeIndex(pd.to_datetime(list(VS.ARCHIVE_GAP_MINUTES), utc=True)).as_unit("ns").asi8
     want = np.sort(want[(want >= ns[0]) & (want <= ns[-1])])
     if not np.array_equal(np.sort(ns[ctx.archive_gap]), want):
         raise ValueError("a real-data context must flag exactly the frozen archive-gap minutes (versions.ARCHIVE_GAP_MINUTES)")
@@ -339,7 +355,7 @@ def _require_real_inputs(ctx: Context) -> None:
 
 def _guard(ctx: Context) -> None:
     if ctx.source == "synthetic":
-        return                                   # make_context 已核对网格带合成数据标记
+        return                                   # make_context 构造时已核对网格带合成数据标记（见模块说明）
     if not REAL_DATA_UNLOCKED:
         raise EngineLockedError(f"Checkpoint 2: data source {ctx.source!r} may not enter the matching engine")
     _require_real_inputs(ctx)
@@ -372,10 +388,31 @@ def _check_signals(ctx: Context, i: np.ndarray, side: np.ndarray, sl: np.ndarray
         raise ValueError("baseline volume undefined at a signal minute")
 
 
+_VIN_ARRAYS = ("entry_dir", "sl", "eref", "w", "cat", "atr_at")
+
+
+def _check_version_inputs(ctx: Context, vin: VersionInputs) -> None:
+    """版本输入必须由同一个上下文对象构造（换窗口、换触发条件或箱体的上下文都必须重建版本输入），构造之后该上下文的
+    交易窗口、该版本阈值口径的触发条件与（A 组）箱体没有被原地改动（features.input_key），且每个数组都是一维、
+    与分钟网格等长（撮合核按分钟索引直接读取，长度不符会越界读写）。"""
+    if vin.context is not ctx:
+        raise ValueError("version inputs were built on a different context; rebuild them with "
+                         "features.build_version_inputs on this context")
+    if vin.input_key is None or vin.input_key != input_key(ctx, vin.spec):
+        raise ValueError("the context's trading window, trigger conditions or box changed in place after the version "
+                         "inputs were built; rebuild them with features.build_version_inputs on this context")
+    n = len(ctx.C)
+    for f in _VIN_ARRAYS:
+        a = getattr(vin, f)
+        if not isinstance(a, np.ndarray) or a.ndim != 1 or a.shape[0] != n:
+            raise ValueError(f"VersionInputs.{f} must be a 1-D array with one entry per grid minute ({n})")
+
+
 def run_portfolio(ctx: Context, vin: VersionInputs, cost: VS.CostScenario, sizing: VS.Sizing,
                   initial_capital: float = VS.INITIAL_CAPITAL) -> PortfolioResult:
     _guard(ctx)
     start_i, last_i, end_i = _window_bounds(ctx)
+    _check_version_inputs(ctx, vin)
     if not np.isin(vin.entry_dir, (-1, 0, 1)).all():
         raise ValueError("entry_dir must be -1, 0 or +1")
     sig = np.flatnonzero(vin.entry_dir != 0)

@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 import subprocess
 import sys
 import time
@@ -31,10 +32,24 @@ OUT = ROOT / "reports" / "impulse_vs_box_round" / "cp2"
 CUTS = ("2020-03-12 13:37", "2021-06-26 13:37", "2022-11-09 00:00", "2023-12-31 23:59")
 
 
-FROZEN_CODE = ("impulse_study/engine.py", "impulse_study/features.py", "impulse_study/versions.py",
-               "impulse_study/synthetic.py", "impulse_study/signals.py", "impulse_study/daily.py",
-               "impulse_study/data_1m.py", "impulse_study/scope.py", "numba_compat.py", "ppvp_engine.py", "config.py",
-               "data_loader.py")
+# 实验计划第 13 节按 SHA256 冻结的文件：impulse_study 包内全部模块，它们与第 8 节所用既有统计模块（ppvp_audit.nulls、
+# ppvp_audit.experiments、attribution、metrics）在 Python 中实际导入的全部仓库内文件，以及第 2 阶段测试文件。
+FROZEN_CODE = ("impulse_study/__init__.py", "impulse_study/engine.py", "impulse_study/features.py",
+               "impulse_study/versions.py", "impulse_study/synthetic.py", "impulse_study/signals.py",
+               "impulse_study/daily.py", "impulse_study/data_1m.py", "impulse_study/scope.py", "impulse_study/qa.py",
+               "numba_compat.py", "ppvp_engine.py", "config.py", "data_loader.py",
+               "ppvp_audit/__init__.py", "ppvp_audit/nulls.py", "ppvp_audit/experiments.py", "ppvp_audit/common.py",
+               "ppvp_audit/engine_path.py", "ppvp_audit/event_sim.py", "ppvp_audit/variants.py", "attribution.py",
+               "metrics.py", "backtester.py", "pipeline.py", "strategy_state_machine.py",
+               "test_impulse_cp2.py")
+
+
+PLAN = ROOT / "reports" / "impulse_vs_box_round" / "experiment_plan_impulse.md"
+
+
+def plan_sha_table() -> dict:
+    """实验计划第 13 节登记的代码 SHA256（文件 → 摘要）。"""
+    return dict(re.findall(r"\| `([^`]+)` \| `([0-9a-f]{64})` \|", PLAN.read_text(encoding="utf-8")))
 
 
 def real_context(df1m, s1d, cut=None):
@@ -66,6 +81,8 @@ def main() -> dict:
            "scope": "BTCUSDT perp IS features only; the matching engine is not called; no prices after any trigger",
            "frozen_key": VS.frozen_key(), "version_keys": VS.version_keys(),
            "code_sha256": {p: hashlib.sha256((ROOT / p).read_bytes()).hexdigest() for p in FROZEN_CODE}}
+    if plan_sha_table() != res["code_sha256"]:                   # 结果文件只对应计划第 13 节冻结的代码
+        raise SystemExit("code SHA256 differs from the table in experiment_plan_impulse.md section 13")
     gaps = table_5b_minutes()
     if gaps != sorted(str(pd.Timestamp(m, tz="UTC")) for m in VS.ARCHIVE_GAP_MINUTES):
         raise SystemExit("versions.ARCHIVE_GAP_MINUTES differs from Checkpoint 1 table 5b")

@@ -610,6 +610,8 @@ def test_continuation_rules():
 
 
 def test_prefix_truncation_engine_synthetic():
+    """截断点（17,000、23,456）离停机足够远：若截断落在某笔持仓所遇的停机之内，截断后的上下文按第 5.5 节报错
+    （停机延续到数据末端），而全量上下文有定义的停机离场，因此引擎层面的截断核对须避开停机。"""
     g = SY.random_grid(30_000, start=str(START.tz_localize(None)), seed=11, halts=((12_000, 25),))
     box = (np.arange(len(g)) // 700) % 2 == 0
     fund = pd.Series(np.random.default_rng(5).normal(1e-4, 3e-4, 40),
@@ -674,16 +676,32 @@ def test_funding_at_or_after_grid_end_is_not_read():
 
 
 def test_numba_and_python_paths_agree(monkeypatch):
-    g = SY.random_grid(12_000, start=str(START.tz_localize(None)), seed=21, halts=((6_000, 12),))
-    ctx = SY.synthetic_context(g, g.index[1500], g.index[len(g) - 40])
+    """numba 与纯 Python 路径逐位一致：每分钟一次的资金费结算（变长结算数组，单笔可达 30 次）、覆盖结算的停机
+    （停机强制离场）与独立事件模拟都在比较之内。"""
+    halts = ((6_000, 12), (9_000, 40))
+    g = SY.random_grid(12_000, start=str(START.tz_localize(None)), seed=21, halts=halts)
+    fund = pd.Series(np.random.default_rng(2).normal(1e-5, 3e-5, len(g)), index=g.index)
+    ctx = SY.synthetic_context(g, g.index[1500], g.index[len(g) - 40], funding=fund)
     vin = F.build_version_inputs(ctx, B3)
-    r1 = E.run_portfolio(ctx, vin, MAIN, RISK)
+    tr0 = E.run_portfolio(ctx, vin, MAIN, RISK).trades
+    idx = np.r_[tr0["trigger_idx"].to_numpy(), [h0 - 5 for h0, _ in halts]]           # 末两个事件持仓中遇到停机
+    side = np.r_[tr0["side"].to_numpy(), [1, -1]].astype(float)
+    eref = ctx.C[idx]
+    sl = eref * (1 - 0.01 * side)
+
+    def both():
+        return E.run_portfolio(ctx, vin, MAIN, RISK), E.simulate_events(ctx, idx, side, sl, eref, False, MAIN)
+
+    r1, e1 = both()
     monkeypatch.setattr(E, "_trade_path", E._trade_path.py_func)
     monkeypatch.setattr(E, "_run_portfolio", E._run_portfolio.py_func)
-    r2 = E.run_portfolio(ctx, vin, MAIN, RISK)
-    assert len(r1.trades) == len(r2.trades) > 5
-    pd.testing.assert_frame_equal(r1.trades, r2.trades)
+    monkeypatch.setattr(E, "_simulate_events", E._simulate_events.py_func)
+    r2, e2 = both()
+    assert len(r1.trades) == len(r2.trades) > 5 and (r1.trades["n_funding"] > 8).any()
+    assert (e1["reason"].to_numpy()[-2:] == E.HALT).all()
+    pd.testing.assert_frame_equal(r1.trades, r2.trades, check_exact=True)
     np.testing.assert_array_equal(r1.equity.to_numpy(), r2.equity.to_numpy())
+    pd.testing.assert_frame_equal(e1, e2, check_exact=True)
 
 
 def test_event_simulation_matches_portfolio_per_trade_returns():
@@ -1089,18 +1107,24 @@ def test_run_portfolio_and_event_simulation_reject_invalid_inputs():
         return E.simulate_events(ctx, np.array([i]), np.array([side]), np.array([sl]), np.array([eref]), False, MAIN)
 
     assert len(sim(I0)) == 1 and len(E.simulate_events(ctx, np.array([], np.int64), [], [], [], False, MAIN)) == 0
-    for call in (lambda: sim(n - 1), lambda: sim(n - 35), lambda: sim(300),        # 网格末端 / 窗口之外
-                 lambda: sim(1199), lambda: sim(1205),                                # 入场 K 线为 bad / 维护污染
-                 lambda: sim(I0, sl=P0 + 100), lambda: sim(I0, sl=np.nan), lambda: sim(I0, side=0.0),
-                 lambda: E.simulate_events(ctx, np.array([1000.0]), [1.0], [P0 - 100], [P0], False, MAIN),
-                 lambda: E.simulate_events(ctx, np.array([I0, I0 + 50]), [1.0], [P0 - 100], [P0], False, MAIN)):
-        with pytest.raises(ValueError):
+    cases = ((lambda: sim(n - 1), "at least 30 minutes"),                            # 网格末端
+             (lambda: sim(n - 35), "outside the context's trading window"),          # 窗口止于 n − 40
+             (lambda: sim(300), "outside the context's trading window"),             # 窗口始于 400
+             (lambda: sim(1199), "maintenance placeholder"),                        # 入场 K 线为 bad
+             (lambda: sim(1205), "maintenance-contaminated"),
+             (lambda: sim(I0, sl=P0 + 100), "losing side"), (lambda: sim(I0, sl=np.nan), "losing side"),
+             (lambda: sim(I0, side=0.0), "side must be"),
+             (lambda: E.simulate_events(ctx, np.array([1000.0]), [1.0], [P0 - 100], [P0], False, MAIN), "integers"),
+             (lambda: E.simulate_events(ctx, np.array([I0, I0 + 50]), [1.0], [P0 - 100], [P0], False, MAIN),
+              "same length"))
+    for call, msg in cases:                                                           # 每个用例只由它自己的检查拒绝
+        with pytest.raises(ValueError, match=msg):
             call()
-    with pytest.raises(ValueError):                                                   # 入场 K 线为 bad 的手工信号
+    with pytest.raises(ValueError, match="maintenance placeholder"):                  # 入场 K 线为 bad 的手工信号
         run(ctx, {1199: (1, P0 - 100)})
-    with pytest.raises(ValueError):                                                   # 止损在盈利一侧
+    with pytest.raises(ValueError, match="losing side"):                              # 止损在盈利一侧
         run(ctx, {I0: (1, P0 + 100)})
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match="entry_dir must be"):
         run(ctx, {I0: (2, P0 - 100)})
 
 
@@ -1150,22 +1174,72 @@ def test_synthetic_label_requires_synthetic_grid():
 
 
 def test_unlocked_real_context_requires_funding_and_frozen_gap_minutes():
-    """解锁之后的输入完整性检查（不翻转锁：直接调用检查函数；数据是合成的）。网格覆盖表 5b 的 2021-01-12 06:10。"""
+    """解锁之后的输入完整性检查（不翻转锁：直接调用检查函数；数据是合成的）。网格覆盖表 5b 的 2021-01-12 06:10。
+    映射到网格上的结算必须恰为网格内全部 UTC 00:00 / 08:00 / 16:00 分钟（IS 全网格即 4,383 次），不多不少。
+    这里的拒绝样例都改变了映射次数；次数相同、分钟不对的样例见下一个测试。"""
     n = 1500
     O, H, L, C, V = bars(n=n)
     g = SY.grid_from_arrays(pd.Timestamp("2021-01-12 00:00", tz="UTC"), O, H, L, C, V)
-    fund = pd.Series([1e-4, 1e-4], index=pd.DatetimeIndex(["2021-01-12 08:00", "2021-01-12 16:00"], tz="UTC"))
+    sched = pd.DatetimeIndex(["2021-01-12 00:00", "2021-01-12 08:00", "2021-01-12 16:00", "2021-01-13 00:00"], tz="UTC")
+    fund = pd.Series(1e-4, index=sched)
     box = np.zeros(n, bool)
     no_fund = F.make_context(g, box, "binance_is", g.index[400], g.index[n - 40], VS.ARCHIVE_GAP_MINUTES)
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match="funding settlement"):
         E._require_real_inputs(no_fund)
+    extra = pd.Series([1e-4], index=[sched[0] + pd.Timedelta(hours=4)])                # 计划外的 04:00 结算
+    for f in (fund.iloc[:0], fund.iloc[1:], pd.Series(1e-4, index=sched - pd.Timedelta(days=400)), pd.concat([fund, extra])):
+        partial = F.make_context(g, box, "binance_is", g.index[400], g.index[n - 40], VS.ARCHIVE_GAP_MINUTES, f)
+        with pytest.raises(ValueError, match="funding settlement"):
+            E._require_real_inputs(partial)
     wrong_gaps = F.make_context(g, box, "binance_is", g.index[400], g.index[n - 40], (), fund)
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match="archive-gap"):
         E._require_real_inputs(wrong_gaps)
     ok = F.make_context(g, box, "binance_is", g.index[400], g.index[n - 40], VS.ARCHIVE_GAP_MINUTES, fund)
     E._require_real_inputs(ok)
-    assert ok.funding_supplied and ok.n_funding_mapped == 2 and int(ok.archive_gap.sum()) == 1
+    assert ok.funding_supplied and ok.n_funding_mapped == 4 and int(ok.archive_gap.sum()) == 1
     assert ok.index[ok.archive_gap][0] == pd.Timestamp("2021-01-12 06:10", tz="UTC")
+    full_is = pd.date_range("2020-01-01 00:00", "2023-12-31 23:59", freq="1min", tz="UTC").as_unit("ns")
+    assert int((full_is.asi8 % (8 * 3_600_000_000_000) == 0).sum()) == 4_383      # IS 全网格的结算分钟数
+
+
+def test_unlocked_funding_check_compares_settlement_minutes_not_only_their_count():
+    """结算次数相同、分钟不对的资金费序列同样被拒绝（第 10 节运行脚本只断言 4,383 次，逐分钟核对只在引擎里）：
+    整体偏移 1 小时（时区或取整失误），或 08:00 被 09:00 取代。网格为 2021-01-12 全天，网格内的结算分钟恰为
+    00:00 / 08:00 / 16:00。"""
+    n = 1440
+    g = SY.grid_from_arrays(pd.Timestamp("2021-01-12 00:00", tz="UTC"), *bars(n=n))
+    sched = pd.DatetimeIndex(["2021-01-12 00:00", "2021-01-12 08:00", "2021-01-12 16:00"], tz="UTC")
+    moved = pd.DatetimeIndex(["2021-01-12 00:00", "2021-01-12 09:00", "2021-01-12 16:00"], tz="UTC")
+    box = np.zeros(n, bool)
+
+    def ctx_with(idx):
+        return F.make_context(g, box, "binance_is", g.index[400], g.index[n - 40], VS.ARCHIVE_GAP_MINUTES,
+                              pd.Series(1e-4, index=idx))
+
+    E._require_real_inputs(ctx_with(sched))
+    for idx in (sched + pd.Timedelta(hours=1), moved):
+        ctx = ctx_with(idx)
+        assert ctx.n_funding_mapped == len(sched) == 3                    # 次数相同：只有逐分钟核对能拒绝
+        with pytest.raises(ValueError, match="funding settlement"):
+            E._require_real_inputs(ctx)
+
+
+def test_unlocked_entry_points_run_the_real_input_checks(monkeypatch):
+    """解锁之后 run_portfolio 与 simulate_events 都经 _guard 调用 _require_real_inputs（第 10 节：引擎在解锁后也核对
+    资金费结算与漏记分钟）。锁只在本测试进程内用 monkeypatch 翻转，提交中的锁值不变；数据是带 'binance_is' 标签的
+    合成网格，正确的代码在任何撮合之前报错。第 3 阶段的翻转提交之后本测试照常通过。"""
+    n = 1500
+    g = SY.grid_from_arrays(pd.Timestamp("2021-01-12 00:00", tz="UTC"), *bars(n=n))
+    sched = pd.DatetimeIndex(["2021-01-12 00:00", "2021-01-12 08:00", "2021-01-12 16:00", "2021-01-13 00:00"], tz="UTC")
+    box = np.zeros(n, bool)
+    no_fund = F.make_context(g, box, "binance_is", g.index[400], g.index[n - 40], VS.ARCHIVE_GAP_MINUTES)
+    no_gaps = F.make_context(g, box, "binance_is", g.index[400], g.index[n - 40], (), pd.Series(1e-4, index=sched))
+    monkeypatch.setattr(E, "REAL_DATA_UNLOCKED", True)
+    for ctx, msg in ((no_fund, "funding settlement"), (no_gaps, "archive-gap")):
+        with pytest.raises(ValueError, match=msg):
+            E.run_portfolio(ctx, SY.manual_inputs(ctx, B1, {I0: (1, P0 - 100)}), MAIN, RISK)
+        with pytest.raises(ValueError, match=msg):
+            E.simulate_events(ctx, np.array([I0]), np.array([1.0]), np.array([P0 - 100]), np.array([P0]), False, MAIN)
 
 
 def test_context_rejects_bad_funding_and_off_grid_gap_minutes():
@@ -1218,6 +1292,370 @@ def test_frozen_versions_inheritance():
     assert a5.trigger_rule == b5.trigger_rule == "z" and VS.SIGMA_REF == 0.0008088465199541001
     assert {k: x.c_rt for k, x in VS.COSTS.items()} == pytest.approx(
         {"gross_0bp": 0.0, "conventional_14bp": 0.0014, "main_17bp": 0.0017, "harsh_34bp": 0.0034})
+
+
+# ----------------------------------------------------------------------------
+# 11. 第二轮独立复核后补充：每个测试对应第二轮变异测试中存活的违规变异或复核发现的校验缺口
+# ----------------------------------------------------------------------------
+def sim_event(ctx, i, side=1.0, sl=P0 - 100, eref=P0, cost=MAIN):
+    return E.simulate_events(ctx, np.array([i]), np.array([side]), np.array([sl]), np.array([eref]), False, cost)
+
+
+@pytest.mark.parametrize("side", [1, -1])
+def test_settlement_inside_halt_has_the_side_sign(side):
+    """结算时点落在持仓中的停机内：按占位分钟的开盘价（停机前最后收盘价）收付，正费率多头付、空头收。"""
+    O, H, L, C, V = bars()
+    bad = np.zeros(len(C), bool)
+    bad[E0 + 3:E0 + 8] = True                                  # 停机占位分钟保持平盘价 10,000（= 停机前最后收盘价）
+    O[E0 + 8], H[E0 + 8], L[E0 + 8], C[E0 + 8] = 10_020.0, 10_030.0, 10_015.0, 10_025.0
+    r = 1e-4
+    fund = pd.Series([r], index=[START + pd.Timedelta(minutes=E0 + 5)])     # τ 落在停机中
+    res = run(ctx_from(O, H, L, C, V, bad=bad, funding=fund), {I0: (side, P0 - side * 100)})
+    t = res.trades.iloc[0]
+    q = 500.0 / 117.0                                          # 0.5%·100,000 / (100 + 0.0017·10,000)
+    assert t["reason_name"] == "halt_forced_exit" and t["exit_bar"] == E0 + 8 and t["n_funding"] == 1
+    assert t["funding"] == pytest.approx(-side * q * P0 * r, rel=1e-12)    # 多头付 4.27，空头收 4.27
+    fill = P0 * (1 + side * 0.0005)
+    cash0 = VS.INITIAL_CAPITAL - 0.0005 * q * fill
+    assert res.equity.iloc[E0 + 5] == pytest.approx(cash0 - side * q * P0 * r + side * q * (P0 - fill), rel=1e-13)
+
+
+def test_event_simulation_rejects_side_other_than_plus_or_minus_one():
+    ctx = ctx_from(*bars())
+    for side, sl in ((2.0, P0 - 100), (0.5, P0 - 100), (-2.0, P0 + 100)):     # 止损都在该“方向”的亏损一侧：只有方向检查能拒绝
+        with pytest.raises(ValueError, match="side must be"):
+            sim_event(ctx, I0, side=side, sl=sl)
+    assert int(sim_event(ctx, I0, side=-1.0, sl=P0 + 100)["reason"].iloc[0]) == E.TIME1
+
+
+def test_engine_rejects_signal_with_undefined_baseline():
+    """交易窗口早于基准就绪（t < 299）：run_portfolio 与 simulate_events 都报错，第一个基准有定义的分钟照常成交。"""
+    ctx = ctx_from(*bars(), start_idx=100)
+    t = 250                                                    # 窗口内、未污染、ATR 已就绪（t ≥ 209）、基准尚无定义
+    assert np.isnan(ctx.base_med[t]) and np.isnan(ctx.base_med[298]) and ctx.base_med[299] == pytest.approx(150.0)
+    assert np.isfinite(ctx.atr["atr_at"][t]) and not ctx.frame["contaminated"].to_numpy()[t]
+    with pytest.raises(ValueError, match="baseline volume undefined"):
+        run(ctx, {t: (1, P0 - 100)})
+    with pytest.raises(ValueError, match="baseline volume undefined"):
+        sim_event(ctx, t)
+    t = run(ctx, {299: (1, P0 - 100)}).trades.iloc[0]          # v1 = 150 / 150
+    assert t["v1"] == pytest.approx(1.0) and t["reason_name"] == "time_bar1"
+
+
+def test_event_simulation_requires_30_minutes_after_the_event():
+    n = 1500
+    ctx = ctx_from(*bars(n=n), last_idx=n - 10)                # 交易窗口延伸到 n − 10（run_portfolio 会拒绝这种上下文）
+    assert ctx.window[n - 20] and ctx.window[n - 31]
+    with pytest.raises(ValueError, match="at least 30 minutes"):
+        sim_event(ctx, n - 20)                                 # 平盘 v1 = 1.0 会在 n − 5 收盘离场，但仍须报错
+    with pytest.raises(ValueError, match="at least 30 minutes"):
+        sim_event(ctx, n - 30)                                 # t + 30 = n 不在网格内：恰好差 1 分钟
+    ok = sim_event(ctx, n - 31)                                # 恰好留出 30 分钟：接受
+    assert int(ok["reason"].iloc[0]) == E.TIME1 and int(ok["exit_bar"].iloc[0]) == n - 31 + 15
+    with pytest.raises(ValueError, match="at least 30 minutes beyond the last eligible trigger"):
+        run(ctx, {I0: (1, P0 - 100)})                          # run_portfolio：窗口末端之后不足 30 分钟
+
+
+def test_cap_and_floor_flags_are_strict_inequalities():
+    """恰好相等时不记为约束：以损定仓数量恰等于 2.0x 上限、止损距离恰等于 0.15% 下限。"""
+    O, H, L, C, V = bars(spread=0.0)
+    t = run(ctx_from(O, H, L, C, V), {I0: (1, P0 - 25.0)}, cost=GROSS).trades.iloc[0]
+    assert 0.005 * 100_000.0 / 25.0 == 2.0 * 100_000.0 / P0 == 20.0
+    assert t["qty"] == 20.0 and not t["cap_bound"] and not t["floor_bound"]
+    t = run(ctx_from(O, H, L, C, V), {I0: (1, P0 - 15.0)}).trades.iloc[0]
+    assert 0.0015 * P0 == 15.0
+    assert t["qty"] == pytest.approx(500.0 / 32.0, rel=1e-13) and not t["floor_bound"] and not t["cap_bound"]
+
+
+def test_n_funding_mapped_counts_only_settlements_on_the_grid():
+    O, H, L, C, V = bars()
+    n = len(C)
+    ts = pd.DatetimeIndex([START - pd.Timedelta(hours=8), START + pd.Timedelta(minutes=500), START + pd.Timedelta(minutes=980),
+                           START + pd.Timedelta(minutes=n), START + pd.Timedelta(minutes=n + 480)])
+    ctx = ctx_from(O, H, L, C, V, funding=pd.Series([1e-4] * 5, index=ts))   # 网格之前 / 网格内 ×2 / 网格右端（不含）/ 之后
+    assert ctx.funding_supplied and ctx.n_funding_mapped == 2
+    assert np.flatnonzero(np.isfinite(ctx.funding_rate_open)).tolist() == [500, 980]
+
+
+def test_s6_box_ok_uses_the_frozen_s6_variant():
+    """features.s6_box_ok 的接线：冻结的 S6 口径、网格分钟与收盘价（spot_1d = None 不读任何文件）。"""
+    g = SY.random_grid(130 * 1440, start="2021-01-01", seed=8, sigma=1.2e-3, impulse_rate=1e-3)
+    box, st = F.s6_box_ok(g, None, g)
+    states = DY.build_box_states(g, None, variants=("main", VS.BOX_STATE_VARIANT))
+    ns = np.asarray(g.index.as_unit("ns").asi8)
+    s6 = DY.minute_box_ok(ns, g["close"].to_numpy(), states[VS.BOX_STATE_VARIANT])
+    main = DY.minute_box_ok(ns, g["close"].to_numpy(), states["main"])
+    pd.testing.assert_frame_equal(st, states[VS.BOX_STATE_VARIANT])
+    np.testing.assert_array_equal(box, s6)
+    assert 0 < box.sum() < main.sum() and not (box & ~main).any()      # S6 比 CP1 原口径多一个条件：只会更少
+
+
+def test_s6_box_ok_forwards_the_spot_warmup():
+    """features.s6_box_ok 把现货日线预热原样传给 ATR_1D（计划第 1.1、3 节），并按 grid（而非 df1m）的分钟与收盘价判定。"""
+    g = SY.random_grid(130 * 1440, start="2021-01-01", seed=8, sigma=1.2e-3, impulse_rate=1e-3)
+    days = pd.date_range("2020-11-01", "2020-12-31", freq="1D", tz="UTC").as_unit("ns")
+    px = np.full(len(days), 10_000.0)
+    spot = pd.DataFrame({"open": px, "high": px * 1.5, "low": px * 0.6, "close": px, "volume": 1.0}, index=days)
+    grid = g.iloc[30 * 1440:]                                          # 与 df1m 不同的网格：钉住网格分钟与收盘价的接线
+    box, st = F.s6_box_ok(g, spot, grid)
+    want = DY.build_box_states(g, spot, variants=(VS.BOX_STATE_VARIANT,))[VS.BOX_STATE_VARIANT]
+    pd.testing.assert_frame_equal(st, want)
+    ns = np.asarray(grid.index.as_unit("ns").asi8)
+    np.testing.assert_array_equal(box, DY.minute_box_ok(ns, grid["close"].to_numpy(), want))
+    assert (box != F.s6_box_ok(g, None, grid)[0]).any()               # 夹具能区分是否传入了现货日线预热
+
+
+@pytest.mark.parametrize("offset,lookback,holding", [(-1, False, True), (0, True, False), (15, True, False),
+                                                    (16, False, False)])
+def test_archive_gap_flags_boundaries(offset, lookback, holding):
+    """漏记分钟在 t − offset：触发回看 [t−15, t] 与持仓 [t+1, 离场分钟] 两个标记的四条边界（offset = −1 即入场分钟 t+1）。"""
+    ctx = ctx_from(*bars(), gaps=[START + pd.Timedelta(minutes=I0 - offset)])
+    t = run(ctx, {I0: (1, P0 - 100)}).trades.iloc[0]
+    assert bool(t["signal_lookback_has_archive_gap"]) is lookback and bool(t["has_archive_gap"]) is holding
+
+
+def test_ledger_times_follow_the_exit_time_definition():
+    O, H, L, C, V = bars()
+    O[E0 + 3], L[E0 + 3] = 9_850.0, 9_840.0
+    t = run(ctx_from(O, H, L, C, V), {I0: (1, P0 - 100)}).trades.iloc[0]
+    assert t["reason_name"] == "stop_gap_open" and t["exit_time"] == START + pd.Timedelta(minutes=E0 + 3)
+    O, H, L, C, V = bars()
+    L[E0 + 3] = 9_890.0
+    t = run(ctx_from(O, H, L, C, V), {I0: (1, P0 - 100)}).trades.iloc[0]
+    assert t["reason_name"] == "stop_intrabar" and t["exit_time"] == START + pd.Timedelta(minutes=E0 + 4)
+    t = run(ctx_from(*bars()), {I0: (1, P0 - 100)}).trades.iloc[0]
+    assert t["reason_name"] == "time_bar1" and t["exit_time"] == START + pd.Timedelta(minutes=E0 + 15)
+    assert t["trigger_time"] == START + pd.Timedelta(minutes=I0) and t["entry_time"] == START + pd.Timedelta(minutes=E0)
+
+
+def test_daily_equity_is_the_last_minute_of_each_utc_day():
+    res = run(ctx_from(*bars()), {I0: (1, P0 - 100)})          # 1,500 分钟：2021-01-04 全天 + 01-05 前 60 分钟
+    want_day1 = VS.INITIAL_CAPITAL - 17.0015 * 500.0 / 117.0   # 01-04 内一笔 time_bar1 亏损：费 10.0015·q + 滑点 7·q
+    d = res.daily_equity
+    assert list(d.index) == [pd.Timestamp("2021-01-04", tz="UTC"), pd.Timestamp("2021-01-05", tz="UTC")]
+    assert d.iloc[0] == pytest.approx(want_day1, rel=1e-13) and d.iloc[0] == res.equity.iloc[1439]
+    assert d.iloc[1] == pytest.approx(want_day1, rel=1e-13) and res.equity.iloc[400] == VS.INITIAL_CAPITAL
+
+
+def test_ledger_category_w_and_atr_are_read_at_the_trigger_minute():
+    t0 = 1003                                                  # t0 % 15 = 13：t0 与 t0 + 1 的决策读取不同的 ATR 桶
+    O, H, L, C, V = bars()
+    H[t0 - 8] = 10_050.0                                       # 只放大桶 [990, 1005) 的 TR：t0 + 1 决策时才收盘
+    ctx = ctx_from(O, H, L, C, V)
+    atr_at = ctx.atr["atr_at"]
+    assert atr_at[t0] == pytest.approx(10.0) and atr_at[t0 + 1] == pytest.approx((13 * 10.0 + 55.0) / 14)
+    z = np.zeros(len(C), bool)
+    one = z.copy()
+    one[t0] = True
+    ctx.cond["pct"] = {"up1": one, "up2": one, "dn1": z, "dn2": z}                 # ① + ② → 类别 3、W = 15
+    vin = F.build_version_inputs(ctx, VS.VERSIONS["B2_pure_long_sl"])
+    t = E.run_portfolio(ctx, vin, MAIN, RISK).trades.iloc[0]
+    assert t["trigger_idx"] == t0 and t["category"] == 3 and t["w"] == 15
+    assert t["atr15"] == atr_at[t0] == pytest.approx(10.0)                         # 平盘每桶 TR = 10,005 − 9,995
+    assert t["sl"] == pytest.approx(9_995.0 - 0.1 * 10.0)                           # SL_B 用同一个 t 时 ATR
+
+
+def test_exclusive_exclusion_order_for_each_adjacent_pair():
+    n = 800
+    O, H, L, C, V = bars(n=n)
+    bad = np.zeros(n, bool)
+    bad[[100, 151, 251]] = True
+    box = np.ones(n, bool)
+    box[270] = False
+    ctx = ctx_from(O, H, L, C, V, bad=bad, start_idx=30, last_idx=700, box=box)
+    up = np.zeros(n, bool)
+    up[[105, 150, 250, 270, 500]] = True
+    z = np.zeros(n, bool)
+    ctx.cond["pct"] = {"up1": up, "up2": z, "dn1": z, "dn2": z}
+    contam, atr_nan, base_nan = ctx.frame["contaminated"].to_numpy(), np.isnan(ctx.atr["atr_at"]), np.isnan(ctx.base_med)
+    # 105：污染 + ATR 未就绪 + 基准无定义；150：ATR 未就绪 + 入场 K 线 bad + 基准无定义；
+    # 250：入场 K 线 bad + 基准无定义（ATR 已就绪）；270：基准无定义 + 箱体不成立（仅 A 组）；500：合格
+    assert contam[105] and atr_nan[105] and not bad[106] and base_nan[105]
+    assert not contam[150] and atr_nan[150] and bad[151] and base_nan[150]
+    assert not contam[250] and not atr_nan[250] and bad[251] and base_nan[250]
+    assert not contam[270] and not atr_nan[270] and not bad[271] and base_nan[270] and not box[270]
+    order = ["ambiguous", "contaminated", "atr_not_ready", "entry_bar_bad", "baseline_undefined", "box_rejected", "invalid_stop"]
+    want = {"ambiguous": 0, "contaminated": 1, "atr_not_ready": 1, "entry_bar_bad": 1, "baseline_undefined": 1,
+            "box_rejected": 0, "invalid_stop": 0}
+    for name in ("A1_box_opt", "B1_pure_long"):
+        vin = F.build_version_inputs(ctx, VS.VERSIONS[name])
+        assert list(vin.skipped_exclusive) == order
+        assert vin.skipped_exclusive == want, name
+        assert np.flatnonzero(vin.entry_dir).tolist() == [500]
+    a1 = F.build_version_inputs(ctx, VS.VERSIONS["A1_box_opt"])
+    assert a1.skipped == {"ambiguous": 0, "contaminated": 1, "atr_not_ready": 2, "entry_bar_bad": 2, "baseline_undefined": 4,
+                          "box_rejected": 1, "invalid_stop": 0}
+
+
+def test_run_portfolio_rejects_version_inputs_not_aligned_with_the_grid(monkeypatch):
+    """版本输入的每个数组都必须是一维且与分钟网格等长；撮合核按分钟索引直接读取，长度不符时报错而不是越界读写。"""
+    ctx = ctx_from(*bars())                                    # n = 1500，交易窗口 400..1460
+    vin = SY.manual_inputs(ctx, B1, {I0: (1, P0 - 100), 1300: (1, P0 - 100)})
+    assert len(E.run_portfolio(ctx, vin, MAIN, RISK).trades) == 2
+    monkeypatch.setattr(E, "_trade_path", E._trade_path.py_func)     # 检查一旦缺失，纯 Python 核以 IndexError 失败，
+    monkeypatch.setattr(E, "_run_portfolio", E._run_portfolio.py_func)   # 而不是破坏测试进程的内存
+    for f in ("entry_dir", "sl", "eref", "w", "cat", "atr_at"):
+        a = getattr(vin, f)
+        for wrong in (a[:1100].copy(), np.r_[a, a[:5]], a.reshape(1, -1), a.reshape(-1, 1)):   # 短 / 长 / 二维 ×2
+            with pytest.raises(ValueError, match="one entry per grid minute"):
+                E.run_portfolio(ctx, dataclasses.replace(vin, **{f: wrong}), MAIN, RISK)
+
+
+def test_run_portfolio_rejects_inputs_built_on_another_context():
+    """版本输入只能与构造它的那个上下文对象一起撮合：另一个交易窗口、另一组触发条件、另一个网格长度或缺少来源都报错。"""
+    g = SY.random_grid(6_000, start=str(START.tz_localize(None)), seed=3, impulse_rate=3e-3)
+    annex = SY.synthetic_context(g, g.index[400], g.index[len(g) - 40])
+    main = SY.synthetic_context(g, g.index[1000], g.index[len(g) - 40])
+    assert len(E.run_portfolio(annex, F.build_version_inputs(annex, B3), MAIN, RISK).trades) > 0
+    alt = dataclasses.replace(main, cond={"pct": {k: ~v for k, v in main.cond["pct"].items()}, "z": main.cond["z"]})
+    short = SY.synthetic_context(g.iloc[:4_000], g.index[400], g.index[3_960])
+    for ctx, vin in ((annex, F.build_version_inputs(main, B3)), (alt, F.build_version_inputs(main, B3)),
+                     (short, F.build_version_inputs(annex, B3)),
+                     (annex, dataclasses.replace(F.build_version_inputs(annex, B3), context=None))):
+        with pytest.raises(ValueError, match="different context"):
+            E.run_portfolio(ctx, vin, MAIN, RISK)
+
+
+def test_run_portfolio_rejects_inputs_after_in_place_context_changes():
+    """版本输入构造之后，同一个上下文对象的交易窗口、该版本口径的触发条件或（A 组）箱体被原地改动时报错；
+    与该版本无关的改动（B3 的 Z 口径条件、B 组的箱体）不影响结果。"""
+    g = SY.random_grid(6_000, start=str(START.tz_localize(None)), seed=3, impulse_rate=3e-3)
+
+    def fresh(spec):
+        ctx = SY.synthetic_context(g, g.index[1_000], g.index[len(g) - 40])
+        return ctx, F.build_version_inputs(ctx, spec)
+
+    changes = {
+        "window widened": (B3, lambda c: c.window.__setitem__(slice(400, 1_000), True)),
+        "pct element flipped": (B3, lambda c: c.cond["pct"]["up1"].__setitem__(3_000, not c.cond["pct"]["up1"][3_000])),
+        "pct dict replaced": (B3, lambda c: c.cond.__setitem__("pct", {k: ~v for k, v in c.cond["pct"].items()})),
+        "z dict replaced": (VS.VERSIONS["B5_pure_bi_mom_z"],
+                            lambda c: c.cond.__setitem__("z", {k: ~v for k, v in c.cond["z"].items()})),
+        "box edited": (VS.VERSIONS["A1_box_opt"], lambda c: c.box_ok.__setitem__(slice(None), True)),
+    }
+    for name, (spec, change) in changes.items():
+        ctx, vin = fresh(spec)
+        E.run_portfolio(ctx, vin, MAIN, RISK)
+        change(ctx)
+        with pytest.raises(ValueError, match="changed in place"):
+            E.run_portfolio(ctx, vin, MAIN, RISK)
+        E.run_portfolio(ctx, F.build_version_inputs(ctx, spec), MAIN, RISK)
+    for spec, change in ((B3, changes["z dict replaced"][1]), (B3, changes["box edited"][1])):
+        ctx, vin = fresh(spec)
+        ref = E.run_portfolio(ctx, vin, MAIN, RISK).trades
+        change(ctx)
+        assert E.run_portfolio(ctx, vin, MAIN, RISK).trades.equals(ref)
+    ctx, vin = fresh(B3)
+    ctx.window[400:1_000] = True
+    assert (E.run_portfolio(ctx, F.build_version_inputs(ctx, B3), MAIN, RISK).trades["trigger_idx"] < 1_000).any()
+
+
+def test_make_context_requires_a_complete_unique_minute_grid():
+    g = SY.grid_from_arrays(START, *bars())
+    for bad_grid in (g.drop(g.index[700:705]), pd.concat([g.iloc[:800], g.iloc[797:]]), g.iloc[::-1], g.iloc[:0]):
+        assert bad_grid.attrs["provenance"] == "synthetic"
+        with pytest.raises(ValueError, match="complete minute grid"):
+            SY.synthetic_context(bad_grid, g.index[400], g.index[1400])
+    for box in (True, np.zeros(len(g) - 1, bool), np.zeros((len(g), 1), bool)):
+        with pytest.raises(ValueError, match="one value per grid minute"):
+            F.make_context(g, box, "synthetic", g.index[400], g.index[1400])
+    with pytest.raises(ValueError, match="complete minute grid"):                 # 与数据标签无关
+        F.make_context(g.drop(g.index[700:705]), np.zeros(len(g) - 5, bool), "binance_is", g.index[400], g.index[1400])
+    with pytest.raises(ValueError, match="one value per grid minute"):
+        F.make_context(g, np.zeros(len(g) - 1, bool), "binance_is", g.index[400], g.index[1400])
+
+
+def test_make_context_copies_box_ok():
+    O, H, L, C, V = bars()
+    box = np.zeros(len(C), bool)
+    ctx = ctx_from(O, H, L, C, V, box=box)
+    box[:] = True                                              # 调用方之后改写自己的数组，不影响上下文
+    assert not ctx.box_ok.any() and ctx.box_ok is not box
+
+
+def test_make_context_requires_a_timezone_aware_index_and_uses_utc():
+    """无时区的网格报错；其他时区的网格统一转换为 UTC，日净值按 UTC 日归属。"""
+    g = SY.grid_from_arrays(START, *bars())
+    naive = g.tz_localize(None)
+    assert naive.attrs["provenance"] == "synthetic"
+    with pytest.raises(ValueError, match="timezone-aware"):
+        SY.synthetic_context(naive, g.index[400], g.index[1400])
+    local = g.tz_convert("Asia/Shanghai")
+    assert local.attrs["provenance"] == "synthetic"
+    ctx = SY.synthetic_context(local, g.index[400], g.index[1400])
+    assert str(ctx.index.tz) == "UTC" and (ctx.index == g.index).all()
+    res = run(ctx, {I0: (1, P0 - 100)})
+    assert list(res.daily_equity.index) == [pd.Timestamp("2021-01-04", tz="UTC"), pd.Timestamp("2021-01-05", tz="UTC")]
+
+
+def test_n_signals_in_window_counts_only_in_window_signals():
+    ctx = ctx_from(*bars(), start_idx=600, last_idx=1300)
+    sig = {500: (1, P0 - 100), 600: (1, P0 - 100), 1300: (1, P0 - 100), 1301: (1, P0 - 100)}
+    res = E.run_portfolio(ctx, SY.manual_inputs(ctx, B1, sig), MAIN, RISK)
+    assert res.trades["trigger_idx"].tolist() == [600, 1300] and res.meta["n_signals_in_window"] == 2
+
+
+def test_daily_equity_last_minute_differs_from_min_max_first():
+    """日净值取当日最后一分钟：夹具中当日最后一分钟的净值既不是当日最低、最高，也不是当日第一分钟的值。"""
+    O, H, L, C, V = bars()
+    C[1315], H[1315] = 10_030.0, 10_035.0                      # 第二笔 time_bar1 小幅盈利，日末值介于当日最低与最高之间
+    res = run(ctx_from(O, H, L, C, V), {I0: (1, P0 - 100), 1300: (1, P0 - 100)})
+    day1 = res.equity.iloc[400:1440]
+    assert day1.min() < day1.iloc[-1] < day1.max() and day1.iloc[-1] != day1.iloc[0]
+    assert res.daily_equity.iloc[0] == res.equity.iloc[1439]
+
+
+def test_funding_supplied_flag_and_grid_without_settlement_minutes():
+    """funding_supplied 只在传入资金费序列时为真；网格内没有任何结算分钟时，未传入资金费的真实标签上下文仍被拒绝。"""
+    assert not ctx_from(*bars()).funding_supplied
+    n = 400                                                    # 01:00–07:39：网格内没有任何结算分钟
+    g = SY.grid_from_arrays(pd.Timestamp("2021-01-12 01:00", tz="UTC"), *bars(n=n))
+    no_fund = F.make_context(g, np.zeros(n, bool), "binance_is", g.index[0], g.index[-1], VS.ARCHIVE_GAP_MINUTES)
+    with pytest.raises(ValueError, match="funding settlement"):
+        E._require_real_inputs(no_fund)
+
+
+def test_ledger_column_types():
+    t = run(ctx_from(*bars()), {I0: (1, P0 - 100)}).trades
+    for c in ("trigger_idx", "entry_idx", "exit_bar", "side", "reason", "cont", "n_funding", "exit_time_idx",
+              "funding_last_boundary"):                         # 显式列出，不引用 engine._INT_COLS 本身
+        assert t[c].dtype == np.int64, c
+    assert t["cap_bound"].dtype == bool and t["floor_bound"].dtype == bool
+
+
+def test_halt_covering_t15_records_no_continuation_test():
+    """停机覆盖 t+15：不做延续判别（cont = −1，v1、k1 缺失），在停机后第一根有效开盘离场。"""
+    O, H, L, C, V = bars()
+    bad = np.zeros(len(C), bool)
+    bad[E0 + 5:E0 + 31] = True
+    t = run(ctx_from(O, H, L, C, V, bad=bad), {I0: (1, P0 - 100)}).trades.iloc[0]
+    assert t["reason_name"] == "halt_forced_exit" and t["exit_bar"] == E0 + 31
+    assert t["cont"] == -1 and np.isnan(t["v1"]) and np.isnan(t["k1"])
+
+
+def test_funding_last_boundary_column():
+    """诊断列 funding_last_boundary：时间离场等于离场时刻索引，盘中止损为离场时刻索引减 1。"""
+    O, H, L, C, V = bars()
+    L[E0 + 3] = 9_890.0
+    t = run(ctx_from(O, H, L, C, V), {I0: (1, P0 - 100)}).trades.iloc[0]
+    assert t["reason_name"] == "stop_intrabar" and t["funding_last_boundary"] == t["exit_time_idx"] - 1 == E0 + 3
+    t = run(ctx_from(*bars()), {I0: (1, P0 - 100)}).trades.iloc[0]
+    assert t["reason_name"] == "time_bar1" and t["funding_last_boundary"] == t["exit_time_idx"] == E0 + 15
+
+
+def test_defensive_checks_of_private_helpers():
+    """公开入口的其他检查使这两处在正常调用中不可达；直接调用私有函数固定它们的行为。"""
+    ctx = ctx_from(*bars())
+    n = len(ctx.C)
+    with pytest.raises(ValueError, match="outside the grid"):
+        E._check_signals(ctx, np.array([n - 1]), np.array([1.0]), np.array([P0 - 100]), np.array([P0]))
+    m, i = 1020, 1000                                          # 触发后只有 19 分钟数据
+    O, H, L, C, V = SY.flat_bars(m, P0, 10.0, 0.0005)
+    V[i + 1:i + 16] = 20.0                                     # v1 = 300 / 150 = 2.0
+    C[i + 15] = 10_004.0                                       # k1 = 0.8 → 继续持有第 2 根，走到网格末端
+    with pytest.raises(ValueError, match="end of the minute grid"):
+        E._trade_path(i, 1.0, P0 - 100, O, H, L, C, V, np.zeros(m, np.bool_), np.full(m, np.nan), 150.0, False,
+                      VS.V1_MIN, VS.K1_MIN, m)
 
 
 # ----------------------------------------------------------------------------

@@ -28,7 +28,8 @@ W 与触发类别只看该版本自身阈值口径、该信号所依据的脉冲
 """
 from __future__ import annotations
 
-from dataclasses import dataclass
+import hashlib
+from dataclasses import dataclass, field
 
 import numpy as np
 import pandas as pd
@@ -197,13 +198,22 @@ def make_context(grid: pd.DataFrame, box_ok: np.ndarray, source: str, main_start
                  last_trigger=VS.LAST_TRIGGER, archive_gap_minutes=(), funding: pd.Series | None = None) -> Context:
     """grid = data_1m.minute_grid(...)（完整分钟网格 + bad 标记）。funding：以结算时刻为索引的费率序列。
 
-    source = 'synthetic' 只接受带合成数据标记的网格（synthetic.grid_from_arrays）。资金费时间戳不得重复、费率必须有限，
-    网格范围内的结算与漏记分钟都必须恰在分钟开盘时刻上，否则报错。
+    source = 'synthetic' 只接受带合成数据标记的网格（synthetic.grid_from_arrays）。网格索引必须带时区（统一转换为 UTC），
+    且是严格连续、无重复的分钟（信号、ATR 自然整刻棒、基准窗口、持仓棒、冷却与离场时刻都把行号当作分钟数，日净值按
+    UTC 日归属），box_ok 必须逐分钟一一对应（复制一份，不与调用方共用）。
+    资金费时间戳不得重复、费率必须有限，网格范围内的结算与漏记分钟都必须恰在分钟开盘时刻上，否则报错。
     """
     if source == SYNTHETIC_TAG and grid.attrs.get("provenance") != SYNTHETIC_TAG:
         raise ValueError("source='synthetic' requires a grid built by impulse_study.synthetic (provenance tag missing)")
-    idx = pd.DatetimeIndex(grid.index).as_unit("ns")
+    idx = pd.DatetimeIndex(grid.index)
+    if idx.tz is None:
+        raise ValueError("grid index must be timezone-aware (UTC minutes)")
+    idx = idx.tz_convert("UTC").as_unit("ns")
     ns = np.asarray(idx.asi8)
+    if len(ns) == 0 or not (np.diff(ns) == MINUTE_NS).all():
+        raise ValueError("grid must be a complete minute grid (strictly consecutive, unique UTC minutes)")
+    if np.shape(box_ok) != (len(ns),):
+        raise ValueError("box_ok must hold one value per grid minute")
     O, H, L, C, V = (grid[c].to_numpy(dtype=float, copy=True) for c in ("open", "high", "low", "close", "volume"))
     bad = grid["bad"].to_numpy(dtype=bool, copy=True)
     f = S.impulse_frame(grid)
@@ -233,7 +243,7 @@ def make_context(grid: pd.DataFrame, box_ok: np.ndarray, source: str, main_start
             raise ValueError("funding timestamps fall off the minute grid")
         fr[pos[ok]] = rates[ok]
         n_mapped = int(ok.sum())
-    return Context(idx, O, H, L, C, V, bad, f, cond, np.asarray(box_ok, dtype=bool), atr, base, window, gap, fr, source,
+    return Context(idx, O, H, L, C, V, bad, f, cond, np.array(box_ok, dtype=bool), atr, base, window, gap, fr, source,
                    funding is not None, n_mapped)
 
 
@@ -259,6 +269,19 @@ class VersionInputs:
     atr_at: np.ndarray
     skipped: dict                # 各项资格条件的排除计数（逐项计数，可重叠；invalid_stop 只计其余条件都满足的分钟）
     skipped_exclusive: dict = None   # 按第 2.4 节顺序取第一个不满足条件的互斥计数：窗口内触发分钟 = 信号 + 各项之和
+    context: Context = field(default=None, repr=False, compare=False)   # 构造它的上下文对象；engine 只接受同一个对象
+    input_key: str = field(default=None, repr=False, compare=False)     # 构造时的 input_key(context, spec)；engine 核对
+
+
+def input_key(ctx: Context, spec: VS.VersionSpec) -> str:
+    """版本输入所依据的交易窗口、该版本阈值口径的触发条件与（A 组）箱体的逐分钟内容摘要（按位打包后 SHA256）。
+    engine.run_portfolio 用它发现版本输入构造之后对同一个上下文对象的原地改动（ctx.window[...] = …、ctx.cond[口径] = …、
+    ctx.box_ok[...] = …）；IS 全网格约 6 ms。"""
+    c = ctx.cond[spec.trigger_rule]
+    h = hashlib.sha256()
+    for a in (ctx.window, c["up1"], c["up2"], c["dn1"], c["dn2"]) + ((ctx.box_ok,) if spec.box else ()):
+        h.update(np.packbits(np.asarray(a, dtype=bool)).tobytes())
+    return h.hexdigest()
 
 
 def build_version_inputs(ctx: Context, spec: VS.VersionSpec) -> VersionInputs:
@@ -338,4 +361,5 @@ def build_version_inputs(ctx: Context, spec: VS.VersionSpec) -> VersionInputs:
     if int(remaining.sum()) != int((d != 0).sum()):                  # 对账：窗口内触发分钟 = 信号 + 互斥排除之和
         raise AssertionError("eligibility reconciliation failed")
     return VersionInputs(spec, d, np.where(d != 0, sl, np.nan), eref, np.where(d != 0, w, 0).astype(np.int8),
-                         np.where(d != 0, cat, 0).astype(np.int8), atr_at, skipped, skipped_exclusive)
+                         np.where(d != 0, cat, 0).astype(np.int8), atr_at, skipped, skipped_exclusive, ctx,
+                         input_key(ctx, spec))

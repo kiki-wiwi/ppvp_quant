@@ -12,7 +12,7 @@ import numpy as np
 import pandas as pd
 
 from . import versions as VS
-from .features import SYNTHETIC_TAG, Context, VersionInputs, make_context
+from .features import SYNTHETIC_TAG, Context, VersionInputs, input_key, make_context
 
 
 def grid_from_arrays(start, O, H, L, C, V, bad=None) -> pd.DataFrame:
@@ -96,4 +96,4 @@ def manual_inputs(ctx: Context, spec: VS.VersionSpec, signals: dict) -> VersionI
         d[i] = s
         sl[i] = stop
     return VersionInputs(spec, d, sl, ctx.C.copy(), np.zeros(n, np.int8), np.where(d != 0, 1, 0).astype(np.int8),
-                         ctx.atr["atr_at"], {}, {})
+                         ctx.atr["atr_at"], {}, {}, ctx, input_key(ctx, spec))
