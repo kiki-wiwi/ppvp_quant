@@ -1,0 +1,18 @@
+{
+  "command": [
+    "/home/ubuntu/Documents/Codex/2026-11-06/github-ppvp-quant-agent-2-checkpoint/work/diag_env/pandas3.0.5_py314/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "dip_limit_study.testing_guard",
+    "test_dip_limit_data.py",
+    "test_dip_limit_scope.py",
+    "test_dip_limit_runtime.py",
+    "-k",
+    "not test_new_loader_rejects_before_any_input_io and not test_independent_real_lock_rejects_before_frame_access and not test_cli_real_is_locked_before_output_or_input"
+  ],
+  "returncode": 0,
+  "scope": "affected entry and registration regressions; three prior lock-only stage tests excluded",
+  "new_files_verified": 27
+}

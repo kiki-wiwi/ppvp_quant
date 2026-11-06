@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "checked_at": "2026-11-06T16:52:02.451048+00:00",
+  "formal_attempts": 1,
+  "combinations": 8,
+  "original_outputs": 60,
+  "figures_visually_inspected": 3,
+  "legacy_frozen_files": 27,
+  "direction_one_registered_files": 23,
+  "this_study_protected_assets": 53,
+  "this_study_registered_new_files": 27,
+  "no_existing_tracked_change": true,
+  "no_stop_file": true
+}

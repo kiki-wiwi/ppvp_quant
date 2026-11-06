@@ -1,0 +1,14 @@
+{
+  "father_count": 83,
+  "fill_rate": 0.6626506024096386,
+  "mean_difference_bps": 16.641167267829555,
+  "filled_contribution_bps": 34.966913294651114,
+  "unfilled_contribution_bps": -18.32574602682156,
+  "statuses": {
+    "filled": 55,
+    "expired": 28
+  },
+  "filled_M_mean_bps": -51.027812189880045,
+  "unfilled_M_mean_bps": 54.32274715093534,
+  "mean_wait_minutes": 12.636363636363637
+}

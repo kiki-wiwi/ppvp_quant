@@ -1,0 +1,11 @@
+{
+  "version": "M_market",
+  "cost": "harsh",
+  "stress": false,
+  "source": "real",
+  "symbol": "BTCUSDT",
+  "failed": false,
+  "failure_reason": "",
+  "n_signals": 83,
+  "n_trades": 66
+}

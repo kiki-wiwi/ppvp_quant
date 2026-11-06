@@ -1,0 +1,11 @@
+{
+  "version": "L_limit",
+  "cost": "main",
+  "stress": true,
+  "source": "real",
+  "symbol": "BTCUSDT",
+  "failed": false,
+  "failure_reason": "",
+  "n_signals": 83,
+  "n_trades": 37
+}

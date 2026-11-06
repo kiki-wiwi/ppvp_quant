@@ -1,0 +1,12 @@
+source=real; building closed-bar trend/dip features
+executing M_market__gross
+executing M_market__main
+executing M_market__harsh
+executing L_limit__gross
+executing L_limit__main
+executing L_limit__harsh
+executing L_limit__main__stress
+executing L_limit__harsh__stress
+independent paired father events; unfilled limits retained as zero
+fixed Webb/Holm inference and shared-month intervals
+completed fixed batch; stop before further validation

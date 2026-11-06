@@ -1,0 +1,985 @@
+{
+  "status": "completed",
+  "source": "real",
+  "started_at": "2026-11-06T16:47:30.994081+00:00",
+  "ended_at": "2026-11-06T16:48:10.168261+00:00",
+  "combination_count": 8,
+  "input_metadata": {
+    "source": "real",
+    "symbol": "BTCUSDT",
+    "minute_count": 2103840,
+    "funding_count": 4383,
+    "archive_gap_count": 10,
+    "perp_content_hash_verified": true,
+    "commit": "66cd0b2866c603f8d88574e91b77e55f31cc2025",
+    "starting_worktree_status": "",
+    "registration": {
+      "baseline_commit": "6777532f427dab014c7d5972f4792644921f3248",
+      "baseline_tree": "3155d85d6cfe82c76d31f9af59a39d16f04a3877",
+      "branch": "codex/trend-dip-limit-study",
+      "authorization": "implementation_and_synthetic_validation_only",
+      "real_data_authorized": false,
+      "approved_plan_sha256": "df36ec579c750ef7580b828148d9ead00c22d69c4eea3ed073036b5730c671a3",
+      "legacy_frozen_key": "fc0d37b9d198ff85",
+      "protected_sources_sha256": {
+        "attribution.py": "1c7165769eef97fb86d1ef010e4dc3cdeef381f4ab52290bd7cfffe488c7357c",
+        "backtester.py": "6dd67439db79fe983bad7a3343bc7dcef118e012d7560499ced91756a8177568",
+        "breakout_study/__init__.py": "392b65990aa7f5e72a139110603794970c8089183ae211d1fc7901d63ae203c8",
+        "breakout_study/config.py": "7f4d405198a1115c2041fb01bac68afe7d90a6556db48681741ab166fb6ebec3",
+        "breakout_study/data.py": "dea80024aba425714fde4d5a01ffcb8edf742c9a3c70fc709a3d42efa6c01b39",
+        "breakout_study/engine.py": "d9b6d2b167d18b132d436d376a5058b700ded46b46200cc297dc02da9ba7a178",
+        "breakout_study/features.py": "ccefff290ba26a58971c41d5a6d6b50ec1835877cd8524b7422ebebe11d4cba0",
+        "breakout_study/reporting.py": "d20aefc0b8808882b3e3357b73003419f0294344d0284baafbf0f454acf0c636",
+        "breakout_study/runtime.py": "d46762a1b519236a1d39218a3276ebfedf1bcff0754d7743db9d192e05ab1730",
+        "breakout_study/scope.py": "369bb0816a9ebe02194116564c63a0596ebf21d43222559124f523c1fc3da0f4",
+        "breakout_study/statistics.py": "30fe3eec102a0052ab2d65b8193246a37850c144a3b42f1753db9f2bc569d0a6",
+        "breakout_study/synthetic.py": "675762dd8e42da7defaac1f28a7307b6b20942ce147c3f0d7c775d0774835d05",
+        "breakout_study/testing_guard.py": "b777aa07e28ae041fe797b2090cbe072063bcf85f06b087a37f1f0bb3d86fd4c",
+        "config.py": "858ff5a924a9555c950a96d30054642144dbe4a1e2d6f055e769540879beb429",
+        "data/manifest_impulse_1m.json": "7e0cb4af7c8a377a530aee4910d20e3339dc50db7c0734f6c21fea3b627d3666",
+        "data_loader.py": "92f88c5aabf4340c6bf186fb52cf483f20e5d399edd36da9a295467c720598c1",
+        "docs/phase_logs/BREAKOUT_implementation_and_synthetic.md": "e58d79334175e6612236746ab297cc9f1fa7ef410d596bdad21c8e84462035aa",
+        "impulse_study/__init__.py": "638e5da61906c4d4454c5af0c18b5bc99d7d7a0862c695124c79c3183e23f747",
+        "impulse_study/daily.py": "79272474bcb6c08d6e3f5485a4ec743fd16481cc6e424b49f67209b4872803d1",
+        "impulse_study/data_1m.py": "c0123f787a0b9f8b353108179648ed580cebb148a8fb068126c3e5f21e40fe84",
+        "impulse_study/engine.py": "cf20d7bcfbcbf93fd74bba8d98c88ba75871518c926ce7a485c53b6f41f4b39f",
+        "impulse_study/features.py": "345870dd82d17b813f45e42c6525349791e2cbe00e082653aa74168186901d21",
+        "impulse_study/qa.py": "6ecb9553768eedfda060c60762644c6b6d44f70d0d9849d7454333376960ce29",
+        "impulse_study/scope.py": "ecc6b5d31f572a07488af2fbd04e96283ec3439f1715ebc98b66bcd7b36be9dc",
+        "impulse_study/signals.py": "2fb18affd57d5be3b79839c0e06639cb03a4b1532f6a4fc155c27bb68d2fa0e3",
+        "impulse_study/synthetic.py": "c55ead6d2fcc6bc00cf87a8b44d40512f205cee562c784458ea7a4cbee6bf147",
+        "impulse_study/versions.py": "a95d63037379f83765591a4f5eda3d11f52d3f128f02b347836cd82f1109c76a",
+        "metrics.py": "13d16204f0724ff54e5a42f2ed3c1d8fd7a7661cd2955b949f17e6b5ef86e52b",
+        "numba_compat.py": "fadd3ecc7e5b9f91637e513db77e673a24d4b5a6dd8de191a57729b28f8e28de",
+        "pipeline.py": "0dfcf1cf61161e449c747a5cf2f6b904bb7b04fbb73194b1e0ee100e74e9e6d7",
+        "ppvp_audit/__init__.py": "365d600d3f7064c8e12527c379886db839edb78a0f1187df9f0bba9bf38109d7",
+        "ppvp_audit/common.py": "1ac48d73df21389ebbfeb830158de96015c508ed8a34d2a8ddc263b0e9697eeb",
+        "ppvp_audit/engine_path.py": "79c5a9d041b194bde16c951ae11ae4f8c5b1c0cb375dd213855e7d396791d8e6",
+        "ppvp_audit/event_sim.py": "6b57c86ed402b24c24f88e70c8f0fb8a22daa14a8841f076ec36b16e44ee7cfa",
+        "ppvp_audit/experiments.py": "af5ddba064faf9320ec33a014394cae78828a63ee9d8a68273a648c5e6a71415",
+        "ppvp_audit/nulls.py": "cd47c6ca9da7a2cf51ff02a76a10d5f07f7cda9eb3235002fb3c20356226c46b",
+        "ppvp_audit/variants.py": "288e0f9b953aff7cd3baedb8d57dd06837403299c4b26d7daa51652f8340b339",
+        "ppvp_engine.py": "6c498886be2731c96b3e8b1e50394859788fda8e17555c540120ee038cd0a2b2",
+        "reports/channel_vs_vah_round/README.md": "0e674597538999dfe995bb5e21e71710bd8b98000577be70823b374b75be8cb4",
+        "reports/channel_vs_vah_round/approved_plan.md": "fb661ffc51245092b209a53073e4e57340d335bd5333cc37595af11b6e3075af",
+        "reports/channel_vs_vah_round/implementation_hashes.json": "2f42587f2985ce2f4af6c46616cce8fa1dca522e5172323bab86804bbb02098e",
+        "reports/channel_vs_vah_round/registration.json": "12da7594f2015e3930761fac0686ac0ccbfc7e0d603be007342c442e4308bfa1",
+        "reports/impulse_vs_box_round/experiment_plan_impulse.md": "1103cfcdece166b24adfadec27b3cfbf54e05a5eb7277733b7304dd9635b0519",
+        "strategy_state_machine.py": "790ad492a9c96b2188148e0de61f53cce9cbca19fb31ab86eb4690e4cffb3e2a",
+        "test_breakout_data.py": "4995378e24d0be06e07d47b47fb457982dd0efeafe7e34b5b00443893a77a7cb",
+        "test_breakout_engine.py": "6453ce28f60afa069086cfadcf89ad240d48e8bba48c49f9faab7dba9d3c5d3e",
+        "test_breakout_features.py": "77312abdc81e3fe4b33e00fd48bb9f203fe50d94e009aac282e759edcce8c559",
+        "test_breakout_reporting.py": "794f48834f0ec6d12fbcea7343cda56f78f409d34c6cbaa73a20b49ba3fa0fff",
+        "test_breakout_runtime.py": "a30ef92d7ec43686c5936c30f775fe704b2f4c3b034f4a568b46bb6c9b78cc16",
+        "test_breakout_scope.py": "6a47a37482acd60ddaa28c1b475453a7e95da973a37b006252946410e7428070",
+        "test_breakout_statistics.py": "05b9dd0b541b1df4541a02ad34d2e73f824fa8ace5294c84b288b3fa24addf2a",
+        "test_impulse_cp2.py": "c9252c84fa769eda305385978bab8aba2935b2aded786e1b8bb683928fc774a4",
+        "tools/run_breakout_study.py": "f02d82e4f48c518d46459b82b5db38139d73d2d67720e2eab798eaf3c76c3804"
+      },
+      "protected_sources_verified": 53,
+      "new_files_verified": 27
+    }
+  },
+  "statistics": {
+    "schema_version": 1,
+    "calendar": {
+      "start": "2020-03-01T00:00:00+00:00",
+      "end_exclusive": "2024-01-01T00:00:00+00:00",
+      "days": 1401,
+      "months": 46,
+      "month_order": [
+        "2020-03",
+        "2020-04",
+        "2020-05",
+        "2020-06",
+        "2020-07",
+        "2020-08",
+        "2020-09",
+        "2020-10",
+        "2020-11",
+        "2020-12",
+        "2021-01",
+        "2021-02",
+        "2021-03",
+        "2021-04",
+        "2021-05",
+        "2021-06",
+        "2021-07",
+        "2021-08",
+        "2021-09",
+        "2021-10",
+        "2021-11",
+        "2021-12",
+        "2022-01",
+        "2022-02",
+        "2022-03",
+        "2022-04",
+        "2022-05",
+        "2022-06",
+        "2022-07",
+        "2022-08",
+        "2022-09",
+        "2022-10",
+        "2022-11",
+        "2022-12",
+        "2023-01",
+        "2023-02",
+        "2023-03",
+        "2023-04",
+        "2023-05",
+        "2023-06",
+        "2023-07",
+        "2023-08",
+        "2023-09",
+        "2023-10",
+        "2023-11",
+        "2023-12"
+      ]
+    },
+    "estimand": "full_calendar_portfolio_mean_daily_return",
+    "family": [
+      "M",
+      "L",
+      "D"
+    ],
+    "family_size": 3,
+    "family_alpha": 0.05,
+    "tests": {
+      "M": {
+        "mean": -6.353660965738142e-05,
+        "se": 2.827881053462938e-05,
+        "t": -2.2467921548389174,
+        "p_raw": 0.98718,
+        "mcse": 0.0003557495489489991,
+        "tail": "one_sided_positive",
+        "bootstrap_replicates": 99999,
+        "finite_mc_denominator": 100000,
+        "tail_exceedances": 98717,
+        "zero_bootstrap_se_count": 0,
+        "forced_p_one_reasons": [],
+        "hypothesis": "mean(M_market)<=0",
+        "rank": 3,
+        "p_holm": 1.0,
+        "holm_threshold": 0.05,
+        "reject": false,
+        "mc_boundary_sensitive": false
+      },
+      "L": {
+        "mean": -3.151444798808952e-05,
+        "se": 1.9709423855568974e-05,
+        "t": -1.598953283415486,
+        "p_raw": 0.9409,
+        "mcse": 0.0007457060149781602,
+        "tail": "one_sided_positive",
+        "bootstrap_replicates": 99999,
+        "finite_mc_denominator": 100000,
+        "tail_exceedances": 94089,
+        "zero_bootstrap_se_count": 0,
+        "forced_p_one_reasons": [],
+        "hypothesis": "mean(L_limit)<=0",
+        "rank": 2,
+        "p_holm": 1.0,
+        "holm_threshold": 0.025,
+        "reject": false,
+        "mc_boundary_sensitive": false
+      },
+      "D": {
+        "mean": 3.20221616692919e-05,
+        "se": 1.7254454212108383e-05,
+        "t": 1.8558779823252953,
+        "p_raw": 0.06955,
+        "mcse": 0.0008044466709139043,
+        "tail": "two_sided_absolute",
+        "bootstrap_replicates": 99999,
+        "finite_mc_denominator": 100000,
+        "tail_exceedances": 6954,
+        "zero_bootstrap_se_count": 0,
+        "forced_p_one_reasons": [],
+        "hypothesis": "mean(L_limit-M_market)=0",
+        "rank": 1,
+        "p_holm": 0.20865,
+        "holm_threshold": 0.016666666666666666,
+        "reject": false,
+        "mc_boundary_sensitive": false
+      }
+    },
+    "intervals": {
+      "daily_mean": {
+        "M_market": {
+          "estimate": -6.353660965738142e-05,
+          "lower": -0.00011863215938234826,
+          "upper": -9.026866007840944e-06,
+          "resamples": 10000,
+          "valid_resamples": 10000,
+          "discarded": 0,
+          "fraction_below_zero": 0.9898
+        },
+        "L_limit": {
+          "estimate": -3.151444798808952e-05,
+          "lower": -6.840253977647089e-05,
+          "upper": 7.684748564089098e-06,
+          "resamples": 10000,
+          "valid_resamples": 10000,
+          "discarded": 0,
+          "fraction_below_zero": 0.941
+        }
+      },
+      "annualized_sharpe": {
+        "M_market": {
+          "estimate": -1.134621653786532,
+          "lower": -2.1087728553287293,
+          "upper": -0.1571199959648416,
+          "resamples": 10000,
+          "valid_resamples": 10000,
+          "discarded": 0,
+          "fraction_below_zero": 0.9898
+        },
+        "L_limit": {
+          "estimate": -0.7431934316177435,
+          "lower": -1.7724310037919433,
+          "upper": 0.1698516904323555,
+          "resamples": 10000,
+          "valid_resamples": 10000,
+          "discarded": 0,
+          "fraction_below_zero": 0.941
+        }
+      },
+      "trade_net_bps": {
+        "M_market": {
+          "estimate": -46.69411117142293,
+          "lower": -100.11484696738847,
+          "upper": 1.8789944012910893,
+          "resamples": 10000,
+          "valid_resamples": 10000,
+          "discarded": 0,
+          "fraction_below_zero": 0.9704
+        },
+        "L_limit": {
+          "estimate": -31.181361411967597,
+          "lower": -88.4309620566996,
+          "upper": 20.073494349612588,
+          "resamples": 10000,
+          "valid_resamples": 10000,
+          "discarded": 0,
+          "fraction_below_zero": 0.8795
+        }
+      },
+      "paired_difference": {
+        "estimate": 3.20221616692919e-05,
+        "lower": -1.3818082002052839e-06,
+        "upper": 6.637073165389455e-05,
+        "resamples": 10000,
+        "valid_resamples": 10000,
+        "discarded": 0,
+        "fraction_below_zero": 0.0294
+      },
+      "event_paired_difference": {
+        "estimate": 16.641167267829555,
+        "lower": -10.037049907470951,
+        "upper": 41.893962355448856,
+        "resamples": 10000,
+        "valid_resamples": 10000,
+        "discarded": 0,
+        "fraction_below_zero": 0.1006
+      }
+    },
+    "metrics": {
+      "M_market": {
+        "daily_mean": -6.353660965738142e-05,
+        "annualized_sharpe": -1.134621653786532,
+        "total_return": -0.08590423973779582,
+        "final_equity": 91409.57602622041,
+        "bankrupt": false,
+        "equity_numerically_undefined": false,
+        "first_nonpositive_equity_day": null,
+        "zero_return_days": 1317,
+        "trade_count": 66,
+        "entry_month_count": 28,
+        "mean_net_bps": -46.694111171422925,
+        "half_trade_counts": [
+          41,
+          25
+        ],
+        "half_trade_mean_bps": [
+          -63.03753912869176,
+          -19.890889321502044
+        ],
+        "entry_month_net_bps_sums": {
+          "2020-04": -157.61209023864762,
+          "2020-05": -250.35356593413576,
+          "2020-06": -420.366513006203,
+          "2020-08": -448.9767121218979,
+          "2020-10": -168.14247739138364,
+          "2020-11": -779.6103122666831,
+          "2020-12": 365.942360540305,
+          "2021-01": -874.4413577196417,
+          "2021-02": -26.63078977635263,
+          "2021-03": -52.35906536896741,
+          "2021-04": -202.36231811420583,
+          "2021-08": 601.8774329840107,
+          "2021-09": -282.69025211709027,
+          "2021-10": 202.34345591632263,
+          "2021-11": -91.15689966179177,
+          "2022-03": -244.40023709444225,
+          "2022-08": -13.657846377624807,
+          "2022-11": -94.9851585215283,
+          "2023-01": 182.79203196560135,
+          "2023-02": -383.2410505248296,
+          "2023-03": 363.07353427635303,
+          "2023-04": -88.12010920660016,
+          "2023-05": -128.27526663056904,
+          "2023-06": 170.54839280046613,
+          "2023-07": -141.57083361036024,
+          "2023-10": 44.05704982144756,
+          "2023-11": -59.92249090964016,
+          "2023-12": -103.5702490258247
+        },
+        "removed_best_months": [
+          "2021-08",
+          "2020-12",
+          "2023-03"
+        ],
+        "remaining_trade_count": 54,
+        "remaining_trade_mean_bps": -81.71675305767747,
+        "cross_month_trade_count": 0,
+        "cross_month_trade_fraction": 0.0,
+        "Q3": false,
+        "Q4": false
+      },
+      "L_limit": {
+        "daily_mean": -3.151444798808952e-05,
+        "annualized_sharpe": -0.7431934316177436,
+        "total_return": -0.043631249833471775,
+        "final_equity": 95636.87501665282,
+        "bankrupt": false,
+        "equity_numerically_undefined": false,
+        "first_nonpositive_equity_day": null,
+        "zero_return_days": 1347,
+        "trade_count": 44,
+        "entry_month_count": 24,
+        "mean_net_bps": -31.1813614119676,
+        "half_trade_counts": [
+          26,
+          18
+        ],
+        "half_trade_mean_bps": [
+          -32.0569915549679,
+          -29.91656231652271
+        ],
+        "entry_month_net_bps_sums": {
+          "2020-04": -114.27901386232485,
+          "2020-05": 118.19122011223868,
+          "2020-06": -303.88907405471775,
+          "2020-10": -154.40411293320648,
+          "2020-11": -308.83150497874044,
+          "2020-12": 318.01029413590163,
+          "2021-01": -649.4707463255453,
+          "2021-02": 128.37382065336234,
+          "2021-04": -150.7349465742238,
+          "2021-08": 573.6925998610176,
+          "2021-09": -90.78224989799688,
+          "2021-10": -199.35806656493034,
+          "2022-03": -179.74649559924325,
+          "2022-08": -101.171417279278,
+          "2022-11": -67.45722311483148,
+          "2023-01": 106.56320201167335,
+          "2023-02": -280.2704941122391,
+          "2023-04": -19.263969552554748,
+          "2023-05": -92.45507549504894,
+          "2023-06": 212.1228381938919,
+          "2023-07": -101.16457437514038,
+          "2023-10": 125.26066995087096,
+          "2023-11": -67.04421434506361,
+          "2023-12": -73.8713679804455
+        },
+        "removed_best_months": [
+          "2021-08",
+          "2020-12",
+          "2023-06"
+        ],
+        "remaining_trade_count": 36,
+        "remaining_trade_mean_bps": -68.77237873103847,
+        "cross_month_trade_count": 0,
+        "cross_month_trade_fraction": 0.0,
+        "Q3": false,
+        "Q4": false
+      }
+    },
+    "harsh_metrics": {
+      "M_market": {
+        "daily_mean": -7.814681572417166e-05,
+        "annualized_sharpe": -1.4792540136094712,
+        "total_return": -0.10434719428897554,
+        "final_equity": 89565.28057110244,
+        "bankrupt": false,
+        "equity_numerically_undefined": false,
+        "first_nonpositive_equity_day": null,
+        "zero_return_days": 1317,
+        "trade_count": 66,
+        "entry_month_count": 28,
+        "mean_net_bps": -63.6794278561758,
+        "half_trade_counts": [
+          41,
+          25
+        ],
+        "half_trade_mean_bps": [
+          -80.01214073601369,
+          -36.89377873324165
+        ],
+        "entry_month_net_bps_sums": {
+          "2020-04": -174.51772679417357,
+          "2020-05": -301.2300926697642,
+          "2020-06": -471.1211748800151,
+          "2020-08": -482.7113410864463,
+          "2020-10": -202.05952036082363,
+          "2020-11": -847.130351340272,
+          "2020-12": 280.5953155817597,
+          "2021-01": -907.865647543377,
+          "2021-02": -60.671726645121,
+          "2021-03": -86.3557246819266,
+          "2021-04": -219.24591820153358,
+          "2021-08": 516.3666697399569,
+          "2021-09": -350.5715698875058,
+          "2021-10": 151.1518688940006,
+          "2021-11": -125.13083030131976,
+          "2022-03": -261.2462133045028,
+          "2022-08": -47.68165857371062,
+          "2022-11": -111.93505513875455,
+          "2023-01": 131.61233583494928,
+          "2023-02": -417.0070409451075,
+          "2023-03": 328.7863659602092,
+          "2023-04": -122.09210353636372,
+          "2023-05": -145.20179534515842,
+          "2023-06": 153.41294703187546,
+          "2023-07": -192.52256288217117,
+          "2023-10": 9.992746857940674,
+          "2023-11": -127.94826049041922,
+          "2023-12": -120.51417379982799
+        },
+        "removed_best_months": [
+          "2021-08",
+          "2023-03",
+          "2020-12"
+        ],
+        "remaining_trade_count": 54,
+        "remaining_trade_mean_bps": -98.67760351462091,
+        "cross_month_trade_count": 0,
+        "cross_month_trade_fraction": 0.0,
+        "Q3": false,
+        "Q4": false
+      },
+      "L_limit": {
+        "daily_mean": -3.557472710185088e-05,
+        "annualized_sharpe": -0.9012094829323182,
+        "total_return": -0.048998133174916636,
+        "final_equity": 95100.18668250834,
+        "bankrupt": false,
+        "equity_numerically_undefined": false,
+        "first_nonpositive_equity_day": null,
+        "zero_return_days": 1347,
+        "trade_count": 44,
+        "entry_month_count": 24,
+        "mean_net_bps": -40.125853537252276,
+        "half_trade_counts": [
+          26,
+          18
+        ],
+        "half_trade_mean_bps": [
+          -40.994958677123606,
+          -38.87047944632704
+        ],
+        "entry_month_net_bps_sums": {
+          "2020-04": -123.17008571551573,
+          "2020-05": 100.18325503693882,
+          "2020-06": -330.6028465641024,
+          "2020-10": -163.25558669014785,
+          "2020-11": -326.5348674701947,
+          "2020-12": 290.91858462026016,
+          "2021-01": -666.8382513839556,
+          "2021-02": 110.37567644185174,
+          "2021-04": -159.60208096061208,
+          "2021-08": 537.4176938685994,
+          "2021-09": -126.59583867005948,
+          "2021-10": -208.16457811827573,
+          "2022-03": -188.57364382660202,
+          "2022-08": -110.0761767220243,
+          "2022-11": -76.39571542583731,
+          "2023-01": 88.54384329302806,
+          "2023-02": -298.0040291514644,
+          "2023-04": -37.21042424842068,
+          "2023-05": -101.36856930693084,
+          "2023-06": 203.00110045152837,
+          "2023-07": -110.06933388535863,
+          "2023-10": 107.22443349571093,
+          "2023-11": -93.93667887589893,
+          "2023-12": -82.80343583161698
+        },
+        "removed_best_months": [
+          "2021-08",
+          "2020-12",
+          "2023-06"
+        ],
+        "remaining_trade_count": 36,
+        "remaining_trade_mean_bps": -77.69097040498576,
+        "cross_month_trade_count": 0,
+        "cross_month_trade_fraction": 0.0,
+        "Q3": false,
+        "Q4": false
+      }
+    },
+    "stress_metrics": {
+      "main": {
+        "daily_mean": -3.769040849342194e-05,
+        "annualized_sharpe": -1.0309212143029372,
+        "total_return": -0.051759224041252216,
+        "final_equity": 94824.07759587478,
+        "bankrupt": false,
+        "equity_numerically_undefined": false,
+        "first_nonpositive_equity_day": null,
+        "zero_return_days": 1355,
+        "trade_count": 37,
+        "entry_month_count": 23,
+        "mean_net_bps": -52.461905117918214,
+        "half_trade_counts": [
+          20,
+          17
+        ],
+        "half_trade_mean_bps": [
+          -61.74695476955624,
+          -41.538317292461706
+        ],
+        "entry_month_net_bps_sums": {
+          "2020-05": 245.00355249295933,
+          "2020-06": -129.66411977918293,
+          "2020-10": -157.3895465998744,
+          "2020-11": -314.8024162778085,
+          "2020-12": -253.31470979969126,
+          "2021-01": -655.4080691775566,
+          "2021-02": 122.41551283795593,
+          "2021-04": -153.72195266214914,
+          "2021-08": 367.018108803219,
+          "2021-09": -102.73644864654557,
+          "2021-10": -202.33900658245048,
+          "2022-03": -182.72950362518952,
+          "2022-08": -104.16218654938552,
+          "2022-11": -70.45136665550133,
+          "2023-01": 100.58451838534022,
+          "2023-02": -286.24443431913426,
+          "2023-04": -25.24810670027138,
+          "2023-05": -95.44672153465291,
+          "2023-06": 209.13309715803533,
+          "2023-07": -104.15534207120459,
+          "2023-10": 5.453541356390315,
+          "2023-11": -76.02002210532248,
+          "2023-12": -76.86486731095286
+        },
+        "removed_best_months": [
+          "2021-08",
+          "2020-05",
+          "2023-06"
+        ],
+        "remaining_trade_count": 32,
+        "remaining_trade_mean_bps": -86.3201639942871,
+        "cross_month_trade_count": 0,
+        "cross_month_trade_fraction": 0.0,
+        "Q3": false,
+        "Q4": false
+      },
+      "harsh": {
+        "daily_mean": -4.2159442834875256e-05,
+        "annualized_sharpe": -1.2202494099974055,
+        "total_return": -0.057643691433217015,
+        "final_equity": 94235.6308566783,
+        "bankrupt": false,
+        "equity_numerically_undefined": false,
+        "first_nonpositive_equity_day": null,
+        "zero_return_days": 1355,
+        "trade_count": 37,
+        "entry_month_count": 23,
+        "mean_net_bps": -64.38019255136946,
+        "half_trade_counts": [
+          20,
+          17
+        ],
+        "half_trade_mean_bps": [
+          -73.64887281378249,
+          -53.475862830883486
+        ],
+        "entry_month_net_bps_sums": {
+          "2020-05": 232.8866679586941,
+          "2020-06": -141.53154680436091,
+          "2020-10": -169.2264540234837,
+          "2020-11": -338.4766900683308,
+          "2020-12": -277.0584488476829,
+          "2021-01": -678.7128970879783,
+          "2021-02": 98.45906081103897,
+          "2021-04": -165.57609313646276,
+          "2021-08": 330.88963924338964,
+          "2021-09": -150.5042361671571,
+          "2021-10": -214.12645815331607,
+          "2022-03": -194.53965987849455,
+          "2022-08": -116.05771526223933,
+          "2022-11": -82.38400250717702,
+          "2023-01": 76.58647604036162,
+          "2023-02": -309.95190956525477,
+          "2023-04": -49.17869854385394,
+          "2023-05": -107.35186138613876,
+          "2023-06": 197.02161837981524,
+          "2023-07": -116.05086927748707,
+          "2023-10": -6.5043172355023655,
+          "2023-11": -111.88829439641664,
+          "2023-12": -88.79043449263168
+        },
+        "removed_best_months": [
+          "2021-08",
+          "2020-05",
+          "2023-06"
+        ],
+        "remaining_trade_count": 32,
+        "remaining_trade_mean_bps": -98.21453281195525,
+        "cross_month_trade_count": 0,
+        "cross_month_trade_fraction": 0.0,
+        "Q3": false,
+        "Q4": false
+      }
+    },
+    "events": {
+      "father_count": 83,
+      "filled_count": 55,
+      "unfilled_count": 28,
+      "fill_rate": 0.6626506024096386,
+      "mean_M_net_bps": -15.487864460448348,
+      "mean_L_net_bps": 1.1533028073812086,
+      "mean_difference_bps": 16.641167267829555,
+      "filled_pair_contribution_bps": 34.966913294651114,
+      "unfilled_opportunity_contribution_bps": -18.32574602682156,
+      "filled_M_mean_net_bps": -51.027812189880045,
+      "unfilled_M_mean_net_bps": 54.32274715093534,
+      "filled_pair_mean_difference_bps": 52.76825097192805,
+      "mean_filled_wait_minutes": 12.636363636363637,
+      "L_status_counts": {
+        "filled": 55,
+        "expired": 28
+      },
+      "contribution_denominator": "all_eligible_fathers",
+      "independent_overlapping_events_are_not_a_tradable_portfolio": true
+    },
+    "gates": {
+      "M_market": {
+        "Q1": {
+          "passed": false,
+          "trade_count": 66,
+          "entry_month_count": 28,
+          "minimum_trades": 100,
+          "minimum_entry_months": 24
+        },
+        "Q2": {
+          "passed": false,
+          "p_holm": 1.0,
+          "total_return": -0.08590423973779582,
+          "mean_net_bps": -46.694111171422925
+        },
+        "Q3": {
+          "passed": false,
+          "half_trade_mean_bps": [
+            -63.03753912869176,
+            -19.890889321502044
+          ],
+          "half_trade_counts": [
+            41,
+            25
+          ]
+        },
+        "Q4": {
+          "passed": false,
+          "removed_best_months": [
+            "2021-08",
+            "2020-12",
+            "2023-03"
+          ],
+          "remaining_trade_mean_bps": -81.71675305767747,
+          "remaining_trade_count": 54
+        },
+        "Q5": {
+          "passed": false,
+          "harsh_total_return": -0.10434719428897554,
+          "harsh_mean_net_bps": -63.6794278561758
+        },
+        "Q7": {
+          "passed": null,
+          "applicable": false
+        },
+        "Q6": {
+          "passed": false,
+          "p_holm": 0.20865,
+          "half_mean_paired_differences": [
+            5.7544883538704645e-05,
+            8.562235129050867e-06
+          ],
+          "directional_version": "L_limit",
+          "supports_qualified_increment": false
+        }
+      },
+      "L_limit": {
+        "Q1": {
+          "passed": false,
+          "trade_count": 44,
+          "entry_month_count": 24,
+          "minimum_trades": 100,
+          "minimum_entry_months": 24
+        },
+        "Q2": {
+          "passed": false,
+          "p_holm": 1.0,
+          "total_return": -0.043631249833471775,
+          "mean_net_bps": -31.1813614119676
+        },
+        "Q3": {
+          "passed": false,
+          "half_trade_mean_bps": [
+            -32.0569915549679,
+            -29.91656231652271
+          ],
+          "half_trade_counts": [
+            26,
+            18
+          ]
+        },
+        "Q4": {
+          "passed": false,
+          "removed_best_months": [
+            "2021-08",
+            "2020-12",
+            "2023-06"
+          ],
+          "remaining_trade_mean_bps": -68.77237873103847,
+          "remaining_trade_count": 36
+        },
+        "Q5": {
+          "passed": false,
+          "harsh_total_return": -0.048998133174916636,
+          "harsh_mean_net_bps": -40.125853537252276
+        },
+        "Q7": {
+          "passed": false,
+          "arms": {
+            "main": {
+              "passed": false,
+              "trade_count": 37,
+              "entry_month_count": 23,
+              "minimum_trades": 100,
+              "minimum_entry_months": 24,
+              "sample_passed": false,
+              "positive_performance": false,
+              "total_return": -0.051759224041252216,
+              "mean_net_bps": -52.461905117918214
+            },
+            "harsh": {
+              "passed": false,
+              "trade_count": 37,
+              "entry_month_count": 23,
+              "minimum_trades": 100,
+              "minimum_entry_months": 24,
+              "sample_passed": false,
+              "positive_performance": false,
+              "total_return": -0.057643691433217015,
+              "mean_net_bps": -64.38019255136946
+            }
+          },
+          "stress_main_minus_M_main_daily_mean": 2.584620116395947e-05,
+          "positive_stress_increment": true,
+          "additional_significance_test": false
+        },
+        "Q6": {
+          "passed": false,
+          "p_holm": 0.20865,
+          "half_mean_paired_differences": [
+            5.7544883538704645e-05,
+            8.562235129050867e-06
+          ],
+          "directional_version": "L_limit",
+          "supports_qualified_increment": false
+        }
+      }
+    },
+    "execution_failed_versions": {
+      "M_market": false,
+      "L_limit": false
+    },
+    "disqualified_versions": {
+      "M_market": false,
+      "L_limit": false
+    },
+    "failure_reasons": {
+      "M_market": [],
+      "L_limit": []
+    },
+    "conclusions": {
+      "versions": {
+        "M_market": "insufficient_evidence",
+        "L_limit": "insufficient_evidence"
+      },
+      "relative": {
+        "status": "stop_current_hypothesis",
+        "Q6": false,
+        "statistically_significant": false,
+        "directional_version": "L_limit",
+        "qualified_winner": null,
+        "qualified_versions": {
+          "M_market": false,
+          "L_limit": false
+        },
+        "mean_paired_difference": 3.20221616692919e-05,
+        "half_mean_paired_differences": [
+          5.7544883538704645e-05,
+          8.562235129050867e-06
+        ],
+        "half_directions_agree": true,
+        "directional_version_failed_gates": [
+          "Q1",
+          "Q2",
+          "Q3",
+          "Q4",
+          "Q5",
+          "Q7"
+        ],
+        "directional_version_disqualified": false,
+        "limit_relative_improvement_supported": false,
+        "market_preferred_without_passive_evidence": false,
+        "stop_current_hypothesis": true
+      },
+      "candidate_labels": {
+        "M_market": "市价急跌规则的 IS 探索性候选",
+        "L_limit": "在登记成交假设下的限价 IS 探索性候选"
+      },
+      "cost_sensitive_label": "成本敏感、不具备资格",
+      "fill_sensitive_label": "成交假设敏感、不具备限价候选资格",
+      "no_sharpe_winner_selection": true
+    },
+    "seeds": {
+      "webb": 2026110801,
+      "month_indices": 2026110802,
+      "generator": "NumPy Generator(PCG64)"
+    },
+    "draw_hashes": {
+      "webb": "8807aecc5c81b49de09a9af6dae0cd18dd7b7e41bddd6b6f7d007ac2a1e8252f",
+      "month_indices": "f5323b917fbbfcb19c289482243a0c89680e0b864651a995a3bcb74da91e7bf3"
+    },
+    "draw_metadata": {
+      "webb_shape": [
+        99999,
+        46
+      ],
+      "webb_dtype": "float64",
+      "month_indices_shape": [
+        10000,
+        46
+      ],
+      "month_indices_dtype": "int64",
+      "byte_order": "little",
+      "hash_serialization": "ndarray.tobytes(order=C)"
+    },
+    "environment": {
+      "python": "3.14.4",
+      "numpy": "2.5.4",
+      "pandas": "3.0.5",
+      "platform": "Linux-7.0.0-1015-oracle-aarch64-with-glibc2.43"
+    },
+    "disclosures": {
+      "interval_p_disagreements": [
+        {
+          "hypothesis": "M",
+          "interval_supports_test_direction": false,
+          "holm_rejects": false,
+          "disagrees": false
+        },
+        {
+          "hypothesis": "L",
+          "interval_supports_test_direction": false,
+          "holm_rejects": false,
+          "disagrees": false
+        },
+        {
+          "hypothesis": "D",
+          "interval_supports_test_direction": false,
+          "holm_rejects": false,
+          "disagrees": false
+        }
+      ],
+      "interval_gate_disagreements": [
+        {
+          "version": "M_market",
+          "daily_mean_interval_positive": false,
+          "Q2_passed": false,
+          "qualified": false,
+          "interval_vs_Q2_disagrees": false,
+          "interval_vs_candidate_disagrees": false
+        },
+        {
+          "version": "L_limit",
+          "daily_mean_interval_positive": false,
+          "Q2_passed": false,
+          "qualified": false,
+          "interval_vs_Q2_disagrees": false,
+          "interval_vs_candidate_disagrees": false
+        }
+      ],
+      "mc_boundary_sensitive_hypotheses": [],
+      "mcse_formula": "sqrt(p_raw*(1-p_raw)/99999)",
+      "mc_boundary_rule": "abs(p_raw-step_threshold)<2*MCSE",
+      "no_resampling_refill": true,
+      "intervals_are_not_significance_gates": true,
+      "trade_clusters": "entry_month",
+      "event_clusters": "father_decision_month",
+      "unfilled_event_L_returns_are_zero": true,
+      "same_month_draws_for_M_L_D_trade_and_event_intervals": true,
+      "cross_month_trade_fraction": {
+        "M_market": 0.0,
+        "L_limit": 0.0
+      },
+      "stress_cross_month_trade_fraction": {
+        "main": 0.0,
+        "harsh": 0.0
+      },
+      "cluster_limitation": "Month clustering permits within-month dependence; cross-month holdings and market dependence remain.",
+      "relative_effect_scope": "Execution-policy total effect includes prices, waiting, nonfills, fees and portfolio state; it does not isolate maker fees or signal alpha.",
+      "stress_limitation": "Joint stress changes the fill set and is not a performance lower bound or proof of real maker execution.",
+      "multiple_research_limitation": "The three-test Holm family controls this registered family only, not prior research on these already-viewed IS data.",
+      "sample_minimum_is_not_power_guarantee": true,
+      "independent_validation_required": true,
+      "event_portfolio_sharpe_prohibited": true,
+      "failure_flags_contract": "Runtime must OR every cost and stress execution failure per version, including intraminute nonpositive equity.",
+      "reused_pure_helpers": [
+        "breakout_study.statistics.webb_test",
+        "breakout_study.statistics.month_intervals",
+        "breakout_study.statistics._interval"
+      ]
+    }
+  },
+  "execution_attribution": {
+    "father_count": 83,
+    "fill_rate": 0.6626506024096386,
+    "mean_difference_bps": 16.641167267829555,
+    "filled_contribution_bps": 34.966913294651114,
+    "unfilled_contribution_bps": -18.32574602682156,
+    "statuses": {
+      "filled": 55,
+      "expired": 28
+    },
+    "filled_M_mean_bps": -51.027812189880045,
+    "unfilled_M_mean_bps": 54.32274715093534,
+    "mean_wait_minutes": 12.636363636363637
+  },
+  "decision_hour_count": 35064,
+  "eligible_father_count": 83,
+  "trade_counts": {
+    "M_market__gross": 66,
+    "M_market__main": 66,
+    "M_market__harsh": 66,
+    "L_limit__gross": 44,
+    "L_limit__main": 44,
+    "L_limit__harsh": 44,
+    "L_limit__main__stress": 37,
+    "L_limit__harsh__stress": 37
+  }
+}

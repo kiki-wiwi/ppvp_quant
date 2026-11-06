@@ -1,0 +1,43 @@
+{
+  "stage": "input_preflight",
+  "started_at": "2026-11-06T16:45:31.742523+00:00",
+  "matching_runs": 0,
+  "baseline": "e9dcc33d93225af314028668ff4200ad2bf81f36",
+  "starting_worktree_status": "",
+  "environment": {
+    "python": "3.14.4",
+    "pandas": "3.0.5",
+    "numpy": "2.5.4",
+    "pyarrow": "26.0.1",
+    "numba": "0.68.1",
+    "scipy": "1.18.1",
+    "matplotlib": "3.11.2",
+    "pytest": "9.2.0"
+  },
+  "protected_sources": 53,
+  "new_files": 27,
+  "legacy_frozen_files": 27,
+  "direction_one_files": 23,
+  "legacy_frozen_key": "fc0d37b9d198ff85",
+  "status": "passed",
+  "input": {
+    "minute_count": 2103840,
+    "funding_count": 4383,
+    "archive_gap_count": 10,
+    "perp_content_hash_verified": true,
+    "source": "real",
+    "symbol": "BTCUSDT"
+  },
+  "first_minute": "2020-01-01 00:00:00+00:00",
+  "last_minute": "2023-12-31 23:59:00+00:00",
+  "bad_minutes": 144,
+  "perp_content_sha256": "1e26dd7ecfe6ee03dc2814dcb0041ef2d5724ff7018b2b7f20ae6364d99f5a33",
+  "input_method": "existing cache, no zip rebuild; both input loaders apply lower and upper IS predicates",
+  "funding_reference_sha256": "c51b924d1c18cbae55646c75a2a8ef862c69f1bef565d38e5d3c52eae263d39c",
+  "source_paths": {
+    "data/processed_1m/BTCUSDT_perp_1m_IS.parquet": "/home/ubuntu/Documents/Codex/2026-11-06/github-ppvp-quant-agent-2-checkpoint/work/ppvp_quant/data/processed_1m/BTCUSDT_perp_1m_IS.parquet",
+    "data/processed/BTCUSDT_funding.parquet": "/home/ubuntu/.codex/worktrees/channel-vah-prereg/ppvp_quant/data/processed/BTCUSDT_funding.parquet"
+  },
+  "forbidden_inputs_read": false,
+  "ended_at": "2026-11-06T16:45:32.975791+00:00"
+}

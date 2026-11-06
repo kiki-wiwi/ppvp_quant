@@ -1,0 +1,12 @@
+2026-11-06T16:47:30.996998+00:00 source=real; building closed-bar trend/dip features
+2026-11-06T16:47:36.970477+00:00 executing M_market__gross
+2026-11-06T16:47:40.617042+00:00 executing M_market__main
+2026-11-06T16:47:44.249526+00:00 executing M_market__harsh
+2026-11-06T16:47:47.886818+00:00 executing L_limit__gross
+2026-11-06T16:47:51.427449+00:00 executing L_limit__main
+2026-11-06T16:47:54.984197+00:00 executing L_limit__harsh
+2026-11-06T16:47:58.555042+00:00 executing L_limit__main__stress
+2026-11-06T16:48:02.107605+00:00 executing L_limit__harsh__stress
+2026-11-06T16:48:05.672266+00:00 independent paired father events; unfilled limits retained as zero
+2026-11-06T16:48:08.499861+00:00 fixed Webb/Holm inference and shared-month intervals
+2026-11-06T16:48:10.170233+00:00 completed fixed batch; stop before further validation
