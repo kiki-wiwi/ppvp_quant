@@ -1,0 +1,85 @@
+{
+  "baseline": "b4e3fc19f7f8ece6177a8460983d68b93bd481c3",
+  "implementation_commit": "d0297578f9d2f6604d8676b1db3fdfa550f696f9",
+  "unlock_commit": "a89814fb2f7fe3b8b5bf4467202083b60838ee63",
+  "dirty_files": [],
+  "frozen_key": "fc0d37b9d198ff85",
+  "frozen_sha256_normalized": {
+    "impulse_study/__init__.py": "638e5da61906c4d4454c5af0c18b5bc99d7d7a0862c695124c79c3183e23f747",
+    "impulse_study/engine.py": "bb45fc65f18b784df0207fae59f8fb172d73b6942a92e9e58de9f681242dbfad",
+    "impulse_study/features.py": "345870dd82d17b813f45e42c6525349791e2cbe00e082653aa74168186901d21",
+    "impulse_study/versions.py": "a95d63037379f83765591a4f5eda3d11f52d3f128f02b347836cd82f1109c76a",
+    "impulse_study/synthetic.py": "c55ead6d2fcc6bc00cf87a8b44d40512f205cee562c784458ea7a4cbee6bf147",
+    "impulse_study/signals.py": "2fb18affd57d5be3b79839c0e06639cb03a4b1532f6a4fc155c27bb68d2fa0e3",
+    "impulse_study/daily.py": "79272474bcb6c08d6e3f5485a4ec743fd16481cc6e424b49f67209b4872803d1",
+    "impulse_study/data_1m.py": "c0123f787a0b9f8b353108179648ed580cebb148a8fb068126c3e5f21e40fe84",
+    "impulse_study/scope.py": "ecc6b5d31f572a07488af2fbd04e96283ec3439f1715ebc98b66bcd7b36be9dc",
+    "impulse_study/qa.py": "6ecb9553768eedfda060c60762644c6b6d44f70d0d9849d7454333376960ce29",
+    "numba_compat.py": "fadd3ecc7e5b9f91637e513db77e673a24d4b5a6dd8de191a57729b28f8e28de",
+    "ppvp_engine.py": "6c498886be2731c96b3e8b1e50394859788fda8e17555c540120ee038cd0a2b2",
+    "config.py": "858ff5a924a9555c950a96d30054642144dbe4a1e2d6f055e769540879beb429",
+    "data_loader.py": "92f88c5aabf4340c6bf186fb52cf483f20e5d399edd36da9a295467c720598c1",
+    "ppvp_audit/__init__.py": "365d600d3f7064c8e12527c379886db839edb78a0f1187df9f0bba9bf38109d7",
+    "ppvp_audit/nulls.py": "cd47c6ca9da7a2cf51ff02a76a10d5f07f7cda9eb3235002fb3c20356226c46b",
+    "ppvp_audit/experiments.py": "af5ddba064faf9320ec33a014394cae78828a63ee9d8a68273a648c5e6a71415",
+    "ppvp_audit/common.py": "1ac48d73df21389ebbfeb830158de96015c508ed8a34d2a8ddc263b0e9697eeb",
+    "ppvp_audit/engine_path.py": "79c5a9d041b194bde16c951ae11ae4f8c5b1c0cb375dd213855e7d396791d8e6",
+    "ppvp_audit/event_sim.py": "6b57c86ed402b24c24f88e70c8f0fb8a22daa14a8841f076ec36b16e44ee7cfa",
+    "ppvp_audit/variants.py": "288e0f9b953aff7cd3baedb8d57dd06837403299c4b26d7daa51652f8340b339",
+    "attribution.py": "1c7165769eef97fb86d1ef010e4dc3cdeef381f4ab52290bd7cfffe488c7357c",
+    "metrics.py": "13d16204f0724ff54e5a42f2ed3c1d8fd7a7661cd2955b949f17e6b5ef86e52b",
+    "backtester.py": "6dd67439db79fe983bad7a3343bc7dcef118e012d7560499ced91756a8177568",
+    "pipeline.py": "0dfcf1cf61161e449c747a5cf2f6b904bb7b04fbb73194b1e0ee100e74e9e6d7",
+    "strategy_state_machine.py": "790ad492a9c96b2188148e0de61f53cce9cbca19fb31ab86eb4690e4cffb3e2a",
+    "test_impulse_cp2.py": "c9252c84fa769eda305385978bab8aba2935b2aded786e1b8bb683928fc774a4"
+  },
+  "registration": {
+    "implementation_commit": "d0297578f9d2f6604d8676b1db3fdfa550f696f9",
+    "new_file_sha256": {
+      "impulse_study/cp3_figures.py": "2146c46c802da9799777632e03727f0693155082cb6af430ae212b35b00c7f5b",
+      "impulse_study/cp3_matching.py": "f48aed7bc469ded272a2405dbf92c27f70b4cb5d0bb7cb921082900b10f5df1d",
+      "impulse_study/cp3_runtime.py": "a030c75f2111d8d0804602e81f125a7df89dbd315c023240ab45bc4181cbbce4",
+      "impulse_study/cp3_sensitivity.py": "e59c8123791d306e515c4be1d24de9f0eda79ff3cb0234a6ca845ce6178dd22a",
+      "impulse_study/cp3_statistics.py": "28832435d5497ac3cff6ff9003088eef421effc73477fc2dc0952919d2cc31c1",
+      "test_impulse_cp3_integration.py": "70cde7170e1710de98dcd23f8e06f67097082ca2702d40928d9e545cc06f628e",
+      "test_impulse_cp3_matching.py": "2a1d3254a4e5619431ca9877fd725851d642f60a56c2de9bcff40a66536e8984",
+      "test_impulse_cp3_runtime_figures.py": "c5e4adaa765727416033c099d6aad5359725a17ae70381a8d0be524f8331bf84",
+      "test_impulse_cp3_sensitivity.py": "702fde6d1eed12b0464eb9234cb77d965f3e9639539f4c7e6c5730f5f020abc3",
+      "test_impulse_cp3_statistics.py": "82bb7328a1b8b616e83b042a6f8c83c22fb0e9d031556c2660bc2b9ca6b25fb9",
+      "tools/run_impulse_cp3.py": "68e1f36d6837dc4da30c88fb66b59ecae88d48e940929cda8c9bf5a7cdff467d"
+    },
+    "existing_dependency_sha256": {
+      "tools/run_impulse_cp1.py": "103aa26b9356c0d85c55beea0fa36fe87b4d313de9d4bb109fdd6f7fd2df6c2e",
+      "data/manifest_impulse_1m.json": "7e0cb4af7c8a377a530aee4910d20e3339dc50db7c0734f6c21fea3b627d3666",
+      "reports/impulse_vs_box_round/cp2/cp2_feature_checks.json": "abbfbf4f46f199a434617bfd0a76d1a9d4bd59f08a15f3a17b85262788cc3d43",
+      "reports/impulse_vs_box_round/experiment_plan_impulse.md": "1103cfcdece166b24adfadec27b3cfbf54e05a5eb7277733b7304dd9635b0519",
+      "requirements.txt": "cf19cfdc6bfcb534525b5f3e83218e1a0de53d2765f4e6b89e2b73bf45a2b3e5"
+    },
+    "synthetic_validation": {
+      "result": "184 passed, 4 deselected in 84.37s",
+      "excluded_real_tests": [
+        "test_real_data_features_are_causal_under_prefix_truncation",
+        "test_real_data_context_is_locked_out_of_the_engine",
+        "test_real_data_cache_hash_and_headline_counts",
+        "test_real_data_offline_rebuild_from_manifest"
+      ],
+      "includes_complete_80_synthetic_pipeline": true
+    },
+    "pre_unlock_events": [
+      "Initial synthetic fixture compared microsecond asi8 to nanosecond boundary, stopped and reported. User explicitly approved proposed_fixture_fix.patch and defensive UTC/ns normalization in new files.",
+      "User clarified pure technical issues in new unfrozen files/tests may be corrected before first commit. A mixed-timezone synthetic integration fixture was corrected under that authorization. No real data was read; no frozen definition changed."
+    ]
+  },
+  "started_utc": "2026-11-06T07:48:24.024832+00:00",
+  "environment": {
+    "python": "3.14.4",
+    "platform": "Linux-7.0.0-1015-oracle-aarch64-with-glibc2.43",
+    "numpy": "2.5.4",
+    "pandas": "3.0.5",
+    "numba": "0.68.1",
+    "scipy": "1.18.1",
+    "pyarrow": "26.0.1",
+    "matplotlib": "3.11.2",
+    "pytest": "9.2.0"
+  }
+}

@@ -1,0 +1,278 @@
+{
+  "per_version_full_period": {
+    "B1_pure_long": {
+      "metrics": {
+        "n": 6603,
+        "gross_bps": -0.8602487580521377,
+        "net_bps": -17.9306656192459,
+        "net_R": -0.10751252288240609,
+        "gross_R": -0.0010180054847960117,
+        "win_rate": 0.313190973799788,
+        "sharpe": -9.285059374782449,
+        "total_return": -0.9572453024025288,
+        "max_drawdown": -0.9577778348309856,
+        "holding_time_share": 0.058608544375998176,
+        "holding_minutes_denominator": 2103840,
+        "funding_total": -489.62410462664286,
+        "cap_bound_n": 0,
+        "floor_bound_n": 0,
+        "stop_exit_share": 0.032106618203846735,
+        "exit_reasons": {
+          "time_bar1": 4704,
+          "time_bar2": 1687,
+          "stop_intrabar": 212
+        },
+        "daily_return_count": 1461,
+        "max_drawdown_minute": -0.9578562497413243
+      },
+      "net_bps_month": {
+        "mean": -17.9306656192459,
+        "lo": -19.69207062643241,
+        "hi": -16.06990813419807,
+        "p_le_0": 1.0,
+        "p": 1.0,
+        "p_positive": 1.0,
+        "p_negative": 0.0,
+        "se": 0.9139468502399518,
+        "t": -19.618936937676736,
+        "n": 6603,
+        "n_clusters": 48,
+        "cluster": "month",
+        "discarded": 0,
+        "ci_seed": 20264611,
+        "p_seed": 20264661,
+        "wild_B": 99999,
+        "ci_B": 10000,
+        "mcse_positive": 0.0,
+        "mcse_negative": 0.0,
+        "reason": null
+      }
+    },
+    "B2_pure_long_sl": {
+      "metrics": {
+        "n": 6703,
+        "gross_bps": -0.17460495725129974,
+        "net_bps": -17.233383107827102,
+        "net_R": -0.21316584359494983,
+        "gross_R": -0.006472251492314305,
+        "win_rate": 0.31015963001641056,
+        "sharpe": -9.357686570681228,
+        "total_return": -0.9971854852592911,
+        "max_drawdown": -0.9972340999621915,
+        "holding_time_share": 0.05648623469465359,
+        "holding_minutes_denominator": 2103840,
+        "funding_total": -422.81955894963903,
+        "cap_bound_n": 0,
+        "floor_bound_n": 0,
+        "stop_exit_share": 0.15202148291809636,
+        "exit_reasons": {
+          "time_bar1": 4084,
+          "time_bar2": 1600,
+          "stop_intrabar": 1019
+        },
+        "daily_return_count": 1461,
+        "max_drawdown_minute": -0.9972441552468198
+      },
+      "net_bps_month": {
+        "mean": -17.233383107827102,
+        "lo": -19.091931663763095,
+        "hi": -15.501668787587501,
+        "p_le_0": 1.0,
+        "p": 1.0,
+        "p_positive": 1.0,
+        "p_negative": 0.0,
+        "se": 0.9217009044688909,
+        "t": -18.697370290373584,
+        "n": 6703,
+        "n_clusters": 48,
+        "cluster": "month",
+        "discarded": 0,
+        "ci_seed": 20264612,
+        "p_seed": 20264662,
+        "wild_B": 99999,
+        "ci_B": 10000,
+        "mcse_positive": 0.0,
+        "mcse_negative": 0.0,
+        "reason": null
+      }
+    },
+    "B3_pure_bi_mom": {
+      "metrics": {
+        "n": 10321,
+        "gross_bps": -2.7691706111557757,
+        "net_bps": -19.750940261261597,
+        "net_R": -0.23640607554829568,
+        "gross_R": -0.025540950813553485,
+        "win_rate": 0.2851467881019281,
+        "sharpe": -11.626754377088732,
+        "total_return": -0.9999559182899596,
+        "max_drawdown": -0.9999562201078696,
+        "holding_time_share": 0.08659879078256902,
+        "holding_minutes_denominator": 2103840,
+        "funding_total": 307.38738072919705,
+        "cap_bound_n": 0,
+        "floor_bound_n": 0,
+        "stop_exit_share": 0.1406840422439686,
+        "exit_reasons": {
+          "time_bar1": 6519,
+          "time_bar2": 2349,
+          "stop_intrabar": 1452,
+          "halt_forced_exit": 1
+        },
+        "daily_return_count": 1461,
+        "max_drawdown_minute": -0.9999566914830464
+      },
+      "net_bps_month": {
+        "mean": -19.750940261261597,
+        "lo": -21.382062875035462,
+        "hi": -17.906733903218274,
+        "p_le_0": 1.0,
+        "p": 1.0,
+        "p_positive": 1.0,
+        "p_negative": 0.0,
+        "se": 0.9098677645558366,
+        "t": -21.70748435175442,
+        "n": 10321,
+        "n_clusters": 48,
+        "cluster": "month",
+        "discarded": 0,
+        "ci_seed": 20264613,
+        "p_seed": 20264663,
+        "wild_B": 99999,
+        "ci_B": 10000,
+        "mcse_positive": 0.0,
+        "mcse_negative": 0.0,
+        "reason": null
+      }
+    },
+    "B4_pure_1bar": {
+      "metrics": {
+        "n": 6877,
+        "gross_bps": -0.6886215107530669,
+        "net_bps": -17.7400877090459,
+        "net_R": -0.10585577188184946,
+        "gross_R": -0.00027051090646116737,
+        "win_rate": 0.3385197033590228,
+        "sharpe": -10.204039150262464,
+        "total_return": -0.9606233518392227,
+        "max_drawdown": -0.9606918608324475,
+        "holding_time_share": 0.04839769183968363,
+        "holding_minutes_denominator": 2103840,
+        "funding_total": -337.2034910712596,
+        "cap_bound_n": 0,
+        "floor_bound_n": 0,
+        "stop_exit_share": 0.028937036498473172,
+        "exit_reasons": {
+          "time_bar1": 6678,
+          "stop_intrabar": 199
+        },
+        "daily_return_count": 1461,
+        "max_drawdown_minute": -0.9607287895710309
+      },
+      "net_bps_month": {
+        "mean": -17.7400877090459,
+        "lo": -19.120407093451337,
+        "hi": -16.36584747640329,
+        "p_le_0": 1.0,
+        "p": 1.0,
+        "p_positive": 1.0,
+        "p_negative": 0.0,
+        "se": 0.7114807014619425,
+        "t": -24.934039212298753,
+        "n": 6877,
+        "n_clusters": 48,
+        "cluster": "month",
+        "discarded": 0,
+        "ci_seed": 20264614,
+        "p_seed": 20264664,
+        "wild_B": 99999,
+        "ci_B": 10000,
+        "mcse_positive": 0.0,
+        "mcse_negative": 0.0,
+        "reason": null
+      }
+    },
+    "B5_pure_bi_mom_z": {
+      "metrics": {
+        "n": 7089,
+        "gross_bps": -2.3768274843287625,
+        "net_bps": -19.353297200463505,
+        "net_R": -0.26508310576505884,
+        "gross_R": -0.008782932221279908,
+        "win_rate": 0.2628015234870927,
+        "sharpe": -11.712936221546258,
+        "total_return": -0.9993166663029867,
+        "max_drawdown": -0.9993166663029867,
+        "holding_time_share": 0.061415792075443,
+        "holding_minutes_denominator": 2103840,
+        "funding_total": 321.311213327888,
+        "cap_bound_n": 0,
+        "floor_bound_n": 0,
+        "stop_exit_share": 0.12709832134292565,
+        "exit_reasons": {
+          "time_bar1": 4324,
+          "time_bar2": 1864,
+          "stop_intrabar": 901
+        },
+        "daily_return_count": 1461,
+        "max_drawdown_minute": -0.999322067288896
+      },
+      "net_bps_month": {
+        "mean": -19.353297200463505,
+        "lo": -20.852850746082034,
+        "hi": -17.77884028953711,
+        "p_le_0": 1.0,
+        "p": 1.0,
+        "p_positive": 1.0,
+        "p_negative": 0.0,
+        "se": 0.7894406993833439,
+        "t": -24.51520071815521,
+        "n": 7089,
+        "n_clusters": 48,
+        "cluster": "month",
+        "discarded": 0,
+        "ci_seed": 20264615,
+        "p_seed": 20264665,
+        "wild_B": 99999,
+        "ci_B": 10000,
+        "mcse_positive": 0.0,
+        "mcse_negative": 0.0,
+        "reason": null
+      }
+    }
+  },
+  "pct_z_aligned_trade_comparison": {
+    "B1_pure_long": {
+      "n": 6594,
+      "gross_bps": -0.9075291121414613,
+      "net_bps": -17.978010019909725,
+      "net_R": -0.10784564714619968
+    },
+    "B2_pure_long_sl": {
+      "n": 6694,
+      "gross_bps": -0.2202571623092311,
+      "net_bps": -17.27908275458158,
+      "net_R": -0.2138414772449258
+    },
+    "B3_pure_bi_mom": {
+      "n": 10302,
+      "gross_bps": -2.8134184177161785,
+      "net_bps": -19.79514184041121,
+      "net_R": -0.23707145675950536
+    },
+    "B4_pure_1bar": {
+      "n": 6867,
+      "gross_bps": -0.691847369515596,
+      "net_bps": -17.74338694145657,
+      "net_R": -0.1058245314964831
+    },
+    "B5_pure_bi_mom_z": {
+      "n": 7089,
+      "gross_bps": -2.3768274843287625,
+      "net_bps": -19.353297200463505,
+      "net_R": -0.26508310576505884
+    }
+  },
+  "alignment_trigger_start_utc": "2020-01-07 15:51",
+  "note": "Full-period portfolio metrics have different feature-ready starts; compare percentage and Z trade metrics only in the aligned table. No matched controls; no gate entry."
+}

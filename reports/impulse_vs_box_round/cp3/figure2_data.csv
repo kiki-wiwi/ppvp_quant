@@ -1,0 +1,13 @@
+version,profitable,stop,n,share_mae_reaching_stop
+A1_box_opt,True,SL_A,285,0.0
+A1_box_opt,True,SL_B,285,0.021052631578947368
+A1_box_opt,True,SL_C,285,0.17192982456140352
+A1_box_opt,False,SL_A,714,0.0196078431372549
+A1_box_opt,False,SL_B,714,0.15406162464985995
+A1_box_opt,False,SL_C,714,0.6456582633053222
+B1_pure_long,True,SL_A,2017,0.0
+B1_pure_long,True,SL_B,2017,0.01834407535944472
+B1_pure_long,True,SL_C,2017,0.1576598909271195
+B1_pure_long,False,SL_A,4425,0.02327683615819209
+B1_pure_long,False,SL_B,4425,0.20112994350282487
+B1_pure_long,False,SL_C,4425,0.6422598870056497

@@ -1,0 +1,11 @@
+version,direction_trigger_minutes,entry_signals,trades,position_or_cooldown_skips,exclusive_ambiguous,exclusive_contaminated,exclusive_atr_not_ready,exclusive_entry_bar_bad,exclusive_baseline_undefined,exclusive_box_rejected,exclusive_invalid_stop,nonexclusive_ambiguous,nonexclusive_contaminated,nonexclusive_atr_not_ready,nonexclusive_entry_bar_bad,nonexclusive_baseline_undefined,nonexclusive_box_rejected,nonexclusive_invalid_stop
+A1_box_opt,27287,3408,999,2409,0,0,0,0,0,23879,0,0,0,0,0,0,23879,0
+A2_box_origin,27287,3408,1005,2403,0,0,0,0,0,23879,0,0,0,0,0,0,23879,0
+A3_box_half,27287,3408,1052,2356,0,0,0,0,0,23879,0,0,0,0,0,0,23879,0
+A4_box_flush,26959,3810,1013,2797,0,0,0,0,0,23149,0,0,0,0,0,0,23149,0
+A5_box_origin_z,14405,2198,746,1452,0,0,0,0,0,12207,0,0,0,0,0,0,12207,0
+B1_pure_long,27287,27287,6442,20845,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+B2_pure_long_sl,27287,27287,6541,20746,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+B3_pure_bi_mom,53642,53038,10058,42980,604,0,0,0,0,0,0,604,0,0,0,0,0,0
+B4_pure_1bar,27287,27287,6708,20579,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+B5_pure_bi_mom_z,28305,28038,6847,21191,267,0,0,0,0,0,0,267,0,0,0,0,0,0

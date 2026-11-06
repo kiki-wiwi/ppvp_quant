@@ -1,0 +1,97 @@
+2026-11-06 07:48:24,683Z generated new fontManager
+2026-11-06 07:48:25,222Z Input loading and frozen pre-match checks
+2026-11-06 07:48:34,740Z Post-unlock regression including required CP2 skips
+2026-11-06 07:50:34,238Z Portfolio A1_box_opt / gross_0bp / risk_0.5pct
+2026-11-06 07:50:34,572Z Portfolio A1_box_opt / gross_0bp / notional_1x
+2026-11-06 07:50:34,853Z Portfolio A1_box_opt / conventional_14bp / risk_0.5pct
+2026-11-06 07:50:35,142Z Portfolio A1_box_opt / conventional_14bp / notional_1x
+2026-11-06 07:50:35,431Z Portfolio A1_box_opt / main_17bp / risk_0.5pct
+2026-11-06 07:50:35,722Z Portfolio A1_box_opt / main_17bp / notional_1x
+2026-11-06 07:50:36,010Z Portfolio A1_box_opt / harsh_34bp / risk_0.5pct
+2026-11-06 07:50:36,304Z Portfolio A1_box_opt / harsh_34bp / notional_1x
+2026-11-06 07:50:36,911Z Portfolio A2_box_origin / gross_0bp / risk_0.5pct
+2026-11-06 07:50:37,191Z Portfolio A2_box_origin / gross_0bp / notional_1x
+2026-11-06 07:50:37,468Z Portfolio A2_box_origin / conventional_14bp / risk_0.5pct
+2026-11-06 07:50:37,756Z Portfolio A2_box_origin / conventional_14bp / notional_1x
+2026-11-06 07:50:38,044Z Portfolio A2_box_origin / main_17bp / risk_0.5pct
+2026-11-06 07:50:38,337Z Portfolio A2_box_origin / main_17bp / notional_1x
+2026-11-06 07:50:38,625Z Portfolio A2_box_origin / harsh_34bp / risk_0.5pct
+2026-11-06 07:50:38,915Z Portfolio A2_box_origin / harsh_34bp / notional_1x
+2026-11-06 07:50:39,522Z Portfolio A3_box_half / gross_0bp / risk_0.5pct
+2026-11-06 07:50:39,807Z Portfolio A3_box_half / gross_0bp / notional_1x
+2026-11-06 07:50:40,092Z Portfolio A3_box_half / conventional_14bp / risk_0.5pct
+2026-11-06 07:50:40,387Z Portfolio A3_box_half / conventional_14bp / notional_1x
+2026-11-06 07:50:40,681Z Portfolio A3_box_half / main_17bp / risk_0.5pct
+2026-11-06 07:50:40,978Z Portfolio A3_box_half / main_17bp / notional_1x
+2026-11-06 07:50:41,271Z Portfolio A3_box_half / harsh_34bp / risk_0.5pct
+2026-11-06 07:50:41,569Z Portfolio A3_box_half / harsh_34bp / notional_1x
+2026-11-06 07:50:41,938Z Portfolio A4_box_flush / gross_0bp / risk_0.5pct
+2026-11-06 07:50:42,223Z Portfolio A4_box_flush / gross_0bp / notional_1x
+2026-11-06 07:50:42,504Z Portfolio A4_box_flush / conventional_14bp / risk_0.5pct
+2026-11-06 07:50:42,798Z Portfolio A4_box_flush / conventional_14bp / notional_1x
+2026-11-06 07:50:43,090Z Portfolio A4_box_flush / main_17bp / risk_0.5pct
+2026-11-06 07:50:43,387Z Portfolio A4_box_flush / main_17bp / notional_1x
+2026-11-06 07:50:43,678Z Portfolio A4_box_flush / harsh_34bp / risk_0.5pct
+2026-11-06 07:50:43,977Z Portfolio A4_box_flush / harsh_34bp / notional_1x
+2026-11-06 07:50:44,586Z Portfolio A5_box_origin_z / gross_0bp / risk_0.5pct
+2026-11-06 07:50:44,837Z Portfolio A5_box_origin_z / gross_0bp / notional_1x
+2026-11-06 07:50:45,085Z Portfolio A5_box_origin_z / conventional_14bp / risk_0.5pct
+2026-11-06 07:50:45,339Z Portfolio A5_box_origin_z / conventional_14bp / notional_1x
+2026-11-06 07:50:45,590Z Portfolio A5_box_origin_z / main_17bp / risk_0.5pct
+2026-11-06 07:50:45,846Z Portfolio A5_box_origin_z / main_17bp / notional_1x
+2026-11-06 07:50:46,098Z Portfolio A5_box_origin_z / harsh_34bp / risk_0.5pct
+2026-11-06 07:50:46,353Z Portfolio A5_box_origin_z / harsh_34bp / notional_1x
+2026-11-06 07:50:46,684Z Portfolio B1_pure_long / gross_0bp / risk_0.5pct
+2026-11-06 07:50:47,617Z Portfolio B1_pure_long / gross_0bp / notional_1x
+2026-11-06 07:50:48,537Z Portfolio B1_pure_long / conventional_14bp / risk_0.5pct
+2026-11-06 07:50:49,519Z Portfolio B1_pure_long / conventional_14bp / notional_1x
+2026-11-06 07:50:50,508Z Portfolio B1_pure_long / main_17bp / risk_0.5pct
+2026-11-06 07:50:51,509Z Portfolio B1_pure_long / main_17bp / notional_1x
+2026-11-06 07:50:52,512Z Portfolio B1_pure_long / harsh_34bp / risk_0.5pct
+2026-11-06 07:50:53,518Z Portfolio B1_pure_long / harsh_34bp / notional_1x
+2026-11-06 07:50:54,864Z Portfolio B2_pure_long_sl / gross_0bp / risk_0.5pct
+2026-11-06 07:50:55,801Z Portfolio B2_pure_long_sl / gross_0bp / notional_1x
+2026-11-06 07:50:56,729Z Portfolio B2_pure_long_sl / conventional_14bp / risk_0.5pct
+2026-11-06 07:50:57,724Z Portfolio B2_pure_long_sl / conventional_14bp / notional_1x
+2026-11-06 07:50:58,722Z Portfolio B2_pure_long_sl / main_17bp / risk_0.5pct
+2026-11-06 07:50:59,729Z Portfolio B2_pure_long_sl / main_17bp / notional_1x
+2026-11-06 07:51:00,735Z Portfolio B2_pure_long_sl / harsh_34bp / risk_0.5pct
+2026-11-06 07:51:01,757Z Portfolio B2_pure_long_sl / harsh_34bp / notional_1x
+2026-11-06 07:51:03,108Z Portfolio B3_pure_bi_mom / gross_0bp / risk_0.5pct
+2026-11-06 07:51:04,468Z Portfolio B3_pure_bi_mom / gross_0bp / notional_1x
+2026-11-06 07:51:05,808Z Portfolio B3_pure_bi_mom / conventional_14bp / risk_0.5pct
+2026-11-06 07:51:07,278Z Portfolio B3_pure_bi_mom / conventional_14bp / notional_1x
+2026-11-06 07:51:08,745Z Portfolio B3_pure_bi_mom / main_17bp / risk_0.5pct
+2026-11-06 07:51:10,234Z Portfolio B3_pure_bi_mom / main_17bp / notional_1x
+2026-11-06 07:51:11,705Z Portfolio B3_pure_bi_mom / harsh_34bp / risk_0.5pct
+2026-11-06 07:51:13,215Z Portfolio B3_pure_bi_mom / harsh_34bp / notional_1x
+2026-11-06 07:51:14,785Z Portfolio B4_pure_1bar / gross_0bp / risk_0.5pct
+2026-11-06 07:51:15,758Z Portfolio B4_pure_1bar / gross_0bp / notional_1x
+2026-11-06 07:51:16,717Z Portfolio B4_pure_1bar / conventional_14bp / risk_0.5pct
+2026-11-06 07:51:17,743Z Portfolio B4_pure_1bar / conventional_14bp / notional_1x
+2026-11-06 07:51:18,780Z Portfolio B4_pure_1bar / main_17bp / risk_0.5pct
+2026-11-06 07:51:19,805Z Portfolio B4_pure_1bar / main_17bp / notional_1x
+2026-11-06 07:51:20,842Z Portfolio B4_pure_1bar / harsh_34bp / risk_0.5pct
+2026-11-06 07:51:21,883Z Portfolio B4_pure_1bar / harsh_34bp / notional_1x
+2026-11-06 07:51:23,269Z Portfolio B5_pure_bi_mom_z / gross_0bp / risk_0.5pct
+2026-11-06 07:51:24,243Z Portfolio B5_pure_bi_mom_z / gross_0bp / notional_1x
+2026-11-06 07:51:25,213Z Portfolio B5_pure_bi_mom_z / conventional_14bp / risk_0.5pct
+2026-11-06 07:51:26,250Z Portfolio B5_pure_bi_mom_z / conventional_14bp / notional_1x
+2026-11-06 07:51:27,296Z Portfolio B5_pure_bi_mom_z / main_17bp / risk_0.5pct
+2026-11-06 07:51:28,345Z Portfolio B5_pure_bi_mom_z / main_17bp / notional_1x
+2026-11-06 07:51:29,394Z Portfolio B5_pure_bi_mom_z / harsh_34bp / risk_0.5pct
+2026-11-06 07:51:30,456Z Portfolio B5_pure_bi_mom_z / harsh_34bp / notional_1x
+2026-11-06 07:51:31,520Z Matched controls A1_box_opt: K=100, four costs, null B=5000
+2026-11-06 07:51:32,558Z Matched controls A2_box_origin: K=100, four costs, null B=5000
+2026-11-06 07:51:33,586Z Matched controls A3_box_half: K=100, four costs, null B=5000
+2026-11-06 07:51:34,636Z Matched controls A4_box_flush: K=100, four costs, null B=5000
+2026-11-06 07:51:35,669Z Matched controls A5_box_origin_z: K=100, four costs, null B=5000
+2026-11-06 07:51:36,543Z Matched controls B1_pure_long: K=100, four costs, null B=5000
+2026-11-06 07:51:41,377Z Matched controls B2_pure_long_sl: K=100, four costs, null B=5000
+2026-11-06 07:51:46,195Z Matched controls B3_pure_bi_mom: K=100, four costs, null B=5000
+2026-11-06 07:51:53,463Z Matched controls B4_pure_1bar: K=100, four costs, null B=5000
+2026-11-06 07:51:58,388Z Matched controls B5_pure_bi_mom_z: K=100, four costs, null B=5000
+2026-11-06 07:52:03,496Z Only CP3-authorized sensitivities: G8z and B full-period appendix
+2026-11-06 07:52:25,298Z Frozen statistics and gates
+2026-11-06 07:52:35,735Z Figures 1-4 and independent onset controls
+2026-11-06 07:52:47,917Z CP3 complete. Stop: no CP4 execution.
