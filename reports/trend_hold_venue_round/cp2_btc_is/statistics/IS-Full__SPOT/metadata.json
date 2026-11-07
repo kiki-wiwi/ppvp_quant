@@ -1,0 +1,119 @@
+{
+  "declaration": "User-authorized one-shot descriptive OOS and cross-venue evaluation; R5 failed V3/V5; no automatic promotion.",
+  "automatic_promotion": false,
+  "calendar": {
+    "start": "2020-03-01T00:00:00+00:00",
+    "end_exclusive": "2024-01-01T00:00:00+00:00",
+    "half_split": "2022-01-01T00:00:00+00:00",
+    "days": 1401,
+    "months": 46,
+    "month_order": [
+      "2020-03",
+      "2020-04",
+      "2020-05",
+      "2020-06",
+      "2020-07",
+      "2020-08",
+      "2020-09",
+      "2020-10",
+      "2020-11",
+      "2020-12",
+      "2021-01",
+      "2021-02",
+      "2021-03",
+      "2021-04",
+      "2021-05",
+      "2021-06",
+      "2021-07",
+      "2021-08",
+      "2021-09",
+      "2021-10",
+      "2021-11",
+      "2021-12",
+      "2022-01",
+      "2022-02",
+      "2022-03",
+      "2022-04",
+      "2022-05",
+      "2022-06",
+      "2022-07",
+      "2022-08",
+      "2022-09",
+      "2022-10",
+      "2022-11",
+      "2022-12",
+      "2023-01",
+      "2023-02",
+      "2023-03",
+      "2023-04",
+      "2023-05",
+      "2023-06",
+      "2023-07",
+      "2023-08",
+      "2023-09",
+      "2023-10",
+      "2023-11",
+      "2023-12"
+    ]
+  },
+  "family": [
+    "T",
+    "D"
+  ],
+  "family_size": 2,
+  "alpha": 0.05,
+  "cumulative_returns": {
+    "main": {
+      "T": 1.7302340315120497,
+      "P": 1.359614445390807
+    },
+    "harsh": {
+      "T": 1.6675592666366055,
+      "P": 1.3287408457351533
+    }
+  },
+  "t_order_count": 151,
+  "matrices": {
+    "webb_weights": {
+      "shape": [
+        99999,
+        46
+      ],
+      "dtype": "float64",
+      "order": "C",
+      "byte_order": "little",
+      "seed": 2026111001,
+      "sha256": "14cb463a7185a41de6130a620852dbb7230bfdaea0f21ea3c6b4d5d755af69a0"
+    },
+    "month_indices": {
+      "shape": [
+        10000,
+        46
+      ],
+      "dtype": "int64",
+      "order": "C",
+      "byte_order": "little",
+      "seed": 2026111002,
+      "sha256": "379945597f32ac43fb34e5f7f5e30a5f97fd16b554055e0e06c3d5a6c8a696db"
+    }
+  },
+  "generator": "NumPy Generator(PCG64)",
+  "mc_boundary_sensitive_tests": [],
+  "interval_p_disagreements": [
+    {
+      "hypothesis": "T",
+      "interval_supports_positive_mean": true,
+      "holm_rejects": true,
+      "disagrees": false
+    },
+    {
+      "hypothesis": "D",
+      "interval_supports_positive_mean": false,
+      "holm_rejects": false,
+      "disagrees": false
+    }
+  ],
+  "zero_equity_rule": "positive-to-zero return -1; subsequent zero-to-zero return 0; no resurrection",
+  "cluster_limitation": "Month clustering permits within-month dependence; cross-month dependence and 46 months limit inference.",
+  "multiplicity_limitation": "Holm is a two-test descriptive reference within one venue/window; it does not control a global cross-venue/window family. Prior IS selection remains."
+}

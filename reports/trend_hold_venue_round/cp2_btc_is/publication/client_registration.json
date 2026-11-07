@@ -1,0 +1,8 @@
+{
+  "version": "git-lfs/3.8.1 (GitHub; linux arm64; go 1.27.3; git a662a6db)",
+  "binary": "/home/ubuntu/Documents/Codex/2026-11-06/github-ppvp-quant-agent-2-checkpoint/work/venue_cp2_publication/git-lfs-3.8.1/git-lfs",
+  "binary_sha256": "b0868f6ccb42243da6eeaa7550acb3af2f3d5041bf79fdb9bea23c3e660e3ff4",
+  "official_archive_url": "https://github.com/git-lfs/git-lfs/releases/download/v3.8.1/git-lfs-linux-arm64-v3.8.1.tar.gz",
+  "archive_sha256": "67895dd77b63329796bc5efdd47b57f218e1f7b98717ebaf936a8238dbcaec0f",
+  "installation": "repository-external binary only; no hooks/configuration yet"
+}

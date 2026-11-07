@@ -1,0 +1,1979 @@
+{
+  "files": {
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-CM-SelfSignal__P_CM_DeltaMatched__main_17/attribution.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-CM-SelfSignal__P_CM_DeltaMatched__main_17/attribution.csv.gz",
+      "sha256": "e76cee3dd1d65fdda0738cbaf34ae1ff23143e4a342025a825fc56958b7badfc",
+      "size": 171631170
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-CM-SelfSignal__P_CM_DeltaMatched__main_17/daily.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-CM-SelfSignal__P_CM_DeltaMatched__main_17/daily.csv",
+      "sha256": "3ca504c29d045a9da5960cbfd36ba9f8c1d3e5eea086bc4eefcfc5f5697ae187",
+      "size": 213297
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-CM-SelfSignal__P_CM_DeltaMatched__main_17/decisions.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-CM-SelfSignal__P_CM_DeltaMatched__main_17/decisions.csv.gz",
+      "sha256": "bfb4faefe425a4057c301d7540ba4977379c998cfaed380e01f437c7864c9ecc",
+      "size": 70602
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-CM-SelfSignal__P_CM_DeltaMatched__main_17/funding.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-CM-SelfSignal__P_CM_DeltaMatched__main_17/funding.csv.gz",
+      "sha256": "a7cfedfa6133c4137ca2f5bb68757b7ecf74be885927e5eb9ba2a08387acf8e1",
+      "size": 97298
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-CM-SelfSignal__P_CM_DeltaMatched__main_17/metadata.json": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-CM-SelfSignal__P_CM_DeltaMatched__main_17/metadata.json",
+      "sha256": "82653743f210fb9ed8d6637f99c9829e05e152f0149967d42bf8a191da28f8ec",
+      "size": 1286
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-CM-SelfSignal__P_CM_DeltaMatched__main_17/minute.parquet": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-CM-SelfSignal__P_CM_DeltaMatched__main_17/minute.parquet",
+      "sha256": "19f412a8cb76fc150c233cde0f1533a63dcaa75dfea2767f775b176121957e90",
+      "size": 133001266
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-CM-SelfSignal__P_CM_DeltaMatched__main_17/orders.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-CM-SelfSignal__P_CM_DeltaMatched__main_17/orders.csv.gz",
+      "sha256": "0a923578568691c6c4894d366290138f175a35f29449de092bcab9548693af26",
+      "size": 15285
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-CM-SelfSignal__P_CM_DeltaMatched__main_17/pressure_events.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-CM-SelfSignal__P_CM_DeltaMatched__main_17/pressure_events.csv.gz",
+      "sha256": "e57d1f6018201b9f953699b0c1222f9f1106bf206e4bd0ce11be58bc680277f0",
+      "size": 47
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-CM-SelfSignal__V3_CM_DeltaMatched__main_17/attribution.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-CM-SelfSignal__V3_CM_DeltaMatched__main_17/attribution.csv.gz",
+      "sha256": "1f951239d12545f5727074a06bf00a1336ec527947e328e4be35ba0d02e8ecfb",
+      "size": 172199401
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-CM-SelfSignal__V3_CM_DeltaMatched__main_17/daily.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-CM-SelfSignal__V3_CM_DeltaMatched__main_17/daily.csv",
+      "sha256": "59d110392209f365347f527314051eacc528acf76828381e7693349e98f6c9f7",
+      "size": 214226
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-CM-SelfSignal__V3_CM_DeltaMatched__main_17/decisions.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-CM-SelfSignal__V3_CM_DeltaMatched__main_17/decisions.csv.gz",
+      "sha256": "df845f3db73e6d55412c404627a576f03a83daafaed33306a388adb3d4e1808b",
+      "size": 71694
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-CM-SelfSignal__V3_CM_DeltaMatched__main_17/funding.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-CM-SelfSignal__V3_CM_DeltaMatched__main_17/funding.csv.gz",
+      "sha256": "7d68f10f469460424f52be2bc28fef2d80f20f828c689c44f5f5f2cdbbe65767",
+      "size": 98288
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-CM-SelfSignal__V3_CM_DeltaMatched__main_17/metadata.json": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-CM-SelfSignal__V3_CM_DeltaMatched__main_17/metadata.json",
+      "sha256": "916155d906e6460aedbba55c0a7cedf0bfdcf4bea123bfba5857dd5991280ab2",
+      "size": 1287
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-CM-SelfSignal__V3_CM_DeltaMatched__main_17/minute.parquet": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-CM-SelfSignal__V3_CM_DeltaMatched__main_17/minute.parquet",
+      "sha256": "887c69cd073e4a01dac539613719f6fae1491b8ff4eafb82ba3d506054b4252f",
+      "size": 129340813
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-CM-SelfSignal__V3_CM_DeltaMatched__main_17/orders.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-CM-SelfSignal__V3_CM_DeltaMatched__main_17/orders.csv.gz",
+      "sha256": "debad80a158122c766cfd269eaf68d8146405a67243907e92a715c0c27ebeaf1",
+      "size": 18623
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-CM-SelfSignal__V3_CM_DeltaMatched__main_17/pressure_events.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-CM-SelfSignal__V3_CM_DeltaMatched__main_17/pressure_events.csv.gz",
+      "sha256": "7d502774723eb4cdd5faad48123232ce04fd5990c7188878fe7b40bdfd981de0",
+      "size": 47
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-CM-SelfSignal__V4_CM_CoinAccum__main_17/attribution.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-CM-SelfSignal__V4_CM_CoinAccum__main_17/attribution.csv.gz",
+      "sha256": "393afc5d9fde094350499c7ce82302f30c5c7e0c39f8bde93bfdecf0c9101f71",
+      "size": 130551479
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-CM-SelfSignal__V4_CM_CoinAccum__main_17/daily.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-CM-SelfSignal__V4_CM_CoinAccum__main_17/daily.csv",
+      "sha256": "d7925d4124c08f36fd28cccb2480cbc62cc5a955fe0294ac304a2c46f1aef54b",
+      "size": 194698
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-CM-SelfSignal__V4_CM_CoinAccum__main_17/decisions.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-CM-SelfSignal__V4_CM_CoinAccum__main_17/decisions.csv.gz",
+      "sha256": "ba4c8b480a221c411ca549af239736bf1e295ff082732c9ffcfd696deef74901",
+      "size": 61147
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-CM-SelfSignal__V4_CM_CoinAccum__main_17/funding.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-CM-SelfSignal__V4_CM_CoinAccum__main_17/funding.csv.gz",
+      "sha256": "8e7313734b875f7f5939272052f1bf7a7f89c9af4db678cb36d79fa8cb8a7e0c",
+      "size": 74733
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-CM-SelfSignal__V4_CM_CoinAccum__main_17/metadata.json": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-CM-SelfSignal__V4_CM_CoinAccum__main_17/metadata.json",
+      "sha256": "f7490d5a27d99261d9f3378b1c7d68fdf813491381fc1cb4c0f478807e794d33",
+      "size": 1286
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-CM-SelfSignal__V4_CM_CoinAccum__main_17/minute.parquet": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-CM-SelfSignal__V4_CM_CoinAccum__main_17/minute.parquet",
+      "sha256": "b68a2d4bba82e717b3b8c2cec0bfb9828b8e5368197bbd8f0245a976cd6ccca8",
+      "size": 105549392
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-CM-SelfSignal__V4_CM_CoinAccum__main_17/orders.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-CM-SelfSignal__V4_CM_CoinAccum__main_17/orders.csv.gz",
+      "sha256": "9a97a1b9d77684829fc26b13717b427ba72701e17fec44a8afb968f0a8d2f8ee",
+      "size": 11147
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-CM-SelfSignal__V4_CM_CoinAccum__main_17/pressure_events.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-CM-SelfSignal__V4_CM_CoinAccum__main_17/pressure_events.csv.gz",
+      "sha256": "c0aee66f44ec6a3080125fd09ccb725378255afcfee55d51b6f840a12ac4bd07",
+      "size": 47
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__HODL_1x_Coin__gross_0/attribution.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__HODL_1x_Coin__gross_0/attribution.csv.gz",
+      "sha256": "e656d3b44a754b69b04f616186ed068f2322d82d694134a6e089917d78158dd7",
+      "size": 84383634
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__HODL_1x_Coin__gross_0/daily.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__HODL_1x_Coin__gross_0/daily.csv",
+      "sha256": "ce7287a6084c1376692d95b63262b4f7b1ec96c528df6f20926c4dcca121c504",
+      "size": 185979
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__HODL_1x_Coin__gross_0/decisions.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__HODL_1x_Coin__gross_0/decisions.csv.gz",
+      "sha256": "557903f721048341a8b9bf8c89c91e9bb6a9f8a79767fcf206f5ddb27d2ba802",
+      "size": 50048
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__HODL_1x_Coin__gross_0/funding.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__HODL_1x_Coin__gross_0/funding.csv.gz",
+      "sha256": "33cb6031963b6385c4a1eca8d08b297c121c8196d4f7dc51a7ef770951ddf02c",
+      "size": 45899
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__HODL_1x_Coin__gross_0/metadata.json": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__HODL_1x_Coin__gross_0/metadata.json",
+      "sha256": "b5452fe020be31122fb11d513fe02026d55e6ac4b5771e2d66d36e8e74c392e4",
+      "size": 1116
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__HODL_1x_Coin__gross_0/minute.parquet": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__HODL_1x_Coin__gross_0/minute.parquet",
+      "sha256": "9d18e789235daf4de8a69c2cb682573253bc1a746b5a25b50a93018f038cc856",
+      "size": 67772589
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__HODL_1x_Coin__gross_0/orders.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__HODL_1x_Coin__gross_0/orders.csv.gz",
+      "sha256": "5d24301fc7b41e6028f8b6750f20405ed0cfdaf4e687414c944db4ea0b49f721",
+      "size": 38
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__HODL_1x_Coin__gross_0/pressure_events.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__HODL_1x_Coin__gross_0/pressure_events.csv.gz",
+      "sha256": "075f412bab63609738abce464a751c523535bcf950ea5217b4e5e68c925dac19",
+      "size": 47
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__HODL_1x_Coin__harsh_34/attribution.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__HODL_1x_Coin__harsh_34/attribution.csv.gz",
+      "sha256": "7f6b1a0cbf729ff4a2e1f3cfd298242de42dda3297555d2679871b235cfa5655",
+      "size": 84392846
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__HODL_1x_Coin__harsh_34/daily.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__HODL_1x_Coin__harsh_34/daily.csv",
+      "sha256": "7384e6c66dff83a33666a92fa4d43e545c89cdac2562ea9667f1918ae1ce0553",
+      "size": 185901
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__HODL_1x_Coin__harsh_34/decisions.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__HODL_1x_Coin__harsh_34/decisions.csv.gz",
+      "sha256": "77a8071c6c7ab58326c1f8d8200214845a936a541bfd46fda4c4933d5a187959",
+      "size": 50038
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__HODL_1x_Coin__harsh_34/funding.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__HODL_1x_Coin__harsh_34/funding.csv.gz",
+      "sha256": "92532a6db1246adb427db3b769a3a605a1b3d332de6c4bf0c341f85d6193bd36",
+      "size": 45899
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__HODL_1x_Coin__harsh_34/metadata.json": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__HODL_1x_Coin__harsh_34/metadata.json",
+      "sha256": "4dd886c385a2ac3ad23f7dd193c561211e9b4df502e743d2ca52ff901ba26638",
+      "size": 1129
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__HODL_1x_Coin__harsh_34/minute.parquet": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__HODL_1x_Coin__harsh_34/minute.parquet",
+      "sha256": "fcda9dfdd2bddd5c458743a046236ff9c85bb40921a6ca130ada94f3c0ffe5c7",
+      "size": 67804650
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__HODL_1x_Coin__harsh_34/orders.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__HODL_1x_Coin__harsh_34/orders.csv.gz",
+      "sha256": "69bff62a1ed5f24dc3bb4659ec83de596810471f309035a95c894ba6162b28cf",
+      "size": 38
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__HODL_1x_Coin__harsh_34/pressure_events.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__HODL_1x_Coin__harsh_34/pressure_events.csv.gz",
+      "sha256": "82629d0eb48c3d1c11f2bf1342436d3de1c5e2cd2d2707a5897929363bd54682",
+      "size": 47
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__HODL_1x_Coin__main_17/attribution.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__HODL_1x_Coin__main_17/attribution.csv.gz",
+      "sha256": "e2deef412cacf93518b95e16a975a83bb54b424d1090c58ec47b8070bed93a83",
+      "size": 84348531
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__HODL_1x_Coin__main_17/daily.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__HODL_1x_Coin__main_17/daily.csv",
+      "sha256": "1d4ecbf6f4af0bebecba7a5c0a0b4c2f61488fedc47a134d722b6d9f3b8315ea",
+      "size": 185994
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__HODL_1x_Coin__main_17/decisions.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__HODL_1x_Coin__main_17/decisions.csv.gz",
+      "sha256": "39c4cbf860495afd24b1c3ef55845facff073d7664719931f19d4a589d465128",
+      "size": 50054
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__HODL_1x_Coin__main_17/funding.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__HODL_1x_Coin__main_17/funding.csv.gz",
+      "sha256": "dbe380a9ed5b3a0ace5408cc3377597e3cac8aac4e2b50b1703819dcb890b3cb",
+      "size": 45899
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__HODL_1x_Coin__main_17/metadata.json": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__HODL_1x_Coin__main_17/metadata.json",
+      "sha256": "2404f3ee86726bf45e00aec23753e9f7fdebe3792d71a427554e03db68fc8bd3",
+      "size": 1129
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__HODL_1x_Coin__main_17/minute.parquet": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__HODL_1x_Coin__main_17/minute.parquet",
+      "sha256": "6cd54d3548c47b7d4c9ede139159bdb74605aabbdfb8ceaa12e5c7968ccee528",
+      "size": 67754322
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__HODL_1x_Coin__main_17/orders.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__HODL_1x_Coin__main_17/orders.csv.gz",
+      "sha256": "e446e32c70bdbea9f4dc0f232f3d0dfde100e30a7d84df7b9c36efac2b7431d0",
+      "size": 38
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__HODL_1x_Coin__main_17/pressure_events.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__HODL_1x_Coin__main_17/pressure_events.csv.gz",
+      "sha256": "95bdfa645818d45c7bdca08e4be8eae3261c0ff40abf246e5fc35afc365c294b",
+      "size": 47
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_CM_DeltaMatched__gross_0/attribution.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_CM_DeltaMatched__gross_0/attribution.csv.gz",
+      "sha256": "29fc762f1d6d0ed395531bbd2ec25c5033a70e9d2e5e5a0e77eca0f5c6645c51",
+      "size": 180248813
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_CM_DeltaMatched__gross_0/daily.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_CM_DeltaMatched__gross_0/daily.csv",
+      "sha256": "40c59e99811d49905477acc5382699722a943906408555331ce9b81659ae1a54",
+      "size": 224627
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_CM_DeltaMatched__gross_0/decisions.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_CM_DeltaMatched__gross_0/decisions.csv.gz",
+      "sha256": "631bc5e2bde86be9c66a02a0a66928c397a9fa83b211db751efb3402d6b0e120",
+      "size": 76502
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_CM_DeltaMatched__gross_0/funding.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_CM_DeltaMatched__gross_0/funding.csv.gz",
+      "sha256": "974e187337e0054f85367b73673ac9e6b83164f4ae362b5fe50978eb5e735970",
+      "size": 51075
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_CM_DeltaMatched__gross_0/metadata.json": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_CM_DeltaMatched__gross_0/metadata.json",
+      "sha256": "a3b9eead0b4279f63d5c726c05061881e01fd922908304f886e88542859b7463",
+      "size": 1219
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_CM_DeltaMatched__gross_0/minute.parquet": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_CM_DeltaMatched__gross_0/minute.parquet",
+      "sha256": "d1dcd23718018ef8b225e99568abfbb9b838cbca5926c6b9b7e1d64216fe7e9c",
+      "size": 134510853
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_CM_DeltaMatched__gross_0/orders.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_CM_DeltaMatched__gross_0/orders.csv.gz",
+      "sha256": "83eaf16c4a64f01f62aadea35fb101e469867b97d097a68f0a1300f9218adabb",
+      "size": 8092
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_CM_DeltaMatched__gross_0/pressure_events.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_CM_DeltaMatched__gross_0/pressure_events.csv.gz",
+      "sha256": "40a85c4e2a53be739600a40b158c354aaa057ba7681731178b1215b29c1e8b8f",
+      "size": 47
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_CM_DeltaMatched__harsh_34/attribution.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_CM_DeltaMatched__harsh_34/attribution.csv.gz",
+      "sha256": "8f070471744b05f685850aa98b7d6c1af135b4ccec5a3d094b98a755587f7d5b",
+      "size": 180468858
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_CM_DeltaMatched__harsh_34/daily.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_CM_DeltaMatched__harsh_34/daily.csv",
+      "sha256": "6767404da8381d88151e7f290a4721a935ff435f0974f63433586a607ae49a04",
+      "size": 224209
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_CM_DeltaMatched__harsh_34/decisions.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_CM_DeltaMatched__harsh_34/decisions.csv.gz",
+      "sha256": "f90b7c30a2061b3df3de67cf17ebad7f19d7dfa471b17c7f37c21ff0cd62a051",
+      "size": 76568
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_CM_DeltaMatched__harsh_34/funding.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_CM_DeltaMatched__harsh_34/funding.csv.gz",
+      "sha256": "3e0932232ab857e78e24962bc65c5cda0639a7b60bdf173024bed8f298a110e0",
+      "size": 102019
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_CM_DeltaMatched__harsh_34/metadata.json": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_CM_DeltaMatched__harsh_34/metadata.json",
+      "sha256": "495a8273ab5707f0b4145799e090524566fc04ca012672b24bc66a24b72a6731",
+      "size": 1278
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_CM_DeltaMatched__harsh_34/minute.parquet": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_CM_DeltaMatched__harsh_34/minute.parquet",
+      "sha256": "b9cd6550b67c3800564faa120f29f2a015cc0e4e436ff9abb8d9994691a1d4d5",
+      "size": 139015782
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_CM_DeltaMatched__harsh_34/orders.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_CM_DeltaMatched__harsh_34/orders.csv.gz",
+      "sha256": "eacea664479afd744ac03eb54fb2989995bccb7aaff2df5dac120393ecdec7be",
+      "size": 15952
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_CM_DeltaMatched__harsh_34/pressure_events.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_CM_DeltaMatched__harsh_34/pressure_events.csv.gz",
+      "sha256": "9f84275c6add7d318f8893477f1aa7ffd018dee7a8e2b8e213309217179d40df",
+      "size": 47
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_CM_DeltaMatched__main_17/attribution.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_CM_DeltaMatched__main_17/attribution.csv.gz",
+      "sha256": "3ffebff3e8b49e207398cff479efc16f427d6e009d92037c42064ddbc86f39af",
+      "size": 180462300
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_CM_DeltaMatched__main_17/daily.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_CM_DeltaMatched__main_17/daily.csv",
+      "sha256": "ee6957a8c76db87d3fb271649b9860eaf43ee0954927f501d2fb69635426b38f",
+      "size": 224256
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_CM_DeltaMatched__main_17/decisions.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_CM_DeltaMatched__main_17/decisions.csv.gz",
+      "sha256": "63a9562158114edad48a44334c640d50dde65265e4a2f591a2d8277950411920",
+      "size": 76633
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_CM_DeltaMatched__main_17/funding.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_CM_DeltaMatched__main_17/funding.csv.gz",
+      "sha256": "928f24a9dd15497dc79971cbd33f05573a523cc957d5b18dd882821919d2636c",
+      "size": 102116
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_CM_DeltaMatched__main_17/metadata.json": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_CM_DeltaMatched__main_17/metadata.json",
+      "sha256": "828594e1beaf68e52fbe1f90dd0bbbb5a3c9319f3e081c4ba92dd90b7bc09fe1",
+      "size": 1276
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_CM_DeltaMatched__main_17/minute.parquet": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_CM_DeltaMatched__main_17/minute.parquet",
+      "sha256": "3ed9c7e5739f77662b7fa35ebfecd839f9ae43dae2ea8e5e5beedc173076a339",
+      "size": 139051069
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_CM_DeltaMatched__main_17/orders.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_CM_DeltaMatched__main_17/orders.csv.gz",
+      "sha256": "601938745c08b958df0d6c28b9ee0617bf77161b3059f219c5597e0beb83a09e",
+      "size": 16040
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_CM_DeltaMatched__main_17/pressure_events.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_CM_DeltaMatched__main_17/pressure_events.csv.gz",
+      "sha256": "1b9efc22f40fd50aad343a8a54d20cfe4b43578315709268aeb1c099815c0978",
+      "size": 47
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_CM_DeltaMatched__main_17__whole_contracts/attribution.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_CM_DeltaMatched__main_17__whole_contracts/attribution.csv.gz",
+      "sha256": "eea5d8b487cf5121522ad3bb1aad3a1b3b3c4308fbb1a3bb7d1a160131082ce2",
+      "size": 180439310
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_CM_DeltaMatched__main_17__whole_contracts/daily.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_CM_DeltaMatched__main_17__whole_contracts/daily.csv",
+      "sha256": "c1705a6ad0d71e439164c641e1332120b8d40c5e325ac1f509da0ce84e77ffa7",
+      "size": 212579
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_CM_DeltaMatched__main_17__whole_contracts/decisions.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_CM_DeltaMatched__main_17__whole_contracts/decisions.csv.gz",
+      "sha256": "331133a614f0c9dc90897446943d4667d9628c3a3e30cbd78e5d4037c569f2bb",
+      "size": 74820
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_CM_DeltaMatched__main_17__whole_contracts/funding.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_CM_DeltaMatched__main_17__whole_contracts/funding.csv.gz",
+      "sha256": "d05427c7c069b45f54a5cceafe392b1b82381b61e9c7f498b8dd2dd178fe0c6e",
+      "size": 100377
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_CM_DeltaMatched__main_17__whole_contracts/metadata.json": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_CM_DeltaMatched__main_17__whole_contracts/metadata.json",
+      "sha256": "c2aae0ab3e1b9fbb7c90716112c14e9af5e4bf8646c8524940e7e3538591346c",
+      "size": 1278
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_CM_DeltaMatched__main_17__whole_contracts/minute.parquet": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_CM_DeltaMatched__main_17__whole_contracts/minute.parquet",
+      "sha256": "f97e176eddd5a599c1ca76b63cdb53f45b6c153262974dc519a2ebb496a33f01",
+      "size": 139035938
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_CM_DeltaMatched__main_17__whole_contracts/orders.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_CM_DeltaMatched__main_17__whole_contracts/orders.csv.gz",
+      "sha256": "f4018fb52f31a2a71605893e3fd40a960b4fc32c7db50db6a6a9e664ce882883",
+      "size": 12570
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_CM_DeltaMatched__main_17__whole_contracts/pressure_events.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_CM_DeltaMatched__main_17__whole_contracts/pressure_events.csv.gz",
+      "sha256": "e4ba65de7734dc2da1b0777014ace516bfdb379bfe433eb60b12dfd02f184fe6",
+      "size": 47
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_SPOT__gross_0/attribution.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_SPOT__gross_0/attribution.csv.gz",
+      "sha256": "9f8c718bf46752d859a33a79abd9c8b1d56842c03f7c2bf366b40fb1524e7501",
+      "size": 28007644
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_SPOT__gross_0/daily.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_SPOT__gross_0/daily.csv",
+      "sha256": "0680bd3d6de2a70dec96c99bc63d501c1d041f1d0e1ad3d867cd4fdd30c2ae18",
+      "size": 80795
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_SPOT__gross_0/decisions.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_SPOT__gross_0/decisions.csv.gz",
+      "sha256": "167050956ee6cf9089b88242818043e3962a59f81daaae6ea33e438e1b2fb37f",
+      "size": 73196
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_SPOT__gross_0/funding.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_SPOT__gross_0/funding.csv.gz",
+      "sha256": "9f5961d74e0513b809a224d8934dd740b70c1668f2c2b822ef5e0c80f40b9225",
+      "size": 39
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_SPOT__gross_0/metadata.json": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_SPOT__gross_0/metadata.json",
+      "sha256": "59ecb6451549bb5f791187fd94761d3848fb9e2fcca25ae1ec2e7a30913614ea",
+      "size": 386
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_SPOT__gross_0/minute.parquet": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_SPOT__gross_0/minute.parquet",
+      "sha256": "e9ea81e112a731aa689c5f194c06b0c8a1c1d17ddb8d1c2e5d23d2727052f062",
+      "size": 50009601
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_SPOT__gross_0/orders.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_SPOT__gross_0/orders.csv.gz",
+      "sha256": "c0a654dbaf5f48a43b1e54fd9cc3d11706abb9e0f2c60607d7e79378d1d1e412",
+      "size": 14243
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_SPOT__gross_0/pressure_events.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_SPOT__gross_0/pressure_events.csv.gz",
+      "sha256": "e4fe3a22931a758c15610b7ec70005e991125b758832101b1bfe5ef3bd080563",
+      "size": 47
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_SPOT__harsh_34/attribution.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_SPOT__harsh_34/attribution.csv.gz",
+      "sha256": "2879729764b7907078d3cf9ba29c426948199532d378439c5abc9e27a351aca9",
+      "size": 28017535
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_SPOT__harsh_34/daily.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_SPOT__harsh_34/daily.csv",
+      "sha256": "09af540cfccb4cea632e85817b217dc833ea466f2bcbb1994af3cff980fb4629",
+      "size": 80775
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_SPOT__harsh_34/decisions.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_SPOT__harsh_34/decisions.csv.gz",
+      "sha256": "d7170897b1fcc226821d15c79e961f2d783338adbd2a67977b9d8b99df9dfc4f",
+      "size": 73233
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_SPOT__harsh_34/funding.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_SPOT__harsh_34/funding.csv.gz",
+      "sha256": "392589b8a2344f0d952da3dfd4ad10bba771d3280309f28e4006b5817eaf3188",
+      "size": 39
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_SPOT__harsh_34/metadata.json": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_SPOT__harsh_34/metadata.json",
+      "sha256": "57c9dfbdd80e94c2b0099e3d38e0d2c842824b5c680d7bb9dcdb33d280cb1b1d",
+      "size": 418
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_SPOT__harsh_34/minute.parquet": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_SPOT__harsh_34/minute.parquet",
+      "sha256": "c4e1a08646856c25a398c5ae301414d12f7dbf27d64708574b4890291a0d69e1",
+      "size": 50056166
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_SPOT__harsh_34/orders.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_SPOT__harsh_34/orders.csv.gz",
+      "sha256": "96b56233d26e1b1ffc9e19815fcf46dbd0856b882ff44da748faaab92e55bcfd",
+      "size": 20187
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_SPOT__harsh_34/pressure_events.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_SPOT__harsh_34/pressure_events.csv.gz",
+      "sha256": "8f3933c542791b12b6b8c1311c741571322a2c4ae6b25283ecd64469fe7be740",
+      "size": 47
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_SPOT__main_17/attribution.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_SPOT__main_17/attribution.csv.gz",
+      "sha256": "94fff4a6b306d9798ebf3ae544f33b8efc9fc405f265287cc5c06952436fb763",
+      "size": 28015529
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_SPOT__main_17/daily.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_SPOT__main_17/daily.csv",
+      "sha256": "e2f528a2ac799b268184ca8bd0697df53f8f8e5bfb4d479b3df2eac4f88df66c",
+      "size": 80762
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_SPOT__main_17/decisions.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_SPOT__main_17/decisions.csv.gz",
+      "sha256": "0f76854a97a605b403eafcecd5bfea95ed6c71ff6e3d23e5ab956643458ef9dd",
+      "size": 73265
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_SPOT__main_17/funding.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_SPOT__main_17/funding.csv.gz",
+      "sha256": "1667757252119ced55114238737796cea92c5d96b50f3c2a316452f8b8d703b6",
+      "size": 39
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_SPOT__main_17/metadata.json": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_SPOT__main_17/metadata.json",
+      "sha256": "a9b34ce14f10149447f66b9ceea6619141553c1b88fa5663baed1376d5760b0d",
+      "size": 415
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_SPOT__main_17/minute.parquet": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_SPOT__main_17/minute.parquet",
+      "sha256": "ec2faa87c2ebc1b492607a86cbd723e17ca605895cb5af468a5d8a329e626e00",
+      "size": 50021094
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_SPOT__main_17/orders.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_SPOT__main_17/orders.csv.gz",
+      "sha256": "b6daa5f54ac6124fbfc41d45a008853badd164659b85957285fd0b43b6b5b9c8",
+      "size": 20201
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_SPOT__main_17/pressure_events.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_SPOT__main_17/pressure_events.csv.gz",
+      "sha256": "86e8a207dd54a776c0a86731c3c34575e0ca93a65a61deedc27e0b65088da9b5",
+      "size": 47
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_USDM__gross_0/attribution.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_USDM__gross_0/attribution.csv.gz",
+      "sha256": "d873bb0bfedeb0b91c8ebded63ee0fd61eb581072a83270f55c06a30041c4760",
+      "size": 43
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_USDM__gross_0/daily.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_USDM__gross_0/daily.csv",
+      "sha256": "1b3d73bc6af59ab3ad6b80ed04ff1e3a7f167b511fcf56326ee2f4bbb33593c6",
+      "size": 80745
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_USDM__gross_0/decisions.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_USDM__gross_0/decisions.csv.gz",
+      "sha256": "6711fdfc901be399528d70f31103b47110a20d1f2535cde90fce42c02ba7c298",
+      "size": 65871
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_USDM__gross_0/funding.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_USDM__gross_0/funding.csv.gz",
+      "sha256": "cd0cd2286a53eebcd2cd68751258d09ff66f9c0b68d90c2505a8abf13e6ff733",
+      "size": 54397
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_USDM__gross_0/metadata.json": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_USDM__gross_0/metadata.json",
+      "sha256": "08fd557afffb58ffd0e6b44161d50bbf90e10519f9b7d106f2195a0eabe25a23",
+      "size": 1121
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_USDM__gross_0/minute.parquet": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_USDM__gross_0/minute.parquet",
+      "sha256": "36f2f12bc46ba11668942dd0cc83fc7c250d6e4118602c2aee523a1786c178d9",
+      "size": 47155388
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_USDM__gross_0/orders.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_USDM__gross_0/orders.csv.gz",
+      "sha256": "4bc946d327192dd4e329cadd92b906efb91ec2f8b3f8a0e444abe2ffcc13020c",
+      "size": 16029
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_USDM__gross_0/pressure_events.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_USDM__gross_0/pressure_events.csv.gz",
+      "sha256": "a86e4ef95d334138af2d188e0159a2b14ea767692ef66092d79869db0bf55ab5",
+      "size": 47
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_USDM__harsh_34/attribution.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_USDM__harsh_34/attribution.csv.gz",
+      "sha256": "adea48fd318aa92c98bf47ee43365bffd4bb3b2f9a9180601205cc87e8d1681e",
+      "size": 43
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_USDM__harsh_34/daily.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_USDM__harsh_34/daily.csv",
+      "sha256": "6a5025590bdd9266a20df68fb916496b0bb3c237f5a27a03daa7631f9662ded1",
+      "size": 80812
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_USDM__harsh_34/decisions.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_USDM__harsh_34/decisions.csv.gz",
+      "sha256": "8388c4ff29d5eaec2f4f37f870cf86e39feba49197cbe8c23e389711f6be6206",
+      "size": 65848
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_USDM__harsh_34/funding.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_USDM__harsh_34/funding.csv.gz",
+      "sha256": "53f03f19e4ac80d9704db318837e778f754a75f76f7313d2272bef6b94464879",
+      "size": 105530
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_USDM__harsh_34/metadata.json": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_USDM__harsh_34/metadata.json",
+      "sha256": "3afa0013b84bcd7dd7295f6e51660904509add41dfde4887758e4967aabeb7ef",
+      "size": 1181
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_USDM__harsh_34/minute.parquet": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_USDM__harsh_34/minute.parquet",
+      "sha256": "c0b51b5bb662616cfef7a96275ae29e3cbca92b990d1c6df933956309ee9842f",
+      "size": 48865868
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_USDM__harsh_34/orders.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_USDM__harsh_34/orders.csv.gz",
+      "sha256": "71e8b2583090974bd1a71671436eaee034453a75839e6beea8e3f5c1d048fd6e",
+      "size": 22013
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_USDM__harsh_34/pressure_events.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_USDM__harsh_34/pressure_events.csv.gz",
+      "sha256": "fa2d94fd5012ef70d6782df0a2c7bd743b11e1d7cda3a432a5710ce37f1a7013",
+      "size": 47
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_USDM__main_17/attribution.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_USDM__main_17/attribution.csv.gz",
+      "sha256": "bebc90b0530cf48a546aaec311edd96bb4dc56087801c4b1e9e8bf85299413fb",
+      "size": 43
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_USDM__main_17/daily.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_USDM__main_17/daily.csv",
+      "sha256": "eac3f25ee78f39d6a1a6e44c552bcedb873043b46123994ec4208570975eadc3",
+      "size": 80772
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_USDM__main_17/decisions.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_USDM__main_17/decisions.csv.gz",
+      "sha256": "9eb2f945f9d14293b2751987ed933be32a842571c46a95c511f5d4ef6ead0e2d",
+      "size": 65769
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_USDM__main_17/funding.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_USDM__main_17/funding.csv.gz",
+      "sha256": "8c5f5dad943873dd06da8b524ca2d351b91f750a1544e149efa76eafb3e8656e",
+      "size": 105505
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_USDM__main_17/metadata.json": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_USDM__main_17/metadata.json",
+      "sha256": "bd9376c95b92a192f1d1e782686be27a90ec161b4959f10d0ff231884070bf41",
+      "size": 1183
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_USDM__main_17/minute.parquet": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_USDM__main_17/minute.parquet",
+      "sha256": "de603bcc0825198487d5702fc4a7a0cd64571bd1526888bd9c481a18b9d0a195",
+      "size": 48814913
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_USDM__main_17/orders.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_USDM__main_17/orders.csv.gz",
+      "sha256": "6dcd5fe0ab03f1648bd2c36f6b8007f6dc14e6b7a843d68fb1d073cd1d9cc5b5",
+      "size": 23303
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_USDM__main_17/pressure_events.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_USDM__main_17/pressure_events.csv.gz",
+      "sha256": "76edb78fb7033bdf4cdcfc4335a745a661d37e6686787a6b74bd1fc2431ca738",
+      "size": 47
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V1_USDM__gross_0/attribution.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V1_USDM__gross_0/attribution.csv.gz",
+      "sha256": "e24a966be697d5f0ef382adb1a87f352e8d7d3828cd72f910db455fa5b29d00b",
+      "size": 43
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V1_USDM__gross_0/daily.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V1_USDM__gross_0/daily.csv",
+      "sha256": "35bab39c05f71cb1033e27fb83a87ce8f076371f3cf2712ae64e3f863c2ab8fa",
+      "size": 70842
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V1_USDM__gross_0/decisions.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V1_USDM__gross_0/decisions.csv.gz",
+      "sha256": "e784bc34f7f3225b820b7c5fad1104a38c9471b41f000e9a30dc58d398c69774",
+      "size": 57348
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V1_USDM__gross_0/funding.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V1_USDM__gross_0/funding.csv.gz",
+      "sha256": "3cba9923e962fede3ed4831602ca58e956e19cb7ebbd45ea9bbacaf5b314fda3",
+      "size": 52686
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V1_USDM__gross_0/metadata.json": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V1_USDM__gross_0/metadata.json",
+      "sha256": "20b5fcc16b41a33779166f88554d7e80bd0f365ade7915c685cfb28af0fc606b",
+      "size": 1131
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V1_USDM__gross_0/minute.parquet": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V1_USDM__gross_0/minute.parquet",
+      "sha256": "92473ad0a6391339b6d241fd485932850c29d9679c4aaea3280137e004a571fd",
+      "size": 35481870
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V1_USDM__gross_0/orders.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V1_USDM__gross_0/orders.csv.gz",
+      "sha256": "8666cb5fb23cc00c414b802472b3a3adebb64ae5261c7cd153cd33df825c9629",
+      "size": 11476
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V1_USDM__gross_0/pressure_events.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V1_USDM__gross_0/pressure_events.csv.gz",
+      "sha256": "4b4526f536e778714e9ac95f92ab59ca2957aca990d4225dd4903fb5c9d78af5",
+      "size": 47
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V1_USDM__harsh_34/attribution.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V1_USDM__harsh_34/attribution.csv.gz",
+      "sha256": "36ad143357055a648987b350fdd3aeb90b3a376e0d7852c1b5de8686eb532480",
+      "size": 43
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V1_USDM__harsh_34/daily.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V1_USDM__harsh_34/daily.csv",
+      "sha256": "3c5d9ebe52cfdab798b3b63b69b0b74e54c5a5c8e33fc0064ca112ed30e51214",
+      "size": 70914
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V1_USDM__harsh_34/decisions.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V1_USDM__harsh_34/decisions.csv.gz",
+      "sha256": "6f59c72ab67addaabe812a4415a682e7dc2fc1485e911dbc50e3b42379d39019",
+      "size": 57345
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V1_USDM__harsh_34/funding.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V1_USDM__harsh_34/funding.csv.gz",
+      "sha256": "288a3cadff5432a9715fe04c010e9831ceb6fa16e5e33a68be63097016f47221",
+      "size": 81418
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V1_USDM__harsh_34/metadata.json": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V1_USDM__harsh_34/metadata.json",
+      "sha256": "d752b78a349dabb7c273163fbdf504db2ee2e07583fb2ebd9adbc99555a85c13",
+      "size": 1184
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V1_USDM__harsh_34/minute.parquet": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V1_USDM__harsh_34/minute.parquet",
+      "sha256": "6d0c7adc1ccf7b029ff6f16ff53159ff53cbba0fa6246157a9f90df3588af482",
+      "size": 36388730
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V1_USDM__harsh_34/orders.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V1_USDM__harsh_34/orders.csv.gz",
+      "sha256": "fcd9fa93a96dcfb78ffee2db3d0d37fb1d3984cb43172f617022c7706205ccb8",
+      "size": 16108
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V1_USDM__harsh_34/pressure_events.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V1_USDM__harsh_34/pressure_events.csv.gz",
+      "sha256": "33db53685576f661f87a1632533fa4aed62918da005c3f9840d19d41dc443cef",
+      "size": 47
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V1_USDM__main_17/attribution.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V1_USDM__main_17/attribution.csv.gz",
+      "sha256": "940ef00cac6ce1aa4bd2067613affb6e35a5cfb974d9b3e14f6d2fed0b1d38ee",
+      "size": 43
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V1_USDM__main_17/daily.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V1_USDM__main_17/daily.csv",
+      "sha256": "a5245b6b7e413a5d3cc71677fe939895e7d97918d30051e3ff14abcef1fd5840",
+      "size": 71075
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V1_USDM__main_17/decisions.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V1_USDM__main_17/decisions.csv.gz",
+      "sha256": "78c2f8594174379b191fcde91dc8347a0fbd59ce30dd92fa6e20f79efce7f0d5",
+      "size": 57363
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V1_USDM__main_17/funding.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V1_USDM__main_17/funding.csv.gz",
+      "sha256": "59fa7fb47570f842e2db847a7b8951e7e6ef2515e25d2aa9774f23667de3dde1",
+      "size": 81463
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V1_USDM__main_17/metadata.json": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V1_USDM__main_17/metadata.json",
+      "sha256": "96b8eba676a019e0ddcedf6de9f844b0aa4c764cff1ec561baa998e7525aee8f",
+      "size": 1182
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V1_USDM__main_17/minute.parquet": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V1_USDM__main_17/minute.parquet",
+      "sha256": "cf9467cf8ddbe263edbf631654264329cd4970fa882e4fdd7ff555161f2ff20c",
+      "size": 36414547
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V1_USDM__main_17/orders.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V1_USDM__main_17/orders.csv.gz",
+      "sha256": "e2e58ba76008f81ec8170b72c2b3ed151089a0dccae95f281c0b9e91e5bbbfb5",
+      "size": 17111
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V1_USDM__main_17/pressure_events.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V1_USDM__main_17/pressure_events.csv.gz",
+      "sha256": "83d7ab0107bbfa52e34b639d0ad4a71e2ebddde3aeceaf9b0bea8b9d2d5199ca",
+      "size": 47
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V2_SPOT__gross_0/attribution.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V2_SPOT__gross_0/attribution.csv.gz",
+      "sha256": "7bbd6fbaca6e0ab2949bcbdc3d0d8af22dc00610691c50244a4780abe21c74f3",
+      "size": 17382324
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V2_SPOT__gross_0/daily.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V2_SPOT__gross_0/daily.csv",
+      "sha256": "3e76bd909ec100f95117c94fbebf4fc7d5eeaebe8f6e5be8f221c9bb977516c2",
+      "size": 70800
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V2_SPOT__gross_0/decisions.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V2_SPOT__gross_0/decisions.csv.gz",
+      "sha256": "254c728d690761d14b4b3539f9762cca3f2442baff52253d849a325d817dcafd",
+      "size": 64825
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V2_SPOT__gross_0/funding.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V2_SPOT__gross_0/funding.csv.gz",
+      "sha256": "a624db3265b346f41003692a57fe8705111df514f49927a7a2ba1d383f2972b0",
+      "size": 39
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V2_SPOT__gross_0/metadata.json": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V2_SPOT__gross_0/metadata.json",
+      "sha256": "9c1ab245e6e47fc737eda8e79f01e1e0460af36e313f3541570a94d5d1cdde58",
+      "size": 387
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V2_SPOT__gross_0/minute.parquet": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V2_SPOT__gross_0/minute.parquet",
+      "sha256": "ce17bc1dc3bee31188131dda07b988fcce274534fce94f0b9d0270aac7043fa9",
+      "size": 37683062
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V2_SPOT__gross_0/orders.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V2_SPOT__gross_0/orders.csv.gz",
+      "sha256": "f5608b606f3855fdce29f15bbd30d9af6453cce9c1cc2cfce0c400c9e9fbc0af",
+      "size": 9892
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V2_SPOT__gross_0/pressure_events.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V2_SPOT__gross_0/pressure_events.csv.gz",
+      "sha256": "e0ceecf45a3f3bedf8a8fdc0e1ef8a6dd52b21990c54c8a5407fadc1100e1252",
+      "size": 47
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V2_SPOT__harsh_34/attribution.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V2_SPOT__harsh_34/attribution.csv.gz",
+      "sha256": "da85845917335ea59a6978ace5cf54085a5c4057460e539f2830eadacfb27dbd",
+      "size": 17387363
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V2_SPOT__harsh_34/daily.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V2_SPOT__harsh_34/daily.csv",
+      "sha256": "754fedb4209d32fc0e19a1bfb945380e57a92c30d8a64af97b0fe1c7c6a47105",
+      "size": 70820
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V2_SPOT__harsh_34/decisions.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V2_SPOT__harsh_34/decisions.csv.gz",
+      "sha256": "948f0b091b444f32ad35fdb7092d6f41562f1b88c2d58d2dc49417fed08ca739",
+      "size": 64902
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V2_SPOT__harsh_34/funding.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V2_SPOT__harsh_34/funding.csv.gz",
+      "sha256": "97acdc9efbd710b4e21ccf7748d68fe8796b0e9ef34c8cb676c24a2e1294d58f",
+      "size": 39
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V2_SPOT__harsh_34/metadata.json": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V2_SPOT__harsh_34/metadata.json",
+      "sha256": "45213d1c481959715c27dd34f37d7b88a7885d267bd9dff2481257729abb6485",
+      "size": 420
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V2_SPOT__harsh_34/minute.parquet": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V2_SPOT__harsh_34/minute.parquet",
+      "sha256": "aabcba412ee52a1a50473de29b5736a43f9e06fa90f86cd5007a3f25ee16bb3f",
+      "size": 37663161
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V2_SPOT__harsh_34/orders.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V2_SPOT__harsh_34/orders.csv.gz",
+      "sha256": "352ea44f03be0a72a6ac96bdc5a3dff27d6e67a3629fff843ac239a20827ec80",
+      "size": 14604
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V2_SPOT__harsh_34/pressure_events.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V2_SPOT__harsh_34/pressure_events.csv.gz",
+      "sha256": "9dbf81362f223c2d68acfcbf5b2855ae269716ebed22083cf0e0d0610f5066a5",
+      "size": 47
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V2_SPOT__main_17/attribution.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V2_SPOT__main_17/attribution.csv.gz",
+      "sha256": "c72b72ff4e77e31ae764226e3e2d23a44af37a840587625f8237e8b34af54b33",
+      "size": 17389486
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V2_SPOT__main_17/daily.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V2_SPOT__main_17/daily.csv",
+      "sha256": "d7bed9335941811b5728550ebc4035a239025e3f2b0bd28abbbaeae9e59be679",
+      "size": 71045
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V2_SPOT__main_17/decisions.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V2_SPOT__main_17/decisions.csv.gz",
+      "sha256": "e40c786ac963e3ea04ca632e9839b4a9a934efbaeee955b9746a76ce08f725f0",
+      "size": 65025
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V2_SPOT__main_17/funding.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V2_SPOT__main_17/funding.csv.gz",
+      "sha256": "8c51ea4ded8aee3dd471ca292a773f64b27976cac29ddab5db27d4d7c7334605",
+      "size": 39
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V2_SPOT__main_17/metadata.json": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V2_SPOT__main_17/metadata.json",
+      "sha256": "fdeed077bc3dbadf9420e7f7cd88db108ddb3267ddb457c57b7a763372578b15",
+      "size": 417
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V2_SPOT__main_17/minute.parquet": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V2_SPOT__main_17/minute.parquet",
+      "sha256": "d17864c181fd345509277f8b0d2e5ee82231f6a967f1dc9673691a51c4709980",
+      "size": 37681345
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V2_SPOT__main_17/orders.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V2_SPOT__main_17/orders.csv.gz",
+      "sha256": "4789922a63f30ad866046e8075f784a5c64d32d65367d1a91c5314fe2ea5926b",
+      "size": 14572
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V2_SPOT__main_17/pressure_events.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V2_SPOT__main_17/pressure_events.csv.gz",
+      "sha256": "cd25e19b333a88af9e4d647d3baa9a687b64159f829385d6d3415495cbc2596c",
+      "size": 47
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V3_CM_DeltaMatched__gross_0/attribution.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V3_CM_DeltaMatched__gross_0/attribution.csv.gz",
+      "sha256": "f320882dcbaf43077751f3c75d47cc8fc71103a7999d9d8c41836a5486e85034",
+      "size": 177051526
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V3_CM_DeltaMatched__gross_0/daily.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V3_CM_DeltaMatched__gross_0/daily.csv",
+      "sha256": "e5c79e555f033d786773ea18cd51d7ade47b06a67d1456c4e7a0108cbe075a72",
+      "size": 225901
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V3_CM_DeltaMatched__gross_0/decisions.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V3_CM_DeltaMatched__gross_0/decisions.csv.gz",
+      "sha256": "fa9bea6d6746358bc839220d295309c0d6ac0e6428f9e3df6f1951ebd6e7b46b",
+      "size": 76341
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V3_CM_DeltaMatched__gross_0/funding.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V3_CM_DeltaMatched__gross_0/funding.csv.gz",
+      "sha256": "c91a4cdcedb5046d91122108e43934e47199f93300a5010f92000add5aaf53b2",
+      "size": 50273
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V3_CM_DeltaMatched__gross_0/metadata.json": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V3_CM_DeltaMatched__gross_0/metadata.json",
+      "sha256": "a08a056865d50381ea79d8f7b3357259ae7b7427c66a37f190896d13671a1682",
+      "size": 1215
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V3_CM_DeltaMatched__gross_0/minute.parquet": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V3_CM_DeltaMatched__gross_0/minute.parquet",
+      "sha256": "ee636a78cfae136ac3134c36033742a9d8cb04e952daf8125e37f25a77afd6af",
+      "size": 113290877
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V3_CM_DeltaMatched__gross_0/orders.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V3_CM_DeltaMatched__gross_0/orders.csv.gz",
+      "sha256": "9165f7b241b93085a955f2fdd423c87044d4a638125b2e621dda13c4b19533ef",
+      "size": 7189
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V3_CM_DeltaMatched__gross_0/pressure_events.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V3_CM_DeltaMatched__gross_0/pressure_events.csv.gz",
+      "sha256": "2085374fb06aad20b0eabf70dfae9234639c3c7e282c643e350c356cec600d47",
+      "size": 47
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V3_CM_DeltaMatched__harsh_34/attribution.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V3_CM_DeltaMatched__harsh_34/attribution.csv.gz",
+      "sha256": "547caa3710ebda2dbc27d70bb1d9c5109c0ccd6785a507fff9616aa044f45ad6",
+      "size": 181034364
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V3_CM_DeltaMatched__harsh_34/daily.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V3_CM_DeltaMatched__harsh_34/daily.csv",
+      "sha256": "6a0262423b53bd75707f440cd7f2e54675e338d824be293ce339d82d140a87a2",
+      "size": 225058
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V3_CM_DeltaMatched__harsh_34/decisions.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V3_CM_DeltaMatched__harsh_34/decisions.csv.gz",
+      "sha256": "92a168e2024eb235f6988e735522c739a536994f667a1d53b621e03df22d4bc2",
+      "size": 77690
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V3_CM_DeltaMatched__harsh_34/funding.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V3_CM_DeltaMatched__harsh_34/funding.csv.gz",
+      "sha256": "43b8db2a14ff479f77f6158805f3edd40f6ba0f5cbf75b025b700b3d18d758a2",
+      "size": 102998
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V3_CM_DeltaMatched__harsh_34/metadata.json": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V3_CM_DeltaMatched__harsh_34/metadata.json",
+      "sha256": "b8533607b96f39e700a147c27984d9316ab8bd3f5bd2ded82b002d88f335d6eb",
+      "size": 1272
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V3_CM_DeltaMatched__harsh_34/minute.parquet": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V3_CM_DeltaMatched__harsh_34/minute.parquet",
+      "sha256": "ed5ba1a9d8d9b18e665851a4d0da4857ac47bc84e732f41a615f08d567bafa62",
+      "size": 135426055
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V3_CM_DeltaMatched__harsh_34/orders.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V3_CM_DeltaMatched__harsh_34/orders.csv.gz",
+      "sha256": "aa3c77162a6bbb691664267adfd55f7362b4f929b7172d6696ec9eeb70403e38",
+      "size": 19492
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V3_CM_DeltaMatched__harsh_34/pressure_events.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V3_CM_DeltaMatched__harsh_34/pressure_events.csv.gz",
+      "sha256": "0eee5c4162f5b6acae5a5e79f2993cf4aea066ee19194b39f22290a62b109901",
+      "size": 47
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V3_CM_DeltaMatched__main_17/attribution.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V3_CM_DeltaMatched__main_17/attribution.csv.gz",
+      "sha256": "c1bb0172b668c3da8949ab778c8cbfce2e18bd20b0570b561fcd6b9b74053119",
+      "size": 181036186
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V3_CM_DeltaMatched__main_17/daily.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V3_CM_DeltaMatched__main_17/daily.csv",
+      "sha256": "060d5364a3ae0842108f4212b94e95190369175cd9d4c0506ae1967aaf427644",
+      "size": 225002
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V3_CM_DeltaMatched__main_17/decisions.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V3_CM_DeltaMatched__main_17/decisions.csv.gz",
+      "sha256": "1972789df2302325fa87425d291a365647df845cdb705496237a51fa44d5b6cb",
+      "size": 77730
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V3_CM_DeltaMatched__main_17/funding.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V3_CM_DeltaMatched__main_17/funding.csv.gz",
+      "sha256": "8735d3d8ddcca32d572de60cf7001f9b60d3f6add7bcf19078152fa2a94465ad",
+      "size": 103030
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V3_CM_DeltaMatched__main_17/metadata.json": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V3_CM_DeltaMatched__main_17/metadata.json",
+      "sha256": "580bbc8de8e5c14890367098afc6c2715142bded9dd1ea3caf71911ef1b261ba",
+      "size": 1277
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V3_CM_DeltaMatched__main_17/minute.parquet": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V3_CM_DeltaMatched__main_17/minute.parquet",
+      "sha256": "e74e0232ad80193dde3e50dd55b05a4588dbcaab712d7d150a02426e3a202019",
+      "size": 135355309
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V3_CM_DeltaMatched__main_17/orders.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V3_CM_DeltaMatched__main_17/orders.csv.gz",
+      "sha256": "6706c627e68f54a14c52039a27ff3ae461b28cd30f6c394c7dd2188118a3b16f",
+      "size": 19594
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V3_CM_DeltaMatched__main_17/pressure_events.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V3_CM_DeltaMatched__main_17/pressure_events.csv.gz",
+      "sha256": "ca88923dde49ba7e45a4e939a35fbe35812e8989647f548412adb06d6c1f3325",
+      "size": 47
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V3_CM_DeltaMatched__main_17__whole_contracts/attribution.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V3_CM_DeltaMatched__main_17__whole_contracts/attribution.csv.gz",
+      "sha256": "fc6cc75c51a01d281c45ec083f7810d2735da9f0778b9c062a6dd021a2b46d7f",
+      "size": 181025256
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V3_CM_DeltaMatched__main_17__whole_contracts/daily.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V3_CM_DeltaMatched__main_17__whole_contracts/daily.csv",
+      "sha256": "a1c571a327cb5a7925fc4aa0627955b8f222d52b40bf153373217cfbb3d9c3c6",
+      "size": 213320
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V3_CM_DeltaMatched__main_17__whole_contracts/decisions.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V3_CM_DeltaMatched__main_17__whole_contracts/decisions.csv.gz",
+      "sha256": "b93e10190a5392d0196babb228de29f3166fc54e3d884e90d9ac189de3fe1f4f",
+      "size": 75458
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V3_CM_DeltaMatched__main_17__whole_contracts/funding.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V3_CM_DeltaMatched__main_17__whole_contracts/funding.csv.gz",
+      "sha256": "fbb8f8cff2174717e62a68e2ef5725006845139f38354567c23cbbd0b96871c6",
+      "size": 100781
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V3_CM_DeltaMatched__main_17__whole_contracts/metadata.json": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V3_CM_DeltaMatched__main_17__whole_contracts/metadata.json",
+      "sha256": "f6cd30be328cb3715b3fbf4c9262a29b55105a972deef05165c7c0b3550946fe",
+      "size": 1274
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V3_CM_DeltaMatched__main_17__whole_contracts/minute.parquet": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V3_CM_DeltaMatched__main_17__whole_contracts/minute.parquet",
+      "sha256": "0cf059531f2f5b81f8354db53fb9291768da6a0970e25e1c2174e7632f412598",
+      "size": 135392560
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V3_CM_DeltaMatched__main_17__whole_contracts/orders.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V3_CM_DeltaMatched__main_17__whole_contracts/orders.csv.gz",
+      "sha256": "58a627b025c7cb38cc28af94f1b7aa72cb8557f883bc1e22faaaad909aeaab9a",
+      "size": 14090
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V3_CM_DeltaMatched__main_17__whole_contracts/pressure_events.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V3_CM_DeltaMatched__main_17__whole_contracts/pressure_events.csv.gz",
+      "sha256": "ffe1f666c498fa177e0335613c206ed7e8b875032f3488f6e218d2ebef65fafe",
+      "size": 47
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V4_CM_CoinAccum__gross_0/attribution.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V4_CM_CoinAccum__gross_0/attribution.csv.gz",
+      "sha256": "78b7cba840fa18607a047052923e811c3a5385150998c33f76eedc2f8d5539a1",
+      "size": 136082822
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V4_CM_CoinAccum__gross_0/daily.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V4_CM_CoinAccum__gross_0/daily.csv",
+      "sha256": "500db2ac0d376b04e62e8966b26221f5a78d16d082500e31a11d8313f24baa96",
+      "size": 205938
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V4_CM_CoinAccum__gross_0/decisions.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V4_CM_CoinAccum__gross_0/decisions.csv.gz",
+      "sha256": "baaf9fa9d470a0ab3d307604d27132febceacab664905125ff5ea8494d5873d7",
+      "size": 65722
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V4_CM_CoinAccum__gross_0/funding.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V4_CM_CoinAccum__gross_0/funding.csv.gz",
+      "sha256": "d358c935eeef00141ef7966d8951d24c8416d141c8d898075f1578458171d088",
+      "size": 49281
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V4_CM_CoinAccum__gross_0/metadata.json": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V4_CM_CoinAccum__gross_0/metadata.json",
+      "sha256": "4928c21ad5bb26a2e8b5d83e259f90d4e0e2ab2724ce0f92d49c88564d122017",
+      "size": 1214
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V4_CM_CoinAccum__gross_0/minute.parquet": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V4_CM_CoinAccum__gross_0/minute.parquet",
+      "sha256": "0045df7b052713235966e4bc1182542d3fb237f6e3917aeee973e7d9773dc69b",
+      "size": 106354132
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V4_CM_CoinAccum__gross_0/orders.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V4_CM_CoinAccum__gross_0/orders.csv.gz",
+      "sha256": "faded66deafe6ce5bbacd94bdfbba4be6395ee786db98fe05372b3d7d51f71bb",
+      "size": 5410
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V4_CM_CoinAccum__gross_0/pressure_events.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V4_CM_CoinAccum__gross_0/pressure_events.csv.gz",
+      "sha256": "b9bf70e9166db230828ee35554c534b84ada7eb5da1fcbfb44841741dfcc63a9",
+      "size": 47
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V4_CM_CoinAccum__harsh_34/attribution.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V4_CM_CoinAccum__harsh_34/attribution.csv.gz",
+      "sha256": "556de65001b4509a14451ed641497857e9b330cde51bf5b8a6d337d375892020",
+      "size": 136225508
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V4_CM_CoinAccum__harsh_34/daily.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V4_CM_CoinAccum__harsh_34/daily.csv",
+      "sha256": "1e553f2aeb8b44857d3da2fd9d460f3f349e425bfe2d88ac89ce7afddd2651cc",
+      "size": 204881
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V4_CM_CoinAccum__harsh_34/decisions.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V4_CM_CoinAccum__harsh_34/decisions.csv.gz",
+      "sha256": "df4b0f1c7eccb5163ad47b1bdc8663a993f6dc93720e6e1f4097d95add4d9bde",
+      "size": 65977
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V4_CM_CoinAccum__harsh_34/funding.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V4_CM_CoinAccum__harsh_34/funding.csv.gz",
+      "sha256": "6c42b17260ecd1613d8204f0cd26a1c2a7609367ed878c42b45ddb4697c62f52",
+      "size": 77980
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V4_CM_CoinAccum__harsh_34/metadata.json": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V4_CM_CoinAccum__harsh_34/metadata.json",
+      "sha256": "344aeaf0f89abbdf7692feeacd249511edb7fcc8c45dec81c0d3958c7009374a",
+      "size": 1277
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V4_CM_CoinAccum__harsh_34/minute.parquet": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V4_CM_CoinAccum__harsh_34/minute.parquet",
+      "sha256": "aa0f22d1dcdd2693e05e8d7c98e1b899724193bf443ee67cf7c95f476a0ef768",
+      "size": 108924686
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V4_CM_CoinAccum__harsh_34/orders.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V4_CM_CoinAccum__harsh_34/orders.csv.gz",
+      "sha256": "b96ea236cbd0ca2ff74e4e53a77d382989599aaf2d448ff325c3edf307b5c157",
+      "size": 11607
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V4_CM_CoinAccum__harsh_34/pressure_events.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V4_CM_CoinAccum__harsh_34/pressure_events.csv.gz",
+      "sha256": "3f4e257bc1d15cffcd3ef0b38047b9e3f09bf2198a5c5c990358e4545dd87a43",
+      "size": 47
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V4_CM_CoinAccum__main_17/attribution.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V4_CM_CoinAccum__main_17/attribution.csv.gz",
+      "sha256": "c1f696e4ef3e9e456fab697efcc3470d342b07e06d7f0d4897b894252698277a",
+      "size": 136210657
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V4_CM_CoinAccum__main_17/daily.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V4_CM_CoinAccum__main_17/daily.csv",
+      "sha256": "d9771aaa32ba5293f6589f71ce7b9fabb27c0e6267ffab7e469f670f209fc2df",
+      "size": 205686
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V4_CM_CoinAccum__main_17/decisions.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V4_CM_CoinAccum__main_17/decisions.csv.gz",
+      "sha256": "d23564046992e8bffd01393f9aa8bc585f0ba7b5e27e41f7203cf73b68acce85",
+      "size": 65925
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V4_CM_CoinAccum__main_17/funding.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V4_CM_CoinAccum__main_17/funding.csv.gz",
+      "sha256": "695be38da7ddbc1ed016c4e7a98e65b16f0f03d4ffd3c520537d6dea9610c0c7",
+      "size": 78079
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V4_CM_CoinAccum__main_17/metadata.json": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V4_CM_CoinAccum__main_17/metadata.json",
+      "sha256": "b6f8f7fd3e2748d14df4bab80fa20998662ab53dd9bea8fe25cdab736d18e6e9",
+      "size": 1271
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V4_CM_CoinAccum__main_17/minute.parquet": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V4_CM_CoinAccum__main_17/minute.parquet",
+      "sha256": "8596b40bf20c55f7791079320bb3d9cb89724abb4ce944cabce23a54b75c8943",
+      "size": 108905602
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V4_CM_CoinAccum__main_17/orders.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V4_CM_CoinAccum__main_17/orders.csv.gz",
+      "sha256": "f1b4cb443cf7824d22ce2e9977db83510cb9aaf3d591f7b6bff1a5468bd451ec",
+      "size": 11535
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V4_CM_CoinAccum__main_17/pressure_events.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V4_CM_CoinAccum__main_17/pressure_events.csv.gz",
+      "sha256": "f5765b6b7f48ccb6400d94eab65e3c3348728a40480b5cb561c5bc5f9595e80d",
+      "size": 47
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V4_CM_CoinAccum__main_17__whole_contracts/attribution.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V4_CM_CoinAccum__main_17__whole_contracts/attribution.csv.gz",
+      "sha256": "93323515a0090cf5ee993423d0e680d93969044ff470d65d38193c4b7318c3c6",
+      "size": 136208265
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V4_CM_CoinAccum__main_17__whole_contracts/daily.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V4_CM_CoinAccum__main_17__whole_contracts/daily.csv",
+      "sha256": "c2d3779acc7cd584d15813df787f2756c46f482cf2cd9ab1bb19d9b5f8b8641a",
+      "size": 199176
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V4_CM_CoinAccum__main_17__whole_contracts/decisions.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V4_CM_CoinAccum__main_17__whole_contracts/decisions.csv.gz",
+      "sha256": "b879081fafccf10c9c025fcb2df34be8c594b6078299948fa818a41a305f14be",
+      "size": 64850
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V4_CM_CoinAccum__main_17__whole_contracts/funding.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V4_CM_CoinAccum__main_17__whole_contracts/funding.csv.gz",
+      "sha256": "59e364117aa82d2ecc7dd0fb22affc7cefa4dc67b41a8f55542cf9f4a01552e4",
+      "size": 76777
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V4_CM_CoinAccum__main_17__whole_contracts/metadata.json": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V4_CM_CoinAccum__main_17__whole_contracts/metadata.json",
+      "sha256": "790b2bd51c55729cad52d1d109d866ad418576f7b2e90b8c49db64750b0220e3",
+      "size": 1272
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V4_CM_CoinAccum__main_17__whole_contracts/minute.parquet": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V4_CM_CoinAccum__main_17__whole_contracts/minute.parquet",
+      "sha256": "21c414b9110e8f2ca049dfcdc6524a886e242b438d0bc064c5242d8882c5bdae",
+      "size": 108918270
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V4_CM_CoinAccum__main_17__whole_contracts/orders.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V4_CM_CoinAccum__main_17__whole_contracts/orders.csv.gz",
+      "sha256": "a1cbf36030a13fbc2102ff67159a527929bcd3f5f778731eb62a68ac2bd93860",
+      "size": 9519
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V4_CM_CoinAccum__main_17__whole_contracts/pressure_events.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V4_CM_CoinAccum__main_17__whole_contracts/pressure_events.csv.gz",
+      "sha256": "347e3764938d9e00aa1b15920d6e4ae2fccbe1a0d6f85448fb3d0b114cc3e976",
+      "size": 47
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_SPOT__gross_0/attribution.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_SPOT__gross_0/attribution.csv.gz",
+      "sha256": "1a104492c1d83f5cc7223fa3207f5a34f5a376f3d3085d8850c1290618f70868",
+      "size": 31959391
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_SPOT__gross_0/daily.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_SPOT__gross_0/daily.csv",
+      "sha256": "d8a9631f4766b74ac74002d7b5494d0ae53f226bf85ae4352a2afa64c4de44e8",
+      "size": 92960
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_SPOT__gross_0/decisions.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_SPOT__gross_0/decisions.csv.gz",
+      "sha256": "606ab89a7f826d2ecd72bdc60521841cbd652e35130772c34b2f74ae8763621b",
+      "size": 84593
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_SPOT__gross_0/funding.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_SPOT__gross_0/funding.csv.gz",
+      "sha256": "a429e25e4dbdfe4ed69ce5746781b8d36655ab0f9bdedc102950c4568b60ee8c",
+      "size": 39
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_SPOT__gross_0/metadata.json": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_SPOT__gross_0/metadata.json",
+      "sha256": "a5d693242f17db9d4611eb7e8caa543cc048f6461f342a624956cdb8e1c41013",
+      "size": 387
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_SPOT__gross_0/minute.parquet": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_SPOT__gross_0/minute.parquet",
+      "sha256": "c54f6259af74b20f39281ad4d264e63abbde79b0d7c6d533211414fe20f23d4c",
+      "size": 57398444
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_SPOT__gross_0/orders.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_SPOT__gross_0/orders.csv.gz",
+      "sha256": "c322138338dfd99d6c81fcf6b92464bbf0716dc2eb5248dfa518e3bfab0c593d",
+      "size": 16439
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_SPOT__gross_0/pressure_events.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_SPOT__gross_0/pressure_events.csv.gz",
+      "sha256": "6abd404aabeaa17faedf322b12693e030f6e6c66079d6ffb162b14745c57bb86",
+      "size": 47
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_SPOT__harsh_34/attribution.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_SPOT__harsh_34/attribution.csv.gz",
+      "sha256": "f4193324d23e5a4f23d5ca8f5b7a36c785ac621fbdccbfed325c984136b8086b",
+      "size": 31968341
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_SPOT__harsh_34/daily.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_SPOT__harsh_34/daily.csv",
+      "sha256": "2129b92355a746d84df477b8d710ecc58aac0b5143f8cab6390ca3873f0da8f1",
+      "size": 92907
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_SPOT__harsh_34/decisions.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_SPOT__harsh_34/decisions.csv.gz",
+      "sha256": "91bb7c4f15500b62e0ce25f394a5ce4d60a4cb4779658a4636644e1dfb3ac23f",
+      "size": 84502
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_SPOT__harsh_34/funding.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_SPOT__harsh_34/funding.csv.gz",
+      "sha256": "e4de194398b4318289d1c8c5243cc3432ede6e2d7484b56d1cd52499b2bbe940",
+      "size": 39
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_SPOT__harsh_34/metadata.json": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_SPOT__harsh_34/metadata.json",
+      "sha256": "031c637d41e0df4f776d2de50702b81d0b1abb84806bb957324f4581d9f0f594",
+      "size": 415
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_SPOT__harsh_34/minute.parquet": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_SPOT__harsh_34/minute.parquet",
+      "sha256": "4f43bd6abf17c7f2b2dfcf1c72d8a43d2eafb7d55875f734090f7a011b34e8c5",
+      "size": 57352368
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_SPOT__harsh_34/orders.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_SPOT__harsh_34/orders.csv.gz",
+      "sha256": "dce3a81faa9c52856896b0653cf1995f9bd549113f5674f7e33b2e08e4e7b210",
+      "size": 23261
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_SPOT__harsh_34/pressure_events.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_SPOT__harsh_34/pressure_events.csv.gz",
+      "sha256": "e84eaf3802b0a498df66908a76f14094b5da29a4111387c67ea2df260dc5ddbb",
+      "size": 47
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_SPOT__main_17/attribution.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_SPOT__main_17/attribution.csv.gz",
+      "sha256": "29049ddfcc001d2f7c533c68823d81d9048dcab695a521157bd976c7ee7d5ebc",
+      "size": 31971467
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_SPOT__main_17/daily.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_SPOT__main_17/daily.csv",
+      "sha256": "2465f10b7e41d063f8eb6074660d98ddaad3cd89882b53c61ef98f4b8722fa8e",
+      "size": 92913
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_SPOT__main_17/decisions.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_SPOT__main_17/decisions.csv.gz",
+      "sha256": "96de79633696d7954a11a1d1c800b9b9934084c03c3f66df4b68ad89cdb7ad86",
+      "size": 84561
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_SPOT__main_17/funding.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_SPOT__main_17/funding.csv.gz",
+      "sha256": "64e855f5e259e9ac5a3ad9be2d2480fadcf7609f2287cc11d161f5c5e91183a6",
+      "size": 39
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_SPOT__main_17/metadata.json": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_SPOT__main_17/metadata.json",
+      "sha256": "ccdd712a2911b8276f100c391edcc614d3260c581f63c94661164759df07a3af",
+      "size": 414
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_SPOT__main_17/minute.parquet": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_SPOT__main_17/minute.parquet",
+      "sha256": "264f7579d9f2addd3d43649a9f0e2f453f7b9f670c318a27c59f692daed94131",
+      "size": 57374196
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_SPOT__main_17/orders.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_SPOT__main_17/orders.csv.gz",
+      "sha256": "5a04f08c1f5be16ee8517de93f5f41c928df4cfb8084541303a767824be9163e",
+      "size": 23211
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_SPOT__main_17/pressure_events.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_SPOT__main_17/pressure_events.csv.gz",
+      "sha256": "333bda34db4e594909bec39b10e2c62b190b9766f386609ab5ab0f9397cc2ee5",
+      "size": 47
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_USDM__gross_0/attribution.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_USDM__gross_0/attribution.csv.gz",
+      "sha256": "c04668338280df4af8a274a361dde74897b9e25a376c4d1a25435a5c552d2581",
+      "size": 43
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_USDM__gross_0/daily.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_USDM__gross_0/daily.csv",
+      "sha256": "bd6229d0375d24e6c5e3293b25f30e076b51ac6c6e7d8d80ceda10b676faaad1",
+      "size": 92943
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_USDM__gross_0/decisions.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_USDM__gross_0/decisions.csv.gz",
+      "sha256": "7189d2604c6539fc0fbf05def8b22bdbef2738a2d711e38dfe20a1b2ca41c0de",
+      "size": 76161
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_USDM__gross_0/funding.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_USDM__gross_0/funding.csv.gz",
+      "sha256": "344a65616dd172864ddd243d5c83a064a89772aafd2e43b200b7904c55670b59",
+      "size": 62452
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_USDM__gross_0/metadata.json": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_USDM__gross_0/metadata.json",
+      "sha256": "d775aedafa8c0b8e09284d898052445c23eb6e342ab3f68f3459f4596dd9fb21",
+      "size": 1137
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_USDM__gross_0/minute.parquet": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_USDM__gross_0/minute.parquet",
+      "sha256": "54c4447c5087fbdb67039f24d0169a3b05e472c9ffe42c126f0b6e42962ae328",
+      "size": 55463811
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_USDM__gross_0/orders.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_USDM__gross_0/orders.csv.gz",
+      "sha256": "ff1d2d434e69dec9208bef5f54c1c8190c0e5e9c674669e81b8492598522f7a8",
+      "size": 18564
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_USDM__gross_0/pressure_events.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_USDM__gross_0/pressure_events.csv.gz",
+      "sha256": "9bed25b6f8d1962fdaaaed3d5e2c7058607401ea64ccbd9d6c1bdd500620b020",
+      "size": 47
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_USDM__harsh_34/attribution.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_USDM__harsh_34/attribution.csv.gz",
+      "sha256": "45b58132558d0680d5d6050d295d10abacb1dbe0690aa3d4adb4d220189ffbc9",
+      "size": 43
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_USDM__harsh_34/daily.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_USDM__harsh_34/daily.csv",
+      "sha256": "1410024aa96a11467aca34ca90cda3ea9cb8a34c2123e570c1dc9b59ff106ee9",
+      "size": 92947
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_USDM__harsh_34/decisions.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_USDM__harsh_34/decisions.csv.gz",
+      "sha256": "33a8ed0a6d0e8e199ea52408cecd254fad030275540f1323d13f7e32c678e73a",
+      "size": 76069
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_USDM__harsh_34/funding.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_USDM__harsh_34/funding.csv.gz",
+      "sha256": "63546770b637062363328721823105eb02c4da0972bfcc987d6e87812b3a481a",
+      "size": 121322
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_USDM__harsh_34/metadata.json": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_USDM__harsh_34/metadata.json",
+      "sha256": "feee4dbe2b3e817a6b1230ea69e318f4c53c313fc414a2079ced07dc089a3a9a",
+      "size": 1180
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_USDM__harsh_34/minute.parquet": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_USDM__harsh_34/minute.parquet",
+      "sha256": "beb0fee96e322d0a65550a4038312cd5e3d75ce13eb876e1a8cad9d16735cd28",
+      "size": 56989380
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_USDM__harsh_34/orders.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_USDM__harsh_34/orders.csv.gz",
+      "sha256": "7af9ff66d4f1e020232254959794ba4958f9c53b453c6db4c2c3beede33963a3",
+      "size": 25341
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_USDM__harsh_34/pressure_events.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_USDM__harsh_34/pressure_events.csv.gz",
+      "sha256": "174f32ea6c475012cd24591ffc9febb70f36683b38555f6b82f40b9efc148282",
+      "size": 47
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_USDM__main_17/attribution.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_USDM__main_17/attribution.csv.gz",
+      "sha256": "7c49307d4973c878771114a87f50b5cc126e9c704326ed194b563940b9abe2d5",
+      "size": 43
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_USDM__main_17/daily.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_USDM__main_17/daily.csv",
+      "sha256": "3950361eb93df31b2c109489c3773c59588289647c0a53a6ccaf6f3d20f1fa80",
+      "size": 92943
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_USDM__main_17/decisions.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_USDM__main_17/decisions.csv.gz",
+      "sha256": "99d28ec87c78ccd046f9a19f1b5593bf31bed29b870038432493106c2259b337",
+      "size": 76059
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_USDM__main_17/funding.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_USDM__main_17/funding.csv.gz",
+      "sha256": "b37dfdd58f22664ae2d0cf21a5642834dab2f736886b48a7460ecbb37f41d6e9",
+      "size": 121329
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_USDM__main_17/metadata.json": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_USDM__main_17/metadata.json",
+      "sha256": "e49f2c908c6c5baa423937e8de508cd2f6c47918f97d84aa4a0ce9a117f9ba13",
+      "size": 1162
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_USDM__main_17/minute.parquet": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_USDM__main_17/minute.parquet",
+      "sha256": "bb9fd737ce3cfb16737cb687b92c19a376e6c0d31fb6eb6adcf2b9b9a96faddf",
+      "size": 56994586
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_USDM__main_17/orders.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_USDM__main_17/orders.csv.gz",
+      "sha256": "0d3258cd830e704cb36ed865e0d088a0774c8b48688fb3e5cd9c4431fc336989",
+      "size": 26807
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_USDM__main_17/pressure_events.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__P_USDM__main_17/pressure_events.csv.gz",
+      "sha256": "4eb062ffb6434f4725efeece90e1fd8caf320f5c3c8d5e90e550cf126c0d37a9",
+      "size": 47
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V1_USDM__gross_0/attribution.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V1_USDM__gross_0/attribution.csv.gz",
+      "sha256": "d58f35b6157b9463789f9f0b1df0ef1af1c8c8094204f33d31569e6a17aec860",
+      "size": 43
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V1_USDM__gross_0/daily.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V1_USDM__gross_0/daily.csv",
+      "sha256": "61d96284e9fa50eb2260af13cd240d6e9186f4580386b8a10c114687673b0ce6",
+      "size": 81212
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V1_USDM__gross_0/decisions.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V1_USDM__gross_0/decisions.csv.gz",
+      "sha256": "01466a7bd2eafbb4447a655e3073db1140619ada2e963eb843c7fc7a2698ea7f",
+      "size": 66347
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V1_USDM__gross_0/funding.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V1_USDM__gross_0/funding.csv.gz",
+      "sha256": "9b2a3aced20d97e30427cab9d752d37629dd0ae6944dc2e9fa0666c1238adcf5",
+      "size": 60504
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V1_USDM__gross_0/metadata.json": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V1_USDM__gross_0/metadata.json",
+      "sha256": "600266b064ca7fab6717d6e73be68c3f4499807d8af79e6b8ae92e3b4d0cc7ba",
+      "size": 1129
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V1_USDM__gross_0/minute.parquet": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V1_USDM__gross_0/minute.parquet",
+      "sha256": "68a1867a4cc1cd128e96c45b9957e2159d7b8e10353eb3cf1b5851c25de1d9f1",
+      "size": 41563205
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V1_USDM__gross_0/orders.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V1_USDM__gross_0/orders.csv.gz",
+      "sha256": "bf40c8ed4a48f31655a28c793db203ebe993ac356ff7d1efd02e09ae10855784",
+      "size": 13134
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V1_USDM__gross_0/pressure_events.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V1_USDM__gross_0/pressure_events.csv.gz",
+      "sha256": "6825fdaeaf427cd2ae88f3a9dcd6991e233b2f72f48b27dfc4371e2f38098731",
+      "size": 47
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V1_USDM__harsh_34/attribution.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V1_USDM__harsh_34/attribution.csv.gz",
+      "sha256": "0ad069f138c2704ad8f9a3f401556aeca4d0fa15bb493f24669dcd536fd1aebc",
+      "size": 43
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V1_USDM__harsh_34/daily.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V1_USDM__harsh_34/daily.csv",
+      "sha256": "6119435cc5e12d479b365243f998c3b3089c912dd1b2a91e23443b2976b44ef9",
+      "size": 81367
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V1_USDM__harsh_34/decisions.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V1_USDM__harsh_34/decisions.csv.gz",
+      "sha256": "5b29382608241f054f23d0c7a73845c5dc43a91625f01d3647bcd8292d4dd188",
+      "size": 66300
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V1_USDM__harsh_34/funding.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V1_USDM__harsh_34/funding.csv.gz",
+      "sha256": "056b85e85a42fbe04dc0c939b0052a1fb797cae5ff69b0816e3400b4bbefa27e",
+      "size": 93868
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V1_USDM__harsh_34/metadata.json": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V1_USDM__harsh_34/metadata.json",
+      "sha256": "2788ea253938ed3d58bc8c02931c0a8c878447bec2f28fe8b42d04eb0a2d9324",
+      "size": 1181
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V1_USDM__harsh_34/minute.parquet": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V1_USDM__harsh_34/minute.parquet",
+      "sha256": "8f49ecf81654639d9e59c027f821f3c8eaf73c76b0d206578874ed4a5c898e3a",
+      "size": 42384022
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V1_USDM__harsh_34/orders.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V1_USDM__harsh_34/orders.csv.gz",
+      "sha256": "d03cf4269808e0c94d6d43318560c23e9ce575a4c7e7e6a94851242d74ee044d",
+      "size": 18407
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V1_USDM__harsh_34/pressure_events.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V1_USDM__harsh_34/pressure_events.csv.gz",
+      "sha256": "4a0ea630e897399281683dd16376774a90dc5bdc67f003a62802f56e18fca75d",
+      "size": 47
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V1_USDM__main_17/attribution.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V1_USDM__main_17/attribution.csv.gz",
+      "sha256": "204d9e4860c1520a464ee4b3df7700113eb4a74d6bb6c28730e27bc374de61fd",
+      "size": 43
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V1_USDM__main_17/daily.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V1_USDM__main_17/daily.csv",
+      "sha256": "b3b00ed03a755f3d6df4398d79d77d7d3d4dbfb8427201c6bd4ed7947d03a19c",
+      "size": 81391
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V1_USDM__main_17/decisions.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V1_USDM__main_17/decisions.csv.gz",
+      "sha256": "30ca06847f0c28c6f789d72462d7692cff1fb1ff8454716570ade0c9299d92df",
+      "size": 66342
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V1_USDM__main_17/funding.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V1_USDM__main_17/funding.csv.gz",
+      "sha256": "b94950312f3ec81e59cd2e9e9349dced91a72741309b11be16f4bda370795ec2",
+      "size": 93825
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V1_USDM__main_17/metadata.json": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V1_USDM__main_17/metadata.json",
+      "sha256": "e4ad8a9a402377a18b2990c13b3167251edaa4e9fda87d6a8e756225017b98d0",
+      "size": 1179
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V1_USDM__main_17/minute.parquet": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V1_USDM__main_17/minute.parquet",
+      "sha256": "27c220daa5d5a93d67c919225f697f6c681f54d6d06694ff41907c0af2b564de",
+      "size": 42373099
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V1_USDM__main_17/orders.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V1_USDM__main_17/orders.csv.gz",
+      "sha256": "3095d1ee59ecb018e72d1f4d4af33b1c63446825d9b90c02d4897b7b85c4f414",
+      "size": 19533
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V1_USDM__main_17/pressure_events.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V1_USDM__main_17/pressure_events.csv.gz",
+      "sha256": "e16de26db276b54b86c44a64f6e5ba037f8293f1ff952a4c973f8b8744048643",
+      "size": 47
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V2_SPOT__gross_0/attribution.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V2_SPOT__gross_0/attribution.csv.gz",
+      "sha256": "c410840b9b1d1716d8ab57ea0356116bc6051223a44eb6e326792e4a6c898150",
+      "size": 20009418
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V2_SPOT__gross_0/daily.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V2_SPOT__gross_0/daily.csv",
+      "sha256": "20a0c7f67596fe105c976ae242c64c840294234222e071eb4bb095e4c16c51a9",
+      "size": 81265
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V2_SPOT__gross_0/decisions.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V2_SPOT__gross_0/decisions.csv.gz",
+      "sha256": "1a2db265b31f828df49fd191caee92a2121317531879c0aeec5a93571ab78fb4",
+      "size": 74851
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V2_SPOT__gross_0/funding.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V2_SPOT__gross_0/funding.csv.gz",
+      "sha256": "f687ebf074c134a1a88ac07891759b0a7ebddd54dd05dd0a7832a13f67a67f99",
+      "size": 39
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V2_SPOT__gross_0/metadata.json": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V2_SPOT__gross_0/metadata.json",
+      "sha256": "57b87c435c38b9485a1368c298b44642d922f38904553215108afed485ae34a0",
+      "size": 388
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V2_SPOT__gross_0/minute.parquet": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V2_SPOT__gross_0/minute.parquet",
+      "sha256": "f93eea39cc845b1d8f3c824d9946869ff1bf937c112e1324510d0ca3c52752f4",
+      "size": 43003590
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V2_SPOT__gross_0/orders.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V2_SPOT__gross_0/orders.csv.gz",
+      "sha256": "7422f93c6a121b3cc669aa27066cbd612f0cbdcd3fbac89adcab0d8474740921",
+      "size": 11342
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V2_SPOT__gross_0/pressure_events.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V2_SPOT__gross_0/pressure_events.csv.gz",
+      "sha256": "c28aaf72e9de6ad9452e26b8807d34462495ab84b59bc2276ddc3051b1c7fd36",
+      "size": 47
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V2_SPOT__harsh_34/attribution.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V2_SPOT__harsh_34/attribution.csv.gz",
+      "sha256": "3775af331341fb949a0887d1e9ff9a3919f992b887db3a8bcf70ffda5825a1cb",
+      "size": 20020020
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V2_SPOT__harsh_34/daily.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V2_SPOT__harsh_34/daily.csv",
+      "sha256": "2139fa7c76714d3c4e4ecf9d87742e2cd884f58b57e07a5f1f49e9f62fecceac",
+      "size": 81304
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V2_SPOT__harsh_34/decisions.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V2_SPOT__harsh_34/decisions.csv.gz",
+      "sha256": "c2e122f1b73832f79c59284623362637ee66db214cff8e93011474c96873a38a",
+      "size": 74927
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V2_SPOT__harsh_34/funding.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V2_SPOT__harsh_34/funding.csv.gz",
+      "sha256": "1a993795ec348195445b66bcd3698493c6feb5e99e5857474c5a72f6a8074fbb",
+      "size": 39
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V2_SPOT__harsh_34/metadata.json": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V2_SPOT__harsh_34/metadata.json",
+      "sha256": "f53c7be0af3f2ba45a0df9be05785adbbd8af5d074293d57e4f6f50c44057d3f",
+      "size": 414
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V2_SPOT__harsh_34/minute.parquet": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V2_SPOT__harsh_34/minute.parquet",
+      "sha256": "0b75f3db675ee092d12c06ad90ed060248401195a5a2551b736d7588c92bf300",
+      "size": 42983198
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V2_SPOT__harsh_34/orders.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V2_SPOT__harsh_34/orders.csv.gz",
+      "sha256": "09bf09ebbcc340f653879c29e5e07be5978858d429c645c699e0738b2d0eca64",
+      "size": 16679
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V2_SPOT__harsh_34/pressure_events.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V2_SPOT__harsh_34/pressure_events.csv.gz",
+      "sha256": "f8a36489db278017f23ab636ea7e2e61600a7cc76e39996d0beb99c9502325b7",
+      "size": 47
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V2_SPOT__main_17/attribution.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V2_SPOT__main_17/attribution.csv.gz",
+      "sha256": "68cadb1b260846d3efeb75fac43a9e584d39a6355276caeaf28aa1c29dac1ff6",
+      "size": 20018150
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V2_SPOT__main_17/daily.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V2_SPOT__main_17/daily.csv",
+      "sha256": "6b757fc6d6d1aa9a7dc7fff2687d20b6841bd4edca2f33dba3b95b5cf57e6d60",
+      "size": 81300
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V2_SPOT__main_17/decisions.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V2_SPOT__main_17/decisions.csv.gz",
+      "sha256": "0fc7687c57d54314e62da4d312b79171920560b151d66decb64353225e0a3383",
+      "size": 74980
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V2_SPOT__main_17/funding.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V2_SPOT__main_17/funding.csv.gz",
+      "sha256": "0c5f08a3b58945ac8c101978c17bcff0d5e6bb533ae67c297d7934c86bb45ee1",
+      "size": 39
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V2_SPOT__main_17/metadata.json": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V2_SPOT__main_17/metadata.json",
+      "sha256": "071893e75752ed6b6cadc7dfe6d415df42adf02738b81fa1ab5937dc5b22cb49",
+      "size": 416
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V2_SPOT__main_17/minute.parquet": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V2_SPOT__main_17/minute.parquet",
+      "sha256": "35f9325a5b6dcd26869a522d23f1864983c4f49cdccba219daa449872e7ef6a8",
+      "size": 42999804
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V2_SPOT__main_17/orders.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V2_SPOT__main_17/orders.csv.gz",
+      "sha256": "7db716a55a854c96551191d10277823be70e37d524b6aae83b767135988016cc",
+      "size": 16638
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V2_SPOT__main_17/pressure_events.csv.gz": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Full__V2_SPOT__main_17/pressure_events.csv.gz",
+      "sha256": "ab2b3f0c5b5f97e1a42d78921840aeb5a2527a88ee778b3e883f34c5b60b7cce",
+      "size": 47
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/comparison.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/comparison.csv",
+      "sha256": "9ab5bd4df7d0eeef8ebc174a7a30cd99de0125aea4ac78932d87f8078e294229",
+      "size": 21027
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/crossvenue.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/crossvenue.csv",
+      "sha256": "f9a0f2559b1659e86c73f8b1b06698b1d6f36334644cf7e6b0761705317ef287",
+      "size": 7875
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/feature_registration.json": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/feature_registration.json",
+      "sha256": "ed68090677cdbab48803402bf896f781a327449b2b2d71e223435f58068f289c",
+      "size": 9157
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/features_CM.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/features_CM.csv",
+      "sha256": "a64cd88755319961f2935e85509183dd9286213528de81bdad1fb00436ba655f",
+      "size": 129092
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/features_UM.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/features_UM.csv",
+      "sha256": "a3367a9d5ef99268079bb42dfa70f4d8475e44d7ae2f211e08b723e8e9659d42",
+      "size": 156643
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/figure_1_equity_and_coin.png": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/figure_1_equity_and_coin.png",
+      "sha256": "b73a8ae0474254dd8fe7db0c0b756aaae046f5291f8bad4b3bcba014f9154fca",
+      "size": 494813
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/figure_2_cost_steps.png": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/figure_2_cost_steps.png",
+      "sha256": "f370d564ae4c0e8a036324e28d5dd97220eab20231cae3f0c41eec8871a0ea18",
+      "size": 164856
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/figure_3_funding_friction_and_gates.png": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/figure_3_funding_friction_and_gates.png",
+      "sha256": "ea260646d05852ede1f73a1181f93669e4973035bcce330dad0557a71400e06f",
+      "size": 225544
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/figure_4_signal_and_rounding_diagnostics.png": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/figure_4_signal_and_rounding_diagnostics.png",
+      "sha256": "993e5a3617a65612e45db8d7db39051377a4bbe8f4cda34fe3072bf812c4664a",
+      "size": 261598
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/figure_captions.md": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/figure_captions.md",
+      "sha256": "34dc4154e99323116952541d99f58a38aff16cb6790dc2b636ac2ab56b5eb8c5",
+      "size": 1534
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/input_verification.json": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/input_verification.json",
+      "sha256": "fb7fdc8274f10f770f9cd9e560c853cc00699f00e1a4b22052fb3d611ed027cd",
+      "size": 72197
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/progress.json": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/progress.json",
+      "sha256": "69d97004c4dd60934410fd73238d61a701d510de98594043481125a5045da5b9",
+      "size": 1760
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/r5_exact_reconciliation.json": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/r5_exact_reconciliation.json",
+      "sha256": "32e9a90bf61c33b107a9b12c8fa0f6628843605016173ef3fa4ac3b4cb15921c",
+      "size": 1755
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/reconciliation.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/reconciliation.csv",
+      "sha256": "ab8b9240efd52d47713affba48c314380e24c7533dc3dbb4e77dbe2d3cd1c081",
+      "size": 4233
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/rounding.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/rounding.csv",
+      "sha256": "2a81c4455042b259e66d4f897b43b422ac40b1be4ef0e418ac50f9235b099361",
+      "size": 542
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/run.log": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/run.log",
+      "sha256": "b9e6db4831f2216faacf892dd3bd631b2ff020b54b7c2fe698ef426fd43861a6",
+      "size": 4243
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/self_signal.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/self_signal.csv",
+      "sha256": "8b7f5ceb3b4454a54a26433181444dbdc4cbc0379f60c87df299317727096fa1",
+      "size": 86795
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/self_signal_summary.json": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/self_signal_summary.json",
+      "sha256": "1042b46801613482f3091659eb4d27204eafc25c8f3665da94fb5034e4b092c3",
+      "size": 492
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Common__CM_DeltaMatched/daily.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Common__CM_DeltaMatched/daily.csv",
+      "sha256": "7f53823fb5e9df03d4246dd2ecb0ecc2812b820d2f993069e089236e64e41584",
+      "size": 184049
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Common__CM_DeltaMatched/gates.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Common__CM_DeltaMatched/gates.csv",
+      "sha256": "c9de582eb145f884b1a00143ade210bc8fb00c23a0ccda0f74b9999f71bba19f",
+      "size": 787
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Common__CM_DeltaMatched/intervals.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Common__CM_DeltaMatched/intervals.csv",
+      "sha256": "6466974d5ee487959e56b24b57ab2ff6471ecb426c169e5952ea837befe98bac",
+      "size": 508
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Common__CM_DeltaMatched/metadata.json": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Common__CM_DeltaMatched/metadata.json",
+      "sha256": "1330a57c7c4a1589a535915b758210e11d1ae71a478176317b99a9c8960e7f41",
+      "size": 2717
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Common__CM_DeltaMatched/month_indices.npy": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Common__CM_DeltaMatched/month_indices.npy",
+      "sha256": "d0a0cba30d5efdd4a0a8832c2ba288195b71c4ef7438460cfa2670a352746597",
+      "size": 3200128
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Common__CM_DeltaMatched/monthly.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Common__CM_DeltaMatched/monthly.csv",
+      "sha256": "cca0f48af528571d5f3f2aa68d366fa67d25e40de801b7cc6d551a7aa3160718",
+      "size": 2978
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Common__CM_DeltaMatched/tests.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Common__CM_DeltaMatched/tests.csv",
+      "sha256": "9997dba27d89d7f6fcb8777dc8fbbb4a5cb8d3b158cd269064fc1551cc6e2ee4",
+      "size": 555
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Common__CM_DeltaMatched/webb_weights.npy": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Common__CM_DeltaMatched/webb_weights.npy",
+      "sha256": "45430bed53cde36691331a19122e3cbdfbcd3c420de01ec83f44af29f5ca6cf7",
+      "size": 31999808
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Common__SPOT/daily.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Common__SPOT/daily.csv",
+      "sha256": "a4abfd115346e96e4bef371f4023391344d2be8c0ef955046319d97d47d3e905",
+      "size": 164570
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Common__SPOT/gates.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Common__SPOT/gates.csv",
+      "sha256": "83005717efcfd8b1dd41745b02346f0cf27f9db5aea484973d3fe86e6890a91e",
+      "size": 792
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Common__SPOT/intervals.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Common__SPOT/intervals.csv",
+      "sha256": "3c45761842ac7445ffb80b0d8f1eb23c524192f57c2bacca8830eb0244c125f6",
+      "size": 506
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Common__SPOT/metadata.json": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Common__SPOT/metadata.json",
+      "sha256": "be9e6823df56f578045d0a7f9259cb2867b22ea8848a12f675c858e9a9a7b9c3",
+      "size": 2718
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Common__SPOT/month_indices.npy": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Common__SPOT/month_indices.npy",
+      "sha256": "d0a0cba30d5efdd4a0a8832c2ba288195b71c4ef7438460cfa2670a352746597",
+      "size": 3200128
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Common__SPOT/monthly.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Common__SPOT/monthly.csv",
+      "sha256": "697f79cb11f74ed73543dcd655b884e76bfedcce2c642faf2592919ab234efcd",
+      "size": 2879
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Common__SPOT/tests.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Common__SPOT/tests.csv",
+      "sha256": "b3db39d99f8c1ceee03f038f9067c6910c548d34eb1353d79bd1cbc2e1547f13",
+      "size": 557
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Common__SPOT/webb_weights.npy": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Common__SPOT/webb_weights.npy",
+      "sha256": "45430bed53cde36691331a19122e3cbdfbcd3c420de01ec83f44af29f5ca6cf7",
+      "size": 31999808
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Common__UM/daily.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Common__UM/daily.csv",
+      "sha256": "f21111935af74fcdadfe3176d163fd32c8e687840fca7a0be6612198394695a5",
+      "size": 166613
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Common__UM/gates.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Common__UM/gates.csv",
+      "sha256": "9a4c37cbb4e024efa3eafe7ee709f4939003362aa0429d4c8a5a80148f5abadb",
+      "size": 789
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Common__UM/intervals.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Common__UM/intervals.csv",
+      "sha256": "a20f9bcdff74f59c361c436900ae65c56a44fed4761faac786f025a865d0783c",
+      "size": 506
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Common__UM/metadata.json": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Common__UM/metadata.json",
+      "sha256": "92ab0a7f1b5f635d301c1ad7c7291204763477c57e570f46ce2f9dc2d9ab7c59",
+      "size": 2720
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Common__UM/month_indices.npy": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Common__UM/month_indices.npy",
+      "sha256": "d0a0cba30d5efdd4a0a8832c2ba288195b71c4ef7438460cfa2670a352746597",
+      "size": 3200128
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Common__UM/monthly.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Common__UM/monthly.csv",
+      "sha256": "df56e9dc3cec19bea3949e7fde2061b81c87963df469e5a1f8bb28a5d18b2228",
+      "size": 2861
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Common__UM/tests.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Common__UM/tests.csv",
+      "sha256": "4e3e6f8d0eaef850359f963394e19b11034bbe43663fab59ea2eb45a77b14693",
+      "size": 559
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Common__UM/webb_weights.npy": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Common__UM/webb_weights.npy",
+      "sha256": "45430bed53cde36691331a19122e3cbdfbcd3c420de01ec83f44af29f5ca6cf7",
+      "size": 31999808
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Full__SPOT/daily.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Full__SPOT/daily.csv",
+      "sha256": "c8bacfdd8e8079f7108b60b2ce8ec86361922e2e76d1815db278b053ae6815d1",
+      "size": 189734
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Full__SPOT/gates.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Full__SPOT/gates.csv",
+      "sha256": "bcb43aca122069edef42d2eabf5d8854d9b602bd1095886f08ae3dc463a83473",
+      "size": 789
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Full__SPOT/intervals.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Full__SPOT/intervals.csv",
+      "sha256": "89ac6bd6b78801adef585f139e8ef1d70516be29d8160eb974e22af1326cc405",
+      "size": 506
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Full__SPOT/metadata.json": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Full__SPOT/metadata.json",
+      "sha256": "3deab359710a93d433da8541037eb4cd5edfe1fe4d38df3017be597081ea87bd",
+      "size": 2819
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Full__SPOT/month_indices.npy": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Full__SPOT/month_indices.npy",
+      "sha256": "69a7763cbc910f7220f98b58efd855a1023f3a4c2725f760589091ee77c32555",
+      "size": 3680128
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Full__SPOT/monthly.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Full__SPOT/monthly.csv",
+      "sha256": "b624b18c2b5ffa26ad021304fb0dcdb606b317ee11a5c1d9dbd57cc2c8020dab",
+      "size": 3260
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Full__SPOT/tests.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Full__SPOT/tests.csv",
+      "sha256": "97b2d39a05a0b22a29e80e144f4ce535c71df7c65ddb50101517034194be9469",
+      "size": 552
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Full__SPOT/webb_weights.npy": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Full__SPOT/webb_weights.npy",
+      "sha256": "51b8ba323896173a5d5d3f7e7789367b1f88b3d5cc83fb2bc67fa6c83f92fe72",
+      "size": 36799760
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Full__UM/daily.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Full__UM/daily.csv",
+      "sha256": "94c1aecf5ee9db6726383d26c41b2362f157361825325995b52b7b28d26f0063",
+      "size": 191736
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Full__UM/gates.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Full__UM/gates.csv",
+      "sha256": "7a233afb90adc7f492ce27f2da484ac931381325aaee024af30bac9451b545e1",
+      "size": 788
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Full__UM/intervals.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Full__UM/intervals.csv",
+      "sha256": "f3282a34d5e827b7cd236682285ce6cf7ed7671f2d7626ef0cc5ff6ce8b77ba8",
+      "size": 506
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Full__UM/metadata.json": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Full__UM/metadata.json",
+      "sha256": "ab7edc5ad298299a7c58bcee07210c9c19767d9890714ccb8daf7567673d4b81",
+      "size": 2819
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Full__UM/month_indices.npy": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Full__UM/month_indices.npy",
+      "sha256": "69a7763cbc910f7220f98b58efd855a1023f3a4c2725f760589091ee77c32555",
+      "size": 3680128
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Full__UM/monthly.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Full__UM/monthly.csv",
+      "sha256": "ceb821f0be5372100520faa86809fa3a657d2a6becec81932bdc00353b392d3e",
+      "size": 3304
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Full__UM/tests.csv": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Full__UM/tests.csv",
+      "sha256": "08636ff29c145605fe6b4fbacc29d7baf2a0cfa03ab01bb2dec1a9311fb64aa6",
+      "size": 558
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Full__UM/webb_weights.npy": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/statistics/IS-Full__UM/webb_weights.npy",
+      "sha256": "51b8ba323896173a5d5d3f7e7789367b1f88b3d5cc83fb2bc67fa6c83f92fe72",
+      "size": 36799760
+    },
+    "reports/trend_hold_venue_round/cp2_btc_is/summary.json": {
+      "path": "reports/trend_hold_venue_round/cp2_btc_is/summary.json",
+      "sha256": "e0b13533646ee58c763d21c33ce12ef598710815892af52f766b2901a4d5d18c",
+      "size": 80138
+    }
+  }
+}

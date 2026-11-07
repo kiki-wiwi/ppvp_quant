@@ -1,0 +1,9 @@
+{
+  "days": 1156,
+  "concordance_pct": 100.0,
+  "budget_difference_mean": -0.0009334494333859878,
+  "budget_difference_max_abs": 0.05014074652103645,
+  "weekly_budget_difference_mean": -0.0011875318624100008,
+  "weekly_budget_difference_max_abs": 0.05014074652103645,
+  "account_comparison_limitation": "Self-signal accounts start independently on 2020-11-01. No extra UM-reference accounts were added to the fixed 42 jobs; signal concordance is not an equal-initial-state PnL comparison."
+}

@@ -1,0 +1,16 @@
+{
+  "version": "V2_SPOT",
+  "cost": "main_17",
+  "asset": "BTC",
+  "window": "IS-Common",
+  "initial_capital": 100000.0,
+  "final_equity": 220362.8085669733,
+  "account_reconciliation_error": 3.280264612043354e-10,
+  "order_count": 132,
+  "adjustment_count": 131,
+  "cash_clip_count": 2,
+  "total_fees": 1888.1549622728205,
+  "total_slippage_cost": 1302.9922867709781,
+  "total_funding": 0.0,
+  "liquidated": false
+}

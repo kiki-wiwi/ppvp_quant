@@ -1,0 +1,50 @@
+2026-11-07T15:21:35.922508+00:00 all inputs supplied; preparing canonical UM and native CM daily features
+2026-11-07T15:21:35.996358+00:00 account 1/42: IS-Full__V1_USDM__gross_0
+2026-11-07T15:21:37.142383+00:00 account 2/42: IS-Full__V1_USDM__main_17
+2026-11-07T15:21:38.310084+00:00 account 3/42: IS-Full__V1_USDM__harsh_34
+2026-11-07T15:21:39.515376+00:00 account 4/42: IS-Full__P_USDM__gross_0
+2026-11-07T15:21:40.705144+00:00 account 5/42: IS-Full__P_USDM__main_17
+2026-11-07T15:21:42.006074+00:00 account 6/42: IS-Full__P_USDM__harsh_34
+2026-11-07T15:21:43.233988+00:00 account 7/42: IS-Full__V2_SPOT__gross_0
+2026-11-07T15:22:49.008729+00:00 account 8/42: IS-Full__V2_SPOT__main_17
+2026-11-07T15:23:54.806547+00:00 account 9/42: IS-Full__V2_SPOT__harsh_34
+2026-11-07T15:25:00.295186+00:00 account 10/42: IS-Full__P_SPOT__gross_0
+2026-11-07T15:26:10.342450+00:00 account 11/42: IS-Full__P_SPOT__main_17
+2026-11-07T15:27:21.073489+00:00 account 12/42: IS-Full__P_SPOT__harsh_34
+2026-11-07T15:28:31.632894+00:00 account 13/42: IS-Common__V1_USDM__gross_0
+2026-11-07T15:28:32.676536+00:00 account 14/42: IS-Common__V1_USDM__main_17
+2026-11-07T15:28:33.724839+00:00 account 15/42: IS-Common__V1_USDM__harsh_34
+2026-11-07T15:28:34.799085+00:00 account 16/42: IS-Common__P_USDM__gross_0
+2026-11-07T15:28:35.846538+00:00 account 17/42: IS-Common__P_USDM__main_17
+2026-11-07T15:28:36.929366+00:00 account 18/42: IS-Common__P_USDM__harsh_34
+2026-11-07T15:28:38.014645+00:00 account 19/42: IS-Common__V2_SPOT__gross_0
+2026-11-07T15:29:35.132014+00:00 account 20/42: IS-Common__V2_SPOT__main_17
+2026-11-07T15:30:32.676693+00:00 account 21/42: IS-Common__V2_SPOT__harsh_34
+2026-11-07T15:31:30.337407+00:00 account 22/42: IS-Common__P_SPOT__gross_0
+2026-11-07T15:32:31.208978+00:00 account 23/42: IS-Common__P_SPOT__main_17
+2026-11-07T15:33:32.172214+00:00 account 24/42: IS-Common__P_SPOT__harsh_34
+2026-11-07T15:34:33.161490+00:00 account 25/42: IS-Common__V3_CM_DeltaMatched__gross_0
+2026-11-07T15:38:40.673941+00:00 account 26/42: IS-Common__V3_CM_DeltaMatched__main_17
+2026-11-07T15:42:48.972203+00:00 account 27/42: IS-Common__V3_CM_DeltaMatched__harsh_34
+2026-11-07T15:46:58.239311+00:00 account 28/42: IS-Common__P_CM_DeltaMatched__gross_0
+2026-11-07T15:51:06.284675+00:00 account 29/42: IS-Common__P_CM_DeltaMatched__main_17
+2026-11-07T15:55:15.578396+00:00 account 30/42: IS-Common__P_CM_DeltaMatched__harsh_34
+2026-11-07T15:59:23.929126+00:00 account 31/42: IS-Common__V4_CM_CoinAccum__gross_0
+2026-11-07T16:03:19.254743+00:00 account 32/42: IS-Common__V4_CM_CoinAccum__main_17
+2026-11-07T16:07:12.683698+00:00 account 33/42: IS-Common__V4_CM_CoinAccum__harsh_34
+2026-11-07T16:11:06.982810+00:00 account 34/42: IS-Common__HODL_1x_Coin__gross_0
+2026-11-07T16:14:43.392264+00:00 account 35/42: IS-Common__HODL_1x_Coin__main_17
+2026-11-07T16:18:19.843514+00:00 account 36/42: IS-Common__HODL_1x_Coin__harsh_34
+2026-11-07T16:21:56.815231+00:00 account 37/42: IS-Common__V3_CM_DeltaMatched__main_17__whole_contracts
+2026-11-07T16:26:05.826614+00:00 account 38/42: IS-Common__P_CM_DeltaMatched__main_17__whole_contracts
+2026-11-07T16:30:14.678393+00:00 account 39/42: IS-Common__V4_CM_CoinAccum__main_17__whole_contracts
+2026-11-07T16:34:09.018434+00:00 account 40/42: IS-CM-SelfSignal__V3_CM_DeltaMatched__main_17
+2026-11-07T16:38:05.349870+00:00 account 41/42: IS-CM-SelfSignal__P_CM_DeltaMatched__main_17
+2026-11-07T16:42:01.957878+00:00 account 42/42: IS-CM-SelfSignal__V4_CM_CoinAccum__main_17
+2026-11-07T16:45:44.974030+00:00 paired inference IS-Full__UM: 99999 Webb / 10000 paired whole-month draws
+2026-11-07T16:45:45.718624+00:00 paired inference IS-Full__SPOT: 99999 Webb / 10000 paired whole-month draws
+2026-11-07T16:45:46.459655+00:00 paired inference IS-Common__UM: 99999 Webb / 10000 paired whole-month draws
+2026-11-07T16:45:47.160935+00:00 paired inference IS-Common__SPOT: 99999 Webb / 10000 paired whole-month draws
+2026-11-07T16:45:47.874349+00:00 paired inference IS-Common__CM_DeltaMatched: 99999 Webb / 10000 paired whole-month draws
+2026-11-07T16:45:49.007623+00:00 rendering registered descriptive comparison figures
+2026-11-07T16:45:51.906843+00:00 completed 42 accounts and five paired inference families; STOP at CP2

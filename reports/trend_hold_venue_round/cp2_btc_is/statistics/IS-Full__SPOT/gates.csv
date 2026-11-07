@@ -1,0 +1,7 @@
+gate,passed,details
+V1,True,"{'day_count': 1401, 'month_count': 46, 'minimum_state_days': 60, 'state_counts_by_half': [{'on': 420, 'off': 251}, {'on': 329, 'off': 401}], 'status': '通过'}"
+V2,True,"{'T_cumulative_return': 1.7302340315120497, 'T_mean': 0.0007633842931098748, 'T_p_holm': 0.02106}"
+V3,False,"{'D_mean': 6.685581490039648e-05, 'D_p_holm': 0.37248}"
+V4,True,"{'means_by_half': [{'T': 0.0011555603352578468, 'D': 4.838779095369081e-06}, {'T': 0.00040290467080673876, 'D': 0.00012386051493488057}]}"
+V5,False,"{'removed_months': ['2022-06', '2020-03', '2023-08'], 'remaining_days': 1309, 'remaining_T_mean': 0.0008297523572014684, 'remaining_D_mean': -0.00017374874901610312}"
+V6,True,"{'harsh_T_cumulative_return': 1.6675592666366055, 'harsh_D_mean': 5.968226149685723e-05}"

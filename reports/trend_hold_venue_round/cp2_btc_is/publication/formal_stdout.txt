@@ -1,0 +1,50 @@
+all inputs supplied; preparing canonical UM and native CM daily features
+account 1/42: IS-Full__V1_USDM__gross_0
+account 2/42: IS-Full__V1_USDM__main_17
+account 3/42: IS-Full__V1_USDM__harsh_34
+account 4/42: IS-Full__P_USDM__gross_0
+account 5/42: IS-Full__P_USDM__main_17
+account 6/42: IS-Full__P_USDM__harsh_34
+account 7/42: IS-Full__V2_SPOT__gross_0
+account 8/42: IS-Full__V2_SPOT__main_17
+account 9/42: IS-Full__V2_SPOT__harsh_34
+account 10/42: IS-Full__P_SPOT__gross_0
+account 11/42: IS-Full__P_SPOT__main_17
+account 12/42: IS-Full__P_SPOT__harsh_34
+account 13/42: IS-Common__V1_USDM__gross_0
+account 14/42: IS-Common__V1_USDM__main_17
+account 15/42: IS-Common__V1_USDM__harsh_34
+account 16/42: IS-Common__P_USDM__gross_0
+account 17/42: IS-Common__P_USDM__main_17
+account 18/42: IS-Common__P_USDM__harsh_34
+account 19/42: IS-Common__V2_SPOT__gross_0
+account 20/42: IS-Common__V2_SPOT__main_17
+account 21/42: IS-Common__V2_SPOT__harsh_34
+account 22/42: IS-Common__P_SPOT__gross_0
+account 23/42: IS-Common__P_SPOT__main_17
+account 24/42: IS-Common__P_SPOT__harsh_34
+account 25/42: IS-Common__V3_CM_DeltaMatched__gross_0
+account 26/42: IS-Common__V3_CM_DeltaMatched__main_17
+account 27/42: IS-Common__V3_CM_DeltaMatched__harsh_34
+account 28/42: IS-Common__P_CM_DeltaMatched__gross_0
+account 29/42: IS-Common__P_CM_DeltaMatched__main_17
+account 30/42: IS-Common__P_CM_DeltaMatched__harsh_34
+account 31/42: IS-Common__V4_CM_CoinAccum__gross_0
+account 32/42: IS-Common__V4_CM_CoinAccum__main_17
+account 33/42: IS-Common__V4_CM_CoinAccum__harsh_34
+account 34/42: IS-Common__HODL_1x_Coin__gross_0
+account 35/42: IS-Common__HODL_1x_Coin__main_17
+account 36/42: IS-Common__HODL_1x_Coin__harsh_34
+account 37/42: IS-Common__V3_CM_DeltaMatched__main_17__whole_contracts
+account 38/42: IS-Common__P_CM_DeltaMatched__main_17__whole_contracts
+account 39/42: IS-Common__V4_CM_CoinAccum__main_17__whole_contracts
+account 40/42: IS-CM-SelfSignal__V3_CM_DeltaMatched__main_17
+account 41/42: IS-CM-SelfSignal__P_CM_DeltaMatched__main_17
+account 42/42: IS-CM-SelfSignal__V4_CM_CoinAccum__main_17
+paired inference IS-Full__UM: 99999 Webb / 10000 paired whole-month draws
+paired inference IS-Full__SPOT: 99999 Webb / 10000 paired whole-month draws
+paired inference IS-Common__UM: 99999 Webb / 10000 paired whole-month draws
+paired inference IS-Common__SPOT: 99999 Webb / 10000 paired whole-month draws
+paired inference IS-Common__CM_DeltaMatched: 99999 Webb / 10000 paired whole-month draws
+rendering registered descriptive comparison figures
+completed 42 accounts and five paired inference families; STOP at CP2

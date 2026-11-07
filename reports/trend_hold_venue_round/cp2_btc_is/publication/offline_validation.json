@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "checks": [
+    "HTTP failure: exactly one request",
+    "redirect: rejected without follow-up",
+    "first upload failure: no next-object/verify request"
+  ],
+  "network_requests": 0,
+  "script_sha256": "676a8e89e1507dc43c8658511f8f5353990dcc4b35185d60e1c565084cff3487"
+}

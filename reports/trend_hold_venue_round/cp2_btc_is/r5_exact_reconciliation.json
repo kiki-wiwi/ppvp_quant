@@ -1,0 +1,56 @@
+[
+  {
+    "job_id": "IS-Full__V1_USDM__gross_0",
+    "daily_exact": true,
+    "terminal_exact": true,
+    "day_count": 1401,
+    "archived_final_equity": 280015.492773547,
+    "archived_version": "T_daily_trend",
+    "archived_result_commit": "3846971ad9014043cc0371a96c693924b7ca1e61"
+  },
+  {
+    "job_id": "IS-Full__V1_USDM__main_17",
+    "daily_exact": true,
+    "terminal_exact": true,
+    "day_count": 1401,
+    "archived_final_equity": 232978.685720026,
+    "archived_version": "T_daily_trend",
+    "archived_result_commit": "3846971ad9014043cc0371a96c693924b7ca1e61"
+  },
+  {
+    "job_id": "IS-Full__V1_USDM__harsh_34",
+    "daily_exact": true,
+    "terminal_exact": true,
+    "day_count": 1401,
+    "archived_final_equity": 227634.60501308515,
+    "archived_version": "T_daily_trend",
+    "archived_result_commit": "3846971ad9014043cc0371a96c693924b7ca1e61"
+  },
+  {
+    "job_id": "IS-Full__P_USDM__gross_0",
+    "daily_exact": true,
+    "terminal_exact": true,
+    "day_count": 1401,
+    "archived_final_equity": 239429.66950778826,
+    "archived_version": "P_continuous_long",
+    "archived_result_commit": "3846971ad9014043cc0371a96c693924b7ca1e61"
+  },
+  {
+    "job_id": "IS-Full__P_USDM__main_17",
+    "daily_exact": true,
+    "terminal_exact": true,
+    "day_count": 1401,
+    "archived_final_equity": 194589.23231328055,
+    "archived_version": "P_continuous_long",
+    "archived_result_commit": "3846971ad9014043cc0371a96c693924b7ca1e61"
+  },
+  {
+    "job_id": "IS-Full__P_USDM__harsh_34",
+    "daily_exact": true,
+    "terminal_exact": true,
+    "day_count": 1401,
+    "archived_final_equity": 192051.1345773938,
+    "archived_version": "P_continuous_long",
+    "archived_result_commit": "3846971ad9014043cc0371a96c693924b7ca1e61"
+  }
+]

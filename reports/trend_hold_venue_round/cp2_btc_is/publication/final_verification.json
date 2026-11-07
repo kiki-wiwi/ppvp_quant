@@ -1,0 +1,37 @@
+{
+  "status": "passed",
+  "checked_at": "2026-11-07T17:04:01.460259+00:00",
+  "frozen": {
+    "cp1_commit": "deadf01a4570386e14bbbec41d6e8eadd3345cac",
+    "cp1_files": 32,
+    "historical_files": 142,
+    "locks": {
+      "BTC_IS_UNLOCKED": true,
+      "POST_IS_AND_ETH_UNLOCKED": false
+    },
+    "environment": {
+      "python": "3.14.4",
+      "pandas": "3.0.5",
+      "numpy": "2.5.4",
+      "pyarrow": "26.0.1",
+      "numba": "0.68.1",
+      "scipy": "1.18.1",
+      "matplotlib": "3.11.2",
+      "pytest": "9.2.0"
+    }
+  },
+  "current_registered_files": 133,
+  "original_output_files_unchanged": 395,
+  "lfs_objects_verified": 84,
+  "lfs_index_pointers_match_payload": true,
+  "all_current_input_cache_bytes_match_registration": true,
+  "remote_unlock_commit_before_result_commit": "90b2f9ddc7aa933e06f26eca14d80aabf96f8c58",
+  "no_backtest_or_inference_rerun": true,
+  "figures_visually_inspected": [
+    "figure_1_equity_and_coin.png",
+    "figure_2_cost_steps.png",
+    "figure_3_funding_friction_and_gates.png",
+    "figure_4_signal_and_rounding_diagnostics.png"
+  ],
+  "lfs_upload_manifest_sha256": "74b92c21fd9a029f2fed3a12e4fb3e636085850140104075ee4b5fbbad7ba116"
+}

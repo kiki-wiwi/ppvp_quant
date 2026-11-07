@@ -1,0 +1,16 @@
+{
+  "version": "V2_SPOT",
+  "cost": "harsh_34",
+  "asset": "BTC",
+  "window": "IS-Common",
+  "initial_capital": 100000.0,
+  "final_equity": 215981.60868287412,
+  "account_reconciliation_error": 1.3537782459137467e-10,
+  "order_count": 132,
+  "adjustment_count": 131,
+  "cash_clip_count": 2,
+  "total_fees": 3737.2767806018082,
+  "total_slippage_cost": 2578.6797919329256,
+  "total_funding": 0.0,
+  "liquidated": false
+}
