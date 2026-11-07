@@ -1,0 +1,629 @@
+{
+  "status": "STOPPED",
+  "started_at": "2026-11-07T14:31:59.565399+00:00",
+  "api": "https://dapi.binance.com/dapi/v1/fundingRate",
+  "symbol": "BTCUSD_PERP",
+  "raw_archive_manifest_sha256": "772263d01fce89bda77948f870055d26ffc4e88ac7e4080bd79e1beec67497bc",
+  "api_pages": [
+    {
+      "path": "reports/trend_hold_venue_round/cp2_registration/funding_api_pages/2020-08_page_001.json",
+      "sha256": "97d7f94e8a8762735f6f80b4b00141e6f36c5d1a679cfe04868143fce32a5140",
+      "bytes": 7310,
+      "url": "https://dapi.binance.com/dapi/v1/fundingRate?symbol=BTCUSD_PERP&startTime=1597104000000&endTime=1598918399999&limit=1000",
+      "parameters": {
+        "symbol": "BTCUSD_PERP",
+        "startTime": 1597104000000,
+        "endTime": 1598918399999,
+        "limit": 1000
+      },
+      "requested_at": "2026-11-07T14:31:59.565644+00:00",
+      "received_at": "2026-11-07T14:31:59.933435+00:00",
+      "rows": 63
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp2_registration/funding_api_pages/2020-09_page_001.json",
+      "sha256": "a10da89f0de8527f18125ecb3a4cb0277ffdc386697fe4ed3a3a43fb3b992827",
+      "bytes": 10467,
+      "url": "https://dapi.binance.com/dapi/v1/fundingRate?symbol=BTCUSD_PERP&startTime=1598918400000&endTime=1601510399999&limit=1000",
+      "parameters": {
+        "symbol": "BTCUSD_PERP",
+        "startTime": 1598918400000,
+        "endTime": 1601510399999,
+        "limit": 1000
+      },
+      "requested_at": "2026-11-07T14:31:59.934512+00:00",
+      "received_at": "2026-11-07T14:32:00.262051+00:00",
+      "rows": 90
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp2_registration/funding_api_pages/2020-10_page_001.json",
+      "sha256": "413885b33a0a1982d701f8c7a6a0d2238171f8e7f6f5f5dfd0fbe3fac0895740",
+      "bytes": 10794,
+      "url": "https://dapi.binance.com/dapi/v1/fundingRate?symbol=BTCUSD_PERP&startTime=1601510400000&endTime=1604188799999&limit=1000",
+      "parameters": {
+        "symbol": "BTCUSD_PERP",
+        "startTime": 1601510400000,
+        "endTime": 1604188799999,
+        "limit": 1000
+      },
+      "requested_at": "2026-11-07T14:32:00.263657+00:00",
+      "received_at": "2026-11-07T14:32:00.588778+00:00",
+      "rows": 93
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp2_registration/funding_api_pages/2020-11_page_001.json",
+      "sha256": "fb4988ee073b2d46a48dc34d708150bb04d6e20cbc75df27befe6f5098c63d25",
+      "bytes": 10441,
+      "url": "https://dapi.binance.com/dapi/v1/fundingRate?symbol=BTCUSD_PERP&startTime=1604188800000&endTime=1606780799999&limit=1000",
+      "parameters": {
+        "symbol": "BTCUSD_PERP",
+        "startTime": 1604188800000,
+        "endTime": 1606780799999,
+        "limit": 1000
+      },
+      "requested_at": "2026-11-07T14:32:00.589868+00:00",
+      "received_at": "2026-11-07T14:32:00.916778+00:00",
+      "rows": 90
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp2_registration/funding_api_pages/2020-12_page_001.json",
+      "sha256": "22b779a2268060fe06db4f9be8c9ff51c4bf05a899e4fbb1ddc804ac61beeddb",
+      "bytes": 10790,
+      "url": "https://dapi.binance.com/dapi/v1/fundingRate?symbol=BTCUSD_PERP&startTime=1606780800000&endTime=1609459199999&limit=1000",
+      "parameters": {
+        "symbol": "BTCUSD_PERP",
+        "startTime": 1606780800000,
+        "endTime": 1609459199999,
+        "limit": 1000
+      },
+      "requested_at": "2026-11-07T14:32:00.918301+00:00",
+      "received_at": "2026-11-07T14:32:01.242178+00:00",
+      "rows": 93
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp2_registration/funding_api_pages/2021-01_page_001.json",
+      "sha256": "a0ebeb4b36f0f8b62b482d306b41af54e447fc4a17f0294b040e8fb229253e33",
+      "bytes": 10790,
+      "url": "https://dapi.binance.com/dapi/v1/fundingRate?symbol=BTCUSD_PERP&startTime=1609459200000&endTime=1612137599999&limit=1000",
+      "parameters": {
+        "symbol": "BTCUSD_PERP",
+        "startTime": 1609459200000,
+        "endTime": 1612137599999,
+        "limit": 1000
+      },
+      "requested_at": "2026-11-07T14:32:01.243761+00:00",
+      "received_at": "2026-11-07T14:32:01.571941+00:00",
+      "rows": 93
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp2_registration/funding_api_pages/2021-02_page_001.json",
+      "sha256": "6ab69305caff2cca8e91d30ca11b3617979d1251b8e1d0ac74451f0f7cbf3a06",
+      "bytes": 9745,
+      "url": "https://dapi.binance.com/dapi/v1/fundingRate?symbol=BTCUSD_PERP&startTime=1612137600000&endTime=1614556799999&limit=1000",
+      "parameters": {
+        "symbol": "BTCUSD_PERP",
+        "startTime": 1612137600000,
+        "endTime": 1614556799999,
+        "limit": 1000
+      },
+      "requested_at": "2026-11-07T14:32:01.573584+00:00",
+      "received_at": "2026-11-07T14:32:01.898629+00:00",
+      "rows": 84
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp2_registration/funding_api_pages/2021-03_page_001.json",
+      "sha256": "c124a3db8a4cb3d2ffa6902ebb55908269b6719a3ef5164a8bb3b3cc7eaf5d13",
+      "bytes": 10789,
+      "url": "https://dapi.binance.com/dapi/v1/fundingRate?symbol=BTCUSD_PERP&startTime=1614556800000&endTime=1617235199999&limit=1000",
+      "parameters": {
+        "symbol": "BTCUSD_PERP",
+        "startTime": 1614556800000,
+        "endTime": 1617235199999,
+        "limit": 1000
+      },
+      "requested_at": "2026-11-07T14:32:01.900221+00:00",
+      "received_at": "2026-11-07T14:32:02.232860+00:00",
+      "rows": 93
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp2_registration/funding_api_pages/2021-04_page_001.json",
+      "sha256": "a5101fd1ac89a2c09a9080bf00d2627b39fdc7d583f3aa2a8ded9756864a9907",
+      "bytes": 10442,
+      "url": "https://dapi.binance.com/dapi/v1/fundingRate?symbol=BTCUSD_PERP&startTime=1617235200000&endTime=1619827199999&limit=1000",
+      "parameters": {
+        "symbol": "BTCUSD_PERP",
+        "startTime": 1617235200000,
+        "endTime": 1619827199999,
+        "limit": 1000
+      },
+      "requested_at": "2026-11-07T14:32:02.234472+00:00",
+      "received_at": "2026-11-07T14:32:02.564125+00:00",
+      "rows": 90
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp2_registration/funding_api_pages/2021-05_page_001.json",
+      "sha256": "a44fda6e0ff00dcb2527c53d851d8a06fd9d018cac0eb4e74f7a8731e0217d2d",
+      "bytes": 10809,
+      "url": "https://dapi.binance.com/dapi/v1/fundingRate?symbol=BTCUSD_PERP&startTime=1619827200000&endTime=1622505599999&limit=1000",
+      "parameters": {
+        "symbol": "BTCUSD_PERP",
+        "startTime": 1619827200000,
+        "endTime": 1622505599999,
+        "limit": 1000
+      },
+      "requested_at": "2026-11-07T14:32:02.565786+00:00",
+      "received_at": "2026-11-07T14:32:02.892378+00:00",
+      "rows": 93
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp2_registration/funding_api_pages/2021-06_page_001.json",
+      "sha256": "2cf661fae386c76cbad9e4cc8ac055a8c2e322e03154c3c8784ce3e27fd933ba",
+      "bytes": 10481,
+      "url": "https://dapi.binance.com/dapi/v1/fundingRate?symbol=BTCUSD_PERP&startTime=1622505600000&endTime=1625097599999&limit=1000",
+      "parameters": {
+        "symbol": "BTCUSD_PERP",
+        "startTime": 1622505600000,
+        "endTime": 1625097599999,
+        "limit": 1000
+      },
+      "requested_at": "2026-11-07T14:32:02.894060+00:00",
+      "received_at": "2026-11-07T14:32:03.226453+00:00",
+      "rows": 90
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp2_registration/funding_api_pages/2021-07_page_001.json",
+      "sha256": "f16f27ed23e27791e4ec1e80885c4e6533c73833875661627aa9cefdc594d5bb",
+      "bytes": 10827,
+      "url": "https://dapi.binance.com/dapi/v1/fundingRate?symbol=BTCUSD_PERP&startTime=1625097600000&endTime=1627775999999&limit=1000",
+      "parameters": {
+        "symbol": "BTCUSD_PERP",
+        "startTime": 1625097600000,
+        "endTime": 1627775999999,
+        "limit": 1000
+      },
+      "requested_at": "2026-11-07T14:32:03.227553+00:00",
+      "received_at": "2026-11-07T14:32:03.559105+00:00",
+      "rows": 93
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp2_registration/funding_api_pages/2021-08_page_001.json",
+      "sha256": "1b1e07f002329849d2970a2a1749f8653270048209a216643cd36e9fcf521b28",
+      "bytes": 10794,
+      "url": "https://dapi.binance.com/dapi/v1/fundingRate?symbol=BTCUSD_PERP&startTime=1627776000000&endTime=1630454399999&limit=1000",
+      "parameters": {
+        "symbol": "BTCUSD_PERP",
+        "startTime": 1627776000000,
+        "endTime": 1630454399999,
+        "limit": 1000
+      },
+      "requested_at": "2026-11-07T14:32:03.560895+00:00",
+      "received_at": "2026-11-07T14:32:03.886462+00:00",
+      "rows": 93
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp2_registration/funding_api_pages/2021-09_page_001.json",
+      "sha256": "dc5f6915da4374079fec216d14774d1516d5a0eb3e695005d877024c29252e4d",
+      "bytes": 10452,
+      "url": "https://dapi.binance.com/dapi/v1/fundingRate?symbol=BTCUSD_PERP&startTime=1630454400000&endTime=1633046399999&limit=1000",
+      "parameters": {
+        "symbol": "BTCUSD_PERP",
+        "startTime": 1630454400000,
+        "endTime": 1633046399999,
+        "limit": 1000
+      },
+      "requested_at": "2026-11-07T14:32:03.888234+00:00",
+      "received_at": "2026-11-07T14:32:04.216069+00:00",
+      "rows": 90
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp2_registration/funding_api_pages/2021-10_page_001.json",
+      "sha256": "bf3f9ed601320e80f2c55121149aa7312ec00f83a4ba5a919bc03795547c60fd",
+      "bytes": 10789,
+      "url": "https://dapi.binance.com/dapi/v1/fundingRate?symbol=BTCUSD_PERP&startTime=1633046400000&endTime=1635724799999&limit=1000",
+      "parameters": {
+        "symbol": "BTCUSD_PERP",
+        "startTime": 1633046400000,
+        "endTime": 1635724799999,
+        "limit": 1000
+      },
+      "requested_at": "2026-11-07T14:32:04.217787+00:00",
+      "received_at": "2026-11-07T14:32:04.540528+00:00",
+      "rows": 93
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp2_registration/funding_api_pages/2021-11_page_001.json",
+      "sha256": "d6849d9ad9adbdf5d6fb050786d13052b6ff23860640c1832f90eb5e0512d8f3",
+      "bytes": 10441,
+      "url": "https://dapi.binance.com/dapi/v1/fundingRate?symbol=BTCUSD_PERP&startTime=1635724800000&endTime=1638316799999&limit=1000",
+      "parameters": {
+        "symbol": "BTCUSD_PERP",
+        "startTime": 1635724800000,
+        "endTime": 1638316799999,
+        "limit": 1000
+      },
+      "requested_at": "2026-11-07T14:32:04.542290+00:00",
+      "received_at": "2026-11-07T14:32:04.872305+00:00",
+      "rows": 90
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp2_registration/funding_api_pages/2021-12_page_001.json",
+      "sha256": "6641a8c5434df1073e9b5cb91ac7a1578adb56b92d4eb45e318d323e642e387d",
+      "bytes": 10797,
+      "url": "https://dapi.binance.com/dapi/v1/fundingRate?symbol=BTCUSD_PERP&startTime=1638316800000&endTime=1640995199999&limit=1000",
+      "parameters": {
+        "symbol": "BTCUSD_PERP",
+        "startTime": 1638316800000,
+        "endTime": 1640995199999,
+        "limit": 1000
+      },
+      "requested_at": "2026-11-07T14:32:04.874122+00:00",
+      "received_at": "2026-11-07T14:32:05.213288+00:00",
+      "rows": 93
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp2_registration/funding_api_pages/2022-01_page_001.json",
+      "sha256": "5501f51bd5c78b53fc1df00a565301e088d0f22dd621e80ee8860e51c4703006",
+      "bytes": 10818,
+      "url": "https://dapi.binance.com/dapi/v1/fundingRate?symbol=BTCUSD_PERP&startTime=1640995200000&endTime=1643673599999&limit=1000",
+      "parameters": {
+        "symbol": "BTCUSD_PERP",
+        "startTime": 1640995200000,
+        "endTime": 1643673599999,
+        "limit": 1000
+      },
+      "requested_at": "2026-11-07T14:32:05.214530+00:00",
+      "received_at": "2026-11-07T14:32:05.543952+00:00",
+      "rows": 93
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp2_registration/funding_api_pages/2022-02_page_001.json",
+      "sha256": "4befbbf399faef56e8e2264e11069e5436724240c2b366d8b094ada428f09694",
+      "bytes": 9774,
+      "url": "https://dapi.binance.com/dapi/v1/fundingRate?symbol=BTCUSD_PERP&startTime=1643673600000&endTime=1646092799999&limit=1000",
+      "parameters": {
+        "symbol": "BTCUSD_PERP",
+        "startTime": 1643673600000,
+        "endTime": 1646092799999,
+        "limit": 1000
+      },
+      "requested_at": "2026-11-07T14:32:05.545209+00:00",
+      "received_at": "2026-11-07T14:32:05.875280+00:00",
+      "rows": 84
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp2_registration/funding_api_pages/2022-03_page_001.json",
+      "sha256": "cbfe9d681fc0f5450ddc283a5b07509cd1ab9a25a63e33d0f9d10c8c6079fb36",
+      "bytes": 10821,
+      "url": "https://dapi.binance.com/dapi/v1/fundingRate?symbol=BTCUSD_PERP&startTime=1646092800000&endTime=1648771199999&limit=1000",
+      "parameters": {
+        "symbol": "BTCUSD_PERP",
+        "startTime": 1646092800000,
+        "endTime": 1648771199999,
+        "limit": 1000
+      },
+      "requested_at": "2026-11-07T14:32:05.876586+00:00",
+      "received_at": "2026-11-07T14:32:06.202903+00:00",
+      "rows": 93
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp2_registration/funding_api_pages/2022-04_page_001.json",
+      "sha256": "019400602f258f256477ff6e68430fca124e023add2a87d94c02e8f6776ae275",
+      "bytes": 10472,
+      "url": "https://dapi.binance.com/dapi/v1/fundingRate?symbol=BTCUSD_PERP&startTime=1648771200000&endTime=1651363199999&limit=1000",
+      "parameters": {
+        "symbol": "BTCUSD_PERP",
+        "startTime": 1648771200000,
+        "endTime": 1651363199999,
+        "limit": 1000
+      },
+      "requested_at": "2026-11-07T14:32:06.204290+00:00",
+      "received_at": "2026-11-07T14:32:06.532806+00:00",
+      "rows": 90
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp2_registration/funding_api_pages/2022-05_page_001.json",
+      "sha256": "d52e07ac5743dd513778da0c66fb363ea3e5b208799fd20c08227ddc9a2a7f48",
+      "bytes": 10810,
+      "url": "https://dapi.binance.com/dapi/v1/fundingRate?symbol=BTCUSD_PERP&startTime=1651363200000&endTime=1654041599999&limit=1000",
+      "parameters": {
+        "symbol": "BTCUSD_PERP",
+        "startTime": 1651363200000,
+        "endTime": 1654041599999,
+        "limit": 1000
+      },
+      "requested_at": "2026-11-07T14:32:06.534086+00:00",
+      "received_at": "2026-11-07T14:32:06.857655+00:00",
+      "rows": 93
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp2_registration/funding_api_pages/2022-06_page_001.json",
+      "sha256": "f5da30c0a8b3579425f5cf9ff401547153e2bc9221bfe37d98b8df1ff79686a1",
+      "bytes": 10499,
+      "url": "https://dapi.binance.com/dapi/v1/fundingRate?symbol=BTCUSD_PERP&startTime=1654041600000&endTime=1656633599999&limit=1000",
+      "parameters": {
+        "symbol": "BTCUSD_PERP",
+        "startTime": 1654041600000,
+        "endTime": 1656633599999,
+        "limit": 1000
+      },
+      "requested_at": "2026-11-07T14:32:06.858945+00:00",
+      "received_at": "2026-11-07T14:32:07.184391+00:00",
+      "rows": 90
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp2_registration/funding_api_pages/2022-07_page_001.json",
+      "sha256": "e4d7a26c6bbaf1cc86a40ffd40aba83d253838fe2c62d234832f940d5f70ef5b",
+      "bytes": 10822,
+      "url": "https://dapi.binance.com/dapi/v1/fundingRate?symbol=BTCUSD_PERP&startTime=1656633600000&endTime=1659311999999&limit=1000",
+      "parameters": {
+        "symbol": "BTCUSD_PERP",
+        "startTime": 1656633600000,
+        "endTime": 1659311999999,
+        "limit": 1000
+      },
+      "requested_at": "2026-11-07T14:32:07.186235+00:00",
+      "received_at": "2026-11-07T14:32:07.514418+00:00",
+      "rows": 93
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp2_registration/funding_api_pages/2022-08_page_001.json",
+      "sha256": "8e5a4d886a2196fbc3968366a59a613f2f82b7611f925c4aee378bd3a9187a14",
+      "bytes": 10834,
+      "url": "https://dapi.binance.com/dapi/v1/fundingRate?symbol=BTCUSD_PERP&startTime=1659312000000&endTime=1661990399999&limit=1000",
+      "parameters": {
+        "symbol": "BTCUSD_PERP",
+        "startTime": 1659312000000,
+        "endTime": 1661990399999,
+        "limit": 1000
+      },
+      "requested_at": "2026-11-07T14:32:07.515735+00:00",
+      "received_at": "2026-11-07T14:32:07.841925+00:00",
+      "rows": 93
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp2_registration/funding_api_pages/2022-09_page_001.json",
+      "sha256": "b15c0144cacc6289e48b51a064f27a8cd46f10631d858f442eadf8223fa2679f",
+      "bytes": 10465,
+      "url": "https://dapi.binance.com/dapi/v1/fundingRate?symbol=BTCUSD_PERP&startTime=1661990400000&endTime=1664582399999&limit=1000",
+      "parameters": {
+        "symbol": "BTCUSD_PERP",
+        "startTime": 1661990400000,
+        "endTime": 1664582399999,
+        "limit": 1000
+      },
+      "requested_at": "2026-11-07T14:32:07.843835+00:00",
+      "received_at": "2026-11-07T14:32:08.165841+00:00",
+      "rows": 90
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp2_registration/funding_api_pages/2022-10_page_001.json",
+      "sha256": "f97d15f7c51fcaebf4f328d2348d8e5e10dbdf7eaa3ce4dabc060ab5f9f31513",
+      "bytes": 10808,
+      "url": "https://dapi.binance.com/dapi/v1/fundingRate?symbol=BTCUSD_PERP&startTime=1664582400000&endTime=1667260799999&limit=1000",
+      "parameters": {
+        "symbol": "BTCUSD_PERP",
+        "startTime": 1664582400000,
+        "endTime": 1667260799999,
+        "limit": 1000
+      },
+      "requested_at": "2026-11-07T14:32:08.167687+00:00",
+      "received_at": "2026-11-07T14:32:08.511503+00:00",
+      "rows": 93
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp2_registration/funding_api_pages/2022-11_page_001.json",
+      "sha256": "b6e4fb864dfa90701d49e69eced99fb0da94162efbdec82212a4706fa971b106",
+      "bytes": 10477,
+      "url": "https://dapi.binance.com/dapi/v1/fundingRate?symbol=BTCUSD_PERP&startTime=1667260800000&endTime=1669852799999&limit=1000",
+      "parameters": {
+        "symbol": "BTCUSD_PERP",
+        "startTime": 1667260800000,
+        "endTime": 1669852799999,
+        "limit": 1000
+      },
+      "requested_at": "2026-11-07T14:32:08.513445+00:00",
+      "received_at": "2026-11-07T14:32:08.843761+00:00",
+      "rows": 90
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp2_registration/funding_api_pages/2022-12_page_001.json",
+      "sha256": "9287293bc7bcec18c395f36393b21cbd339491d3914f48cd2673b631d45c5774",
+      "bytes": 10808,
+      "url": "https://dapi.binance.com/dapi/v1/fundingRate?symbol=BTCUSD_PERP&startTime=1669852800000&endTime=1672531199999&limit=1000",
+      "parameters": {
+        "symbol": "BTCUSD_PERP",
+        "startTime": 1669852800000,
+        "endTime": 1672531199999,
+        "limit": 1000
+      },
+      "requested_at": "2026-11-07T14:32:08.845660+00:00",
+      "received_at": "2026-11-07T14:32:09.174743+00:00",
+      "rows": 93
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp2_registration/funding_api_pages/2023-01_page_001.json",
+      "sha256": "9895e8c1930b618f52818ebba91a5979ab5d7c7ba9ee7e88193d9ac889fc71f3",
+      "bytes": 10796,
+      "url": "https://dapi.binance.com/dapi/v1/fundingRate?symbol=BTCUSD_PERP&startTime=1672531200000&endTime=1675209599999&limit=1000",
+      "parameters": {
+        "symbol": "BTCUSD_PERP",
+        "startTime": 1672531200000,
+        "endTime": 1675209599999,
+        "limit": 1000
+      },
+      "requested_at": "2026-11-07T14:32:09.176192+00:00",
+      "received_at": "2026-11-07T14:32:09.502355+00:00",
+      "rows": 93
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp2_registration/funding_api_pages/2023-02_page_001.json",
+      "sha256": "bf9309d79ffb9b999c5c5e04e8de02108b7de163144a20799a0f1360695b2544",
+      "bytes": 9749,
+      "url": "https://dapi.binance.com/dapi/v1/fundingRate?symbol=BTCUSD_PERP&startTime=1675209600000&endTime=1677628799999&limit=1000",
+      "parameters": {
+        "symbol": "BTCUSD_PERP",
+        "startTime": 1675209600000,
+        "endTime": 1677628799999,
+        "limit": 1000
+      },
+      "requested_at": "2026-11-07T14:32:09.503772+00:00",
+      "received_at": "2026-11-07T14:32:09.829553+00:00",
+      "rows": 84
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp2_registration/funding_api_pages/2023-03_page_001.json",
+      "sha256": "beec0f6f0439919c74f9b5f61c0a96cd82895c62aef14970057ad1a883d5afb6",
+      "bytes": 10815,
+      "url": "https://dapi.binance.com/dapi/v1/fundingRate?symbol=BTCUSD_PERP&startTime=1677628800000&endTime=1680307199999&limit=1000",
+      "parameters": {
+        "symbol": "BTCUSD_PERP",
+        "startTime": 1677628800000,
+        "endTime": 1680307199999,
+        "limit": 1000
+      },
+      "requested_at": "2026-11-07T14:32:09.831447+00:00",
+      "received_at": "2026-11-07T14:32:10.156198+00:00",
+      "rows": 93
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp2_registration/funding_api_pages/2023-04_page_001.json",
+      "sha256": "db3a07659d47fc07c1667b038f39c9fdfebae013bd139072c968bef0b87c9d3e",
+      "bytes": 10459,
+      "url": "https://dapi.binance.com/dapi/v1/fundingRate?symbol=BTCUSD_PERP&startTime=1680307200000&endTime=1682899199999&limit=1000",
+      "parameters": {
+        "symbol": "BTCUSD_PERP",
+        "startTime": 1680307200000,
+        "endTime": 1682899199999,
+        "limit": 1000
+      },
+      "requested_at": "2026-11-07T14:32:10.158119+00:00",
+      "received_at": "2026-11-07T14:32:10.481262+00:00",
+      "rows": 90
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp2_registration/funding_api_pages/2023-05_page_001.json",
+      "sha256": "8c0dbdf8b859ddc21c8cbd6e9436f331f94709988a8423e19efe29c27a281e8a",
+      "bytes": 10799,
+      "url": "https://dapi.binance.com/dapi/v1/fundingRate?symbol=BTCUSD_PERP&startTime=1682899200000&endTime=1685577599999&limit=1000",
+      "parameters": {
+        "symbol": "BTCUSD_PERP",
+        "startTime": 1682899200000,
+        "endTime": 1685577599999,
+        "limit": 1000
+      },
+      "requested_at": "2026-11-07T14:32:10.483289+00:00",
+      "received_at": "2026-11-07T14:32:10.811036+00:00",
+      "rows": 93
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp2_registration/funding_api_pages/2023-06_page_001.json",
+      "sha256": "14c302aae909519825e1f27107faa497a0a22e967de6040ccf4050b6c933fb94",
+      "bytes": 10448,
+      "url": "https://dapi.binance.com/dapi/v1/fundingRate?symbol=BTCUSD_PERP&startTime=1685577600000&endTime=1688169599999&limit=1000",
+      "parameters": {
+        "symbol": "BTCUSD_PERP",
+        "startTime": 1685577600000,
+        "endTime": 1688169599999,
+        "limit": 1000
+      },
+      "requested_at": "2026-11-07T14:32:10.813068+00:00",
+      "received_at": "2026-11-07T14:32:11.149395+00:00",
+      "rows": 90
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp2_registration/funding_api_pages/2023-07_page_001.json",
+      "sha256": "099db10c91258b19c22e15c9d55cd4a860f467d1f308517e2bfa82de4d5d2f72",
+      "bytes": 10803,
+      "url": "https://dapi.binance.com/dapi/v1/fundingRate?symbol=BTCUSD_PERP&startTime=1688169600000&endTime=1690847999999&limit=1000",
+      "parameters": {
+        "symbol": "BTCUSD_PERP",
+        "startTime": 1688169600000,
+        "endTime": 1690847999999,
+        "limit": 1000
+      },
+      "requested_at": "2026-11-07T14:32:11.150808+00:00",
+      "received_at": "2026-11-07T14:32:11.480106+00:00",
+      "rows": 93
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp2_registration/funding_api_pages/2023-08_page_001.json",
+      "sha256": "631f40fd987f9934bb2138ed67cb1ba2ac2a90064c87f52ad5579ec9ef5dcf46",
+      "bytes": 10807,
+      "url": "https://dapi.binance.com/dapi/v1/fundingRate?symbol=BTCUSD_PERP&startTime=1690848000000&endTime=1693526399999&limit=1000",
+      "parameters": {
+        "symbol": "BTCUSD_PERP",
+        "startTime": 1690848000000,
+        "endTime": 1693526399999,
+        "limit": 1000
+      },
+      "requested_at": "2026-11-07T14:32:11.481607+00:00",
+      "received_at": "2026-11-07T14:32:11.810005+00:00",
+      "rows": 93
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp2_registration/funding_api_pages/2023-09_page_001.json",
+      "sha256": "e8abd4baa8eb42cd3c1e1724b99438b2fa40ea65415de3ab38f6666248128c60",
+      "bytes": 10473,
+      "url": "https://dapi.binance.com/dapi/v1/fundingRate?symbol=BTCUSD_PERP&startTime=1693526400000&endTime=1696118399999&limit=1000",
+      "parameters": {
+        "symbol": "BTCUSD_PERP",
+        "startTime": 1693526400000,
+        "endTime": 1696118399999,
+        "limit": 1000
+      },
+      "requested_at": "2026-11-07T14:32:11.811526+00:00",
+      "received_at": "2026-11-07T14:32:12.138381+00:00",
+      "rows": 90
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp2_registration/funding_api_pages/2023-10_page_001.json",
+      "sha256": "35cc9015c7956ff41e76c12ae6dd9ecdcd83dab8a126cece55290bcc32b79c29",
+      "bytes": 10818,
+      "url": "https://dapi.binance.com/dapi/v1/fundingRate?symbol=BTCUSD_PERP&startTime=1696118400000&endTime=1698796799999&limit=1000",
+      "parameters": {
+        "symbol": "BTCUSD_PERP",
+        "startTime": 1696118400000,
+        "endTime": 1698796799999,
+        "limit": 1000
+      },
+      "requested_at": "2026-11-07T14:32:12.139808+00:00",
+      "received_at": "2026-11-07T14:32:12.467160+00:00",
+      "rows": 93
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp2_registration/funding_api_pages/2023-11_page_001.json",
+      "sha256": "41679b6211dea213cf177bc124b33066ea33dbb4eed1f709a6a74aa299422e5a",
+      "bytes": 11687,
+      "url": "https://dapi.binance.com/dapi/v1/fundingRate?symbol=BTCUSD_PERP&startTime=1698796800000&endTime=1701388799999&limit=1000",
+      "parameters": {
+        "symbol": "BTCUSD_PERP",
+        "startTime": 1698796800000,
+        "endTime": 1701388799999,
+        "limit": 1000
+      },
+      "requested_at": "2026-11-07T14:32:12.468654+00:00",
+      "received_at": "2026-11-07T14:32:12.793210+00:00",
+      "rows": 90
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp2_registration/funding_api_pages/2023-12_page_001.json",
+      "sha256": "031f003f172aaf535428031f5f3dd727b238528b0100c422af3379e757bdc63f",
+      "bytes": 12091,
+      "url": "https://dapi.binance.com/dapi/v1/fundingRate?symbol=BTCUSD_PERP&startTime=1701388800000&endTime=1704067199999&limit=1000",
+      "parameters": {
+        "symbol": "BTCUSD_PERP",
+        "startTime": 1701388800000,
+        "endTime": 1704067199999,
+        "limit": 1000
+      },
+      "requested_at": "2026-11-07T14:32:12.794759+00:00",
+      "received_at": "2026-11-07T14:32:13.121477+00:00",
+      "rows": 93
+    }
+  ],
+  "authorization": "Official scheme A; funding tables only before BTC unlock; no OHLC/features/accounts",
+  "automatic_retry": false,
+  "ended_at": "2026-11-07T14:32:13.146383+00:00",
+  "error_type": "ValueError",
+  "error": "overlap missing, extra or misplaced settlement"
+}

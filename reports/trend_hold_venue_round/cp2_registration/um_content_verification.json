@@ -1,0 +1,33 @@
+{
+  "checked_at": "2026-11-07T14:46:01.339123+00:00",
+  "authorization": "User-approved bounded content-only read while both locks remain False; no features/signals/accounts",
+  "path": "data/processed_1m/BTCUSDT_perp_1m_IS.parquet",
+  "rows": 2103840,
+  "first_time": "2020-01-01 00:00:00+00:00",
+  "last_time": "2023-12-31 23:59:00+00:00",
+  "manifest_content_sha256": "1e26dd7ecfe6ee03dc2814dcb0041ef2d5724ff7018b2b7f20ae6364d99f5a33",
+  "actual_content_sha256": "1e26dd7ecfe6ee03dc2814dcb0041ef2d5724ff7018b2b7f20ae6364d99f5a33",
+  "manifest_parquet_sha256": "60e4fd7a0cf23cb83b97a71896c30d6e783b8856d4da4d7be1c805b08040ddf4",
+  "actual_parquet_sha256": "57479bcbb97a21e58e2347e5c17cc6194a2a6fc1302397d4459592746af39aeb",
+  "status": "passed",
+  "frozen": {
+    "cp1_commit": "deadf01a4570386e14bbbec41d6e8eadd3345cac",
+    "cp1_files": 32,
+    "historical_files": 142,
+    "locks": {
+      "BTC_IS_UNLOCKED": false,
+      "POST_IS_AND_ETH_UNLOCKED": false
+    },
+    "environment": {
+      "python": "3.14.4",
+      "pandas": "3.0.5",
+      "numpy": "2.5.4",
+      "pyarrow": "26.0.1",
+      "numba": "0.68.1",
+      "scipy": "1.18.1",
+      "matplotlib": "3.11.2",
+      "pytest": "9.2.0"
+    }
+  },
+  "cache_manifest_and_frozen_files_unchanged": true
+}

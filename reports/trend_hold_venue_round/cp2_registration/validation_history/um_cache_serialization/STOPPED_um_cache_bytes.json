@@ -1,0 +1,55 @@
+{
+  "status": "STOPPED_before_implementation_commit",
+  "checked_at": "2026-11-07T14:42:39.941693+00:00",
+  "error": "UM 1m cached Parquet byte SHA256 differs from original manifest parquet_sha256",
+  "UM_cache": {
+    "path": "data/processed_1m/BTCUSDT_perp_1m_IS.parquet",
+    "resolved_path": "/home/ubuntu/Documents/Codex/2026-11-06/github-ppvp-quant-agent-2-checkpoint/work/ppvp_quant/data/processed_1m/BTCUSDT_perp_1m_IS.parquet",
+    "bytes": 85415317,
+    "manifest_parquet_sha256": "60e4fd7a0cf23cb83b97a71896c30d6e783b8856d4da4d7be1c805b08040ddf4",
+    "actual_parquet_sha256": "57479bcbb97a21e58e2347e5c17cc6194a2a6fc1302397d4459592746af39aeb",
+    "manifest_content_sha256": "1e26dd7ecfe6ee03dc2814dcb0041ef2d5724ff7018b2b7f20ae6364d99f5a33",
+    "content_hash_not_computed_before_unlock": true
+  },
+  "UM_funding_cache": {
+    "path": "data/processed/BTCUSDT_funding.parquet",
+    "bytes": 77878,
+    "manifest_sha256": "bb61b4c1393e15da51e5b11950316cbae37bc66d85b243e529ed3d727e65a570",
+    "actual_sha256": "bb61b4c1393e15da51e5b11950316cbae37bc66d85b243e529ed3d727e65a570"
+  },
+  "CM_funding": {
+    "saved_source_hashes_and_splice_verified": true,
+    "records": 3714,
+    "first_time": "2020-08-11 00:00:00+00:00",
+    "last_time": "2023-12-31 16:00:00+00:00",
+    "overlap": {
+      "existing_vision_decimal_exact_matches": 1593,
+      "approved_api_supplements": 54,
+      "complete_settlements": 1647
+    },
+    "IS_Common_settlements": 3651
+  },
+  "frozen": {
+    "cp1_commit": "deadf01a4570386e14bbbec41d6e8eadd3345cac",
+    "cp1_files": 32,
+    "historical_files": 142,
+    "locks": {
+      "BTC_IS_UNLOCKED": false,
+      "POST_IS_AND_ETH_UNLOCKED": false
+    },
+    "environment": {
+      "python": "3.14.4",
+      "pandas": "3.0.5",
+      "numpy": "2.5.4",
+      "pyarrow": "26.0.1",
+      "numba": "0.68.1",
+      "scipy": "1.18.1",
+      "matplotlib": "3.11.2",
+      "pytest": "9.2.0"
+    }
+  },
+  "head": "deadf01a4570386e14bbbec41d6e8eadd3345cac",
+  "tracked_diff": "",
+  "market_features_or_accounts_executed": false,
+  "automatic_repair_or_resume": false
+}

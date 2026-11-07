@@ -1,0 +1,12 @@
+{
+  "reason": "User-approved official dapi supplement following Vision archive availability diagnosis",
+  "files_sha256": {
+    "reports/trend_hold_venue_round/cp2_registration/validation_history/vision_gap_stop/STOPPED_raw_preparation.json": "9e7d18001031c2a382dbeb42ef88fcc66a5d4b781df50cbd3bbe7cf4ec1eb363",
+    "reports/trend_hold_venue_round/cp2_registration/validation_history/vision_gap_stop/raw_download_progress.json": "9e7d18001031c2a382dbeb42ef88fcc66a5d4b781df50cbd3bbe7cf4ec1eb363",
+    "reports/trend_hold_venue_round/cp2_registration/validation_history/vision_gap_stop/readonly_availability.json": "ba46aa992955cd5b7ded42d91a655ff7b352c1e49f636ac322bfcdc0f34f133b",
+    "reports/trend_hold_venue_round/cp2_registration/validation_history/vision_gap_stop/STOPPED_summary.json": "4218436506e2a4a4111ce262d360be96f41a8f9b50eb05b1b33d3c34b17c1044"
+  },
+  "diagnostic_original_path": "/tmp/trend_hold_formal__ue3kg42/venue_cp2/funding_readonly_availability.json",
+  "raw_klines_parsed": false,
+  "real_features_or_accounts_executed": false
+}

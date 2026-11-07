@@ -1,0 +1,8 @@
+{
+  "sha256": {
+    "reports/trend_hold_venue_round/cp2_registration/validation_history/pre_month_end_patch_synthetic/synthetic_validation.json": "3e39cfe7a000bbdf64095f808cf64eb1640ba0898f42bb3094f10bdaca9ab567",
+    "reports/trend_hold_venue_round/cp2_registration/validation_history/pre_month_end_patch_synthetic/synthetic_pytest.txt": "c466c990337138bcde8f454bf2d81dbb9b7bd0047f4f070eba2989d7b44e87b4",
+    "reports/trend_hold_venue_round/cp2_registration/validation_history/pre_month_end_patch_synthetic/synthetic_junit.xml": "ce6bc473106b04047adb83e13742fb1db4e66375f53a7bc8d16277991334a99b"
+  },
+  "archived_without_byte_changes": true
+}

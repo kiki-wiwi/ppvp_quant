@@ -1,0 +1,16 @@
+{
+  "status": "STOPPED",
+  "completed_archives": 89,
+  "current_archive": "futures/cm/monthly/fundingRate/BTCUSD_PERP/BTCUSD_PERP-fundingRate-2020-08.zip",
+  "failed_url": "https://data.binance.vision/data/futures/cm/monthly/fundingRate/BTCUSD_PERP/BTCUSD_PERP-fundingRate-2020-08.zip.CHECKSUM",
+  "error_type": "HTTPError",
+  "error": "HTTP Error 404: Not Found",
+  "BTC_IS_UNLOCKED_false": true,
+  "POST_IS_AND_ETH_UNLOCKED_false": true,
+  "head": "deadf01a4570386e14bbbec41d6e8eadd3345cac",
+  "existing_tracked_diff": "",
+  "stop_record_sha256": "9e7d18001031c2a382dbeb42ef88fcc66a5d4b781df50cbd3bbe7cf4ec1eb363",
+  "raw_csv_parsed": false,
+  "real_features_or_accounts_executed": false,
+  "automatic_retry": false
+}

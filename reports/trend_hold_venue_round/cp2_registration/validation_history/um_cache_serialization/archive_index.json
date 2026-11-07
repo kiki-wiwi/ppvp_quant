@@ -1,0 +1,6 @@
+{
+  "sha256": {
+    "reports/trend_hold_venue_round/cp2_registration/validation_history/um_cache_serialization/STOPPED_um_cache_bytes.json": "bebcbdfcf0888c7bd4f0fb7f0ab004f679ef92700cc59c0c8c61f38afa526ce7"
+  },
+  "resolution": "User-approved bounded content validation matched frozen R5 content; no cache/manifest changes"
+}

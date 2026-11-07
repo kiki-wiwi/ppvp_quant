@@ -1,0 +1,9 @@
+{
+  "sha256": {
+    "reports/trend_hold_venue_round/cp2_registration/validation_history/vision_month_end_stop/STOPPED_funding.json": "6a0b2813b4b9cb005b7191647a424719e946da6377e25d5994577b335947cecc",
+    "reports/trend_hold_venue_round/cp2_registration/validation_history/vision_month_end_stop/readonly_localization.json": "d75639a086d05ed96c59efc361d666124e804406b372761e5c150929b7537c82",
+    "reports/trend_hold_venue_round/cp2_registration/validation_history/vision_month_end_stop/funding_preparation.txt": "86b02c62a885167cd0f8001cb899b6a0c250917b6c3b279cd9c623989c3f0638",
+    "reports/trend_hold_venue_round/cp2_registration/validation_history/vision_month_end_stop/funding_progress.json": "6a0b2813b4b9cb005b7191647a424719e946da6377e25d5994577b335947cecc"
+  },
+  "archived_without_byte_changes": true
+}

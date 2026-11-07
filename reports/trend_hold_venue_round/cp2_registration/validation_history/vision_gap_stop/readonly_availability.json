@@ -1,0 +1,875 @@
+{
+  "diagnostic_time_utc": "2026-11-07T13:53:13.904184+00:00",
+  "scope": "Object keys only for BTC / 2020-2023; no zip, CSV or 2024+ market content read",
+  "official_listing_script_evidence": [
+    "var BUCKET_URL = location.protocol + '//' + location.hostname + '.' + S3_REGION + '.amazonaws.com'; // e.g. just 's3' for us-east-1 region",
+    "if (typeof BUCKET_URL == 'undefined') {",
+    "var BUCKET_URL = location.protocol + '//' + location.hostname;",
+    "if (!~BUCKET_URL.indexOf(location.protocol + '//' + BUCKET_NAME)) {",
+    "BUCKET_URL += '/' + BUCKET_NAME;",
+    "var BUCKET_WEBSITE_URL = BUCKET_URL;",
+    "// http://esp-link.s3-website-us-east-1.amazonaws.com/",
+    "var s3_rest_url = BUCKET_URL;"
+  ],
+  "listings": [
+    {
+      "family": "CM_monthly_funding",
+      "year": 2020,
+      "url": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision?prefix=data%2Ffutures%2Fcm%2Fmonthly%2FfundingRate%2FBTCUSD_PERP%2FBTCUSD_PERP-fundingRate-2020&max-keys=1000",
+      "status": 200,
+      "response_sha256": "a1c66cef6be9e70d3adca4d1be23a2c3749a5a4051cd9fe44305ae5e0cd1ec0a",
+      "objects": [],
+      "zip_count": 0,
+      "checksum_count": 0,
+      "unpaired_zips": [],
+      "unpaired_checksums": []
+    },
+    {
+      "family": "CM_monthly_funding",
+      "year": 2021,
+      "url": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision?prefix=data%2Ffutures%2Fcm%2Fmonthly%2FfundingRate%2FBTCUSD_PERP%2FBTCUSD_PERP-fundingRate-2021&max-keys=1000",
+      "status": 200,
+      "response_sha256": "8e574300815852ceb69078bb7e55dfec5a5ab4fba1f4ab7b45e276cc7a89970c",
+      "objects": [],
+      "zip_count": 0,
+      "checksum_count": 0,
+      "unpaired_zips": [],
+      "unpaired_checksums": []
+    },
+    {
+      "family": "CM_monthly_funding",
+      "year": 2022,
+      "url": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision?prefix=data%2Ffutures%2Fcm%2Fmonthly%2FfundingRate%2FBTCUSD_PERP%2FBTCUSD_PERP-fundingRate-2022&max-keys=1000",
+      "status": 200,
+      "response_sha256": "f74463e59d0ed9e4b9570dce78b845d2dcb7f5401d111e298c25e5977fd65bbf",
+      "objects": [
+        {
+          "key": "data/futures/cm/monthly/fundingRate/BTCUSD_PERP/BTCUSD_PERP-fundingRate-2022-07.zip",
+          "size": 990
+        },
+        {
+          "key": "data/futures/cm/monthly/fundingRate/BTCUSD_PERP/BTCUSD_PERP-fundingRate-2022-07.zip.CHECKSUM",
+          "size": 102
+        },
+        {
+          "key": "data/futures/cm/monthly/fundingRate/BTCUSD_PERP/BTCUSD_PERP-fundingRate-2022-08.zip",
+          "size": 1010
+        },
+        {
+          "key": "data/futures/cm/monthly/fundingRate/BTCUSD_PERP/BTCUSD_PERP-fundingRate-2022-08.zip.CHECKSUM",
+          "size": 102
+        },
+        {
+          "key": "data/futures/cm/monthly/fundingRate/BTCUSD_PERP/BTCUSD_PERP-fundingRate-2022-09.zip",
+          "size": 990
+        },
+        {
+          "key": "data/futures/cm/monthly/fundingRate/BTCUSD_PERP/BTCUSD_PERP-fundingRate-2022-09.zip.CHECKSUM",
+          "size": 102
+        },
+        {
+          "key": "data/futures/cm/monthly/fundingRate/BTCUSD_PERP/BTCUSD_PERP-fundingRate-2022-10.zip",
+          "size": 986
+        },
+        {
+          "key": "data/futures/cm/monthly/fundingRate/BTCUSD_PERP/BTCUSD_PERP-fundingRate-2022-10.zip.CHECKSUM",
+          "size": 102
+        },
+        {
+          "key": "data/futures/cm/monthly/fundingRate/BTCUSD_PERP/BTCUSD_PERP-fundingRate-2022-11.zip",
+          "size": 979
+        },
+        {
+          "key": "data/futures/cm/monthly/fundingRate/BTCUSD_PERP/BTCUSD_PERP-fundingRate-2022-11.zip.CHECKSUM",
+          "size": 102
+        },
+        {
+          "key": "data/futures/cm/monthly/fundingRate/BTCUSD_PERP/BTCUSD_PERP-fundingRate-2022-12.zip",
+          "size": 922
+        },
+        {
+          "key": "data/futures/cm/monthly/fundingRate/BTCUSD_PERP/BTCUSD_PERP-fundingRate-2022-12.zip.CHECKSUM",
+          "size": 102
+        }
+      ],
+      "zip_count": 6,
+      "checksum_count": 6,
+      "unpaired_zips": [],
+      "unpaired_checksums": []
+    },
+    {
+      "family": "CM_monthly_funding",
+      "year": 2023,
+      "url": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision?prefix=data%2Ffutures%2Fcm%2Fmonthly%2FfundingRate%2FBTCUSD_PERP%2FBTCUSD_PERP-fundingRate-2023&max-keys=1000",
+      "status": 200,
+      "response_sha256": "a915501e4d41f71f49c1cf2bf865a2a907ac3a9e7fe2f0b7e1bbe7d11f4655dc",
+      "objects": [
+        {
+          "key": "data/futures/cm/monthly/fundingRate/BTCUSD_PERP/BTCUSD_PERP-fundingRate-2023-01.zip",
+          "size": 861
+        },
+        {
+          "key": "data/futures/cm/monthly/fundingRate/BTCUSD_PERP/BTCUSD_PERP-fundingRate-2023-01.zip.CHECKSUM",
+          "size": 102
+        },
+        {
+          "key": "data/futures/cm/monthly/fundingRate/BTCUSD_PERP/BTCUSD_PERP-fundingRate-2023-02.zip",
+          "size": 792
+        },
+        {
+          "key": "data/futures/cm/monthly/fundingRate/BTCUSD_PERP/BTCUSD_PERP-fundingRate-2023-02.zip.CHECKSUM",
+          "size": 102
+        },
+        {
+          "key": "data/futures/cm/monthly/fundingRate/BTCUSD_PERP/BTCUSD_PERP-fundingRate-2023-03.zip",
+          "size": 921
+        },
+        {
+          "key": "data/futures/cm/monthly/fundingRate/BTCUSD_PERP/BTCUSD_PERP-fundingRate-2023-03.zip.CHECKSUM",
+          "size": 102
+        },
+        {
+          "key": "data/futures/cm/monthly/fundingRate/BTCUSD_PERP/BTCUSD_PERP-fundingRate-2023-04.zip",
+          "size": 874
+        },
+        {
+          "key": "data/futures/cm/monthly/fundingRate/BTCUSD_PERP/BTCUSD_PERP-fundingRate-2023-04.zip.CHECKSUM",
+          "size": 102
+        },
+        {
+          "key": "data/futures/cm/monthly/fundingRate/BTCUSD_PERP/BTCUSD_PERP-fundingRate-2023-05.zip",
+          "size": 870
+        },
+        {
+          "key": "data/futures/cm/monthly/fundingRate/BTCUSD_PERP/BTCUSD_PERP-fundingRate-2023-05.zip.CHECKSUM",
+          "size": 102
+        },
+        {
+          "key": "data/futures/cm/monthly/fundingRate/BTCUSD_PERP/BTCUSD_PERP-fundingRate-2023-06.zip",
+          "size": 732
+        },
+        {
+          "key": "data/futures/cm/monthly/fundingRate/BTCUSD_PERP/BTCUSD_PERP-fundingRate-2023-06.zip.CHECKSUM",
+          "size": 102
+        },
+        {
+          "key": "data/futures/cm/monthly/fundingRate/BTCUSD_PERP/BTCUSD_PERP-fundingRate-2023-07.zip",
+          "size": 776
+        },
+        {
+          "key": "data/futures/cm/monthly/fundingRate/BTCUSD_PERP/BTCUSD_PERP-fundingRate-2023-07.zip.CHECKSUM",
+          "size": 102
+        },
+        {
+          "key": "data/futures/cm/monthly/fundingRate/BTCUSD_PERP/BTCUSD_PERP-fundingRate-2023-08.zip",
+          "size": 771
+        },
+        {
+          "key": "data/futures/cm/monthly/fundingRate/BTCUSD_PERP/BTCUSD_PERP-fundingRate-2023-08.zip.CHECKSUM",
+          "size": 102
+        },
+        {
+          "key": "data/futures/cm/monthly/fundingRate/BTCUSD_PERP/BTCUSD_PERP-fundingRate-2023-09.zip",
+          "size": 867
+        },
+        {
+          "key": "data/futures/cm/monthly/fundingRate/BTCUSD_PERP/BTCUSD_PERP-fundingRate-2023-09.zip.CHECKSUM",
+          "size": 102
+        },
+        {
+          "key": "data/futures/cm/monthly/fundingRate/BTCUSD_PERP/BTCUSD_PERP-fundingRate-2023-10.zip",
+          "size": 848
+        },
+        {
+          "key": "data/futures/cm/monthly/fundingRate/BTCUSD_PERP/BTCUSD_PERP-fundingRate-2023-10.zip.CHECKSUM",
+          "size": 102
+        },
+        {
+          "key": "data/futures/cm/monthly/fundingRate/BTCUSD_PERP/BTCUSD_PERP-fundingRate-2023-11.zip",
+          "size": 667
+        },
+        {
+          "key": "data/futures/cm/monthly/fundingRate/BTCUSD_PERP/BTCUSD_PERP-fundingRate-2023-11.zip.CHECKSUM",
+          "size": 102
+        },
+        {
+          "key": "data/futures/cm/monthly/fundingRate/BTCUSD_PERP/BTCUSD_PERP-fundingRate-2023-12.zip",
+          "size": 768
+        },
+        {
+          "key": "data/futures/cm/monthly/fundingRate/BTCUSD_PERP/BTCUSD_PERP-fundingRate-2023-12.zip.CHECKSUM",
+          "size": 102
+        }
+      ],
+      "zip_count": 12,
+      "checksum_count": 12,
+      "unpaired_zips": [],
+      "unpaired_checksums": []
+    },
+    {
+      "family": "CM_daily_funding",
+      "year": 2020,
+      "url": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision?prefix=data%2Ffutures%2Fcm%2Fdaily%2FfundingRate%2FBTCUSD_PERP%2FBTCUSD_PERP-fundingRate-2020&max-keys=1000",
+      "status": 200,
+      "response_sha256": "956dc39090acafe989cc69b1870d4779a53ddcd3bd12f21daa07e98e243b6ce5",
+      "objects": [],
+      "zip_count": 0,
+      "checksum_count": 0,
+      "unpaired_zips": [],
+      "unpaired_checksums": []
+    },
+    {
+      "family": "CM_daily_funding",
+      "year": 2021,
+      "url": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision?prefix=data%2Ffutures%2Fcm%2Fdaily%2FfundingRate%2FBTCUSD_PERP%2FBTCUSD_PERP-fundingRate-2021&max-keys=1000",
+      "status": 200,
+      "response_sha256": "219b5fba22bce40824aada4e37226d0d3f1c4b3cd3c774bf6816f24e7ae070dd",
+      "objects": [],
+      "zip_count": 0,
+      "checksum_count": 0,
+      "unpaired_zips": [],
+      "unpaired_checksums": []
+    },
+    {
+      "family": "CM_daily_funding",
+      "year": 2022,
+      "url": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision?prefix=data%2Ffutures%2Fcm%2Fdaily%2FfundingRate%2FBTCUSD_PERP%2FBTCUSD_PERP-fundingRate-2022&max-keys=1000",
+      "status": 200,
+      "response_sha256": "c568f32d3ea2038c48b58d3e970ca42e9877de03ac22ab7b133b0fba8db39a51",
+      "objects": [],
+      "zip_count": 0,
+      "checksum_count": 0,
+      "unpaired_zips": [],
+      "unpaired_checksums": []
+    },
+    {
+      "family": "CM_daily_funding",
+      "year": 2023,
+      "url": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision?prefix=data%2Ffutures%2Fcm%2Fdaily%2FfundingRate%2FBTCUSD_PERP%2FBTCUSD_PERP-fundingRate-2023&max-keys=1000",
+      "status": 200,
+      "response_sha256": "c36882f429a9430be41ab45d12f0ada7c7932996a5b2e190ea873d40edd41d3c",
+      "objects": [],
+      "zip_count": 0,
+      "checksum_count": 0,
+      "unpaired_zips": [],
+      "unpaired_checksums": []
+    },
+    {
+      "family": "CM_premium_1m",
+      "year": 2020,
+      "url": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision?prefix=data%2Ffutures%2Fcm%2Fmonthly%2FpremiumIndexKlines%2FBTCUSD_PERP%2F1m%2FBTCUSD_PERP-1m-2020&max-keys=1000",
+      "status": 200,
+      "response_sha256": "1431cef68027335bbe000a30488e1c2a3a884e7f61df548ce713b61234b1b112",
+      "objects": [
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2020-11.zip",
+          "size": 746949
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2020-11.zip.CHECKSUM",
+          "size": 93
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2020-12.zip",
+          "size": 896342
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2020-12.zip.CHECKSUM",
+          "size": 93
+        }
+      ],
+      "zip_count": 2,
+      "checksum_count": 2,
+      "unpaired_zips": [],
+      "unpaired_checksums": []
+    },
+    {
+      "family": "CM_premium_1m",
+      "year": 2021,
+      "url": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision?prefix=data%2Ffutures%2Fcm%2Fmonthly%2FpremiumIndexKlines%2FBTCUSD_PERP%2F1m%2FBTCUSD_PERP-1m-2021&max-keys=1000",
+      "status": 200,
+      "response_sha256": "38ee6805bcdea25761845a95bc98d557ed2b97fc1824f773591102d5a2984180",
+      "objects": [
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2021-01.zip",
+          "size": 923423
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2021-01.zip.CHECKSUM",
+          "size": 93
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2021-02.zip",
+          "size": 831711
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2021-02.zip.CHECKSUM",
+          "size": 93
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2021-03.zip",
+          "size": 906444
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2021-03.zip.CHECKSUM",
+          "size": 93
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2021-04.zip",
+          "size": 873078
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2021-04.zip.CHECKSUM",
+          "size": 93
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2021-05.zip",
+          "size": 915700
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2021-05.zip.CHECKSUM",
+          "size": 93
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2021-06.zip",
+          "size": 875869
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2021-06.zip.CHECKSUM",
+          "size": 93
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2021-07.zip",
+          "size": 887843
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2021-07.zip.CHECKSUM",
+          "size": 93
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2021-08.zip",
+          "size": 892111
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2021-08.zip.CHECKSUM",
+          "size": 93
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2021-09.zip",
+          "size": 858473
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2021-09.zip.CHECKSUM",
+          "size": 93
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2021-10.zip",
+          "size": 891309
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2021-10.zip.CHECKSUM",
+          "size": 93
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2021-11.zip",
+          "size": 860438
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2021-11.zip.CHECKSUM",
+          "size": 93
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2021-12.zip",
+          "size": 886017
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2021-12.zip.CHECKSUM",
+          "size": 93
+        }
+      ],
+      "zip_count": 12,
+      "checksum_count": 12,
+      "unpaired_zips": [],
+      "unpaired_checksums": []
+    },
+    {
+      "family": "CM_premium_1m",
+      "year": 2022,
+      "url": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision?prefix=data%2Ffutures%2Fcm%2Fmonthly%2FpremiumIndexKlines%2FBTCUSD_PERP%2F1m%2FBTCUSD_PERP-1m-2022&max-keys=1000",
+      "status": 200,
+      "response_sha256": "2ca32df53c5943b9cf33cbc623bf4c2dd7266adc69110821a1dd29986426073d",
+      "objects": [
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2022-01.zip",
+          "size": 884540
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2022-01.zip.CHECKSUM",
+          "size": 93
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2022-02.zip",
+          "size": 798097
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2022-02.zip.CHECKSUM",
+          "size": 93
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2022-03.zip",
+          "size": 878897
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2022-03.zip.CHECKSUM",
+          "size": 93
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2022-04.zip",
+          "size": 842982
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2022-04.zip.CHECKSUM",
+          "size": 93
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2022-05.zip",
+          "size": 883014
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2022-05.zip.CHECKSUM",
+          "size": 93
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2022-06.zip",
+          "size": 859685
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2022-06.zip.CHECKSUM",
+          "size": 93
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2022-07.zip",
+          "size": 882887
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2022-07.zip.CHECKSUM",
+          "size": 93
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2022-08.zip",
+          "size": 874458
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2022-08.zip.CHECKSUM",
+          "size": 93
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2022-09.zip",
+          "size": 846787
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2022-09.zip.CHECKSUM",
+          "size": 93
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2022-10.zip",
+          "size": 864300
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2022-10.zip.CHECKSUM",
+          "size": 93
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2022-11.zip",
+          "size": 849908
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2022-11.zip.CHECKSUM",
+          "size": 93
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2022-12.zip",
+          "size": 859944
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2022-12.zip.CHECKSUM",
+          "size": 93
+        }
+      ],
+      "zip_count": 12,
+      "checksum_count": 12,
+      "unpaired_zips": [],
+      "unpaired_checksums": []
+    },
+    {
+      "family": "CM_premium_1m",
+      "year": 2023,
+      "url": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision?prefix=data%2Ffutures%2Fcm%2Fmonthly%2FpremiumIndexKlines%2FBTCUSD_PERP%2F1m%2FBTCUSD_PERP-1m-2023&max-keys=1000",
+      "status": 200,
+      "response_sha256": "128d23125113c8e18a578c7894fc4ddd46adcdf7c4e0ff77c5351c5526a549ee",
+      "objects": [
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2023-01.zip",
+          "size": 868682
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2023-01.zip.CHECKSUM",
+          "size": 93
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2023-02.zip",
+          "size": 787148
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2023-02.zip.CHECKSUM",
+          "size": 93
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2023-03.zip",
+          "size": 886336
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2023-03.zip.CHECKSUM",
+          "size": 93
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2023-04.zip",
+          "size": 840333
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2023-04.zip.CHECKSUM",
+          "size": 93
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2023-05.zip",
+          "size": 861988
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2023-05.zip.CHECKSUM",
+          "size": 93
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2023-06.zip",
+          "size": 838793
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2023-06.zip.CHECKSUM",
+          "size": 93
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2023-07.zip",
+          "size": 855722
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2023-07.zip.CHECKSUM",
+          "size": 93
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2023-08.zip",
+          "size": 742264
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2023-08.zip.CHECKSUM",
+          "size": 93
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2023-09.zip",
+          "size": 823642
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2023-09.zip.CHECKSUM",
+          "size": 93
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2023-10.zip",
+          "size": 866339
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2023-10.zip.CHECKSUM",
+          "size": 93
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2023-11.zip",
+          "size": 844604
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2023-11.zip.CHECKSUM",
+          "size": 93
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2023-12.zip",
+          "size": 881480
+        },
+        {
+          "key": "data/futures/cm/monthly/premiumIndexKlines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2023-12.zip.CHECKSUM",
+          "size": 93
+        }
+      ],
+      "zip_count": 12,
+      "checksum_count": 12,
+      "unpaired_zips": [],
+      "unpaired_checksums": []
+    },
+    {
+      "family": "UM_monthly_funding",
+      "year": 2020,
+      "url": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision?prefix=data%2Ffutures%2Fum%2Fmonthly%2FfundingRate%2FBTCUSDT%2FBTCUSDT-fundingRate-2020&max-keys=1000",
+      "status": 200,
+      "response_sha256": "6df3d2134b1be48f1097dd8d54ccf41d86243a0704a8006553e9ad5c1c8f880d",
+      "objects": [
+        {
+          "key": "data/futures/um/monthly/fundingRate/BTCUSDT/BTCUSDT-fundingRate-2020-01.zip",
+          "size": 825
+        },
+        {
+          "key": "data/futures/um/monthly/fundingRate/BTCUSDT/BTCUSDT-fundingRate-2020-01.zip.CHECKSUM",
+          "size": 98
+        },
+        {
+          "key": "data/futures/um/monthly/fundingRate/BTCUSDT/BTCUSDT-fundingRate-2020-02.zip",
+          "size": 885
+        },
+        {
+          "key": "data/futures/um/monthly/fundingRate/BTCUSDT/BTCUSDT-fundingRate-2020-02.zip.CHECKSUM",
+          "size": 98
+        },
+        {
+          "key": "data/futures/um/monthly/fundingRate/BTCUSDT/BTCUSDT-fundingRate-2020-03.zip",
+          "size": 928
+        },
+        {
+          "key": "data/futures/um/monthly/fundingRate/BTCUSDT/BTCUSDT-fundingRate-2020-03.zip.CHECKSUM",
+          "size": 98
+        },
+        {
+          "key": "data/futures/um/monthly/fundingRate/BTCUSDT/BTCUSDT-fundingRate-2020-04.zip",
+          "size": 867
+        },
+        {
+          "key": "data/futures/um/monthly/fundingRate/BTCUSDT/BTCUSDT-fundingRate-2020-04.zip.CHECKSUM",
+          "size": 98
+        },
+        {
+          "key": "data/futures/um/monthly/fundingRate/BTCUSDT/BTCUSDT-fundingRate-2020-05.zip",
+          "size": 839
+        },
+        {
+          "key": "data/futures/um/monthly/fundingRate/BTCUSDT/BTCUSDT-fundingRate-2020-05.zip.CHECKSUM",
+          "size": 98
+        },
+        {
+          "key": "data/futures/um/monthly/fundingRate/BTCUSDT/BTCUSDT-fundingRate-2020-06.zip",
+          "size": 791
+        },
+        {
+          "key": "data/futures/um/monthly/fundingRate/BTCUSDT/BTCUSDT-fundingRate-2020-06.zip.CHECKSUM",
+          "size": 98
+        },
+        {
+          "key": "data/futures/um/monthly/fundingRate/BTCUSDT/BTCUSDT-fundingRate-2020-07.zip",
+          "size": 712
+        },
+        {
+          "key": "data/futures/um/monthly/fundingRate/BTCUSDT/BTCUSDT-fundingRate-2020-07.zip.CHECKSUM",
+          "size": 98
+        },
+        {
+          "key": "data/futures/um/monthly/fundingRate/BTCUSDT/BTCUSDT-fundingRate-2020-08.zip",
+          "size": 854
+        },
+        {
+          "key": "data/futures/um/monthly/fundingRate/BTCUSDT/BTCUSDT-fundingRate-2020-08.zip.CHECKSUM",
+          "size": 98
+        },
+        {
+          "key": "data/futures/um/monthly/fundingRate/BTCUSDT/BTCUSDT-fundingRate-2020-09.zip",
+          "size": 838
+        },
+        {
+          "key": "data/futures/um/monthly/fundingRate/BTCUSDT/BTCUSDT-fundingRate-2020-09.zip.CHECKSUM",
+          "size": 98
+        },
+        {
+          "key": "data/futures/um/monthly/fundingRate/BTCUSDT/BTCUSDT-fundingRate-2020-10.zip",
+          "size": 828
+        },
+        {
+          "key": "data/futures/um/monthly/fundingRate/BTCUSDT/BTCUSDT-fundingRate-2020-10.zip.CHECKSUM",
+          "size": 98
+        },
+        {
+          "key": "data/futures/um/monthly/fundingRate/BTCUSDT/BTCUSDT-fundingRate-2020-11.zip",
+          "size": 854
+        },
+        {
+          "key": "data/futures/um/monthly/fundingRate/BTCUSDT/BTCUSDT-fundingRate-2020-11.zip.CHECKSUM",
+          "size": 98
+        },
+        {
+          "key": "data/futures/um/monthly/fundingRate/BTCUSDT/BTCUSDT-fundingRate-2020-12.zip",
+          "size": 852
+        },
+        {
+          "key": "data/futures/um/monthly/fundingRate/BTCUSDT/BTCUSDT-fundingRate-2020-12.zip.CHECKSUM",
+          "size": 98
+        }
+      ],
+      "zip_count": 12,
+      "checksum_count": 12,
+      "unpaired_zips": [],
+      "unpaired_checksums": []
+    }
+  ],
+  "dapi_probe": {
+    "url": "https://dapi.binance.com/dapi/v1/fundingRate?symbol=BTCUSD_PERP&startTime=1598918400000&endTime=1598947200000&limit=1",
+    "status": 200,
+    "bytes": 117,
+    "sha256": "6fc033da648d36cde6254c1e8a61be978de9fea9b81b8f44da584339f106b0ee",
+    "body": "[{\"symbol\":\"BTCUSD_PERP\",\"fundingTime\":1598918400000,\"fundingRate\":\"0.00010000\",\"markPrice\":\"\",\"rateType\":\"Regular\"}]",
+    "probe_rows": 1
+  },
+  "premium_interval_starts": [
+    {
+      "interval": "12h",
+      "url": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision?prefix=data%2Ffutures%2Fcm%2Fmonthly%2FpremiumIndexKlines%2FBTCUSD_PERP%2F12h%2FBTCUSD_PERP-12h-2020&max-keys=1000",
+      "zip_count_2020": 2,
+      "first_2020_month": "2020-11",
+      "all_zips_have_checksums": true,
+      "response_sha256": "86a74bb71d2baf9b427022cb3d50741bc991fc733a008b061e9e5a7f88be7f08"
+    },
+    {
+      "interval": "15m",
+      "url": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision?prefix=data%2Ffutures%2Fcm%2Fmonthly%2FpremiumIndexKlines%2FBTCUSD_PERP%2F15m%2FBTCUSD_PERP-15m-2020&max-keys=1000",
+      "zip_count_2020": 2,
+      "first_2020_month": "2020-11",
+      "all_zips_have_checksums": true,
+      "response_sha256": "1d0387617125ab2b0c505adff170840ca67348dcc40f832bd5191fd576297dac"
+    },
+    {
+      "interval": "1d",
+      "url": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision?prefix=data%2Ffutures%2Fcm%2Fmonthly%2FpremiumIndexKlines%2FBTCUSD_PERP%2F1d%2FBTCUSD_PERP-1d-2020&max-keys=1000",
+      "zip_count_2020": 2,
+      "first_2020_month": "2020-11",
+      "all_zips_have_checksums": true,
+      "response_sha256": "c376b8f48d073da78f68c7568f3ed3683020ac9437fb9034c9a0d97b405b95f2"
+    },
+    {
+      "interval": "1h",
+      "url": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision?prefix=data%2Ffutures%2Fcm%2Fmonthly%2FpremiumIndexKlines%2FBTCUSD_PERP%2F1h%2FBTCUSD_PERP-1h-2020&max-keys=1000",
+      "zip_count_2020": 2,
+      "first_2020_month": "2020-11",
+      "all_zips_have_checksums": true,
+      "response_sha256": "d9211e52762ec85a492bd24c79568c9374ed57ba791bc5b72deea579d8d20b9e"
+    },
+    {
+      "interval": "1m",
+      "url": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision?prefix=data%2Ffutures%2Fcm%2Fmonthly%2FpremiumIndexKlines%2FBTCUSD_PERP%2F1m%2FBTCUSD_PERP-1m-2020&max-keys=1000",
+      "zip_count_2020": 2,
+      "first_2020_month": "2020-11",
+      "all_zips_have_checksums": true,
+      "response_sha256": "1431cef68027335bbe000a30488e1c2a3a884e7f61df548ce713b61234b1b112"
+    },
+    {
+      "interval": "1mo",
+      "url": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision?prefix=data%2Ffutures%2Fcm%2Fmonthly%2FpremiumIndexKlines%2FBTCUSD_PERP%2F1mo%2FBTCUSD_PERP-1mo-2020&max-keys=1000",
+      "zip_count_2020": 2,
+      "first_2020_month": "2020-11",
+      "all_zips_have_checksums": true,
+      "response_sha256": "27576330f52935245cf629a02a9769c5325d12d0e71f8f25d4aa4d5d72f8cb86"
+    },
+    {
+      "interval": "1w",
+      "url": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision?prefix=data%2Ffutures%2Fcm%2Fmonthly%2FpremiumIndexKlines%2FBTCUSD_PERP%2F1w%2FBTCUSD_PERP-1w-2020&max-keys=1000",
+      "zip_count_2020": 2,
+      "first_2020_month": "2020-11",
+      "all_zips_have_checksums": true,
+      "response_sha256": "ec95be933c5d292a2792ca1c6213b135b4583fb6687f89c938a41d027c3f0b62"
+    },
+    {
+      "interval": "2h",
+      "url": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision?prefix=data%2Ffutures%2Fcm%2Fmonthly%2FpremiumIndexKlines%2FBTCUSD_PERP%2F2h%2FBTCUSD_PERP-2h-2020&max-keys=1000",
+      "zip_count_2020": 2,
+      "first_2020_month": "2020-11",
+      "all_zips_have_checksums": true,
+      "response_sha256": "cdc3be8958e5091845937e958adf8c7ff9210e760e3f73afaa67ad11b650ef76"
+    },
+    {
+      "interval": "30m",
+      "url": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision?prefix=data%2Ffutures%2Fcm%2Fmonthly%2FpremiumIndexKlines%2FBTCUSD_PERP%2F30m%2FBTCUSD_PERP-30m-2020&max-keys=1000",
+      "zip_count_2020": 2,
+      "first_2020_month": "2020-11",
+      "all_zips_have_checksums": true,
+      "response_sha256": "b67df0ed08a6f2207dd06547f26e9f85fa5e5ea3f6c6aa09052fa7bca1f11ca3"
+    },
+    {
+      "interval": "3d",
+      "url": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision?prefix=data%2Ffutures%2Fcm%2Fmonthly%2FpremiumIndexKlines%2FBTCUSD_PERP%2F3d%2FBTCUSD_PERP-3d-2020&max-keys=1000",
+      "zip_count_2020": 2,
+      "first_2020_month": "2020-11",
+      "all_zips_have_checksums": true,
+      "response_sha256": "bf3c660fa71d7cc943c7e8a9aa89d333a711ede3b2cf3727faed3e1aaa907673"
+    },
+    {
+      "interval": "3m",
+      "url": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision?prefix=data%2Ffutures%2Fcm%2Fmonthly%2FpremiumIndexKlines%2FBTCUSD_PERP%2F3m%2FBTCUSD_PERP-3m-2020&max-keys=1000",
+      "zip_count_2020": 2,
+      "first_2020_month": "2020-11",
+      "all_zips_have_checksums": true,
+      "response_sha256": "31fe84a9152f3174677172b0a379fa233afaa98579ef5a971d8c9f7d2a721566"
+    },
+    {
+      "interval": "4h",
+      "url": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision?prefix=data%2Ffutures%2Fcm%2Fmonthly%2FpremiumIndexKlines%2FBTCUSD_PERP%2F4h%2FBTCUSD_PERP-4h-2020&max-keys=1000",
+      "zip_count_2020": 2,
+      "first_2020_month": "2020-11",
+      "all_zips_have_checksums": true,
+      "response_sha256": "c872e133f6281defcda972feda3279c576a5c13fd487fa204d26cbd3dd674eb5"
+    },
+    {
+      "interval": "5m",
+      "url": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision?prefix=data%2Ffutures%2Fcm%2Fmonthly%2FpremiumIndexKlines%2FBTCUSD_PERP%2F5m%2FBTCUSD_PERP-5m-2020&max-keys=1000",
+      "zip_count_2020": 2,
+      "first_2020_month": "2020-11",
+      "all_zips_have_checksums": true,
+      "response_sha256": "1597af36a192b24c79ff8f53dc26af610064021169b2e8e6e132ba8902428867"
+    },
+    {
+      "interval": "6h",
+      "url": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision?prefix=data%2Ffutures%2Fcm%2Fmonthly%2FpremiumIndexKlines%2FBTCUSD_PERP%2F6h%2FBTCUSD_PERP-6h-2020&max-keys=1000",
+      "zip_count_2020": 2,
+      "first_2020_month": "2020-11",
+      "all_zips_have_checksums": true,
+      "response_sha256": "b7e626180f597e787544ad68a4255be425be15bd68018c01ce62be3525384210"
+    },
+    {
+      "interval": "8h",
+      "url": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision?prefix=data%2Ffutures%2Fcm%2Fmonthly%2FpremiumIndexKlines%2FBTCUSD_PERP%2F8h%2FBTCUSD_PERP-8h-2020&max-keys=1000",
+      "zip_count_2020": 2,
+      "first_2020_month": "2020-11",
+      "all_zips_have_checksums": true,
+      "response_sha256": "725e1ff9c1d72a653829a145d9fd34b471e6e986790336db97a9a9f6132ccf81"
+    }
+  ],
+  "funding_boundary_heads": [
+    {
+      "url": "https://data.binance.vision/data/futures/cm/monthly/fundingRate/BTCUSD_PERP/BTCUSD_PERP-fundingRate-2022-07.zip",
+      "status": 200,
+      "content_length": "990"
+    },
+    {
+      "url": "https://data.binance.vision/data/futures/cm/monthly/fundingRate/BTCUSD_PERP/BTCUSD_PERP-fundingRate-2022-07.zip.CHECKSUM",
+      "status": 200,
+      "content_length": "102"
+    },
+    {
+      "url": "https://data.binance.vision/data/futures/cm/monthly/fundingRate/BTCUSD_PERP/BTCUSD_PERP-fundingRate-2023-12.zip",
+      "status": 200,
+      "content_length": "768"
+    },
+    {
+      "url": "https://data.binance.vision/data/futures/cm/monthly/fundingRate/BTCUSD_PERP/BTCUSD_PERP-fundingRate-2023-12.zip.CHECKSUM",
+      "status": 200,
+      "content_length": "102"
+    }
+  ]
+}

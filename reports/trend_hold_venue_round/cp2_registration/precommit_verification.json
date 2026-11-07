@@ -1,0 +1,25 @@
+{
+  "cp1_commit": "deadf01a4570386e14bbbec41d6e8eadd3345cac",
+  "cp1_files": 32,
+  "historical_files": 142,
+  "locks": {
+    "BTC_IS_UNLOCKED": false,
+    "POST_IS_AND_ETH_UNLOCKED": false
+  },
+  "environment": {
+    "python": "3.14.4",
+    "pandas": "3.0.5",
+    "numpy": "2.5.4",
+    "pyarrow": "26.0.1",
+    "numba": "0.68.1",
+    "scipy": "1.18.1",
+    "matplotlib": "3.11.2",
+    "pytest": "9.2.0"
+  },
+  "funding_sources_verified": true,
+  "CM_IS_Common_settlements": 3651,
+  "CM_overlap_settlements": 1647,
+  "Vision_dapi_exact_matches": 1593,
+  "dapi_month_end_supplements": 54,
+  "synthetic_validation": "175 passed, 1 user-authorized old R5 lock test deselected"
+}
