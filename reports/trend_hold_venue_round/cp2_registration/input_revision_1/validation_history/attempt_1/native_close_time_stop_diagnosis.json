@@ -1,0 +1,9 @@
+{
+  "stage": "read-only timestamp localization after formal input stop",
+  "archive": "data/raw/futures/cm/monthly/klines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2020-08.zip",
+  "official_zip_sha256_verified": true,
+  "rows": 29818,
+  "unexpected_close_time_rows": 0,
+  "examples": [],
+  "no_features_signals_accounts_or_rerun": true
+}

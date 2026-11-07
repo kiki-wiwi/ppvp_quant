@@ -93,12 +93,10 @@ def parse_klines(raw,month,venue):
     if np.any(high<np.maximum(op,close)) or np.any(low>np.minimum(op,close)):
         raise ValueError('invalid native OHLC bounds')
     raw_close=_timestamps(table.iloc[:,6],'kline close')
-    # Official close-time precision may be ms or us; both terminate within the last ms.
-    close_delta=raw_close.asi8-index.asi8
-    if np.any((close_delta<scope.MINUTE_NS-1_000_000)|(close_delta>=scope.MINUTE_NS)):
-        raise ValueError('native close time does not end its one-minute bar')
+    clock_exceptions=_clock_exception_records(index,raw_close,month,venue,values)
     result=pd.DataFrame(values,index=index,columns=OHLCV)
     result.index.name='open_time'
+    result.attrs['raw_close_time_exceptions']=clock_exceptions
     return result
 
 
@@ -256,12 +254,17 @@ def load_inputs(root=ROOT):
     del old
     parts={('SPOT','klines'):[],('CM','klines'):[],('CM','fundingRate'):[]}
     raw_rows=[]
+    clock_exceptions=[]
     for entry in entries:
         raw=_read_archive(root,entry)
         frame=parse_klines(raw,entry['month'],entry['venue']) if entry['kind']=='klines' else parse_funding(raw,entry['month'])
         parts[(entry['venue'],entry['kind'])].append(frame)
+        observed=frame.attrs.get('raw_close_time_exceptions',[])
+        clock_exceptions.extend(observed)
         raw_rows.append({'path':entry['path'],'sha256':entry['sha256'],'parsed_rows':len(frame),
-                         'first_time':frame.index[0].isoformat(),'last_time':frame.index[-1].isoformat()})
+                         'first_time':frame.index[0].isoformat(),'last_time':frame.index[-1].isoformat(),
+                         'raw_close_time_exceptions':observed})
+    clock_summary=validate_clock_exception_inventory(clock_exceptions)
     spot_raw=pd.concat(parts[('SPOT','klines')]);cm_raw=pd.concat(parts[('CM','klines')])
     funding=load_cm_funding(root,cm_native_start(cm_raw))
     for obj,label in ((spot_raw,'Spot native'),(cm_raw,'CM native'),(funding,'CM funding')):_ordered(obj.index,label)
@@ -279,11 +282,17 @@ def load_inputs(root=ROOT):
             'CM_funding':_cache(root,CACHE_PATHS['CM_funding'],funding.to_frame())}
     metadata={'scope':'BTC only, all input timestamps before 2024-01-01 UTC',
               'environment':environment,'UM':um_metadata,'archives':raw_rows,'caches':caches,
+              'raw_close_time_exceptions':clock_exceptions,'raw_close_time_exception_summary':clock_summary,
               'CM_native_start':native_start.isoformat(),'CM_first_full_day':CM_COMPLETE_START.isoformat(),
               'CM_funding_registration':{'path':CM_FUNDING_MANIFEST,
                   'sha256':_digest_bytes((root/CM_FUNDING_MANIFEST).read_bytes()),
                   'source':'registered dapi and Vision canonical splice',
                   'IS_Common_points':3651,'August_native_points':int((funding.index<CM_COMMON_START).sum()),
+                  'canonical_record_count':funding.attrs['canonical_record_count'],
+                  'context_record_count':len(funding),
+                  'context_exclusions':funding.attrs['context_funding_exclusions'],
+                  'canonical_first_settlement':funding.attrs['canonical_first_settlement'],
+                  'canonical_last_settlement':funding.attrs['canonical_last_settlement'],
                   'first_settlement':funding.index[0].isoformat(),'last_settlement':funding.index[-1].isoformat()},
               'new_grid_rule':'bad = missing OR flat zero-volume placeholder; archive_gap = missing; positive prior-only fill',
               'counts':{name:{'minutes':len(ctx),'bad':int(ctx.bad.sum()),
@@ -314,7 +323,9 @@ def validate_cm_funding(funding,native_start):
     expected=pd.date_range(CM_COMMON_START,IS_END,freq='8h',inclusive='left').as_unit('ns')
     if len(common)!=3651 or not common.equals(expected):
         raise ValueError('canonical CM IS-Common funding must contain exactly 3651 ordered settlement points')
-    return pd.Series(rates,index=index,name='funding_rate')
+    result=pd.Series(rates,index=index,name='funding_rate')
+    result.attrs=dict(funding.attrs)
+    return result
 
 
 def load_cm_funding(root,native_start):
@@ -322,4 +333,94 @@ def load_cm_funding(root,native_start):
     require_cp2()
     from .funding_sources import verify_registered
     verified=verify_registered(Path(root))
-    return validate_cm_funding(verified,native_start)
+    return funding_for_context(verified,native_start)
+
+
+# User-approved native close-time metadata anomalies only. Values are exact
+# original epoch milliseconds converted to ns; no price or volume is repaired.
+SPOT_CLOSE_TIME_EXCEPTIONS=(
+    ('2020-02',1582112100000*1_000_000,1582112132286*1_000_000),
+    ('2020-03',1583313660000*1_000_000,1583313706694*1_000_000),
+    ('2020-12',1608559740000*1_000_000,1608558440521*1_000_000),
+    ('2021-02',1613014800000*1_000_000,1613014854773*1_000_000),
+    ('2021-04',1619323200000*1_000_000,1619323258146*1_000_000),
+    ('2021-08',1628819940000*1_000_000,1628819999000*1_000_000),
+    ('2021-12',1640321940000*1_000_000,1640321994362*1_000_000),
+    ('2023-03',1679661540000*1_000_000,1679661581646*1_000_000),
+)
+PRE_CONTEXT_FUNDING_TIME=pd.Timestamp('2020-08-11T00:00:00Z').as_unit('ns')
+APPROVED_CM_NATIVE_START=pd.Timestamp('2020-08-11T07:02:00Z').as_unit('ns')
+
+
+def _clock_exception_records(index,raw_close,month,venue,ohlcv):
+    """Admit only the eight exact approved metadata pairs; never rewrite values."""
+    allowed={('SPOT',m,op):close for m,op,close in SPOT_CLOSE_TIME_EXCEPTIONS}
+    close_delta=raw_close.asi8-index.asi8
+    invalid=(close_delta<scope.MINUTE_NS-1_000_000)|(close_delta>=scope.MINUTE_NS)
+    known=np.array([(venue,month,int(op)) in allowed for op in index.asi8],dtype=bool)
+    records=[]
+    for position in np.flatnonzero(invalid|known):
+        open_ns=int(index.asi8[position]);close_ns=int(raw_close.asi8[position])
+        key=(venue,month,open_ns)
+        if key not in allowed or allowed[key]!=close_ns:
+            raise ValueError('unregistered native close time exception; one-minute bar rejected')
+        op,high,low,close,volume=ohlcv[position]
+        placeholder=bool(volume==0 and op==high==low==close)
+        records.append({
+            'venue':venue,'symbol':'BTCUSDT','month':month,
+            'archive_relative_path':f'spot/monthly/klines/BTCUSDT/1m/BTCUSDT-1m-{month}.zip',
+            'open_time_ns':open_ns,'raw_close_time_ns':close_ns,
+            'open_time_utc':index[position].isoformat(),
+            'raw_close_time_utc':raw_close[position].isoformat(),
+            'raw_close_minus_open_ns':close_ns-open_ns,
+            'decision_clock_close_ns':open_ns+scope.MINUTE_NS,
+            'decision_clock_close_utc':(index[position]+MINUTE).isoformat(),
+            'existing_R5_placeholder_rule_marks_bad':placeholder,
+            'raw_ohlcv_unchanged':True,
+            'handling':'exact approved raw close_time metadata exception; clock remains open_time + 1min',
+        })
+    return records
+
+
+def validate_clock_exception_inventory(records):
+    """Full registered input must expose exactly the eight approved original rows."""
+    expected={('SPOT',month,op,close) for month,op,close in SPOT_CLOSE_TIME_EXCEPTIONS}
+    observed=[(r['venue'],r['month'],r['open_time_ns'],r['raw_close_time_ns']) for r in records]
+    placeholders=sum(bool(r['existing_R5_placeholder_rule_marks_bad']) for r in records)
+    if len(observed)!=8 or set(observed)!=expected or placeholders!=3:
+        raise ValueError('registered close-time exception inventory must be exactly 8 rows: 5 valid and 3 existing placeholders')
+    return {'count':8,'valid_rows':5,'existing_bad_placeholders':3,
+            'additional_bad_flags':0,'ohlcv_changes':0,'clock':'open_time + 1min'}
+
+
+def funding_for_context(verified,native_start):
+    """Preserve canonical records; exclude only the approved pre-native event from Context."""
+    canonical=validate_cm_funding(verified,CM_EARLIEST)
+    native_start=pd.Timestamp(native_start)
+    if native_start.tz is None:raise ValueError('aware CM native start required')
+    native_start=native_start.tz_convert('UTC').as_unit('ns')
+    before=canonical.index<native_start
+    exclusions=[]
+    if before.any():
+        prior=canonical.loc[before]
+        if (native_start!=APPROVED_CM_NATIVE_START or len(canonical)!=3714 or len(prior)!=1
+                or prior.index[0]!=PRE_CONTEXT_FUNDING_TIME or float(prior.iloc[0])!=0.0001):
+            raise ValueError('unapproved pre-context funding record; only the registered single launch event may be excluded')
+        exclusions.append({
+            'funding_time_ns':int(PRE_CONTEXT_FUNDING_TIME.value),
+            'funding_time_utc':PRE_CONTEXT_FUNDING_TIME.isoformat(),
+            'funding_rate':'0.0001',
+            'native_context_start_ns':int(native_start.value),
+            'native_context_start_utc':native_start.isoformat(),
+            'preserved_in_canonical_registration':True,
+            'handling':'excluded from Context only; settlement precedes first native CM minute',
+        })
+    selected=canonical.loc[~before].copy(deep=True)
+    selected.attrs.update({
+        'canonical_record_count':len(canonical),
+        'context_record_count':len(selected),
+        'canonical_first_settlement':canonical.index[0].isoformat(),
+        'canonical_last_settlement':canonical.index[-1].isoformat(),
+        'context_funding_exclusions':exclusions,
+    })
+    return validate_cm_funding(selected,native_start)

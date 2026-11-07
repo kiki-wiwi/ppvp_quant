@@ -1,0 +1,31 @@
+{
+  "stage": "pre_match_input_verification",
+  "error_type": "ValueError",
+  "error": "native close time does not end its one-minute bar",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/ubuntu/.codex/worktrees/channel-vah-prereg/ppvp_quant/tools/run_trend_hold_venue_cp2.py\", line 53, in main\n    contexts,inputs=load_inputs(ROOT)\n                    ~~~~~~~~~~~^^^^^^\n  File \"/home/ubuntu/.codex/worktrees/channel-vah-prereg/ppvp_quant/trend_hold_venue_study/data.py\", line 261, in load_inputs\n    frame=parse_klines(raw,entry['month'],entry['venue']) if entry['kind']=='klines' else parse_funding(raw,entry['month'])\n          ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.codex/worktrees/channel-vah-prereg/ppvp_quant/trend_hold_venue_study/data.py\", line 99, in parse_klines\n    raise ValueError('native close time does not end its one-minute bar')\nValueError: native close time does not end its one-minute bar\n",
+  "starting_state": {
+    "cp1_commit": "deadf01a4570386e14bbbec41d6e8eadd3345cac",
+    "cp1_files": 32,
+    "historical_files": 142,
+    "locks": {
+      "BTC_IS_UNLOCKED": true,
+      "POST_IS_AND_ETH_UNLOCKED": false
+    },
+    "environment": {
+      "python": "3.14.4",
+      "pandas": "3.0.5",
+      "numpy": "2.5.4",
+      "pyarrow": "26.0.1",
+      "numba": "0.68.1",
+      "scipy": "1.18.1",
+      "matplotlib": "3.11.2",
+      "pytest": "9.2.0"
+    },
+    "implementation_commit": "4870310dfa9dd4a51b64aaa149caffaf48de79f9",
+    "unlock_commit": "51a2bc3e15c4a12a87424dc7217278b965c52d81",
+    "starting_worktree_status": "",
+    "cp2_files": 82,
+    "fixed_account_count": 42
+  },
+  "automatic_retry": false
+}

@@ -1,0 +1,15 @@
+{
+  "started_at": "2026-11-07T14:49:27.530512+00:00",
+  "cwd": "/home/ubuntu/.codex/worktrees/channel-vah-prereg/ppvp_quant",
+  "head": "51a2bc3e15c4a12a87424dc7217278b965c52d81",
+  "worktree_status": "",
+  "command": [
+    "/home/ubuntu/Documents/Codex/2026-11-06/github-ppvp-quant-agent-2-checkpoint/work/diag_env/pandas3.0.5_py314/bin/python",
+    "-u",
+    "tools/run_trend_hold_venue_cp2.py",
+    "--real"
+  ],
+  "automatic_retry": false,
+  "ended_at": "2026-11-07T14:49:32.547273+00:00",
+  "exit_code": 1
+}

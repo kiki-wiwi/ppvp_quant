@@ -1,0 +1,1 @@
+ValueError: native close time does not end its one-minute bar

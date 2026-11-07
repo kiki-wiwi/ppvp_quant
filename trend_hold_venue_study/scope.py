@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 from .config import ASSETS, VENUES, utc
 
-BTC_IS_UNLOCKED = True
+BTC_IS_UNLOCKED = False
 POST_IS_AND_ETH_UNLOCKED = False
 MINUTE_NS = 60_000_000_000
 class ScopeError(ValueError): pass

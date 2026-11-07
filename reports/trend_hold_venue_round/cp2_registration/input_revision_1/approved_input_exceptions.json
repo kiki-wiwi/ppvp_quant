@@ -1,0 +1,140 @@
+{
+  "authorization": "User approved only these eight timestamp exceptions and one pre-Context funding record; no strategy/formula/parameter/seed change",
+  "kline_exceptions": [
+    {
+      "archive": "data/raw/spot/monthly/klines/BTCUSDT/1m/BTCUSDT-1m-2020-02.zip",
+      "open_time_raw": 1582112100000,
+      "close_time_raw": 1582112132286,
+      "open_time_utc": "2020-02-19T11:35:00+00:00",
+      "close_time_utc": "2020-02-19T11:35:32.286000+00:00",
+      "delta_ms": 32286.0,
+      "volume": "2.70658300",
+      "flat_OHLC": false,
+      "existing_R5_placeholder_rule_would_mark_bad": false,
+      "OHLC_bounds_valid": true,
+      "archive_sha256": "05aedf91c80f579da396951b1d9e84587d02c9684352e1ff17d4468f556c674e",
+      "execution_clock": "open_time + 1 minute; raw close_time preserved as input metadata",
+      "OHLCV_policy": "unchanged; existing missing/flat-zero-volume bad rules only"
+    },
+    {
+      "archive": "data/raw/spot/monthly/klines/BTCUSDT/1m/BTCUSDT-1m-2020-03.zip",
+      "open_time_raw": 1583313660000,
+      "close_time_raw": 1583313706694,
+      "open_time_utc": "2020-03-04T09:21:00+00:00",
+      "close_time_utc": "2020-03-04T09:21:46.694000+00:00",
+      "delta_ms": 46694.0,
+      "volume": "0.79908400",
+      "flat_OHLC": false,
+      "existing_R5_placeholder_rule_would_mark_bad": false,
+      "OHLC_bounds_valid": true,
+      "archive_sha256": "ee5d21ec0f3c5bdef1da330d8b74d8571779fe757bb7e9f272847d36b95a71a2",
+      "execution_clock": "open_time + 1 minute; raw close_time preserved as input metadata",
+      "OHLCV_policy": "unchanged; existing missing/flat-zero-volume bad rules only"
+    },
+    {
+      "archive": "data/raw/spot/monthly/klines/BTCUSDT/1m/BTCUSDT-1m-2020-12.zip",
+      "open_time_raw": 1608559740000,
+      "close_time_raw": 1608558440521,
+      "open_time_utc": "2020-12-21T14:09:00+00:00",
+      "close_time_utc": "2020-12-21T13:47:20.521000+00:00",
+      "delta_ms": -1299479.0,
+      "volume": "0E-8",
+      "flat_OHLC": true,
+      "existing_R5_placeholder_rule_would_mark_bad": true,
+      "OHLC_bounds_valid": true,
+      "archive_sha256": "a53a9352fd808d10981f68191138b39ef142e15ca88e03a061309f1699419749",
+      "execution_clock": "open_time + 1 minute; raw close_time preserved as input metadata",
+      "OHLCV_policy": "unchanged; existing missing/flat-zero-volume bad rules only"
+    },
+    {
+      "archive": "data/raw/spot/monthly/klines/BTCUSDT/1m/BTCUSDT-1m-2021-02.zip",
+      "open_time_raw": 1613014800000,
+      "close_time_raw": 1613014854773,
+      "open_time_utc": "2021-02-11T03:40:00+00:00",
+      "close_time_utc": "2021-02-11T03:40:54.773000+00:00",
+      "delta_ms": 54773.0,
+      "volume": "0E-8",
+      "flat_OHLC": true,
+      "existing_R5_placeholder_rule_would_mark_bad": true,
+      "OHLC_bounds_valid": true,
+      "archive_sha256": "21723e4951ba30037cb8417278b7cf4a38d47c625b1cb5ac97864d539ae6d407",
+      "execution_clock": "open_time + 1 minute; raw close_time preserved as input metadata",
+      "OHLCV_policy": "unchanged; existing missing/flat-zero-volume bad rules only"
+    },
+    {
+      "archive": "data/raw/spot/monthly/klines/BTCUSDT/1m/BTCUSDT-1m-2021-04.zip",
+      "open_time_raw": 1619323200000,
+      "close_time_raw": 1619323258146,
+      "open_time_utc": "2021-04-25T04:00:00+00:00",
+      "close_time_utc": "2021-04-25T04:00:58.146000+00:00",
+      "delta_ms": 58146.0,
+      "volume": "5.88703400",
+      "flat_OHLC": false,
+      "existing_R5_placeholder_rule_would_mark_bad": false,
+      "OHLC_bounds_valid": true,
+      "archive_sha256": "016ea34ee7e52c4783c1e03ec65c710361c1ccf228d3a4c0b44a4d0baa859641",
+      "execution_clock": "open_time + 1 minute; raw close_time preserved as input metadata",
+      "OHLCV_policy": "unchanged; existing missing/flat-zero-volume bad rules only"
+    },
+    {
+      "archive": "data/raw/spot/monthly/klines/BTCUSDT/1m/BTCUSDT-1m-2021-08.zip",
+      "open_time_raw": 1628819940000,
+      "close_time_raw": 1628819999000,
+      "open_time_utc": "2021-08-13T01:59:00+00:00",
+      "close_time_utc": "2021-08-13T01:59:59+00:00",
+      "delta_ms": 59000.0,
+      "volume": "5.59026800",
+      "flat_OHLC": false,
+      "existing_R5_placeholder_rule_would_mark_bad": false,
+      "OHLC_bounds_valid": true,
+      "archive_sha256": "8e886c3aeb7eb625493e875bfaf181eeb5a316dad424c86d042ad2c73cad563b",
+      "execution_clock": "open_time + 1 minute; raw close_time preserved as input metadata",
+      "OHLCV_policy": "unchanged; existing missing/flat-zero-volume bad rules only"
+    },
+    {
+      "archive": "data/raw/spot/monthly/klines/BTCUSDT/1m/BTCUSDT-1m-2021-12.zip",
+      "open_time_raw": 1640321940000,
+      "close_time_raw": 1640321994362,
+      "open_time_utc": "2021-12-24T04:59:00+00:00",
+      "close_time_utc": "2021-12-24T04:59:54.362000+00:00",
+      "delta_ms": 54362.0,
+      "volume": "16.24421000",
+      "flat_OHLC": false,
+      "existing_R5_placeholder_rule_would_mark_bad": false,
+      "OHLC_bounds_valid": true,
+      "archive_sha256": "2b6c79547da2d87e6735d29fcb2d75f0e15c9cbfcec6396c8d8f20b3632d8e0b",
+      "execution_clock": "open_time + 1 minute; raw close_time preserved as input metadata",
+      "OHLCV_policy": "unchanged; existing missing/flat-zero-volume bad rules only"
+    },
+    {
+      "archive": "data/raw/spot/monthly/klines/BTCUSDT/1m/BTCUSDT-1m-2023-03.zip",
+      "open_time_raw": 1679661540000,
+      "close_time_raw": 1679661581646,
+      "open_time_utc": "2023-03-24T12:39:00+00:00",
+      "close_time_utc": "2023-03-24T12:39:41.646000+00:00",
+      "delta_ms": 41646.0,
+      "volume": "0E-8",
+      "flat_OHLC": true,
+      "existing_R5_placeholder_rule_would_mark_bad": true,
+      "OHLC_bounds_valid": true,
+      "archive_sha256": "5591171a15f210af647a2fb68ab8cbad45a3a595cfe9a0eec9d06e5e84928bec",
+      "execution_clock": "open_time + 1 minute; raw close_time preserved as input metadata",
+      "OHLCV_policy": "unchanged; existing missing/flat-zero-volume bad rules only"
+    }
+  ],
+  "CM_context_start": "2020-08-11T07:02:00+00:00",
+  "excluded_from_context_only": [
+    {
+      "funding_time_ms": 1597104000000,
+      "funding_rate": "0.00010000",
+      "source": "dapi",
+      "raw_funding_time_ms": 1597104000000,
+      "source_path": "reports/trend_hold_venue_round/cp2_registration/funding_api_pages/2020-08_page_001.json"
+    }
+  ],
+  "funding_registration_policy": "canonical 3714 records and raw API bytes unchanged; exclude the one recorded 00:00 settlement only from the later-starting Context; common-window 3651 remains complete",
+  "source_diagnostics_sha256": {
+    "reports/trend_hold_venue_round/cp2_registration/input_revision_1/validation_history/attempt_1/all_native_timestamp_diagnosis.json": "5c9e950b56aceb707cbeb1110c183fdca7c18e219a3f7725b9eb2a725f99e071",
+    "reports/trend_hold_venue_round/cp2_registration/input_revision_1/validation_history/attempt_1/final_stop_independent_checks.json": "4c4d1dfafc2a6890832903dc6332907b02a49ba8f52dbafcf2008645bd7b8526"
+  }
+}

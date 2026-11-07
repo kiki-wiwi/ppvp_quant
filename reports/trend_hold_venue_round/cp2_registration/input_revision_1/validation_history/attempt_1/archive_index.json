@@ -1,0 +1,19 @@
+{
+  "original_output": "reports/trend_hold_venue_round/cp2_btc_is",
+  "original_output_sha256": {
+    "STOPPED.json": "93dec97779e9fc3c9c3db2257ba54ed0ca9c326ac41c84bfc11a5c6189f3499e"
+  },
+  "archived_files_sha256": {
+    "reports/trend_hold_venue_round/cp2_registration/input_revision_1/validation_history/attempt_1/formal_stdout.txt": "10ab9f734566e4128c6ca831e42066d19f6191578f31b18bdbef73fe69b16356",
+    "reports/trend_hold_venue_round/cp2_registration/input_revision_1/validation_history/attempt_1/all_native_timestamp_diagnosis.json": "5c9e950b56aceb707cbeb1110c183fdca7c18e219a3f7725b9eb2a725f99e071",
+    "reports/trend_hold_venue_round/cp2_registration/input_revision_1/validation_history/attempt_1/formal_start.json": "d25f84b96fc12e75462f8e3f96ba3354dba2f0d3f9c04d12e9d650e82a272514",
+    "reports/trend_hold_venue_round/cp2_registration/input_revision_1/validation_history/attempt_1/formal_exit.json": "dff6fd9dfc7d761f6461c731b6640731024eaf0f500f21d28eef296f371078a7",
+    "reports/trend_hold_venue_round/cp2_registration/input_revision_1/validation_history/attempt_1/final_stop_independent_checks.json": "4c4d1dfafc2a6890832903dc6332907b02a49ba8f52dbafcf2008645bd7b8526",
+    "reports/trend_hold_venue_round/cp2_registration/input_revision_1/validation_history/attempt_1/native_close_time_stop_diagnosis.json": "1e39c460b27e0ebc14ecd21d88eae0b36258cca346c1b26e69b17c6d75c183c9",
+    "reports/trend_hold_venue_round/cp2_registration/input_revision_1/validation_history/attempt_1/cp2_btc_is/STOPPED.json": "93dec97779e9fc3c9c3db2257ba54ed0ca9c326ac41c84bfc11a5c6189f3499e"
+  },
+  "original_commits_preserved": [
+    "4870310dfa9dd4a51b64aaa149caffaf48de79f9",
+    "51a2bc3e15c4a12a87424dc7217278b965c52d81"
+  ]
+}

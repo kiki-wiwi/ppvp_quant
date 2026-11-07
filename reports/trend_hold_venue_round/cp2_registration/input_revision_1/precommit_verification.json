@@ -1,0 +1,27 @@
+{
+  "cp1_commit": "deadf01a4570386e14bbbec41d6e8eadd3345cac",
+  "cp1_files": 32,
+  "historical_files": 142,
+  "locks": {
+    "BTC_IS_UNLOCKED": false,
+    "POST_IS_AND_ETH_UNLOCKED": false
+  },
+  "environment": {
+    "python": "3.14.4",
+    "pandas": "3.0.5",
+    "numpy": "2.5.4",
+    "pyarrow": "26.0.1",
+    "numba": "0.68.1",
+    "scipy": "1.18.1",
+    "matplotlib": "3.11.2",
+    "pytest": "9.2.0"
+  },
+  "original_implementation_commit": "4870310dfa9dd4a51b64aaa149caffaf48de79f9",
+  "original_unlock_commit": "51a2bc3e15c4a12a87424dc7217278b965c52d81",
+  "synthetic_validation": "203 passed; one user-authorized historical R5 stage-lock node deselected",
+  "original_output_preserved": "validation_history/attempt_1/cp2_btc_is/STOPPED.json",
+  "revised_loader_only": "eight exact raw close timestamp pairs; one exact pre-Context funding record",
+  "post_is_and_eth_remain_locked": true,
+  "original_CP2_registration_unchanged": true,
+  "formal_output_and_new_input_caches_absent": true
+}
