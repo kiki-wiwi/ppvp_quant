@@ -1,0 +1,2322 @@
+{
+  "status": "completed",
+  "source": "real",
+  "started_at": "2026-11-06T17:55:06.599726+00:00",
+  "ended_at": "2026-11-06T18:51:37.629523+00:00",
+  "all_schedules_frozen_at": "2026-11-06T17:55:23.294133+00:00",
+  "first_matching_at": "2026-11-06T17:55:23.295782+00:00",
+  "combination_count": 203,
+  "completed_combinations": [
+    "S_channel_unfiltered__gross_0",
+    "S_channel_unfiltered__main_17",
+    "S_channel_unfiltered__harsh_34",
+    "R_000__main_17",
+    "R_001__main_17",
+    "R_002__main_17",
+    "R_003__main_17",
+    "R_004__main_17",
+    "R_005__main_17",
+    "R_006__main_17",
+    "R_007__main_17",
+    "R_008__main_17",
+    "R_009__main_17",
+    "R_010__main_17",
+    "R_011__main_17",
+    "R_012__main_17",
+    "R_013__main_17",
+    "R_014__main_17",
+    "R_015__main_17",
+    "R_016__main_17",
+    "R_017__main_17",
+    "R_018__main_17",
+    "R_019__main_17",
+    "R_020__main_17",
+    "R_021__main_17",
+    "R_022__main_17",
+    "R_023__main_17",
+    "R_024__main_17",
+    "R_025__main_17",
+    "R_026__main_17",
+    "R_027__main_17",
+    "R_028__main_17",
+    "R_029__main_17",
+    "R_030__main_17",
+    "R_031__main_17",
+    "R_032__main_17",
+    "R_033__main_17",
+    "R_034__main_17",
+    "R_035__main_17",
+    "R_036__main_17",
+    "R_037__main_17",
+    "R_038__main_17",
+    "R_039__main_17",
+    "R_040__main_17",
+    "R_041__main_17",
+    "R_042__main_17",
+    "R_043__main_17",
+    "R_044__main_17",
+    "R_045__main_17",
+    "R_046__main_17",
+    "R_047__main_17",
+    "R_048__main_17",
+    "R_049__main_17",
+    "R_050__main_17",
+    "R_051__main_17",
+    "R_052__main_17",
+    "R_053__main_17",
+    "R_054__main_17",
+    "R_055__main_17",
+    "R_056__main_17",
+    "R_057__main_17",
+    "R_058__main_17",
+    "R_059__main_17",
+    "R_060__main_17",
+    "R_061__main_17",
+    "R_062__main_17",
+    "R_063__main_17",
+    "R_064__main_17",
+    "R_065__main_17",
+    "R_066__main_17",
+    "R_067__main_17",
+    "R_068__main_17",
+    "R_069__main_17",
+    "R_070__main_17",
+    "R_071__main_17",
+    "R_072__main_17",
+    "R_073__main_17",
+    "R_074__main_17",
+    "R_075__main_17",
+    "R_076__main_17",
+    "R_077__main_17",
+    "R_078__main_17",
+    "R_079__main_17",
+    "R_080__main_17",
+    "R_081__main_17",
+    "R_082__main_17",
+    "R_083__main_17",
+    "R_084__main_17",
+    "R_085__main_17",
+    "R_086__main_17",
+    "R_087__main_17",
+    "R_088__main_17",
+    "R_089__main_17",
+    "R_090__main_17",
+    "R_091__main_17",
+    "R_092__main_17",
+    "R_093__main_17",
+    "R_094__main_17",
+    "R_095__main_17",
+    "R_096__main_17",
+    "R_097__main_17",
+    "R_098__main_17",
+    "R_099__main_17",
+    "R_100__main_17",
+    "R_101__main_17",
+    "R_102__main_17",
+    "R_103__main_17",
+    "R_104__main_17",
+    "R_105__main_17",
+    "R_106__main_17",
+    "R_107__main_17",
+    "R_108__main_17",
+    "R_109__main_17",
+    "R_110__main_17",
+    "R_111__main_17",
+    "R_112__main_17",
+    "R_113__main_17",
+    "R_114__main_17",
+    "R_115__main_17",
+    "R_116__main_17",
+    "R_117__main_17",
+    "R_118__main_17",
+    "R_119__main_17",
+    "R_120__main_17",
+    "R_121__main_17",
+    "R_122__main_17",
+    "R_123__main_17",
+    "R_124__main_17",
+    "R_125__main_17",
+    "R_126__main_17",
+    "R_127__main_17",
+    "R_128__main_17",
+    "R_129__main_17",
+    "R_130__main_17",
+    "R_131__main_17",
+    "R_132__main_17",
+    "R_133__main_17",
+    "R_134__main_17",
+    "R_135__main_17",
+    "R_136__main_17",
+    "R_137__main_17",
+    "R_138__main_17",
+    "R_139__main_17",
+    "R_140__main_17",
+    "R_141__main_17",
+    "R_142__main_17",
+    "R_143__main_17",
+    "R_144__main_17",
+    "R_145__main_17",
+    "R_146__main_17",
+    "R_147__main_17",
+    "R_148__main_17",
+    "R_149__main_17",
+    "R_150__main_17",
+    "R_151__main_17",
+    "R_152__main_17",
+    "R_153__main_17",
+    "R_154__main_17",
+    "R_155__main_17",
+    "R_156__main_17",
+    "R_157__main_17",
+    "R_158__main_17",
+    "R_159__main_17",
+    "R_160__main_17",
+    "R_161__main_17",
+    "R_162__main_17",
+    "R_163__main_17",
+    "R_164__main_17",
+    "R_165__main_17",
+    "R_166__main_17",
+    "R_167__main_17",
+    "R_168__main_17",
+    "R_169__main_17",
+    "R_170__main_17",
+    "R_171__main_17",
+    "R_172__main_17",
+    "R_173__main_17",
+    "R_174__main_17",
+    "R_175__main_17",
+    "R_176__main_17",
+    "R_177__main_17",
+    "R_178__main_17",
+    "R_179__main_17",
+    "R_180__main_17",
+    "R_181__main_17",
+    "R_182__main_17",
+    "R_183__main_17",
+    "R_184__main_17",
+    "R_185__main_17",
+    "R_186__main_17",
+    "R_187__main_17",
+    "R_188__main_17",
+    "R_189__main_17",
+    "R_190__main_17",
+    "R_191__main_17",
+    "R_192__main_17",
+    "R_193__main_17",
+    "R_194__main_17",
+    "R_195__main_17",
+    "R_196__main_17",
+    "R_197__main_17",
+    "R_198__main_17",
+    "R_199__main_17"
+  ],
+  "input_metadata": {
+    "source": "real",
+    "symbol": "BTCUSDT",
+    "minute_count": 2103840,
+    "funding_count": 4383,
+    "bad_count": 144,
+    "archive_gap_count": 10,
+    "perp_content_hash_verified": true,
+    "environment": {
+      "python": "3.14.4",
+      "pandas": "3.0.5",
+      "numpy": "2.5.4",
+      "pyarrow": "26.0.1",
+      "numba": "0.68.1",
+      "scipy": "1.18.1",
+      "matplotlib": "3.11.2",
+      "pytest": "9.2.0"
+    },
+    "registration": {
+      "baseline_commit": "366c592c40a9f33ace51f600e7f5bc04ff2bd6f3",
+      "baseline_tree": "72eb1e3632220ad65d3dd5765a3521bb55ba28c7",
+      "branch": "codex/channel-random-study",
+      "authorization": "implementation_and_synthetic_validation_only",
+      "real_data_authorized": false,
+      "approved_plan_sha256": "ad8a451a6afb059691b5f3b0ed96f98d2f28390086492bffb3b87419f8a942a0",
+      "legacy_frozen_key": "fc0d37b9d198ff85",
+      "protected_sources_sha256": {
+        "attribution.py": "1c7165769eef97fb86d1ef010e4dc3cdeef381f4ab52290bd7cfffe488c7357c",
+        "backtester.py": "6dd67439db79fe983bad7a3343bc7dcef118e012d7560499ced91756a8177568",
+        "breakout_study/__init__.py": "392b65990aa7f5e72a139110603794970c8089183ae211d1fc7901d63ae203c8",
+        "breakout_study/config.py": "7f4d405198a1115c2041fb01bac68afe7d90a6556db48681741ab166fb6ebec3",
+        "breakout_study/data.py": "dea80024aba425714fde4d5a01ffcb8edf742c9a3c70fc709a3d42efa6c01b39",
+        "breakout_study/engine.py": "d9b6d2b167d18b132d436d376a5058b700ded46b46200cc297dc02da9ba7a178",
+        "breakout_study/features.py": "ccefff290ba26a58971c41d5a6d6b50ec1835877cd8524b7422ebebe11d4cba0",
+        "breakout_study/reporting.py": "d20aefc0b8808882b3e3357b73003419f0294344d0284baafbf0f454acf0c636",
+        "breakout_study/runtime.py": "d46762a1b519236a1d39218a3276ebfedf1bcff0754d7743db9d192e05ab1730",
+        "breakout_study/scope.py": "369bb0816a9ebe02194116564c63a0596ebf21d43222559124f523c1fc3da0f4",
+        "breakout_study/statistics.py": "30fe3eec102a0052ab2d65b8193246a37850c144a3b42f1753db9f2bc569d0a6",
+        "breakout_study/synthetic.py": "675762dd8e42da7defaac1f28a7307b6b20942ce147c3f0d7c775d0774835d05",
+        "breakout_study/testing_guard.py": "b777aa07e28ae041fe797b2090cbe072063bcf85f06b087a37f1f0bb3d86fd4c",
+        "config.py": "858ff5a924a9555c950a96d30054642144dbe4a1e2d6f055e769540879beb429",
+        "data/manifest_impulse_1m.json": "7e0cb4af7c8a377a530aee4910d20e3339dc50db7c0734f6c21fea3b627d3666",
+        "data_loader.py": "92f88c5aabf4340c6bf186fb52cf483f20e5d399edd36da9a295467c720598c1",
+        "dip_limit_study/__init__.py": "ca0704ab65b919f2a4e23454a9113c57e6b29e6610e033b49087a0b2e522697f",
+        "dip_limit_study/config.py": "3fe3ef528b9e4b9f4979b1487d9c18d807863cf632ab2be8e182f0ad8e1c9b0e",
+        "dip_limit_study/data.py": "721171737a184d51c24c0c654d056442038f6ad1c7da56a6d43713217828c74c",
+        "dip_limit_study/engine.py": "9daed158f64304da228223d66822202b37c265a082ab283fde7cca643c074395",
+        "dip_limit_study/features.py": "018b178dd47c199f614f4d9e5dc44657deb73d794516b3541f8b18c4e1f7136d",
+        "dip_limit_study/reporting.py": "4194c11ec3a5cca973918e328d19e39369becf903e9b2354b66692764c3b1fdb",
+        "dip_limit_study/runtime.py": "539d6877720db6c17436db9bc2dcd0bd4709b5fa53978b2b100bec34fa7965c8",
+        "dip_limit_study/scope.py": "55477411734bf1c9d2632237dc718a123e63fcdd458c985a90b21cc281ba6292",
+        "dip_limit_study/statistics.py": "8b87a0ccfb90b5831202ac2f35b855e7c5fd674e7faf397d7bbc5a798311610f",
+        "dip_limit_study/synthetic.py": "898e0de174b0110932dcc7622d25d490a7fb3b4a591a771bfc5029ccb16e553f",
+        "dip_limit_study/testing_guard.py": "d5e9106ec7959584eb5c73014fbc4a1994295852ae83339ac299cf5f47c7f7d8",
+        "docs/phase_logs/BREAKOUT_implementation_and_synthetic.md": "e58d79334175e6612236746ab297cc9f1fa7ef410d596bdad21c8e84462035aa",
+        "docs/phase_logs/DIP_LIMIT_implementation_and_synthetic.md": "be52a883019849c865209d5b3cfcbf13ee6570b02e5e3304d8ac9086c63bbb95",
+        "impulse_study/__init__.py": "638e5da61906c4d4454c5af0c18b5bc99d7d7a0862c695124c79c3183e23f747",
+        "impulse_study/daily.py": "79272474bcb6c08d6e3f5485a4ec743fd16481cc6e424b49f67209b4872803d1",
+        "impulse_study/data_1m.py": "c0123f787a0b9f8b353108179648ed580cebb148a8fb068126c3e5f21e40fe84",
+        "impulse_study/engine.py": "cf20d7bcfbcbf93fd74bba8d98c88ba75871518c926ce7a485c53b6f41f4b39f",
+        "impulse_study/features.py": "345870dd82d17b813f45e42c6525349791e2cbe00e082653aa74168186901d21",
+        "impulse_study/qa.py": "6ecb9553768eedfda060c60762644c6b6d44f70d0d9849d7454333376960ce29",
+        "impulse_study/scope.py": "ecc6b5d31f572a07488af2fbd04e96283ec3439f1715ebc98b66bcd7b36be9dc",
+        "impulse_study/signals.py": "2fb18affd57d5be3b79839c0e06639cb03a4b1532f6a4fc155c27bb68d2fa0e3",
+        "impulse_study/synthetic.py": "c55ead6d2fcc6bc00cf87a8b44d40512f205cee562c784458ea7a4cbee6bf147",
+        "impulse_study/versions.py": "a95d63037379f83765591a4f5eda3d11f52d3f128f02b347836cd82f1109c76a",
+        "metrics.py": "13d16204f0724ff54e5a42f2ed3c1d8fd7a7661cd2955b949f17e6b5ef86e52b",
+        "numba_compat.py": "fadd3ecc7e5b9f91637e513db77e673a24d4b5a6dd8de191a57729b28f8e28de",
+        "pipeline.py": "0dfcf1cf61161e449c747a5cf2f6b904bb7b04fbb73194b1e0ee100e74e9e6d7",
+        "ppvp_audit/__init__.py": "365d600d3f7064c8e12527c379886db839edb78a0f1187df9f0bba9bf38109d7",
+        "ppvp_audit/common.py": "1ac48d73df21389ebbfeb830158de96015c508ed8a34d2a8ddc263b0e9697eeb",
+        "ppvp_audit/engine_path.py": "79c5a9d041b194bde16c951ae11ae4f8c5b1c0cb375dd213855e7d396791d8e6",
+        "ppvp_audit/event_sim.py": "6b57c86ed402b24c24f88e70c8f0fb8a22daa14a8841f076ec36b16e44ee7cfa",
+        "ppvp_audit/experiments.py": "af5ddba064faf9320ec33a014394cae78828a63ee9d8a68273a648c5e6a71415",
+        "ppvp_audit/nulls.py": "cd47c6ca9da7a2cf51ff02a76a10d5f07f7cda9eb3235002fb3c20356226c46b",
+        "ppvp_audit/variants.py": "288e0f9b953aff7cd3baedb8d57dd06837403299c4b26d7daa51652f8340b339",
+        "ppvp_engine.py": "6c498886be2731c96b3e8b1e50394859788fda8e17555c540120ee038cd0a2b2",
+        "reports/channel_vs_vah_round/README.md": "0e674597538999dfe995bb5e21e71710bd8b98000577be70823b374b75be8cb4",
+        "reports/channel_vs_vah_round/approved_plan.md": "fb661ffc51245092b209a53073e4e57340d335bd5333cc37595af11b6e3075af",
+        "reports/channel_vs_vah_round/implementation_hashes.json": "2f42587f2985ce2f4af6c46616cce8fa1dca522e5172323bab86804bbb02098e",
+        "reports/channel_vs_vah_round/registration.json": "12da7594f2015e3930761fac0686ac0ccbfc7e0d603be007342c442e4308bfa1",
+        "reports/impulse_vs_box_round/experiment_plan_impulse.md": "1103cfcdece166b24adfadec27b3cfbf54e05a5eb7277733b7304dd9635b0519",
+        "reports/trend_dip_limit_round/README.md": "b0552f4f1a4c5397d5993181f796592864ae304e26694c7fdda262ecafa15f42",
+        "reports/trend_dip_limit_round/approved_plan.md": "df36ec579c750ef7580b828148d9ead00c22d69c4eea3ed073036b5730c671a3",
+        "reports/trend_dip_limit_round/implementation_hashes.json": "8f049b6d4871aba464e3dbf057c4a9796e240b911ee76bd56bad7f2e8ae2ba55",
+        "reports/trend_dip_limit_round/implementation_plan.md": "fcfce09cdecdf5afc18dc696909554c3cc73da373be206145a8e75f22e3f17e0",
+        "reports/trend_dip_limit_round/registration.json": "98656f0a3775baf30ca8ce247108b86e61b22088f866b76bb409140fcac75503",
+        "reports/trend_dip_limit_round/synthetic_pytest.txt": "2a1286013aba7b8b797d4eae209d63c27bec572904e30b20383b49cae2e412a9",
+        "reports/trend_dip_limit_round/synthetic_validation.json": "6370bb97d6e057e7731826a1dff6ae063272d21af8858142ec2329f5fcbba688",
+        "strategy_state_machine.py": "790ad492a9c96b2188148e0de61f53cce9cbca19fb31ab86eb4690e4cffb3e2a",
+        "test_breakout_data.py": "4995378e24d0be06e07d47b47fb457982dd0efeafe7e34b5b00443893a77a7cb",
+        "test_breakout_engine.py": "6453ce28f60afa069086cfadcf89ad240d48e8bba48c49f9faab7dba9d3c5d3e",
+        "test_breakout_features.py": "77312abdc81e3fe4b33e00fd48bb9f203fe50d94e009aac282e759edcce8c559",
+        "test_breakout_reporting.py": "794f48834f0ec6d12fbcea7343cda56f78f409d34c6cbaa73a20b49ba3fa0fff",
+        "test_breakout_runtime.py": "a30ef92d7ec43686c5936c30f775fe704b2f4c3b034f4a568b46bb6c9b78cc16",
+        "test_breakout_scope.py": "6a47a37482acd60ddaa28c1b475453a7e95da973a37b006252946410e7428070",
+        "test_breakout_statistics.py": "05b9dd0b541b1df4541a02ad34d2e73f824fa8ace5294c84b288b3fa24addf2a",
+        "test_dip_limit_data.py": "af0fc958627e94b6b42aab87229bafeaf89f622c65604b4fa736f4d86b9c0a63",
+        "test_dip_limit_engine.py": "64ad4dbcd9fd14c363a27903e6f1caf5188d2ae1d866488e1e2f416333d0c6fd",
+        "test_dip_limit_features.py": "2df7327c603c05c86162d01d7dcc3bc519193d9bbfe5f6ef78ee701c478b64ca",
+        "test_dip_limit_integration.py": "10603c2dd04b9f0b8dd88f68153ce53ee27a5c89a09a41773b96d958861b6818",
+        "test_dip_limit_reporting.py": "8c52dd59b380de76d74d0d67e73468c015205fc7720ac4b8551b29ac11b4bb6f",
+        "test_dip_limit_runtime.py": "9cafef5d5a4f81b08a17db8c67b61610196f6ae6d492992ee3a775d1cacf661c",
+        "test_dip_limit_scope.py": "44beb8c51c89fa09cf7e6f6e1e933ce0946986d4f48537a16d88b038e4ff73e0",
+        "test_dip_limit_statistics.py": "cfd9f36aa30d6e1962651574340b7caac0081593d09bc40f8690f26f630ce88d",
+        "test_impulse_cp2.py": "c9252c84fa769eda305385978bab8aba2935b2aded786e1b8bb683928fc774a4",
+        "tools/run_breakout_study.py": "f02d82e4f48c518d46459b82b5db38139d73d2d67720e2eab798eaf3c76c3804",
+        "tools/run_dip_limit_study.py": "dbeb6a67c0ddf2135029b9ca4ebd458a728ffead39037028491d86323e417aa6"
+      },
+      "protected_sources_verified": 81,
+      "new_files_verified": 27
+    },
+    "implementation_commit": "5c138263d2ee88b9345180fdf42a75151feddd62",
+    "unlock_commit": "e934a8a5d3ec53a2fe991d059e6604208d53a08e",
+    "starting_worktree_status": ""
+  },
+  "verdict": "insufficient_random_identifiability_or_precision",
+  "schedule_metadata": {
+    "seed": 2026110901,
+    "bit_generator": "PCG64",
+    "count": 200,
+    "time_encoding": "ascending UTC ns int64 little-endian C-order",
+    "candidate_time_sha256": "c5ff52028bfa8c2bf43266a969f5405e775285788ff67eaa74c3101f7ba3a6e4",
+    "parent_time_sha256": "ac7a56b728d5ec454514bea9c29b708bdef7313b81bb342489793460dd91474c",
+    "replicates": [
+      {
+        "version": "R_000",
+        "spawn_key": [
+          0
+        ],
+        "time_sha256": "f49a4fd27aa989c45a7d941ded63336e2ae0f7564a8863cafe5078aef0d3bb60",
+        "count": 412
+      },
+      {
+        "version": "R_001",
+        "spawn_key": [
+          1
+        ],
+        "time_sha256": "1d7688ae4e75a9ea533019a29970c557b629dcd0f6e04925f2486e733753972c",
+        "count": 412
+      },
+      {
+        "version": "R_002",
+        "spawn_key": [
+          2
+        ],
+        "time_sha256": "c3ae8a6e38c388a6e8c6872a38d146179df23cef8ff709f9ddad725f15e26916",
+        "count": 412
+      },
+      {
+        "version": "R_003",
+        "spawn_key": [
+          3
+        ],
+        "time_sha256": "9e511a5af1a6511ae14f391d810a43c0b336b8dc7aa4cc0b118017f2770eeb3e",
+        "count": 412
+      },
+      {
+        "version": "R_004",
+        "spawn_key": [
+          4
+        ],
+        "time_sha256": "5fd118ab9f88828d2859772a93f4388e2371e7a7e55737ed8cc7bcc7c40dc217",
+        "count": 412
+      },
+      {
+        "version": "R_005",
+        "spawn_key": [
+          5
+        ],
+        "time_sha256": "df6ccaf84a8c6de5262165acea9bf30853335de67e25a69ff5184c00c1064508",
+        "count": 412
+      },
+      {
+        "version": "R_006",
+        "spawn_key": [
+          6
+        ],
+        "time_sha256": "ab36f523cdccca253ca5e385e65a7bcfc7d0381b1a365a77665ae0df2cdb5196",
+        "count": 412
+      },
+      {
+        "version": "R_007",
+        "spawn_key": [
+          7
+        ],
+        "time_sha256": "ae9b64c0e21adab2973881e887909c877feae54dd93062a93affc92022f55beb",
+        "count": 412
+      },
+      {
+        "version": "R_008",
+        "spawn_key": [
+          8
+        ],
+        "time_sha256": "42c20692dfdd7ae24e64f7e7b27cd010256f1a592a5c8b53edb8e78fc7760002",
+        "count": 412
+      },
+      {
+        "version": "R_009",
+        "spawn_key": [
+          9
+        ],
+        "time_sha256": "a11d7cbeefe0fd7d7d1f3af166afbd3b9c3c2622ad77dccaad78d4a348ee778f",
+        "count": 412
+      },
+      {
+        "version": "R_010",
+        "spawn_key": [
+          10
+        ],
+        "time_sha256": "4d0ee43cd05465349fd105ac0c3cf9646ae2533ba1c92c3eb284c10862ee208a",
+        "count": 412
+      },
+      {
+        "version": "R_011",
+        "spawn_key": [
+          11
+        ],
+        "time_sha256": "2982c1c5d6bb00a8f602839de7ada7a064489b764e8343ca420356b11e257e20",
+        "count": 412
+      },
+      {
+        "version": "R_012",
+        "spawn_key": [
+          12
+        ],
+        "time_sha256": "e1f5c1c8b7e837012c52518b27fc6390b270be72600cfb280265afa68e75bb33",
+        "count": 412
+      },
+      {
+        "version": "R_013",
+        "spawn_key": [
+          13
+        ],
+        "time_sha256": "12842e4332e40f3dcf3eaba04fda1b8f255727e195855f9216c01e08796e2e01",
+        "count": 412
+      },
+      {
+        "version": "R_014",
+        "spawn_key": [
+          14
+        ],
+        "time_sha256": "06dfe884d15f1d6ef35b06a051e71e341c31779d5412501f05a46ad8e69693b4",
+        "count": 412
+      },
+      {
+        "version": "R_015",
+        "spawn_key": [
+          15
+        ],
+        "time_sha256": "bdab9dcb1086200a831b036b6c6802871201618fdd4506252660d9f4d6f39970",
+        "count": 412
+      },
+      {
+        "version": "R_016",
+        "spawn_key": [
+          16
+        ],
+        "time_sha256": "cf42020fdbfe2dfef7d54a0e9ee8601a235a7cb3df409796d82d2c643e7065a1",
+        "count": 412
+      },
+      {
+        "version": "R_017",
+        "spawn_key": [
+          17
+        ],
+        "time_sha256": "8137e8cfe92277c023d2a1ae3b00760d1e56645cb526468eb0e04ca0ba85656e",
+        "count": 412
+      },
+      {
+        "version": "R_018",
+        "spawn_key": [
+          18
+        ],
+        "time_sha256": "9d4bbf0de5e16c93d3a114515db05762d690ea675b14e69db6a621a6dedfa9dc",
+        "count": 412
+      },
+      {
+        "version": "R_019",
+        "spawn_key": [
+          19
+        ],
+        "time_sha256": "1698017be523b025739a02a28ab9f9294502cc315d42457c48c162dfd42ddcf9",
+        "count": 412
+      },
+      {
+        "version": "R_020",
+        "spawn_key": [
+          20
+        ],
+        "time_sha256": "2d96f287b10da8cc3b9a14050d53df79d0e7beb21e5e4a2158b3d8eec476e7da",
+        "count": 412
+      },
+      {
+        "version": "R_021",
+        "spawn_key": [
+          21
+        ],
+        "time_sha256": "4516bf563cb85f42beb8d2895f6da20e62106a6958d351e1369e54b727b1c285",
+        "count": 412
+      },
+      {
+        "version": "R_022",
+        "spawn_key": [
+          22
+        ],
+        "time_sha256": "adafe10c51d41d3f32337bcf7b04794af20bb40d214026c660d162f2eaaba190",
+        "count": 412
+      },
+      {
+        "version": "R_023",
+        "spawn_key": [
+          23
+        ],
+        "time_sha256": "2a7f828e89c5f51d50fce13439ad53a0f53dbc1259840dabc197051416d94c4b",
+        "count": 412
+      },
+      {
+        "version": "R_024",
+        "spawn_key": [
+          24
+        ],
+        "time_sha256": "120a8b6ae6eee2947ee0a182fd65d15f980b12ebe775b163daa58d70c0080ab6",
+        "count": 412
+      },
+      {
+        "version": "R_025",
+        "spawn_key": [
+          25
+        ],
+        "time_sha256": "ca84b3cdc5988eaf3f5192a73f9da961eed452bffe45966bada497675fded431",
+        "count": 412
+      },
+      {
+        "version": "R_026",
+        "spawn_key": [
+          26
+        ],
+        "time_sha256": "ef8fff3074ab53adf9ba46a0074397f5fea1fd0fd2600b05796a8e2b92f1a6c1",
+        "count": 412
+      },
+      {
+        "version": "R_027",
+        "spawn_key": [
+          27
+        ],
+        "time_sha256": "b179940c87ca859deb455e12cccca40a765a46a1f80ea70aa855760026b87945",
+        "count": 412
+      },
+      {
+        "version": "R_028",
+        "spawn_key": [
+          28
+        ],
+        "time_sha256": "81ad86cbcd207a43d412323f60cf6f372e71dfce7026aa1279785db7981a3c80",
+        "count": 412
+      },
+      {
+        "version": "R_029",
+        "spawn_key": [
+          29
+        ],
+        "time_sha256": "f23bce37d4d689ffc504848e07568df1d6b581ee76dd851a02b46816bc23f984",
+        "count": 412
+      },
+      {
+        "version": "R_030",
+        "spawn_key": [
+          30
+        ],
+        "time_sha256": "3e5adb5cac5e3b24cd301f38e8563ae24978c3b7e261a7f54ca85d5ffbe31daa",
+        "count": 412
+      },
+      {
+        "version": "R_031",
+        "spawn_key": [
+          31
+        ],
+        "time_sha256": "e820ba27d2c106ba9d099cc1c4e2de7abfbae4c9bfc8e39f7a5fb059897d650e",
+        "count": 412
+      },
+      {
+        "version": "R_032",
+        "spawn_key": [
+          32
+        ],
+        "time_sha256": "a711661d7d1d67cd2e5642b0aa265d1f72301356b71a5bbc5d416a3228fb5577",
+        "count": 412
+      },
+      {
+        "version": "R_033",
+        "spawn_key": [
+          33
+        ],
+        "time_sha256": "5407132a37eb17747e955c856757b82b7f9093b7e60077ed4eff89c8a0c29c00",
+        "count": 412
+      },
+      {
+        "version": "R_034",
+        "spawn_key": [
+          34
+        ],
+        "time_sha256": "e43a077c2266a9651c0c1865121c26282f139185de07f709f8cbbfd142ae3103",
+        "count": 412
+      },
+      {
+        "version": "R_035",
+        "spawn_key": [
+          35
+        ],
+        "time_sha256": "a87ebdc485fc908a6f4dc57b0b7c48bae56c4591e3d47fec8a4f8119857d6a7d",
+        "count": 412
+      },
+      {
+        "version": "R_036",
+        "spawn_key": [
+          36
+        ],
+        "time_sha256": "f8584a205f61500df51ab350ed031f7a7e2fb2ab799762756bc0dc91dbfc95ca",
+        "count": 412
+      },
+      {
+        "version": "R_037",
+        "spawn_key": [
+          37
+        ],
+        "time_sha256": "b5491afc9a4bd1ae52a04417e46247824ebf142e7df5a28d83a02887cbf8bdaa",
+        "count": 412
+      },
+      {
+        "version": "R_038",
+        "spawn_key": [
+          38
+        ],
+        "time_sha256": "5a9ad0b507241bdd6449954a2eec166c9db778b85c55e140a1080aa28f327dd7",
+        "count": 412
+      },
+      {
+        "version": "R_039",
+        "spawn_key": [
+          39
+        ],
+        "time_sha256": "62dff68536237d57b60eb150de675ddaf83fa98d72e008eaa6604e9aa114e2fe",
+        "count": 412
+      },
+      {
+        "version": "R_040",
+        "spawn_key": [
+          40
+        ],
+        "time_sha256": "5630ab3857912764ab889f9bb2e1f5504135eb58b5f39638b2fed9099612fadb",
+        "count": 412
+      },
+      {
+        "version": "R_041",
+        "spawn_key": [
+          41
+        ],
+        "time_sha256": "6cba76ec12fd0285bd4b000f162bab04c2edabe67cbd2cb23750d0a7bea5f00c",
+        "count": 412
+      },
+      {
+        "version": "R_042",
+        "spawn_key": [
+          42
+        ],
+        "time_sha256": "dffda8076b32d2dda319f73cb3d60095eece5201de287f794b1d908aa7d5a956",
+        "count": 412
+      },
+      {
+        "version": "R_043",
+        "spawn_key": [
+          43
+        ],
+        "time_sha256": "18bd4781a499d335024468162598fd168fdc01fd268c5213519f9072edd28624",
+        "count": 412
+      },
+      {
+        "version": "R_044",
+        "spawn_key": [
+          44
+        ],
+        "time_sha256": "32d9c5ec40cdf6dba0acd970741631a722c8348491120e21120fe2119d4b2a70",
+        "count": 412
+      },
+      {
+        "version": "R_045",
+        "spawn_key": [
+          45
+        ],
+        "time_sha256": "02dfaf0d186492cc703ddf6d9bbb1a88ed2cf00278b57dacfdfe4091c6925682",
+        "count": 412
+      },
+      {
+        "version": "R_046",
+        "spawn_key": [
+          46
+        ],
+        "time_sha256": "ef56ab3c24ab37b901b76aeba6bb2c370ec6b9533ea80e91341970d2c95d7cde",
+        "count": 412
+      },
+      {
+        "version": "R_047",
+        "spawn_key": [
+          47
+        ],
+        "time_sha256": "1c5e6cbe1d50c56d1dc4955484345057b3909f45fac24f947064fbd87a3fc576",
+        "count": 412
+      },
+      {
+        "version": "R_048",
+        "spawn_key": [
+          48
+        ],
+        "time_sha256": "00074a916d3b53a7e15a5cf71f9a73ed5aa4eb4f7a3fe36c242f53aafb8876eb",
+        "count": 412
+      },
+      {
+        "version": "R_049",
+        "spawn_key": [
+          49
+        ],
+        "time_sha256": "4bfceeab8c20b51680ce8b2a0a8afd8735062a86d96c0f0cc4a2267a076c70ca",
+        "count": 412
+      },
+      {
+        "version": "R_050",
+        "spawn_key": [
+          50
+        ],
+        "time_sha256": "db0d0ba547a4b3ddb796a651f2e3a118593e48addbe95645070302a04b8a94f9",
+        "count": 412
+      },
+      {
+        "version": "R_051",
+        "spawn_key": [
+          51
+        ],
+        "time_sha256": "7867c39089f35f1000ec0ffbb64afb28ec981c543435b36a959c6f3bbb43716e",
+        "count": 412
+      },
+      {
+        "version": "R_052",
+        "spawn_key": [
+          52
+        ],
+        "time_sha256": "cae167fd65a5562c5cd12850559a6ac39c6a180a607f4c3e84292ed173b2b39d",
+        "count": 412
+      },
+      {
+        "version": "R_053",
+        "spawn_key": [
+          53
+        ],
+        "time_sha256": "3521072c53b172685c71b94b155126ab5012a7a4b17e2a4cf0b0bfb20e5446c1",
+        "count": 412
+      },
+      {
+        "version": "R_054",
+        "spawn_key": [
+          54
+        ],
+        "time_sha256": "d457d1cfe389a2eff5c1fcb84b6697326cb2a2be30b6239fe518bf716e91322e",
+        "count": 412
+      },
+      {
+        "version": "R_055",
+        "spawn_key": [
+          55
+        ],
+        "time_sha256": "7af72b839b18b9770ea31197a56bd1e0d3c351521264d0dcf8e0af9e654c8be7",
+        "count": 412
+      },
+      {
+        "version": "R_056",
+        "spawn_key": [
+          56
+        ],
+        "time_sha256": "8f42abbd65c808ccc1e0fecea322ab48a7e71af7df1d843618cd72f68f5896b9",
+        "count": 412
+      },
+      {
+        "version": "R_057",
+        "spawn_key": [
+          57
+        ],
+        "time_sha256": "8c70a516db2164b6939d35063989194c68b636a4a0158114b4ce578a4abfd1eb",
+        "count": 412
+      },
+      {
+        "version": "R_058",
+        "spawn_key": [
+          58
+        ],
+        "time_sha256": "956a3becb30e397944914b5e90c09e0e92c6833eee19049cc2511212bc7af740",
+        "count": 412
+      },
+      {
+        "version": "R_059",
+        "spawn_key": [
+          59
+        ],
+        "time_sha256": "461df9b2e5d34584305698b9fe7a5c75eca125f639691fff0eab504267449da9",
+        "count": 412
+      },
+      {
+        "version": "R_060",
+        "spawn_key": [
+          60
+        ],
+        "time_sha256": "54a3f474cc30ed58354171b384b7a234a5640f2e4ae6890603f7e967d082204d",
+        "count": 412
+      },
+      {
+        "version": "R_061",
+        "spawn_key": [
+          61
+        ],
+        "time_sha256": "242e0f23393df80d758c0262388d6158317439952fcc1e21ee1bab0d4a019804",
+        "count": 412
+      },
+      {
+        "version": "R_062",
+        "spawn_key": [
+          62
+        ],
+        "time_sha256": "7f5596d4731a625f26ec062bd917c84ca06d99c1662895d3eaade6adfdbbc17b",
+        "count": 412
+      },
+      {
+        "version": "R_063",
+        "spawn_key": [
+          63
+        ],
+        "time_sha256": "e14528949a211284ab33ed1c8d4a7ac63479502ce8c0b48f96eff13d4aa0fa45",
+        "count": 412
+      },
+      {
+        "version": "R_064",
+        "spawn_key": [
+          64
+        ],
+        "time_sha256": "c65b1e3f067c001f067113caa3e41a6b30ab3317638a05564dd22e05810e65ee",
+        "count": 412
+      },
+      {
+        "version": "R_065",
+        "spawn_key": [
+          65
+        ],
+        "time_sha256": "f3c4c4be814ad8d0434d85dcd69dc3ede17ec45d54112c401d56150b843c34a2",
+        "count": 412
+      },
+      {
+        "version": "R_066",
+        "spawn_key": [
+          66
+        ],
+        "time_sha256": "9e42fe252481b14af84986660dae9dde9ebf375c9c3503ceee78ea2a00fb4e6b",
+        "count": 412
+      },
+      {
+        "version": "R_067",
+        "spawn_key": [
+          67
+        ],
+        "time_sha256": "0796b8024534dbb20450b584bcfb3208885d2a7b23b5f2d0d7e9f70886ff3559",
+        "count": 412
+      },
+      {
+        "version": "R_068",
+        "spawn_key": [
+          68
+        ],
+        "time_sha256": "d125f22c692ad339da80f9e024e9a052a5405cdb167885245f58aab0d2eb1d44",
+        "count": 412
+      },
+      {
+        "version": "R_069",
+        "spawn_key": [
+          69
+        ],
+        "time_sha256": "7306447c2d9c5138ed3818d461ddfa3ecc086cff47679ec08601af4ae9a3130f",
+        "count": 412
+      },
+      {
+        "version": "R_070",
+        "spawn_key": [
+          70
+        ],
+        "time_sha256": "b3664ad276d023fe5561bf4b46dd57751ef01e34ce2da3c7b5a7ed6471684676",
+        "count": 412
+      },
+      {
+        "version": "R_071",
+        "spawn_key": [
+          71
+        ],
+        "time_sha256": "268ff5a1d3327092ee29ccab079164eeec781b1b9725b5e127b5911487651f19",
+        "count": 412
+      },
+      {
+        "version": "R_072",
+        "spawn_key": [
+          72
+        ],
+        "time_sha256": "46123ee7959da15b5b9986bd747a7a59dbbec24f57264572ec0cedf48366eff4",
+        "count": 412
+      },
+      {
+        "version": "R_073",
+        "spawn_key": [
+          73
+        ],
+        "time_sha256": "123e36dca3ccf8f9e2d955289f894642363d2c7bed3f0d2a9491f11b4fcac9fc",
+        "count": 412
+      },
+      {
+        "version": "R_074",
+        "spawn_key": [
+          74
+        ],
+        "time_sha256": "eda943fb22d9369090ba9f233e2d1fccf26b832236ca00e4dc9512953db41ecb",
+        "count": 412
+      },
+      {
+        "version": "R_075",
+        "spawn_key": [
+          75
+        ],
+        "time_sha256": "3f8b8ccad5d7b923ea9f68e945861cd5dc322a29fcb16fe4ebf13aa2e2fa56db",
+        "count": 412
+      },
+      {
+        "version": "R_076",
+        "spawn_key": [
+          76
+        ],
+        "time_sha256": "cef3378bf138413e88ad75ff14f3fa3fb841364caa728a5dd96fee9f5bcfa037",
+        "count": 412
+      },
+      {
+        "version": "R_077",
+        "spawn_key": [
+          77
+        ],
+        "time_sha256": "29a1b53821079b687cb393033393e8744648314d0352434d07ebb2df1d2284d1",
+        "count": 412
+      },
+      {
+        "version": "R_078",
+        "spawn_key": [
+          78
+        ],
+        "time_sha256": "0ae6563b4f9cc8678768cd7c8da2d7ae702c46663fe98eb227fea75ddef1d50d",
+        "count": 412
+      },
+      {
+        "version": "R_079",
+        "spawn_key": [
+          79
+        ],
+        "time_sha256": "33a328003fd85d49fc1c599766ced29a9501645964b7e218c276384048165ba5",
+        "count": 412
+      },
+      {
+        "version": "R_080",
+        "spawn_key": [
+          80
+        ],
+        "time_sha256": "d657e99f31d6185a00095cadb823455d9623f9e1a8958fcaeac433585ba8c481",
+        "count": 412
+      },
+      {
+        "version": "R_081",
+        "spawn_key": [
+          81
+        ],
+        "time_sha256": "f25d17b14a653f3de2e682a63e7ad0aef377b502062ae0835de7b86d4c01cf40",
+        "count": 412
+      },
+      {
+        "version": "R_082",
+        "spawn_key": [
+          82
+        ],
+        "time_sha256": "f57c7afb963804fb137ce1d78b2fa0a9c745641d9752e9e6532ad8b9ec8eb9ec",
+        "count": 412
+      },
+      {
+        "version": "R_083",
+        "spawn_key": [
+          83
+        ],
+        "time_sha256": "f63ee440f3a84d694b3a486083e2a1e36951d09990196bf6dba9431f82701626",
+        "count": 412
+      },
+      {
+        "version": "R_084",
+        "spawn_key": [
+          84
+        ],
+        "time_sha256": "dfe09249ef68ad8811cc3428c2be2602630912438d8c0e9e3f5948ff6cbbe110",
+        "count": 412
+      },
+      {
+        "version": "R_085",
+        "spawn_key": [
+          85
+        ],
+        "time_sha256": "953cdac5f2e27f36dcf67a84f4561cb797fd4eced3c41e6c8799fd27a7dee38b",
+        "count": 412
+      },
+      {
+        "version": "R_086",
+        "spawn_key": [
+          86
+        ],
+        "time_sha256": "021201b06a9477d1ce97a23d9723cfef41701f1a9bff43b2f8aa600bc92bde38",
+        "count": 412
+      },
+      {
+        "version": "R_087",
+        "spawn_key": [
+          87
+        ],
+        "time_sha256": "e650d6c27e10f4187692a71d5b0d93f4f1e7362ee66cf40923b34ce5730118b2",
+        "count": 412
+      },
+      {
+        "version": "R_088",
+        "spawn_key": [
+          88
+        ],
+        "time_sha256": "635250efda4c4cbe4ace314622812c8ea1583e9d087940c81c6606d0de098f99",
+        "count": 412
+      },
+      {
+        "version": "R_089",
+        "spawn_key": [
+          89
+        ],
+        "time_sha256": "5daf5ee462e3839e8339d8f358e4b76b52eb9a06cbe19bfd5b95114f7899de3c",
+        "count": 412
+      },
+      {
+        "version": "R_090",
+        "spawn_key": [
+          90
+        ],
+        "time_sha256": "83cf1240f274159dcb6cca82bea917b37cce4147d86bdf21c64f8ab8651d11d4",
+        "count": 412
+      },
+      {
+        "version": "R_091",
+        "spawn_key": [
+          91
+        ],
+        "time_sha256": "aede78d8b91bf5392be9af19b6453ed022b6fc67698cd10afb4d334bbce95955",
+        "count": 412
+      },
+      {
+        "version": "R_092",
+        "spawn_key": [
+          92
+        ],
+        "time_sha256": "0b955b1cfe2a88612a6421d875c78bea7608368fc087dafe575592636ee1b433",
+        "count": 412
+      },
+      {
+        "version": "R_093",
+        "spawn_key": [
+          93
+        ],
+        "time_sha256": "1b8f1a5d8a6bc3dc9479afa857716dbaba1ae3a4ff2bd9845c4ad144c4e01cef",
+        "count": 412
+      },
+      {
+        "version": "R_094",
+        "spawn_key": [
+          94
+        ],
+        "time_sha256": "ab59030e480f2f99f9ed6bb7c654f61cc983801edb5e4f73e0e0b14f2e0242ff",
+        "count": 412
+      },
+      {
+        "version": "R_095",
+        "spawn_key": [
+          95
+        ],
+        "time_sha256": "614b90470178190fc7464fc363d44bb74d1d4dee45e5f3ddca042051709fda24",
+        "count": 412
+      },
+      {
+        "version": "R_096",
+        "spawn_key": [
+          96
+        ],
+        "time_sha256": "7b3405fa1e37ef054a647b9db1a4c4367835e6d24f959bdb122cb532f3f6ad6a",
+        "count": 412
+      },
+      {
+        "version": "R_097",
+        "spawn_key": [
+          97
+        ],
+        "time_sha256": "c30e28a2e1ddf74cdc157f87a7ef6d39d75a9891931bdd8f7c8005993508a30e",
+        "count": 412
+      },
+      {
+        "version": "R_098",
+        "spawn_key": [
+          98
+        ],
+        "time_sha256": "051fda357f5413730f0444193ecdee899da5bc876fb78ab82eed89e4967defe5",
+        "count": 412
+      },
+      {
+        "version": "R_099",
+        "spawn_key": [
+          99
+        ],
+        "time_sha256": "1f47db801c9ef6af53fd2f37aed98e99f68f34f9c68b428a9a0b0576357d8a0c",
+        "count": 412
+      },
+      {
+        "version": "R_100",
+        "spawn_key": [
+          100
+        ],
+        "time_sha256": "69b02aeb0577bfb768ce81affe29f7f2c515b700807242c977e51f3de66962db",
+        "count": 412
+      },
+      {
+        "version": "R_101",
+        "spawn_key": [
+          101
+        ],
+        "time_sha256": "f1666bd33efed277eb7bef8d2f6269d0f44c3293e2329a6053853d0b5fe05455",
+        "count": 412
+      },
+      {
+        "version": "R_102",
+        "spawn_key": [
+          102
+        ],
+        "time_sha256": "55321658f6566e7b6c457bddeac2a2cd63a2e8389cc260a18eed9d7c84f64779",
+        "count": 412
+      },
+      {
+        "version": "R_103",
+        "spawn_key": [
+          103
+        ],
+        "time_sha256": "1a18b1172455d824524b2834505982cf679871abb67086eacf4953264b496cd9",
+        "count": 412
+      },
+      {
+        "version": "R_104",
+        "spawn_key": [
+          104
+        ],
+        "time_sha256": "c30f78437da72f2387e406b71156b9d539f6a11e206720eda0d6a9eed97f0a6a",
+        "count": 412
+      },
+      {
+        "version": "R_105",
+        "spawn_key": [
+          105
+        ],
+        "time_sha256": "209cebf55ab31292324060c6bf9f92a2e8cfd248a8a19e09b39888684369fb53",
+        "count": 412
+      },
+      {
+        "version": "R_106",
+        "spawn_key": [
+          106
+        ],
+        "time_sha256": "d73b4045e859bd31fdc919cd555cfa46966037c5e59027ccd562f28f2e48996c",
+        "count": 412
+      },
+      {
+        "version": "R_107",
+        "spawn_key": [
+          107
+        ],
+        "time_sha256": "07bad06d42f03a8a44884c577fd2d5fd53ef25eeff62c7b300746cce0aa8a5a7",
+        "count": 412
+      },
+      {
+        "version": "R_108",
+        "spawn_key": [
+          108
+        ],
+        "time_sha256": "db8af46e8de553164b7cd4f1b0438e02ad26c273e97dd2399fd66e4f19b54fbe",
+        "count": 412
+      },
+      {
+        "version": "R_109",
+        "spawn_key": [
+          109
+        ],
+        "time_sha256": "c32a4faff15fced9037358e9da494863bb0bf64bc3d739fa3d9e15ec8a56a646",
+        "count": 412
+      },
+      {
+        "version": "R_110",
+        "spawn_key": [
+          110
+        ],
+        "time_sha256": "b72024af1f6ece4b3c9948c7e158f0e3ba1398190aaac168567577b6b8ff9188",
+        "count": 412
+      },
+      {
+        "version": "R_111",
+        "spawn_key": [
+          111
+        ],
+        "time_sha256": "7ebc226549237d748c72ae3b3e360dd1d24d8f6859b106b2ad1ae057cdfe1fbe",
+        "count": 412
+      },
+      {
+        "version": "R_112",
+        "spawn_key": [
+          112
+        ],
+        "time_sha256": "390027ec79b09ea334e12e533c7aa1f275481bac17077a2d4a60ae816a1d4806",
+        "count": 412
+      },
+      {
+        "version": "R_113",
+        "spawn_key": [
+          113
+        ],
+        "time_sha256": "f40095e6fecbd99c7f216947e91c47db5027ec502da4be50f3cc115f80ebfa32",
+        "count": 412
+      },
+      {
+        "version": "R_114",
+        "spawn_key": [
+          114
+        ],
+        "time_sha256": "d30421bc7a17997e878bb2e6329ec18c46964b7e7b075e7c17a8517ff4272e66",
+        "count": 412
+      },
+      {
+        "version": "R_115",
+        "spawn_key": [
+          115
+        ],
+        "time_sha256": "9fb7931f784619c83fa8af30ea9d0323e92fbf60bb1c8c7ca122dea7d27b88ac",
+        "count": 412
+      },
+      {
+        "version": "R_116",
+        "spawn_key": [
+          116
+        ],
+        "time_sha256": "0d3ff9dc3576882a012fbd6fb98ccdb095f1965f24f5472de8b138098669c5c2",
+        "count": 412
+      },
+      {
+        "version": "R_117",
+        "spawn_key": [
+          117
+        ],
+        "time_sha256": "072daf4c01ac50f98edc5e74e9e0a56f500ef20de1c448252462e17dce31ebc0",
+        "count": 412
+      },
+      {
+        "version": "R_118",
+        "spawn_key": [
+          118
+        ],
+        "time_sha256": "5c6fa7469b1505e758f92468bb49c33b36eb93feacfe2b0d860f31f2394db9df",
+        "count": 412
+      },
+      {
+        "version": "R_119",
+        "spawn_key": [
+          119
+        ],
+        "time_sha256": "7e1b42c5c4f1a434c43b6f7bf9bea67b0465bcce44d97fd45a2b2b711d0535ea",
+        "count": 412
+      },
+      {
+        "version": "R_120",
+        "spawn_key": [
+          120
+        ],
+        "time_sha256": "6924f00fad3553479fd725e3e9b8d6f09b5c3ad9c95f227dd2904f45b5cd7238",
+        "count": 412
+      },
+      {
+        "version": "R_121",
+        "spawn_key": [
+          121
+        ],
+        "time_sha256": "5edf469e19f41df38f191223207e39f127db0067972fd5b515f45b705848bd72",
+        "count": 412
+      },
+      {
+        "version": "R_122",
+        "spawn_key": [
+          122
+        ],
+        "time_sha256": "b34a006e879af28b5a4964a5c69bcd69d5f8b26e4dfb0427dd353c351316fe7c",
+        "count": 412
+      },
+      {
+        "version": "R_123",
+        "spawn_key": [
+          123
+        ],
+        "time_sha256": "e923fd5b293024f51eae61942b2d82bfadcf3026024ea83adc1c667a5f3f06e4",
+        "count": 412
+      },
+      {
+        "version": "R_124",
+        "spawn_key": [
+          124
+        ],
+        "time_sha256": "5d9856093d9bc1df2ecb00f49de6b940cfa61c4c2bc592b2d2e3aedd0ec2a3ea",
+        "count": 412
+      },
+      {
+        "version": "R_125",
+        "spawn_key": [
+          125
+        ],
+        "time_sha256": "0af12a26fc50068a4fe7589ca15f003514d08d9451241af11d33efa31ba7d79d",
+        "count": 412
+      },
+      {
+        "version": "R_126",
+        "spawn_key": [
+          126
+        ],
+        "time_sha256": "24d9d64b0d4a65d498f76fcca1828ce24b72c4960f7fbe07fde1682d4c6aa1e9",
+        "count": 412
+      },
+      {
+        "version": "R_127",
+        "spawn_key": [
+          127
+        ],
+        "time_sha256": "a70e6ea3481a26d21417b4d76bb3f609481bf7d93dd7ed02bbf8a804e0b08b70",
+        "count": 412
+      },
+      {
+        "version": "R_128",
+        "spawn_key": [
+          128
+        ],
+        "time_sha256": "2a6dfc5e1cee839cadd37df744ae815098cde884ebe054609ae1e2ce28f225fc",
+        "count": 412
+      },
+      {
+        "version": "R_129",
+        "spawn_key": [
+          129
+        ],
+        "time_sha256": "9a11680629e29b587820c8e97fef0cf01f5489a26c5f76e6bc4d3f89ea672c39",
+        "count": 412
+      },
+      {
+        "version": "R_130",
+        "spawn_key": [
+          130
+        ],
+        "time_sha256": "72a825fd53f85c79ba8be4bf0f6164fb00b812bebaf7bfa9b1faacc5e8adf448",
+        "count": 412
+      },
+      {
+        "version": "R_131",
+        "spawn_key": [
+          131
+        ],
+        "time_sha256": "0fe820595fc36e1d71f6b136373220df3cd095523db83013bd85e2adee618d6d",
+        "count": 412
+      },
+      {
+        "version": "R_132",
+        "spawn_key": [
+          132
+        ],
+        "time_sha256": "77b847cfc3858ddd4483148a25c3245fa93dbdde561ca105f5c765d3e47a5a00",
+        "count": 412
+      },
+      {
+        "version": "R_133",
+        "spawn_key": [
+          133
+        ],
+        "time_sha256": "b1251cb009f1a76cec6354d471ed1141e7b4deb098c6f2e619434b6d66ad54b9",
+        "count": 412
+      },
+      {
+        "version": "R_134",
+        "spawn_key": [
+          134
+        ],
+        "time_sha256": "bc4f32fced8d35e6c7d3f8cfd8e59b0533c1d889c352371a59979efd8d78ca54",
+        "count": 412
+      },
+      {
+        "version": "R_135",
+        "spawn_key": [
+          135
+        ],
+        "time_sha256": "7852ed826d48b1630d5d25b5ef0ae17101fe7f5d8509feb43aef1278bca61f6f",
+        "count": 412
+      },
+      {
+        "version": "R_136",
+        "spawn_key": [
+          136
+        ],
+        "time_sha256": "7a02124cc08bd3490a3fb990e98f0f60dccc10906a6b50fffb74b68b2f5f48f5",
+        "count": 412
+      },
+      {
+        "version": "R_137",
+        "spawn_key": [
+          137
+        ],
+        "time_sha256": "3d32823f345db5fc5ee8ddb3e44c0a681b80c9909f21cab70b3bd9dcf7fd9e45",
+        "count": 412
+      },
+      {
+        "version": "R_138",
+        "spawn_key": [
+          138
+        ],
+        "time_sha256": "5a321b7457edeee7b0c403662b1a7234673e3288f988ee40e03e8670a3cc47c8",
+        "count": 412
+      },
+      {
+        "version": "R_139",
+        "spawn_key": [
+          139
+        ],
+        "time_sha256": "1d66ac9fa1a1673bdc82d009f7aa38ebd0693d14cfa7920c402fcc4e2f0c082d",
+        "count": 412
+      },
+      {
+        "version": "R_140",
+        "spawn_key": [
+          140
+        ],
+        "time_sha256": "c2239c8ac5e0fdcbaf68b4d6fbba48fe566550c7a84590ff15c4474dd1be5c2b",
+        "count": 412
+      },
+      {
+        "version": "R_141",
+        "spawn_key": [
+          141
+        ],
+        "time_sha256": "c059799e836a1f6e7bb7e96e5ba357a74c6b09562017eb0e5069b913a5f68891",
+        "count": 412
+      },
+      {
+        "version": "R_142",
+        "spawn_key": [
+          142
+        ],
+        "time_sha256": "a216dd1254856adc17574e946817774316d7fa9940bcc33810b064007d341164",
+        "count": 412
+      },
+      {
+        "version": "R_143",
+        "spawn_key": [
+          143
+        ],
+        "time_sha256": "73464ad5e31fd8b39577b8978d136302e90d4b5ad1ec1f9f69923f3cc3895d6f",
+        "count": 412
+      },
+      {
+        "version": "R_144",
+        "spawn_key": [
+          144
+        ],
+        "time_sha256": "b734a66d6b771cb630ec6434a40430d23c293a7ecf5e0dde0bf83fb77b1d0f14",
+        "count": 412
+      },
+      {
+        "version": "R_145",
+        "spawn_key": [
+          145
+        ],
+        "time_sha256": "e8f05ceada919e855a6da650fea8766e78063a6defaa9723b16ecfe80cd63ac9",
+        "count": 412
+      },
+      {
+        "version": "R_146",
+        "spawn_key": [
+          146
+        ],
+        "time_sha256": "e1c21c7c4a2de992810ae32bc729aa294e4bcb6745d9ef8eeec7e844ccc6dc97",
+        "count": 412
+      },
+      {
+        "version": "R_147",
+        "spawn_key": [
+          147
+        ],
+        "time_sha256": "39cef3243ce937fd2c5b1330bc84b52f3aec8663fa27dbf1ca0d30ab883962d1",
+        "count": 412
+      },
+      {
+        "version": "R_148",
+        "spawn_key": [
+          148
+        ],
+        "time_sha256": "8382cf4caaba644e93b53a4d738d97d9e15b96f313e34cfde9ab196f9d1442f2",
+        "count": 412
+      },
+      {
+        "version": "R_149",
+        "spawn_key": [
+          149
+        ],
+        "time_sha256": "934d2dc03f2df559be0dd553d81fa702e30e4b2f62499f4ed1bc2a6c46648085",
+        "count": 412
+      },
+      {
+        "version": "R_150",
+        "spawn_key": [
+          150
+        ],
+        "time_sha256": "5cd581cb9953d72fd6e9eef3fd3ec436065241d19207dee2fc9a52d19a2efcbb",
+        "count": 412
+      },
+      {
+        "version": "R_151",
+        "spawn_key": [
+          151
+        ],
+        "time_sha256": "2c75b91cf0fce40e41a249a9263f9b1d82050392d06c9a114bb2430663eefdcb",
+        "count": 412
+      },
+      {
+        "version": "R_152",
+        "spawn_key": [
+          152
+        ],
+        "time_sha256": "76e9f39d51446eb55cb3dfa3b768f6fc86b4bde1784081ca03b6e6708b0921bf",
+        "count": 412
+      },
+      {
+        "version": "R_153",
+        "spawn_key": [
+          153
+        ],
+        "time_sha256": "ecaddb76e5664d6b177e3f465d16454e719afc6e0ad5350bbecbc2a4e324c174",
+        "count": 412
+      },
+      {
+        "version": "R_154",
+        "spawn_key": [
+          154
+        ],
+        "time_sha256": "364fcdc92b3c01032ab69791797ef4f6e9004c94f5f933ed20a02809b1d693b9",
+        "count": 412
+      },
+      {
+        "version": "R_155",
+        "spawn_key": [
+          155
+        ],
+        "time_sha256": "303e819c2d195e0a98754bfe9cf84baa69b3d1d106a3c5838f2a4bd15507c3ce",
+        "count": 412
+      },
+      {
+        "version": "R_156",
+        "spawn_key": [
+          156
+        ],
+        "time_sha256": "b2b078aaff2446632c4630496b7a18b99755614782d6d8713399181c44c02117",
+        "count": 412
+      },
+      {
+        "version": "R_157",
+        "spawn_key": [
+          157
+        ],
+        "time_sha256": "3ec01fc9438fd04de9510dc93cec92e4098cabb3c06214403b865a3b3ef8e5fe",
+        "count": 412
+      },
+      {
+        "version": "R_158",
+        "spawn_key": [
+          158
+        ],
+        "time_sha256": "27cbf6d2516aac5f4c2f28354c99b0fb0bbf306ed4afb7175331a6839205e8bc",
+        "count": 412
+      },
+      {
+        "version": "R_159",
+        "spawn_key": [
+          159
+        ],
+        "time_sha256": "a18532d92901b10903fb6f62cb459e69f484f0ac7032a2db04d99b25702f0d00",
+        "count": 412
+      },
+      {
+        "version": "R_160",
+        "spawn_key": [
+          160
+        ],
+        "time_sha256": "ab0bed1b05decf21e9c82ba52fb9c63fa2e5a86698c31d61c192a96643395a27",
+        "count": 412
+      },
+      {
+        "version": "R_161",
+        "spawn_key": [
+          161
+        ],
+        "time_sha256": "a6ca039963d252213d39f3ce0e11ff211ddb700911f4694f76614637e946665f",
+        "count": 412
+      },
+      {
+        "version": "R_162",
+        "spawn_key": [
+          162
+        ],
+        "time_sha256": "94586fc2f2d4f2eb90c036d70c67f6e20150321c835c3504051ecc3646a58563",
+        "count": 412
+      },
+      {
+        "version": "R_163",
+        "spawn_key": [
+          163
+        ],
+        "time_sha256": "be147ac98d6fe4991031f83d2c8ac4a44a4ad990eeaac5e1aec0a59ae767641c",
+        "count": 412
+      },
+      {
+        "version": "R_164",
+        "spawn_key": [
+          164
+        ],
+        "time_sha256": "a79fbd803680914d6be196f243914e963363cb9ba13914c7596409dee9f5c9ea",
+        "count": 412
+      },
+      {
+        "version": "R_165",
+        "spawn_key": [
+          165
+        ],
+        "time_sha256": "d82610c6529abe95dfbcc5515be1e0af39d42eb09c7af9894e2be5bdf2f56cfa",
+        "count": 412
+      },
+      {
+        "version": "R_166",
+        "spawn_key": [
+          166
+        ],
+        "time_sha256": "14dea3831f15d79dd45e6ac409be56c68f2a7cc40ba08663a7e8d870abdde345",
+        "count": 412
+      },
+      {
+        "version": "R_167",
+        "spawn_key": [
+          167
+        ],
+        "time_sha256": "d8980059b27a5bafe916921f2fb162c7635793f33fb48e9b35b2a63b8d6a0668",
+        "count": 412
+      },
+      {
+        "version": "R_168",
+        "spawn_key": [
+          168
+        ],
+        "time_sha256": "ddfc36168c01ad943cadb15353f619c8a408dce11246e50abf0f77bdb58f8505",
+        "count": 412
+      },
+      {
+        "version": "R_169",
+        "spawn_key": [
+          169
+        ],
+        "time_sha256": "9054da712c7581bcf3103b16e79b25996275f302b6cd57db28d09533f6d3ec9e",
+        "count": 412
+      },
+      {
+        "version": "R_170",
+        "spawn_key": [
+          170
+        ],
+        "time_sha256": "040d1eb98d47ce2bd050212b0c9ab0a8c5d18d20f41fbbb508e5be2159c06329",
+        "count": 412
+      },
+      {
+        "version": "R_171",
+        "spawn_key": [
+          171
+        ],
+        "time_sha256": "34e862cb3608ec1d50df8f50bf0de28063f30568c49c0a7d399db2ad9e8288dd",
+        "count": 412
+      },
+      {
+        "version": "R_172",
+        "spawn_key": [
+          172
+        ],
+        "time_sha256": "4c0d5717f1fa904be54e64391f7b6b6e7faba6d884546fab545ef8b6439588ce",
+        "count": 412
+      },
+      {
+        "version": "R_173",
+        "spawn_key": [
+          173
+        ],
+        "time_sha256": "e3e6d3b7f1c4f9cde2bf95050727565251b24dfffa00d3f6956701a811f0c8b9",
+        "count": 412
+      },
+      {
+        "version": "R_174",
+        "spawn_key": [
+          174
+        ],
+        "time_sha256": "9dbd7f61735e461ed911dc16b2a69b71e2067ecbadbe19986b2b4494680bbdad",
+        "count": 412
+      },
+      {
+        "version": "R_175",
+        "spawn_key": [
+          175
+        ],
+        "time_sha256": "94c40914bc8c86e2ee12824b5e0380f8e12c43875cfbfe7054bd739ec4b67bd6",
+        "count": 412
+      },
+      {
+        "version": "R_176",
+        "spawn_key": [
+          176
+        ],
+        "time_sha256": "1fab5a74303f152d9e40edca721e6fb57ce3126b172867ffde94cdf5a52cdfa8",
+        "count": 412
+      },
+      {
+        "version": "R_177",
+        "spawn_key": [
+          177
+        ],
+        "time_sha256": "953fac5992e943f6c9732283d0737ba3aaacfd9b445ae894906a19148d72a2cc",
+        "count": 412
+      },
+      {
+        "version": "R_178",
+        "spawn_key": [
+          178
+        ],
+        "time_sha256": "9ede4c283f5db7b6298c851da74dcea09d13a08e6c95a2b446172d68c713a89a",
+        "count": 412
+      },
+      {
+        "version": "R_179",
+        "spawn_key": [
+          179
+        ],
+        "time_sha256": "767bbf9753e4ff46d1e52d0c12738173e0a710de55934eed9a66f17729a71313",
+        "count": 412
+      },
+      {
+        "version": "R_180",
+        "spawn_key": [
+          180
+        ],
+        "time_sha256": "ecd642106cdfbd3e81e1507972db571e71ab5d6a3fcd4ce9fd084eb6def5429a",
+        "count": 412
+      },
+      {
+        "version": "R_181",
+        "spawn_key": [
+          181
+        ],
+        "time_sha256": "d8f1528ba66f46b86fb246aca077f72b2640a99dd0908ca0a72309859c2ddc79",
+        "count": 412
+      },
+      {
+        "version": "R_182",
+        "spawn_key": [
+          182
+        ],
+        "time_sha256": "43ddb4b8a422ce4b6453e78cb96a385c9b5b779f5eefc0acaefc74dc96d17ea4",
+        "count": 412
+      },
+      {
+        "version": "R_183",
+        "spawn_key": [
+          183
+        ],
+        "time_sha256": "fa03160e42327386b7934805ebc7737606b9eddfe0b5adf1714bd3869d637a1d",
+        "count": 412
+      },
+      {
+        "version": "R_184",
+        "spawn_key": [
+          184
+        ],
+        "time_sha256": "293b13cf079e5abafe2f456f4086d1715703cb7ecc68330c44c377d5e3c79e54",
+        "count": 412
+      },
+      {
+        "version": "R_185",
+        "spawn_key": [
+          185
+        ],
+        "time_sha256": "23a8f415035362fa430f16b127ea4ec8f7feb3d91163879447f9b00ab8a20190",
+        "count": 412
+      },
+      {
+        "version": "R_186",
+        "spawn_key": [
+          186
+        ],
+        "time_sha256": "970c128d8e498cb9c6a03af2586757edf0f7351ed5b66859f5c40b181410e0ad",
+        "count": 412
+      },
+      {
+        "version": "R_187",
+        "spawn_key": [
+          187
+        ],
+        "time_sha256": "f18279b39bfe5d113aafdb99a6c7f9c514fd0e9979619b2132a94fc48ff32af3",
+        "count": 412
+      },
+      {
+        "version": "R_188",
+        "spawn_key": [
+          188
+        ],
+        "time_sha256": "7b33d9d5ea4d5d82883713987ce1cccd5fb0b7e6529888b164226b35d7592179",
+        "count": 412
+      },
+      {
+        "version": "R_189",
+        "spawn_key": [
+          189
+        ],
+        "time_sha256": "41a03aa2e05220d646855f78ce7680613387e69fab309e2fd408d325b6ea640a",
+        "count": 412
+      },
+      {
+        "version": "R_190",
+        "spawn_key": [
+          190
+        ],
+        "time_sha256": "df93c16d01ffa77d75a64f273790017a1dab35a9b6b256426882ffba07fa2e51",
+        "count": 412
+      },
+      {
+        "version": "R_191",
+        "spawn_key": [
+          191
+        ],
+        "time_sha256": "6fe5c9faf98726a638588185c43c03cf2e83c5be080fa12cb1f5b3e6eecc0c00",
+        "count": 412
+      },
+      {
+        "version": "R_192",
+        "spawn_key": [
+          192
+        ],
+        "time_sha256": "0bd8c30067296e30ec4814793de89a7b5ca56483502b5d45215d5f24ab1f5580",
+        "count": 412
+      },
+      {
+        "version": "R_193",
+        "spawn_key": [
+          193
+        ],
+        "time_sha256": "b927d1bbf2859dfe5a36c92db25ff519eca1399cd4059e33b0522936f5b9c0dc",
+        "count": 412
+      },
+      {
+        "version": "R_194",
+        "spawn_key": [
+          194
+        ],
+        "time_sha256": "5e14750d0bd26ee89c68259d51e69d52d48d48596c871740de531cebb7880f48",
+        "count": 412
+      },
+      {
+        "version": "R_195",
+        "spawn_key": [
+          195
+        ],
+        "time_sha256": "6ba59f4748576458bc12310bb4bbb13b355f96e01119e5a0e0f8940842236386",
+        "count": 412
+      },
+      {
+        "version": "R_196",
+        "spawn_key": [
+          196
+        ],
+        "time_sha256": "9764a8a4392e4260fb41122f9c2dab136ed60b57e12454c5b4ae64917dd9de62",
+        "count": 412
+      },
+      {
+        "version": "R_197",
+        "spawn_key": [
+          197
+        ],
+        "time_sha256": "bb2e001892f4df405fb4b12e483df87b43725ba0dc789c09c7b8fd68c81c8710",
+        "count": 412
+      },
+      {
+        "version": "R_198",
+        "spawn_key": [
+          198
+        ],
+        "time_sha256": "b3a4f59a9ce386d8e27e5e169905a10ffa19a1ffaef911e384c12c69f4c1b728",
+        "count": 412
+      },
+      {
+        "version": "R_199",
+        "spawn_key": [
+          199
+        ],
+        "time_sha256": "66229a947c2c14a1760f8efeda2e869ab6ceb1eeb9356035269d01e061240107",
+        "count": 412
+      }
+    ]
+  },
+  "schedule_counters": {
+    "candidate_count": 33445,
+    "parent_count": 412,
+    "stratum_count": 3161,
+    "saturated_stratum_count": 5,
+    "saturated_parent_count": 5,
+    "nonsaturated_parent_count": 407,
+    "missing_vol_parent_count": 0,
+    "nonsaturated_parent_fraction": 0.9878640776699029,
+    "finite_positive_vol_parent_fraction": 1.0
+  },
+  "statistics_metadata": {
+    "calendar": {
+      "days": 1401,
+      "months": 46,
+      "start": "2020-03-01 00:00:00+00:00",
+      "end_exclusive": "2024-01-01 00:00:00+00:00"
+    },
+    "family": [
+      "S",
+      "D"
+    ],
+    "alpha": 0.05,
+    "main": {
+      "daily_mean": 5.731530348793013e-05,
+      "annualized_sharpe": 0.35475177710215383,
+      "total_return": 0.07646566399459509,
+      "final_equity": 107646.56639945951,
+      "zero_return_days": 1068,
+      "trade_count": 181,
+      "entry_month_count": 46,
+      "mean_net_bps": 5.861560597474379,
+      "half_trade_counts": [
+        102,
+        79
+      ],
+      "half_trade_mean_bps": [
+        -1.8244618211377945,
+        15.785285745555916
+      ],
+      "removed_best_months": [
+        "2021-07",
+        "2022-02",
+        "2021-10"
+      ],
+      "removed_best_month_net_bps_sums": [
+        1409.0493785698486,
+        1327.008443586255,
+        1239.6157135606993
+      ],
+      "remaining_trade_count": 171,
+      "remaining_trade_mean_bps": -17.04521092148503,
+      "cross_month_trade_count": 5
+    },
+    "harsh": {
+      "daily_mean": -6.060568166836895e-06,
+      "annualized_sharpe": -0.041078180601132046,
+      "total_return": -0.013916474504354737,
+      "final_equity": 98608.35254956453,
+      "zero_return_days": 1068,
+      "trade_count": 181,
+      "entry_month_count": 46,
+      "mean_net_bps": -11.1635430264789,
+      "half_trade_counts": [
+        102,
+        79
+      ],
+      "half_trade_mean_bps": [
+        -18.846607166603082,
+        -1.2436374278375475
+      ],
+      "removed_best_months": [
+        "2021-07",
+        "2022-02",
+        "2021-10"
+      ],
+      "removed_best_month_net_bps_sums": [
+        1391.0565231170401,
+        1275.0205969607541,
+        1136.6149701390343
+      ],
+      "remaining_trade_count": 171,
+      "remaining_trade_mean_bps": -34.05434723982169,
+      "cross_month_trade_count": 5
+    },
+    "mcse_r": 5.150763848231418e-06,
+    "mcse_r_scope": "finite_random_replicates_on_fixed_market_path_not_market_uncertainty",
+    "inference_conditioning": "fixed_200_random_schedules",
+    "sharpe_method": "direct_daily_std_ddof_1_per_shared_whole_month_draw_no_variance_epsilon",
+    "random_fraction_daily_mean_above_S": 0.885,
+    "random_fraction_daily_mean_below_S": 0.115,
+    "random_fraction_total_return_above_S": 0.875,
+    "random_fraction_total_return_below_S": 0.125,
+    "random_comparison_is_exact_randomization_p": false,
+    "Rbar_equity_is_statistical_index_not_actual_account": true,
+    "D_months_descending": [
+      "2021-07",
+      "2023-02",
+      "2022-09",
+      "2022-02",
+      "2023-06",
+      "2023-04",
+      "2021-10",
+      "2023-12",
+      "2022-08",
+      "2021-11",
+      "2022-05",
+      "2023-11",
+      "2020-07",
+      "2022-10",
+      "2021-05",
+      "2022-04",
+      "2023-05",
+      "2022-12",
+      "2022-01",
+      "2021-06",
+      "2020-12",
+      "2023-08",
+      "2021-08",
+      "2023-07",
+      "2021-03",
+      "2020-08",
+      "2022-06",
+      "2022-11",
+      "2020-03",
+      "2021-12",
+      "2020-05",
+      "2020-09",
+      "2020-06",
+      "2021-01",
+      "2020-10",
+      "2021-04",
+      "2021-09",
+      "2023-09",
+      "2023-01",
+      "2023-10",
+      "2022-07",
+      "2021-02",
+      "2023-03",
+      "2022-03",
+      "2020-04",
+      "2020-11"
+    ],
+    "matrices": {
+      "webb_weights": {
+        "shape": [
+          99999,
+          46
+        ],
+        "dtype": "float64",
+        "dtype_string": "<f8",
+        "order": "C",
+        "sha256": "3560ba758427e357588494b371ca30349c1d9bf56bc57abcde7fcb02e4412296",
+        "seed": 2026110902,
+        "generator": "Generator(PCG64)"
+      },
+      "month_indices": {
+        "shape": [
+          10000,
+          46
+        ],
+        "dtype": "int64",
+        "dtype_string": "<i8",
+        "order": "C",
+        "sha256": "27d2d948284d3b347c173dc028672abda0ba4ef188e693865a9f160f5cfc5cee",
+        "seed": 2026110903,
+        "generator": "Generator(PCG64)"
+      }
+    }
+  },
+  "trade_counts": {
+    "S_channel_unfiltered__gross_0": 181,
+    "S_channel_unfiltered__main_17": 181,
+    "S_channel_unfiltered__harsh_34": 181,
+    "R_000__main_17": 269,
+    "R_001__main_17": 288,
+    "R_002__main_17": 276,
+    "R_003__main_17": 268,
+    "R_004__main_17": 276,
+    "R_005__main_17": 268,
+    "R_006__main_17": 273,
+    "R_007__main_17": 266,
+    "R_008__main_17": 279,
+    "R_009__main_17": 274,
+    "R_010__main_17": 260,
+    "R_011__main_17": 267,
+    "R_012__main_17": 272,
+    "R_013__main_17": 278,
+    "R_014__main_17": 281,
+    "R_015__main_17": 273,
+    "R_016__main_17": 282,
+    "R_017__main_17": 266,
+    "R_018__main_17": 267,
+    "R_019__main_17": 269,
+    "R_020__main_17": 287,
+    "R_021__main_17": 275,
+    "R_022__main_17": 276,
+    "R_023__main_17": 276,
+    "R_024__main_17": 272,
+    "R_025__main_17": 278,
+    "R_026__main_17": 267,
+    "R_027__main_17": 263,
+    "R_028__main_17": 281,
+    "R_029__main_17": 289,
+    "R_030__main_17": 262,
+    "R_031__main_17": 271,
+    "R_032__main_17": 270,
+    "R_033__main_17": 265,
+    "R_034__main_17": 279,
+    "R_035__main_17": 285,
+    "R_036__main_17": 280,
+    "R_037__main_17": 275,
+    "R_038__main_17": 277,
+    "R_039__main_17": 272,
+    "R_040__main_17": 273,
+    "R_041__main_17": 271,
+    "R_042__main_17": 275,
+    "R_043__main_17": 277,
+    "R_044__main_17": 279,
+    "R_045__main_17": 274,
+    "R_046__main_17": 283,
+    "R_047__main_17": 284,
+    "R_048__main_17": 271,
+    "R_049__main_17": 272,
+    "R_050__main_17": 282,
+    "R_051__main_17": 281,
+    "R_052__main_17": 283,
+    "R_053__main_17": 274,
+    "R_054__main_17": 261,
+    "R_055__main_17": 280,
+    "R_056__main_17": 277,
+    "R_057__main_17": 267,
+    "R_058__main_17": 279,
+    "R_059__main_17": 277,
+    "R_060__main_17": 270,
+    "R_061__main_17": 287,
+    "R_062__main_17": 272,
+    "R_063__main_17": 284,
+    "R_064__main_17": 280,
+    "R_065__main_17": 279,
+    "R_066__main_17": 277,
+    "R_067__main_17": 274,
+    "R_068__main_17": 270,
+    "R_069__main_17": 266,
+    "R_070__main_17": 282,
+    "R_071__main_17": 288,
+    "R_072__main_17": 270,
+    "R_073__main_17": 278,
+    "R_074__main_17": 278,
+    "R_075__main_17": 271,
+    "R_076__main_17": 271,
+    "R_077__main_17": 274,
+    "R_078__main_17": 285,
+    "R_079__main_17": 271,
+    "R_080__main_17": 292,
+    "R_081__main_17": 270,
+    "R_082__main_17": 279,
+    "R_083__main_17": 266,
+    "R_084__main_17": 275,
+    "R_085__main_17": 273,
+    "R_086__main_17": 281,
+    "R_087__main_17": 270,
+    "R_088__main_17": 270,
+    "R_089__main_17": 273,
+    "R_090__main_17": 277,
+    "R_091__main_17": 273,
+    "R_092__main_17": 272,
+    "R_093__main_17": 285,
+    "R_094__main_17": 281,
+    "R_095__main_17": 279,
+    "R_096__main_17": 278,
+    "R_097__main_17": 288,
+    "R_098__main_17": 280,
+    "R_099__main_17": 274,
+    "R_100__main_17": 271,
+    "R_101__main_17": 279,
+    "R_102__main_17": 264,
+    "R_103__main_17": 284,
+    "R_104__main_17": 279,
+    "R_105__main_17": 275,
+    "R_106__main_17": 266,
+    "R_107__main_17": 262,
+    "R_108__main_17": 273,
+    "R_109__main_17": 282,
+    "R_110__main_17": 272,
+    "R_111__main_17": 275,
+    "R_112__main_17": 277,
+    "R_113__main_17": 272,
+    "R_114__main_17": 292,
+    "R_115__main_17": 272,
+    "R_116__main_17": 272,
+    "R_117__main_17": 284,
+    "R_118__main_17": 279,
+    "R_119__main_17": 276,
+    "R_120__main_17": 266,
+    "R_121__main_17": 274,
+    "R_122__main_17": 268,
+    "R_123__main_17": 283,
+    "R_124__main_17": 272,
+    "R_125__main_17": 273,
+    "R_126__main_17": 286,
+    "R_127__main_17": 273,
+    "R_128__main_17": 260,
+    "R_129__main_17": 281,
+    "R_130__main_17": 278,
+    "R_131__main_17": 274,
+    "R_132__main_17": 282,
+    "R_133__main_17": 270,
+    "R_134__main_17": 269,
+    "R_135__main_17": 278,
+    "R_136__main_17": 279,
+    "R_137__main_17": 279,
+    "R_138__main_17": 263,
+    "R_139__main_17": 271,
+    "R_140__main_17": 265,
+    "R_141__main_17": 275,
+    "R_142__main_17": 260,
+    "R_143__main_17": 275,
+    "R_144__main_17": 270,
+    "R_145__main_17": 280,
+    "R_146__main_17": 274,
+    "R_147__main_17": 282,
+    "R_148__main_17": 282,
+    "R_149__main_17": 275,
+    "R_150__main_17": 279,
+    "R_151__main_17": 276,
+    "R_152__main_17": 273,
+    "R_153__main_17": 276,
+    "R_154__main_17": 266,
+    "R_155__main_17": 283,
+    "R_156__main_17": 278,
+    "R_157__main_17": 288,
+    "R_158__main_17": 280,
+    "R_159__main_17": 291,
+    "R_160__main_17": 285,
+    "R_161__main_17": 285,
+    "R_162__main_17": 264,
+    "R_163__main_17": 287,
+    "R_164__main_17": 269,
+    "R_165__main_17": 269,
+    "R_166__main_17": 277,
+    "R_167__main_17": 278,
+    "R_168__main_17": 268,
+    "R_169__main_17": 272,
+    "R_170__main_17": 273,
+    "R_171__main_17": 276,
+    "R_172__main_17": 264,
+    "R_173__main_17": 270,
+    "R_174__main_17": 275,
+    "R_175__main_17": 271,
+    "R_176__main_17": 282,
+    "R_177__main_17": 275,
+    "R_178__main_17": 277,
+    "R_179__main_17": 273,
+    "R_180__main_17": 278,
+    "R_181__main_17": 278,
+    "R_182__main_17": 274,
+    "R_183__main_17": 263,
+    "R_184__main_17": 267,
+    "R_185__main_17": 283,
+    "R_186__main_17": 277,
+    "R_187__main_17": 276,
+    "R_188__main_17": 281,
+    "R_189__main_17": 286,
+    "R_190__main_17": 273,
+    "R_191__main_17": 289,
+    "R_192__main_17": 271,
+    "R_193__main_17": 279,
+    "R_194__main_17": 278,
+    "R_195__main_17": 279,
+    "R_196__main_17": 275,
+    "R_197__main_17": 271,
+    "R_198__main_17": 266,
+    "R_199__main_17": 267
+  },
+  "real_data_authorized": true,
+  "limitations": [
+    "offline conditional schedules, not online random policy",
+    "fixed 200 paths; random dispersion is not a market confidence interval",
+    "IS-only exploratory study; no next-stage authorization"
+  ]
+}

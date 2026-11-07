@@ -1,0 +1,17 @@
+{
+  "implementation_commit": "5c138263d2ee88b9345180fdf42a75151feddd62",
+  "unlock_commit": "e934a8a5d3ec53a2fe991d059e6604208d53a08e",
+  "starting_worktree_status": "",
+  "protected_sources_verified": 81,
+  "new_files_verified": 27,
+  "environment": {
+    "python": "3.14.4",
+    "pandas": "3.0.5",
+    "numpy": "2.5.4",
+    "pyarrow": "26.0.1",
+    "numba": "0.68.1",
+    "scipy": "1.18.1",
+    "matplotlib": "3.11.2",
+    "pytest": "9.2.0"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "status": "passed",
+  "stage": "input_only_no_features_no_matching",
+  "started_at": "2026-11-06T17:52:38.651790+00:00",
+  "completed_at": "2026-11-06T17:52:39.633518+00:00",
+  "implementation_commit": "5c138263d2ee88b9345180fdf42a75151feddd62",
+  "source": "real",
+  "symbol": "BTCUSDT",
+  "start": "2020-01-01 00:00:00+00:00",
+  "last_minute": "2023-12-31 23:59:00+00:00",
+  "minute_count": 2103840,
+  "bad_count": 144,
+  "archive_gap_count": 10,
+  "funding_count": 4383,
+  "funding_grid_and_rate_sha256": "d8f2b4a35228f5242b5ff33f6c3a72c3f8ad2d9fabd250053d35ad4dcc9d8ed8",
+  "perp_content_sha256": "1e26dd7ecfe6ee03dc2814dcb0041ef2d5724ff7018b2b7f20ae6364d99f5a33",
+  "protected_sources_verified": 81,
+  "new_files_verified": 27,
+  "approved_plan_sha256": "ad8a451a6afb059691b5f3b0ed96f98d2f28390086492bffb3b87419f8a942a0",
+  "environment": {
+    "python": "3.14.4",
+    "pandas": "3.0.5",
+    "numpy": "2.5.4",
+    "pyarrow": "26.0.1",
+    "numba": "0.68.1",
+    "scipy": "1.18.1",
+    "matplotlib": "3.11.2",
+    "pytest": "9.2.0"
+  },
+  "data_filters": "IS bounds applied in read_parquet before rows load; funding rounded after filtering",
+  "matching_executed": false
+}

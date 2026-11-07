@@ -1,0 +1,159 @@
+{
+  "calendar": {
+    "days": 1401,
+    "months": 46,
+    "start": "2020-03-01 00:00:00+00:00",
+    "end_exclusive": "2024-01-01 00:00:00+00:00"
+  },
+  "family": [
+    "S",
+    "D"
+  ],
+  "alpha": 0.05,
+  "main": {
+    "daily_mean": 5.731530348793013e-05,
+    "annualized_sharpe": 0.35475177710215383,
+    "total_return": 0.07646566399459509,
+    "final_equity": 107646.56639945951,
+    "zero_return_days": 1068,
+    "trade_count": 181,
+    "entry_month_count": 46,
+    "mean_net_bps": 5.861560597474379,
+    "half_trade_counts": [
+      102,
+      79
+    ],
+    "half_trade_mean_bps": [
+      -1.8244618211377945,
+      15.785285745555916
+    ],
+    "removed_best_months": [
+      "2021-07",
+      "2022-02",
+      "2021-10"
+    ],
+    "removed_best_month_net_bps_sums": [
+      1409.0493785698486,
+      1327.008443586255,
+      1239.6157135606993
+    ],
+    "remaining_trade_count": 171,
+    "remaining_trade_mean_bps": -17.04521092148503,
+    "cross_month_trade_count": 5
+  },
+  "harsh": {
+    "daily_mean": -6.060568166836895e-06,
+    "annualized_sharpe": -0.041078180601132046,
+    "total_return": -0.013916474504354737,
+    "final_equity": 98608.35254956453,
+    "zero_return_days": 1068,
+    "trade_count": 181,
+    "entry_month_count": 46,
+    "mean_net_bps": -11.1635430264789,
+    "half_trade_counts": [
+      102,
+      79
+    ],
+    "half_trade_mean_bps": [
+      -18.846607166603082,
+      -1.2436374278375475
+    ],
+    "removed_best_months": [
+      "2021-07",
+      "2022-02",
+      "2021-10"
+    ],
+    "removed_best_month_net_bps_sums": [
+      1391.0565231170401,
+      1275.0205969607541,
+      1136.6149701390343
+    ],
+    "remaining_trade_count": 171,
+    "remaining_trade_mean_bps": -34.05434723982169,
+    "cross_month_trade_count": 5
+  },
+  "mcse_r": 5.150763848231418e-06,
+  "mcse_r_scope": "finite_random_replicates_on_fixed_market_path_not_market_uncertainty",
+  "inference_conditioning": "fixed_200_random_schedules",
+  "sharpe_method": "direct_daily_std_ddof_1_per_shared_whole_month_draw_no_variance_epsilon",
+  "random_fraction_daily_mean_above_S": 0.885,
+  "random_fraction_daily_mean_below_S": 0.115,
+  "random_fraction_total_return_above_S": 0.875,
+  "random_fraction_total_return_below_S": 0.125,
+  "random_comparison_is_exact_randomization_p": false,
+  "Rbar_equity_is_statistical_index_not_actual_account": true,
+  "D_months_descending": [
+    "2021-07",
+    "2023-02",
+    "2022-09",
+    "2022-02",
+    "2023-06",
+    "2023-04",
+    "2021-10",
+    "2023-12",
+    "2022-08",
+    "2021-11",
+    "2022-05",
+    "2023-11",
+    "2020-07",
+    "2022-10",
+    "2021-05",
+    "2022-04",
+    "2023-05",
+    "2022-12",
+    "2022-01",
+    "2021-06",
+    "2020-12",
+    "2023-08",
+    "2021-08",
+    "2023-07",
+    "2021-03",
+    "2020-08",
+    "2022-06",
+    "2022-11",
+    "2020-03",
+    "2021-12",
+    "2020-05",
+    "2020-09",
+    "2020-06",
+    "2021-01",
+    "2020-10",
+    "2021-04",
+    "2021-09",
+    "2023-09",
+    "2023-01",
+    "2023-10",
+    "2022-07",
+    "2021-02",
+    "2023-03",
+    "2022-03",
+    "2020-04",
+    "2020-11"
+  ],
+  "matrices": {
+    "webb_weights": {
+      "shape": [
+        99999,
+        46
+      ],
+      "dtype": "float64",
+      "dtype_string": "<f8",
+      "order": "C",
+      "sha256": "3560ba758427e357588494b371ca30349c1d9bf56bc57abcde7fcb02e4412296",
+      "seed": 2026110902,
+      "generator": "Generator(PCG64)"
+    },
+    "month_indices": {
+      "shape": [
+        10000,
+        46
+      ],
+      "dtype": "int64",
+      "dtype_string": "<i8",
+      "order": "C",
+      "sha256": "27d2d948284d3b347c173dc028672abda0ba4ef188e693865a9f160f5cfc5cee",
+      "seed": 2026110903,
+      "generator": "Generator(PCG64)"
+    }
+  }
+}

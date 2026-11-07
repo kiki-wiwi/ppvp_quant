@@ -1,0 +1,8 @@
+,passed,details
+U1,True,"{'trade_count': 181, 'entry_month_count': 46}"
+U2,False,"{'p_holm': 0.43762, 'total_return': 0.07646566399459509, 'mean_net_bps': 5.861560597474379}"
+U3,False,"{'p_holm': 0.89229, 'daily_mean_difference': -8.088094059899623e-05}"
+U4,False,"{'S_half_trade_mean_bps': [-1.8244618211377945, 15.785285745555916], 'D_half_daily_mean': [-0.00017474551949442558, 5.397323015843661e-06]}"
+U5,False,"{'removed_best_months': ['2021-07', '2022-02', '2021-10'], 'removed_best_month_net_bps_sums': [1409.0493785698486, 1327.008443586255, 1239.6157135606993], 'remaining_trade_count': 171, 'remaining_trade_mean_bps': -17.04521092148503}"
+U6,False,"{'total_return': -0.013916474504354737, 'mean_net_bps': -11.1635430264789}"
+U7,False,"{'parent_count': 412, 'unsaturated_parent_count': 407, 'saturated_parent_count': 5, 'missing_volatility_parent_count': 0, 'unsaturated_parent_fraction': 0.9878640776699029, 'finite_positive_v_parent_fraction': 1.0, 'mean_difference': -8.088094059899623e-05, 'mcse_r': 5.150763848231418e-06, 'strict_mc_precision_passed': False, 'passed': False}"

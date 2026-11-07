@@ -1,0 +1,15 @@
+{
+  "version": "R_142",
+  "cost": "main_17",
+  "source": "real",
+  "symbol": "BTCUSDT",
+  "initial_capital": 100000.0,
+  "failed": false,
+  "failure_reason": null,
+  "failure_time": null,
+  "candidate_eligible": true,
+  "n_signals": 412,
+  "n_trades": 260,
+  "funding_boundary": "open-owned; time-exit close belongs to ending minute",
+  "archive_gap_minutes": 10
+}
