@@ -1,0 +1,58 @@
+{
+  "status": "passed",
+  "source": "synthetic",
+  "real_market_reads": 0,
+  "real_data_unlocked": false,
+  "pytest_result": "86 passed, 5 subtests passed in 18.47s",
+  "new_test_count": 71,
+  "existing_regression_count": 15,
+  "guard": "trend_hold_study.testing_guard prohibits market file and network access",
+  "command": "python -m pytest -q -p trend_hold_study.testing_guard tests/test_trend_hold_{scope,features,data,engine,statistics,runtime,reporting,integration}.py test_breakout_statistics.py",
+  "combination_count": 6,
+  "completed_combinations": [
+    "T_daily_trend__gross_0",
+    "T_daily_trend__main_17",
+    "T_daily_trend__harsh_34",
+    "P_continuous_long__gross_0",
+    "P_continuous_long__main_17",
+    "P_continuous_long__harsh_34"
+  ],
+  "calendar_days": 1401,
+  "months": 46,
+  "synthetic_features_frozen_at": "2026-11-07T06:31:53.145481+00:00",
+  "synthetic_first_matching_at": "2026-11-07T06:31:53.145740+00:00",
+  "statistical_matrices": {
+    "webb_weights": {
+      "shape": [
+        99999,
+        46
+      ],
+      "dtype": "float64",
+      "order": "C",
+      "byte_order": "little",
+      "seed": 2026111001,
+      "sha256": "14cb463a7185a41de6130a620852dbb7230bfdaea0f21ea3c6b4d5d755af69a0"
+    },
+    "month_indices": {
+      "shape": [
+        10000,
+        46
+      ],
+      "dtype": "int64",
+      "order": "C",
+      "byte_order": "little",
+      "seed": 2026111002,
+      "sha256": "379945597f32ac43fb34e5f7f5e30a5f97fd16b554055e0e06c3d5a6c8a696db"
+    }
+  },
+  "synthetic_artifact_hashes_verified": 53,
+  "synthetic_output_manifest_sha256": "d05597487588a9fc9faa3d18136daef0f6fbb26bc5e9c2c06baa318bfd9416f1",
+  "figures_inspected": [
+    "figure_1_equity_and_budget.png",
+    "figure_2_annual.png",
+    "figure_3_cost_and_months.png"
+  ],
+  "review": "Core logic reviewed once; missing holding diagnostics fixed and focused correction verified.",
+  "formal_output_directory_exists": false,
+  "synthetic_external_path": "/tmp/trend_hold_implementation/pytest_final/test_complete_synthetic_fixed_0/synthetic_outputs"
+}
