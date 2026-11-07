@@ -1,0 +1,8 @@
+Authorized resume: exact single historical-node deselection
+Deselected: tests/test_trend_hold_engine.py::test_rejects_missing_or_invalid_daily_inputs_and_real_context_before_access
+Reason: Historical R5 CP1 lock-state assertion expects REAL_DATA_UNLOCKED=False. Archived R5 baseline is already unlocked (True). User authorized deselecting this unique node only; old code/tests and both new False locks remain unchanged.
+Command: /home/ubuntu/Documents/Codex/2026-11-06/github-ppvp-quant-agent-2-checkpoint/work/diag_env/pandas3.0.5_py314/bin/python -m pytest -p trend_hold_venue_study.testing_guard -x -q --deselect=tests/test_trend_hold_engine.py::test_rejects_missing_or_invalid_daily_inputs_and_real_context_before_access --junitxml=reports/trend_hold_venue_round/synthetic_junit.xml tests/test_trend_venue_accounting.py tests/test_trend_venue_linear.py tests/test_trend_venue_portfolios.py tests/test_trend_venue_registration.py tests/test_trend_venue_reporting.py tests/test_trend_venue_scope_features.py tests/test_trend_venue_statistics.py tests/test_trend_hold_engine.py tests/test_trend_hold_features.py tests/test_trend_hold_statistics.py tests/test_trend_hold_reporting.py
+
+........................................................................ [ 55%]
+.........................................................                [100%]
+129 passed, 1 deselected in 4.68s
