@@ -243,7 +243,10 @@ def load_inputs(root=ROOT):
     require_cp2()  # Before importing the old real loader or touching any path.
     root=Path(root)
     from trend_hold_study.data import load_real_context,verify_environment
+    from . import input_binding
     environment=verify_environment()
+    binding=input_binding.load_binding(root)
+    um_binding=input_binding.verify_um_binding(root,binding)
     manifest=json.loads((root/MANIFEST).read_text())
     entries=validate_archive_manifest(manifest)
     for path in CACHE_PATHS.values():
@@ -266,6 +269,8 @@ def load_inputs(root=ROOT):
                          'raw_close_time_exceptions':observed})
     clock_summary=validate_clock_exception_inventory(clock_exceptions)
     spot_raw=pd.concat(parts[('SPOT','klines')]);cm_raw=pd.concat(parts[('CM','klines')])
+    daily,daily_records=input_binding.load_daily_supplements(root)
+    cm_raw=input_binding.merge_cm_supplements(cm_raw,daily)
     funding=load_cm_funding(root,cm_native_start(cm_raw))
     for obj,label in ((spot_raw,'Spot native'),(cm_raw,'CM native'),(funding,'CM funding')):_ordered(obj.index,label)
     native_start=cm_native_start(cm_raw)
@@ -273,6 +278,7 @@ def load_inputs(root=ROOT):
         raise ValueError('CM funding outside native IS minute grid')
     spot_grid=build_grid(spot_raw,IS_START,IS_END)
     cm_grid=build_grid(cm_raw.loc[native_start:],native_start,IS_END)
+    grid_bindings=input_binding.verify_grid_binding(binding,spot_grid,cm_grid,funding)
     for grid in (spot_grid,cm_grid):grid.attrs['source']='real'
     spot=scope.make_context(spot_grid,source='real',asset='BTC',venue='SPOT')
     cm=scope.make_context(cm_grid,funding,source='real',asset='BTC',venue='CM')
@@ -282,6 +288,10 @@ def load_inputs(root=ROOT):
             'CM_funding':_cache(root,CACHE_PATHS['CM_funding'],funding.to_frame())}
     metadata={'scope':'BTC only, all input timestamps before 2024-01-01 UTC',
               'environment':environment,'UM':um_metadata,'archives':raw_rows,'caches':caches,
+              'daily_supplements':daily_records,
+              'input_binding':{'path':input_binding.BINDING,
+                  'sha256':_digest_bytes((root/input_binding.BINDING).read_bytes()),
+                  'UM':um_binding,'verified_grids':grid_bindings},
               'raw_close_time_exceptions':clock_exceptions,'raw_close_time_exception_summary':clock_summary,
               'CM_native_start':native_start.isoformat(),'CM_first_full_day':CM_COMPLETE_START.isoformat(),
               'CM_funding_registration':{'path':CM_FUNDING_MANIFEST,

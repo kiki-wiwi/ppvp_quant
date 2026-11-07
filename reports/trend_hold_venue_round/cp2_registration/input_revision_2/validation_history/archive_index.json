@@ -1,0 +1,20 @@
+{
+  "original_directory": "reports/trend_hold_venue_round/cp2_registration/preunlock_preflight_2",
+  "files_sha256": {
+    "native_archive_registration.json": "e6472a8ebdddace6ba3182bd80c9cb811bf6487941b4cd12e370f34f7cddd61d",
+    "um_content_registration.json": "823ad38f623ee7450c7e04f99bf7e5a0009f943d03ecd07b4f7bbdf8d7938f04",
+    "STOPPED_preflight.json": "c69b4cf338c81573b7b3da9092a0332226680c4744b2720354ebf9810266471d",
+    "evidence_hashes.json": "eed871dad359a0dee776da204a04c8bb6181813eff1c6fcd659dbb3f8ecb2445",
+    "spot_structure_verification.json": "14058ad3a8fd71601da0d8bb91cd6bd7874b2f66e0d5e60aea003d059c02c4a3",
+    "preflight_summary.json": "c69b4cf338c81573b7b3da9092a0332226680c4744b2720354ebf9810266471d",
+    "cm_structure_verification.json": "f65795f3b9cc8dfa1a6187987fbc360e607f1e7254574e344ee870fb578c03ad",
+    "validation_history/attempt_2/formal_stdout.txt": "ab7f842285a88fc9cca8deeed22e400f47c95613a46c7f19c0cbb5226c168cc6",
+    "validation_history/attempt_2/archive_index.json": "c87053fe4b4e56b8945d04c414f1f8b3ffbf875079c64e17c4646017dcbc9fa5",
+    "validation_history/attempt_2/formal_start.json": "9ea9603d7f569404e8cd85f27a61480714ac4c22a3a4f623b6e3ebcf87dc2679",
+    "validation_history/attempt_2/zero_effective_day_diagnosis.json": "117ad0b3d022a0f6e780b66caa80a95901780bfb5ae45a98b4405248e58cab63",
+    "validation_history/attempt_2/final_state.json": "85dd5cea36eb56675f6620893a626a25bb2c67cdcb39e311a93b999bcfa0aad3",
+    "validation_history/attempt_2/formal_exit.json": "f6d5b29015c0c53242c13cfa3f634936f50cd82938d7b81b2b0e73abd3c18069",
+    "validation_history/attempt_2/cp2_btc_is/STOPPED.json": "2d40f886781a9e9b6ed65fb4e5867699bde43b4e7cd398714eea76c429873777"
+  },
+  "byte_for_byte_preserved": true
+}

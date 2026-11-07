@@ -1,0 +1,16 @@
+{
+  "original_output_directory": "reports/trend_hold_venue_round/cp2_btc_is",
+  "original_files_sha256": {
+    "STOPPED.json": "2d40f886781a9e9b6ed65fb4e5867699bde43b4e7cd398714eea76c429873777"
+  },
+  "archived_files_sha256": {
+    "reports/trend_hold_venue_round/cp2_registration/preunlock_preflight_2/validation_history/attempt_2/formal_stdout.txt": "ab7f842285a88fc9cca8deeed22e400f47c95613a46c7f19c0cbb5226c168cc6",
+    "reports/trend_hold_venue_round/cp2_registration/preunlock_preflight_2/validation_history/attempt_2/formal_start.json": "9ea9603d7f569404e8cd85f27a61480714ac4c22a3a4f623b6e3ebcf87dc2679",
+    "reports/trend_hold_venue_round/cp2_registration/preunlock_preflight_2/validation_history/attempt_2/zero_effective_day_diagnosis.json": "117ad0b3d022a0f6e780b66caa80a95901780bfb5ae45a98b4405248e58cab63",
+    "reports/trend_hold_venue_round/cp2_registration/preunlock_preflight_2/validation_history/attempt_2/final_state.json": "85dd5cea36eb56675f6620893a626a25bb2c67cdcb39e311a93b999bcfa0aad3",
+    "reports/trend_hold_venue_round/cp2_registration/preunlock_preflight_2/validation_history/attempt_2/formal_exit.json": "f6d5b29015c0c53242c13cfa3f634936f50cd82938d7b81b2b0e73abd3c18069",
+    "reports/trend_hold_venue_round/cp2_registration/preunlock_preflight_2/validation_history/attempt_2/cp2_btc_is/STOPPED.json": "2d40f886781a9e9b6ed65fb4e5867699bde43b4e7cd398714eea76c429873777"
+  },
+  "prior_commit": "ef0d3effc947467fcb91f7cae5a052634a47ae35",
+  "preserved_byte_for_byte": true
+}

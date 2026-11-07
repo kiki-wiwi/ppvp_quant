@@ -1,0 +1,23 @@
+{
+  "venue": "CM",
+  "archives_verified": 41,
+  "native_rows": 1776538,
+  "grid_minutes": 1782298,
+  "first_grid_minute": "2020-08-11T07:02:00+00:00",
+  "last_grid_minute": "2023-12-31T23:59:00+00:00",
+  "native_OHLCV_content_sha256": "12f83e24b82b649a7b97950e16334076678841dcfd9d498f2efca56abd8e0e17",
+  "archive_gap_count": 5760,
+  "placeholder_count": 10655,
+  "bad_count": 16415,
+  "full_UTC_days_checked": 1237,
+  "zero_effective_days": [
+    "2023-08-28T00:00:00+00:00",
+    "2023-08-29T00:00:00+00:00",
+    "2023-08-30T00:00:00+00:00",
+    "2023-08-31T00:00:00+00:00"
+  ],
+  "raw_close_time_exception_count": 0,
+  "status": "STOPPED",
+  "grid_content_sha256": null,
+  "reason": "No admissible completed grid: complete UTC day has no effective minute; no cache constructed or saved"
+}

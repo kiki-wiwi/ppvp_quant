@@ -1,0 +1,10 @@
+{
+  "sha256": {
+    "reports/trend_hold_venue_round/cp2_registration/input_revision_2/preflight/native_archive_registration.json": "6f4b870ce47017d1cd908714cfdced9f402daa408c613ba8f6a906f134982e58",
+    "reports/trend_hold_venue_round/cp2_registration/input_revision_2/preflight/um_content_registration.json": "823ad38f623ee7450c7e04f99bf7e5a0009f943d03ecd07b4f7bbdf8d7938f04",
+    "reports/trend_hold_venue_round/cp2_registration/input_revision_2/preflight/spot_structure_verification.json": "14058ad3a8fd71601da0d8bb91cd6bd7874b2f66e0d5e60aea003d059c02c4a3",
+    "reports/trend_hold_venue_round/cp2_registration/input_revision_2/preflight/preflight_summary.json": "796d0285b1e9881e952fed13484ba6f42abfd64d776cee029b84cd4466faef1d",
+    "reports/trend_hold_venue_round/cp2_registration/input_revision_2/preflight/cm_structure_verification.json": "88edeb5d9e0d7b21e37ca5233a4419fce0c42eb32c648fa5d0ba2e660500f6ee"
+  },
+  "external_preflight_script_sha256": "9a6492f1ef2662c66a3200a4c8d8bf2109aa107fbe883773fab585c49e081161"
+}

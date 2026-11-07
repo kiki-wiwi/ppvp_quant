@@ -1,0 +1,53 @@
+{
+  "baseline_commit": "ef0d3effc947467fcb91f7cae5a052634a47ae35",
+  "prior_implementation_commit": "c4c619160bc4c66d643f6bb664b429ed239f6e20",
+  "created_at": "2026-11-07T15:20:04.788280+00:00",
+  "hash_algorithm": "SHA256",
+  "modified_files_sha256": {
+    "trend_hold_venue_study/cp2_control.py": {
+      "before": "921d25b775cc97fbcae6b06d2a2cc9e8d49c7b6f5c909cc0b25732bf2a0b89f6",
+      "after": "36aa88230567c464367f5f8e8c75e7967568be2eddc557f336b8b2ccbde069e8"
+    },
+    "trend_hold_venue_study/data.py": {
+      "before": "86f5a75d92c7fe7d2b9da9311fd929df3b548101bc0ca0cb8cf1a4ddf0d1b156",
+      "after": "e71b8c2452bd0f8676341ca31913363be3d3554d0015e35e8c6ff158c727eb3b"
+    }
+  },
+  "added_files_sha256": {
+    "reports/trend_hold_venue_round/cp2_registration/input_revision_2/cm_daily_supplements.json": "82bc68d1ac7826a6f69b901f708dba718e0b9800c31dea83cfdb4392c468d325",
+    "reports/trend_hold_venue_round/cp2_registration/input_revision_2/daily_availability.json": "bca5ec8b9ab3bb3f9b7a560b029acf3361455d200d7e80f32a516b0b9f178b5f",
+    "reports/trend_hold_venue_round/cp2_registration/input_revision_2/input_binding.json": "7bf18a53847089249ce623e27e0f974081912518d5417aced081f98f67cf38cc",
+    "reports/trend_hold_venue_round/cp2_registration/input_revision_2/precommit_verification.json": "653a4043ba3912288ce73645bcb7b475c83498341aaf5e28e83a6aa22cbe9a76",
+    "reports/trend_hold_venue_round/cp2_registration/input_revision_2/preflight/cm_structure_verification.json": "88edeb5d9e0d7b21e37ca5233a4419fce0c42eb32c648fa5d0ba2e660500f6ee",
+    "reports/trend_hold_venue_round/cp2_registration/input_revision_2/preflight/evidence_hashes.json": "31c95cb9c6afb8f245a88fcfccaf7b475183f5a3b4f029b893800f7ba7551def",
+    "reports/trend_hold_venue_round/cp2_registration/input_revision_2/preflight/native_archive_registration.json": "6f4b870ce47017d1cd908714cfdced9f402daa408c613ba8f6a906f134982e58",
+    "reports/trend_hold_venue_round/cp2_registration/input_revision_2/preflight/preflight_summary.json": "796d0285b1e9881e952fed13484ba6f42abfd64d776cee029b84cd4466faef1d",
+    "reports/trend_hold_venue_round/cp2_registration/input_revision_2/preflight/spot_structure_verification.json": "14058ad3a8fd71601da0d8bb91cd6bd7874b2f66e0d5e60aea003d059c02c4a3",
+    "reports/trend_hold_venue_round/cp2_registration/input_revision_2/preflight/um_content_registration.json": "823ad38f623ee7450c7e04f99bf7e5a0009f943d03ecd07b4f7bbdf8d7938f04",
+    "reports/trend_hold_venue_round/cp2_registration/input_revision_2/preunlock_preflight.py": "9a6492f1ef2662c66a3200a4c8d8bf2109aa107fbe883773fab585c49e081161",
+    "reports/trend_hold_venue_round/cp2_registration/input_revision_2/revision_notes.md": "a13c4e096276d8d4f69227ce2a14e1d9f6f43f47d07d46cb4104c944b2feb714",
+    "reports/trend_hold_venue_round/cp2_registration/input_revision_2/synthetic_junit.xml": "8affd113a5bc9c69d2839cd9a812a2edee9345c638a7e584f029a9628cdcee4e",
+    "reports/trend_hold_venue_round/cp2_registration/input_revision_2/synthetic_pytest.txt": "8bb846c72ef8153173a25858968d9ef67b6b9a48306f248d68a5aca9f9c5345f",
+    "reports/trend_hold_venue_round/cp2_registration/input_revision_2/synthetic_validation.json": "092cc17549e49c40f32c9a1a716cefade0d0f03893edc778e044314f63a742fb",
+    "reports/trend_hold_venue_round/cp2_registration/input_revision_2/validation_history/archive_index.json": "88c43092176799b8d512b53a0ec4d9272334875f52bb7b395e12e7eaa61f7076",
+    "reports/trend_hold_venue_round/cp2_registration/input_revision_2/validation_history/preunlock_preflight_2/STOPPED_preflight.json": "c69b4cf338c81573b7b3da9092a0332226680c4744b2720354ebf9810266471d",
+    "reports/trend_hold_venue_round/cp2_registration/input_revision_2/validation_history/preunlock_preflight_2/cm_structure_verification.json": "f65795f3b9cc8dfa1a6187987fbc360e607f1e7254574e344ee870fb578c03ad",
+    "reports/trend_hold_venue_round/cp2_registration/input_revision_2/validation_history/preunlock_preflight_2/evidence_hashes.json": "eed871dad359a0dee776da204a04c8bb6181813eff1c6fcd659dbb3f8ecb2445",
+    "reports/trend_hold_venue_round/cp2_registration/input_revision_2/validation_history/preunlock_preflight_2/native_archive_registration.json": "e6472a8ebdddace6ba3182bd80c9cb811bf6487941b4cd12e370f34f7cddd61d",
+    "reports/trend_hold_venue_round/cp2_registration/input_revision_2/validation_history/preunlock_preflight_2/preflight_summary.json": "c69b4cf338c81573b7b3da9092a0332226680c4744b2720354ebf9810266471d",
+    "reports/trend_hold_venue_round/cp2_registration/input_revision_2/validation_history/preunlock_preflight_2/spot_structure_verification.json": "14058ad3a8fd71601da0d8bb91cd6bd7874b2f66e0d5e60aea003d059c02c4a3",
+    "reports/trend_hold_venue_round/cp2_registration/input_revision_2/validation_history/preunlock_preflight_2/um_content_registration.json": "823ad38f623ee7450c7e04f99bf7e5a0009f943d03ecd07b4f7bbdf8d7938f04",
+    "reports/trend_hold_venue_round/cp2_registration/input_revision_2/validation_history/preunlock_preflight_2/validation_history/attempt_2/archive_index.json": "c87053fe4b4e56b8945d04c414f1f8b3ffbf875079c64e17c4646017dcbc9fa5",
+    "reports/trend_hold_venue_round/cp2_registration/input_revision_2/validation_history/preunlock_preflight_2/validation_history/attempt_2/cp2_btc_is/STOPPED.json": "2d40f886781a9e9b6ed65fb4e5867699bde43b4e7cd398714eea76c429873777",
+    "reports/trend_hold_venue_round/cp2_registration/input_revision_2/validation_history/preunlock_preflight_2/validation_history/attempt_2/final_state.json": "85dd5cea36eb56675f6620893a626a25bb2c67cdcb39e311a93b999bcfa0aad3",
+    "reports/trend_hold_venue_round/cp2_registration/input_revision_2/validation_history/preunlock_preflight_2/validation_history/attempt_2/formal_exit.json": "f6d5b29015c0c53242c13cfa3f634936f50cd82938d7b81b2b0e73abd3c18069",
+    "reports/trend_hold_venue_round/cp2_registration/input_revision_2/validation_history/preunlock_preflight_2/validation_history/attempt_2/formal_start.json": "9ea9603d7f569404e8cd85f27a61480714ac4c22a3a4f623b6e3ebcf87dc2679",
+    "reports/trend_hold_venue_round/cp2_registration/input_revision_2/validation_history/preunlock_preflight_2/validation_history/attempt_2/formal_stdout.txt": "ab7f842285a88fc9cca8deeed22e400f47c95613a46c7f19c0cbb5226c168cc6",
+    "reports/trend_hold_venue_round/cp2_registration/input_revision_2/validation_history/preunlock_preflight_2/validation_history/attempt_2/zero_effective_day_diagnosis.json": "117ad0b3d022a0f6e780b66caa80a95901780bfb5ae45a98b4405248e58cab63",
+    "tests/test_trend_venue_cp2_daily_binding.py": "43779e0e98a0c2bbb7cb69493bc79effb9acda2d381a57e79bac12fd5bf2b474",
+    "tests/test_trend_venue_cp2_revision2_control.py": "6135367e716de804079f9ec45c59783cda2617d769bcbb56b29b5e3a41337afe",
+    "trend_hold_venue_study/input_binding.py": "5986ff8c06dcbb42b2af4e6506a27e50297b5d713b57fa5db742998c2230025f"
+  },
+  "scope_transition": "BTC IS True -> False; next independent commit False -> True; POST_IS_AND_ETH_UNLOCKED always False",
+  "authorization": "Approved exact four official CM daily supplements and locked BTC IS structure/content preflight; UM current Parquet bytes plus unchanged frozen content hash; no strategy changes"
+}

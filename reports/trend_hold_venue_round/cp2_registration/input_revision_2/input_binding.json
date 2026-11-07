@@ -1,0 +1,17 @@
+{
+  "UM": {
+    "path": "data/processed_1m/BTCUSDT_perp_1m_IS.parquet",
+    "current_parquet_sha256": "57479bcbb97a21e58e2347e5c17cc6194a2a6fc1302397d4459592746af39aeb",
+    "content_sha256": "1e26dd7ecfe6ee03dc2814dcb0041ef2d5724ff7018b2b7f20ae6364d99f5a33",
+    "historical_manifest_sha256": "7e0cb4af7c8a377a530aee4910d20e3339dc50db7c0734f6c21fea3b627d3666"
+  },
+  "SPOT": {
+    "grid_content_sha256": "4e5a116b03a367753dcacd448a770dd6cd62de4196c103e6c90c43e0526ba99d"
+  },
+  "CM": {
+    "grid_content_sha256": "fc0065763aaf8e4bd7bf5c4eca631da2776247023621f1c6ba68ffe20a9fa1e9"
+  },
+  "CM_funding": {
+    "content_sha256": "85038ad2458ce929c59dc63b5faa0a642088abb45e883bcbe848319e70c5f483"
+  }
+}

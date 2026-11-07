@@ -1,0 +1,18 @@
+{
+  "venue": "CM",
+  "archives_verified": 41,
+  "native_rows": 1782298,
+  "grid_minutes": 1782298,
+  "first_grid_minute": "2020-08-11T07:02:00+00:00",
+  "last_grid_minute": "2023-12-31T23:59:00+00:00",
+  "native_OHLCV_content_sha256": "feb0533a743597f72ec95a0065c1e882449178df295a818883cdd84c4a833ad7",
+  "archive_gap_count": 0,
+  "placeholder_count": 10685,
+  "bad_count": 10685,
+  "full_UTC_days_checked": 1237,
+  "zero_effective_days": [],
+  "raw_close_time_exception_count": 0,
+  "status": "passed",
+  "grid_content_sha256": "fc0065763aaf8e4bd7bf5c4eca631da2776247023621f1c6ba68ffe20a9fa1e9",
+  "deterministic_grid_rule": "existing bad = missing OR flat zero-volume placeholder; archive_gap=missing; prior-only positive price fill"
+}

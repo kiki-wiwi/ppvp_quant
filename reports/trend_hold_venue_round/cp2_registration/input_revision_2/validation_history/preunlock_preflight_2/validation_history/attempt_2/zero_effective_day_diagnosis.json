@@ -1,0 +1,45 @@
+{
+  "status": "STOPPED_readonly_CM_daily_coverage_diagnosis",
+  "scope": "BTC CM IS only; native coverage/placeholder counts, no indicators/signals/accounts",
+  "official_monthly_archive_hashes_verified": 41,
+  "complete_days_checked": 1237,
+  "zero_effective_days": [
+    {
+      "day": "2023-08-28",
+      "native_minutes": 0,
+      "placeholder_minutes": 0,
+      "effective_minutes": 0,
+      "missing_minutes": 1440
+    },
+    {
+      "day": "2023-08-29",
+      "native_minutes": 0,
+      "placeholder_minutes": 0,
+      "effective_minutes": 0,
+      "missing_minutes": 1440
+    },
+    {
+      "day": "2023-08-30",
+      "native_minutes": 0,
+      "placeholder_minutes": 0,
+      "effective_minutes": 0,
+      "missing_minutes": 1440
+    },
+    {
+      "day": "2023-08-31",
+      "native_minutes": 0,
+      "placeholder_minutes": 0,
+      "effective_minutes": 0,
+      "missing_minutes": 1440
+    }
+  ],
+  "affected_months": [
+    {
+      "month": "2023-08",
+      "rows": 38880,
+      "path": "data/raw/futures/cm/monthly/klines/BTCUSD_PERP/1m/BTCUSD_PERP-1m-2023-08.zip",
+      "sha256": "928ca0ddf0c9ebbe8e1bfec137cad985cb3156919f8d347508e370a467bbe58c"
+    }
+  ],
+  "automatic_repair_or_rerun": false
+}

@@ -1,0 +1,19 @@
+{
+  "status": "passed",
+  "path": "data/processed_1m/BTCUSDT_perp_1m_IS.parquet",
+  "rows": 2103840,
+  "first_time": "2020-01-01 00:00:00+00:00",
+  "last_time": "2023-12-31 23:59:00+00:00",
+  "historical_manifest_path": "data/manifest_impulse_1m.json",
+  "historical_manifest_sha256": "7e0cb4af7c8a377a530aee4910d20e3339dc50db7c0734f6c21fea3b627d3666",
+  "historical_parquet_sha256": "60e4fd7a0cf23cb83b97a71896c30d6e783b8856d4da4d7be1c805b08040ddf4",
+  "current_parquet_sha256": "57479bcbb97a21e58e2347e5c17cc6194a2a6fc1302397d4459592746af39aeb",
+  "registered_content_sha256": "1e26dd7ecfe6ee03dc2814dcb0041ef2d5724ff7018b2b7f20ae6364d99f5a33",
+  "actual_content_sha256": "1e26dd7ecfe6ee03dc2814dcb0041ef2d5724ff7018b2b7f20ae6364d99f5a33",
+  "container_byte_difference_with_identical_registered_content": true,
+  "formal_input_binding_required": {
+    "parquet_sha256": "57479bcbb97a21e58e2347e5c17cc6194a2a6fc1302397d4459592746af39aeb",
+    "content_sha256": "1e26dd7ecfe6ee03dc2814dcb0041ef2d5724ff7018b2b7f20ae6364d99f5a33"
+  },
+  "interpretation": "Same frozen column/index contents; Parquet serialization/container bytes differ. No cache or historical manifest is rewritten."
+}

@@ -1,0 +1,26 @@
+{
+  "venue": "SPOT",
+  "archives_verified": 48,
+  "native_rows": 2101515,
+  "grid_minutes": 2103840,
+  "first_grid_minute": "2020-01-01T00:00:00+00:00",
+  "last_grid_minute": "2023-12-31T23:59:00+00:00",
+  "native_OHLCV_content_sha256": "cbb8bc2789e67389be4bf2994ca0d9599dd341f9437e75811b44a03aec7a3c0f",
+  "archive_gap_count": 2325,
+  "placeholder_count": 211,
+  "bad_count": 2536,
+  "full_UTC_days_checked": 1461,
+  "zero_effective_days": [],
+  "raw_close_time_exception_count": 8,
+  "approved_timestamp_exceptions": {
+    "count": 8,
+    "valid_rows": 5,
+    "existing_bad_placeholders": 3,
+    "additional_bad_flags": 0,
+    "ohlcv_changes": 0,
+    "clock": "open_time + 1min"
+  },
+  "status": "passed",
+  "grid_content_sha256": "4e5a116b03a367753dcacd448a770dd6cd62de4196c103e6c90c43e0526ba99d",
+  "deterministic_grid_rule": "existing bad = missing OR flat zero-volume placeholder; archive_gap=missing; prior-only positive price fill"
+}

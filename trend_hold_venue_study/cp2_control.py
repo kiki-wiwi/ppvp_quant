@@ -1,4 +1,4 @@
-"""Source-only protection of original CP2 history and the approved input revision."""
+"""Source-only protection of CP2 history and two approved input revisions."""
 from hashlib import sha256
 import json
 import os
@@ -22,6 +22,15 @@ ORIGINAL_UNLOCK='51a2bc3e15c4a12a87424dc7217278b965c52d81'
 REVISION=REG+'/input_revision_1'
 REVISION_MANIFEST=REVISION+'/implementation_hashes.json'
 APPROVED_MODIFIED={'trend_hold_venue_study/data.py','trend_hold_venue_study/cp2_control.py'}
+PRIOR_IMPL='c4c619160bc4c66d643f6bb664b429ed239f6e20'
+PRIOR_UNLOCK='ef0d3effc947467fcb91f7cae5a052634a47ae35'
+REVISION2=REG+'/input_revision_2'
+REVISION2_MANIFEST=REVISION2+'/implementation_hashes.json'
+REVISION2_ADDED_SOURCE={
+    'trend_hold_venue_study/input_binding.py',
+    'tests/test_trend_venue_cp2_daily_binding.py',
+    'tests/test_trend_venue_cp2_revision2_control.py',
+}
 
 def _git(root,*args):return subprocess.check_output(['git',*args],cwd=root)
 def digest(raw):return sha256(raw).hexdigest()
@@ -81,18 +90,73 @@ def validate_revision(revision,original):
     effective.update(added)
     return effective
 
+def _is_sha256(value):
+    return isinstance(value,str) and len(value)==64 and all(c in '0123456789abcdef' for c in value)
+
+def validate_revision2(revision,prior_effective):
+    """Bind approved new bytes to the first revision, preserving earlier files."""
+    if (revision.get('baseline_commit')!=PRIOR_UNLOCK or
+        revision.get('prior_implementation_commit')!=PRIOR_IMPL):
+        raise ValueError('second input revision must preserve the first revision commits')
+    modified=revision.get('modified_files_sha256',{})
+    if set(modified)!=APPROVED_MODIFIED:
+        raise ValueError('second revision may modify only the approved loader and registration controller')
+    for path,hashes in modified.items():
+        if hashes.get('before')!=prior_effective.get(path):
+            raise ValueError('second revision does not bind first-revision registered bytes: '+path)
+        if not _is_sha256(hashes.get('after')):raise ValueError('second revision SHA256 required')
+    added=revision.get('added_files_sha256',{})
+    if not added or REVISION2_MANIFEST in added:
+        raise ValueError('second revision additions must exclude the self-referential manifest')
+    for path,value in added.items():
+        if not (path.startswith(REVISION2+'/') or path in REVISION2_ADDED_SOURCE):
+            raise ValueError('unapproved second revision addition: '+path)
+        if '..' in Path(path).parts or not _is_sha256(value) or path in prior_effective:
+            raise ValueError('invalid or previously registered second revision path/hash')
+    effective=dict(prior_effective)
+    effective.update({path:hashes['after'] for path,hashes in modified.items()})
+    effective.update(added)
+    return effective
+
 def verify_cp2(root=ROOT):
     root=Path(root);raw=(root/CP2_MANIFEST).read_bytes();doc=json.loads(raw)
     if doc['baseline_commit']!=CP1:raise ValueError('CP2 baseline mismatch')
     if raw!=_git(root,'show',ORIGINAL_IMPL+':'+CP2_MANIFEST):
         raise ValueError('original CP2 registration manifest changed')
     revision_raw=(root/REVISION_MANIFEST).read_bytes()
+    if revision_raw!=_git(root,'show',PRIOR_IMPL+':'+REVISION_MANIFEST):
+        raise ValueError('first input revision manifest changed')
     revision=json.loads(revision_raw)
-    expected=validate_revision(revision,doc)
+    prior=validate_revision(revision,doc)
+    prior[CP2_MANIFEST]=digest(raw)
+    prior[REVISION_MANIFEST]=digest(revision_raw)
+    revision2_raw=(root/REVISION2_MANIFEST).read_bytes()
+    revision2=json.loads(revision2_raw)
+    expected=validate_revision2(revision2,prior)
     for path,want in expected.items():
         if digest((root/path).read_bytes())!=want:raise ValueError('CP2 implementation mismatch: '+path)
-    expected[CP2_MANIFEST]=digest(raw)
-    return {**doc,'sha256':expected,'revision':revision,'revision_manifest_sha256':digest(revision_raw)}
+    return {**doc,'sha256':expected,'revision':revision,'revision_manifest_sha256':digest(revision_raw),
+            'revision2':revision2,'revision2_manifest_sha256':digest(revision2_raw)}
+
+def _verify_unlock_pair(root,implementation,unlocked):
+    if _git(root,'diff','--name-status',implementation,unlocked).decode().strip()!='M\t'+LOCK:
+        raise ValueError('unlock must change only the BTC lock file')
+    if _git(root,'diff','--summary',implementation,unlocked).strip():
+        raise ValueError('unlock cannot change file mode')
+    validate_transition(_git(root,'show',implementation+':'+LOCK),_git(root,'show',unlocked+':'+LOCK))
+
+def _verify_revision_delta(root,baseline,implementation,revision,manifest):
+    changes=_git(root,'diff','--name-status',baseline,implementation).decode().splitlines()
+    expected_mod=APPROVED_MODIFIED|{LOCK}
+    expected_add=set(revision['added_files_sha256'])|{manifest}
+    actual_mod={line[2:] for line in changes if line.startswith('M\t')}
+    actual_add={line[2:] for line in changes if line.startswith('A\t')}
+    if actual_mod!=expected_mod or actual_add!=expected_add or len(changes)!=len(expected_mod)+len(expected_add):
+        raise ValueError('unregistered or unauthorized revision changes')
+    summary=_git(root,'diff','--summary',baseline,implementation).decode().splitlines()
+    expected_summary={'create mode 100644 '+path for path in expected_add}
+    if {line.strip() for line in summary}!=expected_summary or len(summary)!=len(expected_summary):
+        raise ValueError('revision file mode changes forbidden')
 
 def verify_unlock(root=ROOT):
     require_btc_is()
@@ -101,32 +165,25 @@ def verify_unlock(root=ROOT):
     head_parts=_git(root,'rev-list','--parents','-n','1','HEAD').decode().split()
     if len(head_parts)!=2:raise ValueError('unlock must have one implementation parent')
     head,implementation=head_parts
-    if _git(root,'rev-list','--parents','-n','1',ORIGINAL_IMPL).decode().split()!=[ORIGINAL_IMPL,CP1]:
-        raise ValueError('original implementation history changed')
-    if _git(root,'rev-list','--parents','-n','1',ORIGINAL_UNLOCK).decode().split()!=[ORIGINAL_UNLOCK,ORIGINAL_IMPL]:
-        raise ValueError('original unlock history changed')
-    if _git(root,'rev-list','--parents','-n','1',implementation).decode().split()!=[implementation,ORIGINAL_UNLOCK]:
-        raise ValueError('approved revision must directly descend from original unlock')
-    if _git(root,'diff','--name-status',implementation,head).decode().strip()!='M\t'+LOCK:
-        raise ValueError('unlock must change only the BTC lock file')
-    if _git(root,'diff','--summary',implementation,head).strip():raise ValueError('unlock cannot change file mode')
-    validate_transition(_git(root,'show',implementation+':'+LOCK),_git(root,'show',head+':'+LOCK))
-    validate_transition(_git(root,'show',implementation+':'+LOCK),_git(root,'show',ORIGINAL_UNLOCK+':'+LOCK))
-    if (root/REVISION_MANIFEST).read_bytes()!=_git(root,'show',implementation+':'+REVISION_MANIFEST):
-        raise ValueError('revision manifest differs from implementation commit')
+    for commit,parent in ((ORIGINAL_IMPL,CP1),(ORIGINAL_UNLOCK,ORIGINAL_IMPL),
+                          (PRIOR_IMPL,ORIGINAL_UNLOCK),(PRIOR_UNLOCK,PRIOR_IMPL),
+                          (implementation,PRIOR_UNLOCK)):
+        if _git(root,'rev-list','--parents','-n','1',commit).decode().split()!=[commit,parent]:
+            raise ValueError('approved CP2 ancestor chain changed: '+commit)
+    for before,after in ((ORIGINAL_IMPL,ORIGINAL_UNLOCK),(PRIOR_IMPL,PRIOR_UNLOCK),(implementation,head)):
+        _verify_unlock_pair(root,before,after)
+    # Every re-lock restores the same scope bytes; POST-IS/ETH never unlocks.
+    validate_transition(_git(root,'show',PRIOR_IMPL+':'+LOCK),_git(root,'show',ORIGINAL_UNLOCK+':'+LOCK))
+    validate_transition(_git(root,'show',implementation+':'+LOCK),_git(root,'show',PRIOR_UNLOCK+':'+LOCK))
+    if (root/REVISION2_MANIFEST).read_bytes()!=_git(root,'show',implementation+':'+REVISION2_MANIFEST):
+        raise ValueError('second revision manifest differs from implementation commit')
     protected=verify_frozen(root,btc_unlocked=True);doc=verify_cp2(root)
-    revision=doc['revision']
-    changes=_git(root,'diff','--name-status',ORIGINAL_UNLOCK,implementation).decode().splitlines()
-    expected_mod=APPROVED_MODIFIED|{LOCK}
-    expected_add=set(revision['added_files_sha256'])|{REVISION_MANIFEST}
-    actual_mod={line[2:] for line in changes if line.startswith('M\t')}
-    actual_add={line[2:] for line in changes if line.startswith('A\t')}
-    if actual_mod!=expected_mod or actual_add!=expected_add or len(changes)!=len(expected_mod)+len(expected_add):
-        raise ValueError('unregistered or unauthorized revision changes')
-    summary=_git(root,'diff','--summary',ORIGINAL_UNLOCK,implementation).decode().splitlines()
-    if any('create mode 100644 ' not in line for line in summary):raise ValueError('revision file mode changes forbidden')
+    _verify_revision_delta(root,ORIGINAL_UNLOCK,PRIOR_IMPL,doc['revision'],REVISION_MANIFEST)
+    _verify_revision_delta(root,PRIOR_UNLOCK,implementation,doc['revision2'],REVISION2_MANIFEST)
     if os.path.lexists(root/OUT):raise FileExistsError('formal output exists; no automatic resume')
     return {**protected,'original_implementation_commit':ORIGINAL_IMPL,'original_unlock_commit':ORIGINAL_UNLOCK,
+            'prior_implementation_commit':PRIOR_IMPL,'prior_unlock_commit':PRIOR_UNLOCK,
             'implementation_commit':implementation,'unlock_commit':head,'starting_worktree_status':'',
             'cp2_files':len(doc['sha256'])+1,'fixed_account_count':42,
-            'approved_input_revision':'eight exact Spot close timestamps; one exact pre-Context CM funding record'}
+            'approved_input_revision':'eight exact Spot close timestamps; one exact pre-Context CM funding record',
+            'approved_input_revision2':'four official CM daily archives; UM canonical-content and Parquet-byte hash binding'}

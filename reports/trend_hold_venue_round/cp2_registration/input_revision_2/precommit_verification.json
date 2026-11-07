@@ -1,0 +1,31 @@
+{
+  "status": "passed",
+  "frozen": {
+    "cp1_commit": "deadf01a4570386e14bbbec41d6e8eadd3345cac",
+    "cp1_files": 32,
+    "historical_files": 142,
+    "locks": {
+      "BTC_IS_UNLOCKED": false,
+      "POST_IS_AND_ETH_UNLOCKED": false
+    },
+    "environment": {
+      "python": "3.14.4",
+      "pandas": "3.0.5",
+      "numpy": "2.5.4",
+      "pyarrow": "26.0.1",
+      "numba": "0.68.1",
+      "scipy": "1.18.1",
+      "matplotlib": "3.11.2",
+      "pytest": "9.2.0"
+    }
+  },
+  "synthetic_tests_passed": 235,
+  "deselected": [
+    "tests/test_trend_hold_engine.py::test_rejects_missing_or_invalid_daily_inputs_and_real_context_before_access"
+  ],
+  "input_preflight_status": "passed",
+  "formal_output_absent": true,
+  "new_input_caches_absent": true,
+  "source_unchanged_since_tests": true,
+  "prior_manifest_bytes_preserved": true
+}
