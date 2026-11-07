@@ -1,0 +1,32 @@
+{
+  "shared_features_sha256": "a3367a9d5ef99268079bb42dfa70f4d8475e44d7ae2f211e08b723e8e9659d42",
+  "features_frozen_at": "2026-11-07T07:11:40.182015+00:00",
+  "combinations_completed": 0,
+  "index_unit": "ns",
+  "version_order": [
+    [
+      "T_daily_trend",
+      "gross_0"
+    ],
+    [
+      "T_daily_trend",
+      "main_17"
+    ],
+    [
+      "T_daily_trend",
+      "harsh_34"
+    ],
+    [
+      "P_continuous_long",
+      "gross_0"
+    ],
+    [
+      "P_continuous_long",
+      "main_17"
+    ],
+    [
+      "P_continuous_long",
+      "harsh_34"
+    ]
+  ]
+}

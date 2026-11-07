@@ -1,0 +1,9 @@
+2026-11-07T07:11:40.141014+00:00 source=real; constructing causal daily features and common budget
+2026-11-07T07:11:40.182315+00:00 executing T_daily_trend__gross_0
+2026-11-07T07:11:41.932426+00:00 executing T_daily_trend__main_17
+2026-11-07T07:11:43.691133+00:00 executing T_daily_trend__harsh_34
+2026-11-07T07:11:45.446591+00:00 executing P_continuous_long__gross_0
+2026-11-07T07:11:47.184968+00:00 executing P_continuous_long__main_17
+2026-11-07T07:11:48.928592+00:00 executing P_continuous_long__harsh_34
+2026-11-07T07:11:50.684426+00:00 paired inference: 99999 shared Webb draws and 10000 shared month draws
+2026-11-07T07:11:52.725228+00:00 completed six accounts; STOP and await review
