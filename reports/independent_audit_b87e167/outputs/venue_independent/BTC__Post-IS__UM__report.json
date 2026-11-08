@@ -1,0 +1,254 @@
+{
+ "V1_USDM__gross_0": {
+  "final": 136346.10737183038,
+  "archived_final": 136346.10737183038,
+  "max_rel_daily_equity_diff": 2.131291827743569e-16,
+  "max_abs_return_diff": 9.974659986866641e-17,
+  "mdd": -0.19237666973564482,
+  "funding": 0.0
+ },
+ "P_USDM__gross_0": {
+  "final": 134325.99100223585,
+  "archived_final": 134325.99100223585,
+  "max_rel_daily_equity_diff": 2.0754311335996537e-16,
+  "max_abs_return_diff": 9.974659986866641e-17,
+  "mdd": -0.29589741339491815,
+  "funding": 0.0
+ },
+ "V2_SPOT__gross_0": {
+  "final": 136320.14238956972,
+  "archived_final": 136320.14238956972,
+  "max_rel_daily_equity_diff": 2.1226759637723447e-16,
+  "max_abs_return_diff": 9.8879238130678e-17,
+  "mdd": -0.19211409213034025,
+  "clips": 0.0
+ },
+ "P_SPOT__gross_0": {
+  "final": 134358.08027888322,
+  "archived_final": 134358.08027888322,
+  "max_rel_daily_equity_diff": 2.2016065823925907e-16,
+  "max_abs_return_diff": 9.990923019453923e-17,
+  "mdd": -0.29518194066032766,
+  "clips": 1.0
+ },
+ "V3_CM_DeltaMatched__gross_0": {
+  "final": 136071.03146293235,
+  "archived_final": 136071.03146293244,
+  "max_rel_daily_equity_diff": 2.1687745373656088e-15,
+  "max_abs_return_diff": 6.782768791069316e-16,
+  "mdd": -0.19230119539686574,
+  "C0": 2.3649842326501207,
+  "C0_hat": 2.3649842326501207,
+  "final_coin": 1.8469244395906415,
+  "coin_growth": -0.21905422704613942,
+  "funding_coin": 0.0,
+  "pressure_hits": 0.0
+ },
+ "P_CM_DeltaMatched__gross_0": {
+  "final": 134520.54559966573,
+  "archived_final": 134520.54559966558,
+  "max_rel_daily_equity_diff": 2.946240096066981e-15,
+  "max_abs_return_diff": 6.019490461639521e-16,
+  "mdd": -0.29412829381508643,
+  "C0": 2.3649842326501207,
+  "C0_hat": 2.3649842326501207,
+  "final_coin": 1.8258793265837114,
+  "coin_growth": -0.22795285424051503,
+  "funding_coin": 0.0,
+  "pressure_hits": 0.0
+ },
+ "V4_CM_CoinAccum__gross_0": {
+  "final": 207477.0944231478,
+  "archived_final": 207477.09442314896,
+  "max_rel_daily_equity_diff": 6.548864115736945e-15,
+  "max_abs_return_diff": 5.585809592645319e-16,
+  "mdd": -0.5869566135579565,
+  "C0": 2.3649842326501207,
+  "C0_hat": 2.3649842326501207,
+  "final_coin": 2.816135897740691,
+  "coin_growth": 0.19076307522990343,
+  "funding_coin": 0.0,
+  "pressure_hits": 0.0
+ },
+ "HODL_1x_Coin__gross_0": {
+  "final": 174238.7707001157,
+  "archived_final": 174238.7707001157,
+  "max_rel_daily_equity_diff": 2.853822348988676e-16,
+  "max_abs_return_diff": 9.974659986866641e-17,
+  "mdd": -0.5235937184066859,
+  "C0": 2.3649842326501207,
+  "C0_hat": 2.3649842326501207,
+  "final_coin": 2.3649842326501207,
+  "coin_growth": 0.0,
+  "funding_coin": 0.0,
+  "pressure_hits": 0.0
+ },
+ "V1_USDM__main_17": {
+  "final": 124520.22338558799,
+  "archived_final": 124520.223385588,
+  "max_rel_daily_equity_diff": 2.2155527618215563e-16,
+  "max_abs_return_diff": 9.974659986866641e-17,
+  "mdd": -0.20740149295270482,
+  "funding": -8032.2176355094525
+ },
+ "P_USDM__main_17": {
+  "final": 122020.23553484023,
+  "archived_final": 122020.23553484023,
+  "max_rel_daily_equity_diff": 2.07586999063337e-16,
+  "max_abs_return_diff": 9.974659986866641e-17,
+  "mdd": -0.3081032206183244,
+  "funding": -11434.392433641573
+ },
+ "V2_SPOT__main_17": {
+  "final": 132943.96822704663,
+  "archived_final": 132943.96822704663,
+  "max_rel_daily_equity_diff": 2.1796892407067801e-16,
+  "max_abs_return_diff": 9.974659986866641e-17,
+  "mdd": -0.1973038117865854,
+  "clips": 1.0
+ },
+ "P_SPOT__main_17": {
+  "final": 133036.7033848398,
+  "archived_final": 133036.7033848398,
+  "max_rel_daily_equity_diff": 2.195869580360334e-16,
+  "max_abs_return_diff": 9.974659986866641e-17,
+  "mdd": -0.2969119538043704,
+  "clips": 1.0
+ },
+ "V3_CM_DeltaMatched__main_17": {
+  "final": 148409.04567647266,
+  "archived_final": 148409.0456764733,
+  "max_rel_daily_equity_diff": 5.95845439276701e-15,
+  "max_abs_return_diff": 7.0305089874822535e-16,
+  "mdd": -0.17363408134486147,
+  "C0": 2.362621020973892,
+  "C0_hat": 2.362621020973892,
+  "final_coin": 2.0158020978268887,
+  "coin_growth": -0.14679414094268983,
+  "funding_coin": 0.20167743964487772,
+  "pressure_hits": 0.0
+ },
+ "P_CM_DeltaMatched__main_17": {
+  "final": 145713.19955540044,
+  "archived_final": 145713.19955540053,
+  "max_rel_daily_equity_diff": 2.506138230823502e-15,
+  "max_abs_return_diff": 7.294512216482474e-16,
+  "mdd": -0.289203534850045,
+  "C0": 2.362621020973892,
+  "C0_hat": 2.362621020973892,
+  "final_coin": 1.9791851096810145,
+  "coin_growth": -0.1622926012631607,
+  "funding_coin": 0.17256820080743926,
+  "pressure_hits": 0.0
+ },
+ "V4_CM_CoinAccum__main_17": {
+  "final": 189394.26337000122,
+  "archived_final": 189394.26337000163,
+  "max_rel_daily_equity_diff": 4.1975376705590685e-15,
+  "max_abs_return_diff": 6.410887445906788e-16,
+  "mdd": -0.5919177593580827,
+  "C0": 2.362621020973892,
+  "C0_hat": 2.362621020973892,
+  "final_coin": 2.572493823927005,
+  "coin_growth": 0.08883049845489044,
+  "funding_coin": -0.17062942463798791,
+  "pressure_hits": 0.0
+ },
+ "HODL_1x_Coin__main_17": {
+  "final": 173942.83466412994,
+  "archived_final": 173942.83466412994,
+  "max_rel_daily_equity_diff": 3.200919094313603e-16,
+  "max_abs_return_diff": 9.974659986866641e-17,
+  "mdd": -0.523593718406686,
+  "C0": 2.362621020973892,
+  "C0_hat": 2.362621020973892,
+  "final_coin": 2.362621020973892,
+  "coin_growth": 0.0,
+  "funding_coin": 0.0,
+  "pressure_hits": 0.0
+ },
+ "V1_USDM__harsh_34": {
+  "final": 121431.8419453312,
+  "archived_final": 121431.8419453312,
+  "max_rel_daily_equity_diff": 2.153179413144914e-16,
+  "max_abs_return_diff": 9.93129189996722e-17,
+  "mdd": -0.2124987579187675,
+  "funding": -7960.114662651367
+ },
+ "P_USDM__harsh_34": {
+  "final": 120817.40279586552,
+  "archived_final": 120817.40279586552,
+  "max_rel_daily_equity_diff": 2.0591328979871955e-16,
+  "max_abs_return_diff": 9.974659986866641e-17,
+  "mdd": -0.30980781223239584,
+  "funding": -11393.395139884293
+ },
+ "V2_SPOT__harsh_34": {
+  "final": 129649.34526021438,
+  "archived_final": 129649.34526021438,
+  "max_rel_daily_equity_diff": 2.2177476277281796e-16,
+  "max_abs_return_diff": 9.974659986866641e-17,
+  "mdd": -0.20246414572096594,
+  "clips": 1.0
+ },
+ "P_SPOT__harsh_34": {
+  "final": 131727.71446233103,
+  "archived_final": 131727.71446233103,
+  "max_rel_daily_equity_diff": 2.1987845975871744e-16,
+  "max_abs_return_diff": 9.974659986866641e-17,
+  "mdd": -0.2986378214789851,
+  "clips": 1.0
+ },
+ "V3_CM_DeltaMatched__harsh_34": {
+  "final": 144369.80306688085,
+  "archived_final": 144369.80306688172,
+  "max_rel_daily_equity_diff": 7.488927480673386e-15,
+  "max_abs_return_diff": 7.589686257941652e-16,
+  "mdd": -0.17882791169992873,
+  "C0": 2.360261349689393,
+  "C0_hat": 2.360261349689393,
+  "final_coin": 1.9623120903038653,
+  "coin_growth": -0.16860389610578386,
+  "funding_coin": 0.19975608656713206,
+  "pressure_hits": 0.0
+ },
+ "P_CM_DeltaMatched__harsh_34": {
+  "final": 144116.6250354244,
+  "archived_final": 144116.62503542483,
+  "max_rel_daily_equity_diff": 4.491900721823705e-15,
+  "max_abs_return_diff": 7.4593109467002705e-16,
+  "mdd": -0.29072731809876895,
+  "C0": 2.360261349689393,
+  "C0_hat": 2.360261349689393,
+  "final_coin": 1.9588708283392968,
+  "coin_growth": -0.17006189649418213,
+  "funding_coin": 0.17197059716578278,
+  "pressure_hits": 0.0
+ },
+ "V4_CM_CoinAccum__harsh_34": {
+  "final": 184200.73519053299,
+  "archived_final": 184200.73519053223,
+  "max_rel_daily_equity_diff": 7.227655844411524e-15,
+  "max_abs_return_diff": 7.147060721024445e-16,
+  "mdd": -0.5950539466170692,
+  "C0": 2.360261349689393,
+  "C0_hat": 2.360261349689393,
+  "final_coin": 2.503704528431016,
+  "coin_growth": 0.06077427771314392,
+  "funding_coin": -0.16887346663283923,
+  "pressure_hits": 0.0
+ },
+ "HODL_1x_Coin__harsh_34": {
+  "final": 173647.4375940183,
+  "archived_final": 173647.4375940183,
+  "max_rel_daily_equity_diff": 3.109369507515109e-16,
+  "max_abs_return_diff": 9.8879238130678e-17,
+  "mdd": -0.523593718406686,
+  "C0": 2.360261349689393,
+  "C0_hat": 2.360261349689393,
+  "final_coin": 2.360261349689393,
+  "coin_growth": 0.0,
+  "funding_coin": 0.0,
+  "pressure_hits": 0.0
+ }
+}

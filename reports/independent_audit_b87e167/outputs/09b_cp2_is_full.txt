@@ -1,0 +1,12 @@
+V1_USDM gross_0: CP2 daily return vs my independent R5 max abs diff 0.00e+00
+P_USDM gross_0: CP2 daily return vs my independent R5 max abs diff 0.00e+00
+V2_SPOT gross_0: final 279434.00 archived 279434.00 max rel daily equity diff 3.14e-16 cash clips 0
+P_SPOT gross_0: final 239089.19 archived 239089.19 max rel daily equity diff 2.92e-16 cash clips 2
+V1_USDM main_17: CP2 daily return vs my independent R5 max abs diff 0.00e+00
+P_USDM main_17: CP2 daily return vs my independent R5 max abs diff 0.00e+00
+V2_SPOT main_17: final 273023.40 archived 273023.40 max rel daily equity diff 2.65e-16 cash clips 2
+P_SPOT main_17: final 235961.44 archived 235961.44 max rel daily equity diff 3.15e-16 cash clips 2
+V1_USDM harsh_34: CP2 daily return vs my independent R5 max abs diff 0.00e+00
+P_USDM harsh_34: CP2 daily return vs my independent R5 max abs diff 0.00e+00
+V2_SPOT harsh_34: final 266755.93 archived 266755.93 max rel daily equity diff 3.21e-16 cash clips 2
+P_SPOT harsh_34: final 232874.08 archived 232874.08 max rel daily equity diff 3.07e-16 cash clips 2

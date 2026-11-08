@@ -1,0 +1,12 @@
+              count           max
+item                             
+C0               48  0.000000e+00
+final_coin       48  1.206403e-14
+funding_coin     48  4.117774e-15
+funding_usd      24  2.883655e-15
+                                             account        item  independent    archived           rel
+121    ETH__IS-Common__UM__V4_CM_CoinAccum__harsh_34  final_coin   273.284919  273.284919  1.206403e-14
+34            IS-Common__P_CM_DeltaMatched__harsh_34  final_coin     5.860248    5.860248  9.548272e-15
+163      ETH__Post-IS__UM__V4_CM_CoinAccum__harsh_34  final_coin    48.014402   48.014402  7.843223e-15
+87   ETH__IS-Common__UM__V3_CM_DeltaMatched__gross_0  final_coin    85.281057   85.281057  7.831870e-15
+3             IS-Common__V3_CM_DeltaMatched__gross_0  final_coin     5.306282    5.306282  7.699593e-15

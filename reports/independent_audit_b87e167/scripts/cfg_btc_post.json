@@ -1,0 +1,16 @@
+{
+ "asset": "BTC",
+ "window": [
+  "2024-01-01",
+  "2026-06-01"
+ ],
+ "load_start": "2023-11-01",
+ "signal_origin": "2024-01-01",
+ "um": "inputs_venue/729185f47e8a667fd4a96504904552ad29772e0994d5d27ffa3bd95ea31dccab",
+ "um_funding": "inputs_venue/292428cdf1eb041ae0e0ee9d782b577acd1405e76e948879c1ba8aa3dc023088",
+ "spot": "inputs_venue/15fe4ea52e1ecef896aa03c2d4121d6d06470d0903ff7f49a5ba30c998f6cea8",
+ "cm": "inputs_venue/807774913b7d89b78b6c63432ef15e2c0e9ae59af42cd694b81a161e5351956c",
+ "cm_funding": "inputs_venue/691e2e16d9e8dc6869cd74cb758a1c36d368a1229cf0c117be7061f75d3f7fbe",
+ "archived_dir": "audit/reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts",
+ "prefix": "BTC__Post-IS__UM__"
+}

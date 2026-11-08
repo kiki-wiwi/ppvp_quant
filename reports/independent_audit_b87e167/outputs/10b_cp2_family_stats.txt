@@ -1,0 +1,10 @@
+Full_UM: months=46 T=6.505bp D=0.908bp pT=0.02276 pD=0.32984 | 
+Full_SPOT: months=46 T=7.634bp D=0.669bp pT=0.01053 pD=0.37248 | 
+Common_UM: months=40 T=5.854bp D=0.791bp pT=0.05418 pD=0.36232 | 
+Common_SPOT: months=40 T=6.931bp D=0.556bp pT=0.03001 pD=0.40228 | 
+Common_CM_DeltaMatched: months=40 T=9.020bp D=0.687bp pT=0.00916 pD=0.37963 | 
+IS-Full__UM archived pT 0.02276 pD 0.32984
+IS-Full__SPOT archived pT 0.01053 pD 0.37248
+IS-Common__UM archived pT 0.05418 pD 0.36232
+IS-Common__SPOT archived pT 0.03001 pD 0.40228
+IS-Common__CM_DeltaMatched archived pT 0.00916 pD 0.37963

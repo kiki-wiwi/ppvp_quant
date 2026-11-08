@@ -1,0 +1,15 @@
+  BTC_UM: warmup points in cache before canonical start: 183
+BTC_UM: cache 2829 == canon 2646 times-equal True values-equal True; sources {vision:2646}; vision mismatches 0; dapi-sourced mismatches vs saved pages 0; vision/dapi overlap 0 mismatches 0; 8h grid True; first 2023-11-01 00:00:00+00:00 last 2026-05-31 16:00:00+00:00
+  ETH_UM: warmup points in cache before canonical start: 0
+ETH_UM: cache 6483 == canon 6483 times-equal True values-equal True; sources {vision:6483}; vision mismatches 0; dapi-sourced mismatches vs saved pages 0; vision/dapi overlap 0 mismatches 0; 8h grid True; first 2020-07-01 00:00:00+00:00 last 2026-05-31 16:00:00+00:00
+  BTC_CM: warmup points in cache before canonical start: 183
+BTC_CM: cache 2829 == canon 2646 times-equal True values-equal True; sources {vision:2588, dapi_month_end_supplement:58}; vision mismatches 0; dapi-sourced mismatches vs saved pages 0; vision/dapi overlap 2588 mismatches 0; 8h grid True; first 2023-11-01 00:00:00+00:00 last 2026-05-31 16:00:00+00:00
+  ETH_CM: warmup points in cache before canonical start: 0
+ETH_CM: cache 6338 == canon 6338 times-equal True values-equal True; sources {dapi_early_native:2045, vision:4181, dapi_month_end_supplement:112}; vision mismatches 0; dapi-sourced mismatches vs saved pages 0; vision/dapi overlap 4181 mismatches 0; 8h grid True; first 2020-08-18 08:00:00+00:00 last 2026-05-31 16:00:00+00:00
+BTC CM vs UM [dapi_month_end_supplement] n=58 corr=0.926 mean UM=0.000092 mean CM=0.000125 median |diff|=0.000030
+BTC CM vs UM [vision] n=2588 corr=0.765 mean UM=0.000065 mean CM=0.000067 median |diff|=0.000031
+ETH CM vs UM [dapi_early_native] n=2045 corr=0.799 mean UM=0.000236 mean CM=0.000156 median |diff|=0.000045
+ETH CM vs UM [dapi_month_end_supplement] n=112 corr=0.918 mean UM=0.000081 mean CM=0.000085 median |diff|=0.000026
+ETH CM vs UM [vision] n=4181 corr=0.812 mean UM=0.000059 mean CM=0.000054 median |diff|=0.000031
+CP2 BTC CM funding cache 3713 records; equal to saved CP2 dapi page value at same time: 3713; pages 41 records 3714
+CP2 BTC CM vs UM early(dapi) n=2066 corr=0.819; late(vision) n=1647 corr=0.634; mean CM early 0.000143 late 0.000051

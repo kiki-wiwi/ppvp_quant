@@ -1,0 +1,16 @@
+{
+ "asset": "BTC",
+ "window": [
+  "2020-09-01",
+  "2024-01-01"
+ ],
+ "load_start": "2020-01-01",
+ "signal_origin": "2020-03-01",
+ "um": "inputs_r5/57479bcbb97a21e58e2347e5c17cc6194a2a6fc1302397d4459592746af39aeb",
+ "um_funding": "audit/data/processed/BTCUSDT_funding.parquet",
+ "spot": "inputs_venue/086e42133ce4de3170b1ed64d73e785d5db8e613f85b0fcfa52432950821274b",
+ "cm": "inputs_venue/9e9f7cf4bdc576919e96a0b125f964a715ec8ffc36a2e03ede400e55c824a4c8",
+ "cm_funding": "inputs_venue/8e5c9cb108bec7f43ef0e11f6c6f764c1603ae6b004979b7cf4866f0425a7992",
+ "archived_dir": "audit/reports/trend_hold_venue_round/cp2_btc_is/accounts",
+ "prefix": "IS-Common__"
+}

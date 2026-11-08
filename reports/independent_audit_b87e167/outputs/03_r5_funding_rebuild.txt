@@ -1,0 +1,8 @@
+raw cols ['calc_time', 'funding_interval_hours', 'last_funding_rate'] rows 7488
+cache cols ['funding_rate', 'funding_interval_hours'] funding_time 7488
+cache index equals raw calc_time: False
+rate exact equal: True
+interval hours unique [8]
+max abs ms offset from minute 47.0 n nonzero 3363
+IS settlements 4383 grid 4383 equal True
+IS funding mean 0.000136616, frac positive 0.865, sum 0.59879, max 0.00300, min -0.00300

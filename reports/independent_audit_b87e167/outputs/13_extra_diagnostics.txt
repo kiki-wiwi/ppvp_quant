@@ -1,0 +1,9 @@
+[1] on days 749 off days 652
+    D on-days mean -0.100 bp (sum -75.2 bp); D off-days mean 2.067 bp (sum 1348.0 bp)
+    P on-days mean 12.36 bp; P off-days mean -2.17 bp (iid t -0.441)
+    excluding 2020-03: D mean 0.213 bp, T mean 6.652 bp
+[2] monthly placeholders 99 (2023-11-10 15:07:00+00:00 .. 2023-11-10 16:45:00+00:00); 23:59 close monthly 37330.4 daily 37330.4; max |close diff| 329.2
+[3] BTC V2_SPOT Post-IS final 132944 USD; illustrative 4% simple interest on idle cash (1-gL) 8593 USD
+[3] BTC P_SPOT Post-IS final 133037 USD; illustrative 4% simple interest on idle cash (1-gL) 6662 USD
+[3] ETH V2_SPOT Post-IS final 141570 USD; illustrative 4% simple interest on idle cash (1-gL) 10271 USD
+[3] ETH P_SPOT Post-IS final 113739 USD; illustrative 4% simple interest on idle cash (1-gL) 8043 USD

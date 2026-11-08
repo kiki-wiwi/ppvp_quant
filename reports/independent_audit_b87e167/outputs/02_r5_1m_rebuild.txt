@@ -1,0 +1,15 @@
+rows mine 2103840 cache 2103840 index equal True
+open               exact_equal=True maxabs=0
+high               exact_equal=True maxabs=0
+low                exact_equal=True maxabs=0
+close              exact_equal=True maxabs=0
+volume             exact_equal=True maxabs=0
+quote_volume       exact_equal=True maxabs=0
+count              exact_equal=True maxabs=0
+taker_buy_volume   exact_equal=True maxabs=0
+raw_close_time equal True
+src equal True
+2023-11-10 monthly vs daily differing minutes per column {'open': 99, 'high': 100, 'low': 99, 'close': 100, 'volume': 100}
+grid 2103840 missing 0 zero-vol 144 placeholder(bad) 144
+days with bad minutes 5 {Timestamp('2020-09-27 00:00:00+0000', tz='UTC'): 2, Timestamp('2021-03-02 00:00:00+0000', tz='UTC'): 59, Timestamp('2022-05-01 00:00:00+0000', tz='UTC'): 29, Timestamp('2022-05-28 00:00:00+0000', tz='UTC'): 35, Timestamp('2023-09-12 00:00:00+0000', tz='UTC'): 19}
+cache content sha256 1e26dd7ecfe6ee03dc2814dcb0041ef2d5724ff7018b2b7f20ae6364d99f5a33

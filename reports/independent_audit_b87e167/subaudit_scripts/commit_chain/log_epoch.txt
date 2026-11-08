@@ -1,0 +1,72 @@
+b87e167f93e6bec0ef5def53007894c6014ce3e2 21eee8746452d5d46b78f5ef8c50c024ebd21779|1794155169|1794155169|Codex|Codex|Add GitHub-only external audit handoff and frozen input archives
+21eee8746452d5d46b78f5ef8c50c024ebd21779 05fe6f1a46dbd99fad92b07dba973ac7c44f19ab|1794152187|1794152187|Codex|Codex|Archive CP3 BTC post-IS and ETH cross-venue results
+05fe6f1a46dbd99fad92b07dba973ac7c44f19ab 4d3d103e6614e98de1bdf15cb17a8619d4e74ad7|1794138609|1794138609|Codex|Codex|Authorize one-shot CP3 post-IS and ETH evaluation
+4d3d103e6614e98de1bdf15cb17a8619d4e74ad7 f0c21acdd9320d87272d3c8cd46fe95b8d72ec5d|1794138376|1794138376|Codex|Codex|Implement CP3 post-IS and ETH evaluation through May 2026
+f0c21acdd9320d87272d3c8cd46fe95b8d72ec5d 90b2f9ddc7aa933e06f26eca14d80aabf96f8c58|1794071075|1794071075|Codex|Codex|Archive BTC IS cross-venue CP2 results: 42 accounts
+90b2f9ddc7aa933e06f26eca14d80aabf96f8c58 ef1ad9ace449a13cd79de2a28caf2f32b40fdddb|1794064851|1794064851|Codex|Codex|Unlock BTC IS only after approved CP2 input preflight
+ef1ad9ace449a13cd79de2a28caf2f32b40fdddb ef0d3effc947467fcb91f7cae5a052634a47ae35|1794064810|1794064810|Codex|Codex|Register approved CP2 input completion and locked preflight
+ef0d3effc947467fcb91f7cae5a052634a47ae35 c4c619160bc4c66d643f6bb664b429ed239f6e20|1794063692|1794063692|Codex|Codex|Independently unlock BTC IS for approved CP2 input revision
+c4c619160bc4c66d643f6bb664b429ed239f6e20 51a2bc3e15c4a12a87424dc7217278b965c52d81|1794063664|1794063664|Codex|Codex|Register approved CP2 native timestamp and funding-boundary revision
+51a2bc3e15c4a12a87424dc7217278b965c52d81 4870310dfa9dd4a51b64aaa149caffaf48de79f9|1794062942|1794062942|Codex|Codex|Unlock BTC IS only for venue CP2 fixed 42-account run
+4870310dfa9dd4a51b64aaa149caffaf48de79f9 deadf01a4570386e14bbbec41d6e8eadd3345cac|1794062852|1794062852|Codex|Codex|Implement BTC IS venue CP2 loaders, registration and fixed batch
+deadf01a4570386e14bbbec41d6e8eadd3345cac 3846971ad9014043cc0371a96c693924b7ca1e61|1794051372|1794051372|Codex|Codex|Register cross-venue trend holding CP1 and synthetic validation
+3846971ad9014043cc0371a96c693924b7ca1e61 fc04caaf7463555c87cf30ad032f07adf0d1b0c2|1794048929|1794048929|Codex|Codex|Archive R5 BTC IS daily trend hold results
+fc04caaf7463555c87cf30ad032f07adf0d1b0c2 cda559de7fe510a61f74dd5315eb25e1692d16ca|1794035449|1794035449|kiki-wiwi|kiki-wiwi|Authorize fixed BTC IS daily trend hold formal run
+cda559de7fe510a61f74dd5315eb25e1692d16ca 35490be840ca49ec0d7172e4356ae556df94f640|1794033293|1794033293|kiki-wiwi|kiki-wiwi|feat: register daily trend holding study with synthetic validation
+35490be840ca49ec0d7172e4356ae556df94f640 e934a8a5d3ec53a2fe991d059e6604208d53a08e|1794031579|1794031579|kiki-wiwi|kiki-wiwi|results: archive BTC IS channel breakout versus matched random study
+e934a8a5d3ec53a2fe991d059e6604208d53a08e 5c138263d2ee88b9345180fdf42a75151feddd62|1793987661|1793987661|kiki-wiwi|kiki-wiwi|Unlock the approved BTC IS channel/random fixed batch
+5c138263d2ee88b9345180fdf42a75151feddd62 366c592c40a9f33ace51f600e7f5bc04ff2bd6f3|1793987376|1793987376|kiki-wiwi|kiki-wiwi|Register locked channel-vs-random study with synthetic validation
+366c592c40a9f33ace51f600e7f5bc04ff2bd6f3 66cd0b2866c603f8d88574e91b77e55f31cc2025|1793984698|1793984698|kiki-wiwi|kiki-wiwi|Archive preregistered BTC IS trend dip limit results
+66cd0b2866c603f8d88574e91b77e55f31cc2025 e9dcc33d93225af314028668ff4200ad2bf81f36|1793983605|1793983605|kiki-wiwi|kiki-wiwi|Authorize the fixed BTC IS trend dip limit batch
+e9dcc33d93225af314028668ff4200ad2bf81f36 6777532f427dab014c7d5972f4792644921f3248|1793983039|1793983039|kiki-wiwi|kiki-wiwi|Register trend dip limit study and synthetic implementation
+6777532f427dab014c7d5972f4792644921f3248 5f7b2e6fe24aa41b64035b98f07c9116341fd035|1793980788|1793980788|kiki-wiwi|kiki-wiwi|Record preregistered BTC IS channel versus VAH results
+5f7b2e6fe24aa41b64035b98f07c9116341fd035 570da8356464af5ae678cd8a5e5e6e492e1e4f2d|1793979488|1793979488|kiki-wiwi|kiki-wiwi|Unlock registered channel/VAH BTC IS run after input verification
+570da8356464af5ae678cd8a5e5e6e492e1e4f2d cee29ef2c9356f4d23da1f94ec0dc44fe2cd30b6|1793978950|1793978950|kiki-wiwi|kiki-wiwi|feat: register channel-vah study and synthetic-only implementation
+cee29ef2c9356f4d23da1f94ec0dc44fe2cd30b6 a89814fb2f7fe3b8b5bf4467202083b60838ee63|1793953101|1793953101|kiki-wiwi|kiki-wiwi|CP3: record frozen BTC IS impulse study results
+a89814fb2f7fe3b8b5bf4467202083b60838ee63 d0297578f9d2f6604d8676b1db3fdfa550f696f9|1793947919|1793947919|kiki-wiwi|kiki-wiwi|Impulse study CP3: register implementation hashes and unlock real IS data
+d0297578f9d2f6604d8676b1db3fdfa550f696f9 b4e3fc19f7f8ece6177a8460983d68b93bd481c3|1793947841|1793947841|kiki-wiwi|kiki-wiwi|Impulse study CP3: implement frozen statistics, runner, figures and sensitivity code
+b4e3fc19f7f8ece6177a8460983d68b93bd481c3 74522d4f7889e157e4babe7576ce5c7cb281b978|1793924024|1793924024|Claude|Claude|Impulse study CP2: engine benchmark from the clean tree and the Checkpoint 2 phase log
+74522d4f7889e157e4babe7576ce5c7cb281b978 58117a6065ec24525cfed9438e9fcdbbfa05d8fe|1793923783|1793923783|Claude|Claude|Impulse study CP2: regenerate the pre-trigger feature checks from the clean tree; bench records git state
+58117a6065ec24525cfed9438e9fcdbbfa05d8fe eedb4fe42914b8733024a245b92615d770b7c32a|1793923675|1793923675|Claude|Claude|Impulse study CP2: second and third review rounds - input checks, tests and plan revisions
+eedb4fe42914b8733024a245b92615d770b7c32a 6096f3e379b8d921eb2cec4fcc83c63769a6767e|1793906573|1793906573|Claude|Claude|Impulse study CP2 plan: commit CP4 sensitivity code before the CP3 unlock
+6096f3e379b8d921eb2cec4fcc83c63769a6767e ef4fa32f9812a7b04a46bd70708ed9c78407e255|1793906344|1793906344|Claude|Claude|Impulse study CP2: apply independent-review fixes to engine, features, tests and plan
+ef4fa32f9812a7b04a46bd70708ed9c78407e255 555258a8a299d5e434b39b13b461a007106a0258|1793897693|1793897693|Claude|Claude|Impulse study CP2: long/short 1m engine, causal features, frozen versions and draft plan (pre-review)
+555258a8a299d5e434b39b13b461a007106a0258 38ca6c3f365595c14351ca94409e49671e0504b8|1793891626|1793891626|Claude|Claude|Impulse study CP1: final results from a clean tree and the Checkpoint 1 phase log
+38ca6c3f365595c14351ca94409e49671e0504b8 fe1023894154ad44b2f7f68c621b9503e1c39859|1793891214|1793891214|Claude|Claude|Impulse study CP1: record placeholder-masking suppressions and tail-omission exposure in the runner
+fe1023894154ad44b2f7f68c621b9503e1c39859 67ce6ab4af8cfbf805172151fafe2c1ce1084fa9|1793890895|1793890895|Claude|Claude|Impulse study CP1: apply independent-review fixes to the data layer, QA, box variants and checks
+67ce6ab4af8cfbf805172151fafe2c1ce1084fa9 2f66ea1bd836cfa1716bcfb875bc3b03febe04fc|1793887062|1793887062|Claude|Claude|Impulse study CP1: verified 1m IS data layer and pure trigger-frequency counts (pre-review)
+2f66ea1bd836cfa1716bcfb875bc3b03febe04fc 29df4f9e81bcfb092c390f63f8411dca4a404613 64ca64bca4fd3ae954e0e45e4e55f5e3ad5243db|1793882549|1793882549|kiki-wiwi|GitHub|Merge pull request #1 from kiki-wiwi/claude/sharp-darwin-k34sz1
+64ca64bca4fd3ae954e0e45e4e55f5e3ad5243db ab577badf47faca6fd3f6265aa87ffc56c2f3bce|1793881649|1793881649|lwu300327-commits|lwu300327-commits|docs(audit): add Codex gpt-6.1-sol (high) factor failure diagnosis and next-step roadmap
+ab577badf47faca6fd3f6265aa87ffc56c2f3bce bf7fd622f2bc07e7013b8122bcfd813c0ed62267|1793865161|1793865161|Claude|Claude|Audit round: final review corrections; reports complete
+bf7fd622f2bc07e7013b8122bcfd813c0ed62267 a37b6ad4ce2f3a80df84c1e1cd3316a6c6575808|1793863890|1793863890|Claude|Claude|Audit round: methodology-review corrections (D2 order sensitivity, H1-H4, zero-skill criteria)
+a37b6ad4ce2f3a80df84c1e1cd3316a6c6575808 0ea27495a471afeec2cfb79f8b04d538304b1619|1793862521|1793862521|Claude|Claude|Decision report: C1 take-profit gap tested with month clustering and an RR control
+0ea27495a471afeec2cfb79f8b04d538304b1619 ac11241906dabf701c87dd60fa1c1fa635590295|1793862076|1793862076|Claude|Claude|Audit round: apply verified review corrections to both reports
+ac11241906dabf701c87dd60fa1c1fa635590295 e7230628fb8f0d3d40b135080cdf66d1cfd25e04|1793861831|1793861831|Claude|Claude|Audit round: post-run checks, exact warm-up flags, number-free exposure register
+e7230628fb8f0d3d40b135080cdf66d1cfd25e04 e0e0f5b1dee8ae940cff4af2727c558cb119a8cd|1793858843|1793858843|Claude|Claude|Decision report: precise wording on C1 ambiguity sources, D2 worst-case direction, funding exclusion, criterion 2
+e0e0f5b1dee8ae940cff4af2727c558cb119a8cd 88607ed8882bc66d70d8f13b7fbbccdbcce116a1|1793858698|1793858698|Claude|Claude|Audit round: audit report, decision report and audit evidence (pre-review drafts)
+88607ed8882bc66d70d8f13b7fbbccdbcce116a1 aa1ecb44a43c847119c0fff5ccf4928d3754734c|1793858283|1793858283|Claude|Claude|Audit round: run the nine pre-registered versions once (BTC IS, 1H, worst case)
+aa1ecb44a43c847119c0fff5ccf4928d3754734c b871c0a6d089c906da0a5e3167d10539b8fb141c|1793857877|1793857877|Claude|Claude|Audit round: B_audited and pre-run plan addendum (before any version is run)
+b871c0a6d089c906da0a5e3167d10539b8fb141c 49490526ef0324e35eb0e9b81e714245db143925|1793852583|1793852583|Claude|Claude|Audit round: pre-register the experiment plan (9 versions incl. E1) before any version is run
+49490526ef0324e35eb0e9b81e714245db143925 9f3e1e4031b1500d219f61bcbf995468446059d8|1793851922|1793851922|Claude|Claude|Audit round: re-freeze B_original manifest without 1m data (results unchanged)
+9f3e1e4031b1500d219f61bcbf995468446059d8 80e7c403521e8482f36d9a5a703920892334218f|1793851920|1793851920|Claude|Claude|Audit round: withdraw all 1m data per the user's supplementary constraint; 1H worst-case path rules
+80e7c403521e8482f36d9a5a703920892334218f 382bc9c3cfd76679624ee28c8ef3eab640ded5c4|1793851406|1793851406|Claude|Claude|Audit round: opportunity/trade ledgers, reconciliation, seeded slices, matched random baselines (B_original, IS)
+382bc9c3cfd76679624ee28c8ef3eab640ded5c4 b0298f221edd4643b960b8a42947e73a3c5e0fdb|1793850935|1793850935|Claude|Claude|Audit round: freeze B_original (baseline_manifest.json)
+b0298f221edd4643b960b8a42947e73a3c5e0fdb 04724f044d4e3ac996ddb40dd46d1d8c2ca7ab2e|1793850933|1793850933|Claude|Claude|Audit round: IS-only research package, verified 1m data manifest, five-figure reproduction
+04724f044d4e3ac996ddb40dd46d1d8c2ca7ab2e 67929148c78e305f935c61f69fa466ebb967df69|1793848978|1793848978|Claude|Claude|Phase 2: process third-review findings; unify the zero-skill benchmark in the pre-registered rules
+67929148c78e305f935c61f69fa466ebb967df69 c71946e32ba4555d648e671ebf1cfd0dfc88d4b5|1793844633|1793844633|Claude|Claude|Phase 2: clarify the benchmark rationale in pre-registered rule 4
+c71946e32ba4555d648e671ebf1cfd0dfc88d4b5 c8b44c06682393cf1185fb8f2435be4c3b544bae|1793844599|1793844599|Claude|Claude|Phase 2: fix second-review findings; complete the phase log
+c8b44c06682393cf1185fb8f2435be4c3b544bae 6a75cc9a8c42d406d03300abf3a28c489d5d4e03|1793840965|1793840965|Claude|Claude|Phase 2: add full test-suite output (200 passed)
+6a75cc9a8c42d406d03300abf3a28c489d5d4e03 c571fbc3c3ea45fc6665c3f2fc0f88bb48f9c6dc|1793840783|1793840783|Claude|Claude|Phase 2: methodology-review fixes and pre-registered Phase 3 rules
+c571fbc3c3ea45fc6665c3f2fc0f88bb48f9c6dc f85c142b609a9569157187b41cf77b2c6a1571bf|1793838460|1793838460|Claude|Claude|Phase 2: fix first-review findings (code, statistics, figures, log)
+f85c142b609a9569157187b41cf77b2c6a1571bf a59f7830c74aba87a3d456ce8bffdf5ff627253b|1793834379|1793834379|Claude|Claude|Phase 2: report carry/roll baseline variants and Phase 1 follow-ups
+a59f7830c74aba87a3d456ce8bffdf5ff627253b d1bc53c2b32b91b6088a5bf85f730761ffadd611|1793834139|1793834139|Claude|Claude|Phase 2: BTC baseline backtest and IS loss attribution (draft for review)
+d1bc53c2b32b91b6088a5bf85f730761ffadd611 75f8cf73c42f72daea69d0440161bbc391bd578a|1793827267|1793827267|Claude|Claude|Phase 1: fix fourth-review findings and strengthen the gate
+75f8cf73c42f72daea69d0440161bbc391bd578a b2fbdb7abaef3a9b6becc0bad2c6fc9d147c859a|1793819152|1793819152|Claude|Claude|Phase 1: fix third-review findings, harden the gate, commit mutation harness
+b2fbdb7abaef3a9b6becc0bad2c6fc9d147c859a 35db332bed3fe5fc7594c1ba62c40b5891159f63|1793809589|1793809589|Claude|Claude|Phase 1: fix second-review findings and close gate blind spots
+35db332bed3fe5fc7594c1ba62c40b5891159f63 3e494cfdb4c2d8120ca9731be6dba57a4c9b67b7|1793805197|1793805197|Claude|Claude|Phase 1: phase log draft, README entry, early-2020 gate cuts
+3e494cfdb4c2d8120ca9731be6dba57a4c9b67b7 ee2650673627198586a70193bb0f5c4d30a708bd|1793804849|1793804849|Claude|Claude|Phase 1: fix confirmed audit findings and strengthen the look-ahead gate
+ee2650673627198586a70193bb0f5c4d30a708bd cb95e21e0d2e9712f45d8adad5b816776dc1cc86|1793799110|1793799110|Claude|Claude|Phase 1 (WIP): PPVP engine, state machine, backtester, metrics and look-ahead test suite
+cb95e21e0d2e9712f45d8adad5b816776dc1cc86 29df4f9e81bcfb092c390f63f8411dca4a404613|1793797315|1793797315|Claude|Claude|Phase 0: data engineering - Binance Vision perp/spot/funding loader with SHA256 verification, cleaning and QA
+29df4f9e81bcfb092c390f63f8411dca4a404613 fffe2c5982c59753af0ab64bf110b2d36d75d97c|1793796337|1793796337|kiki-wiwi|GitHub|Delete ppvp_quant_prompts.md
+fffe2c5982c59753af0ab64bf110b2d36d75d97c 6af319d8fcb2da116358d832dc018551b538f604|1793795917|1793795917|kiki-wiwi|GitHub|Add files via upload
+6af319d8fcb2da116358d832dc018551b538f604 |1793795899|1793795899|kiki-wiwi|GitHub|Initial commit

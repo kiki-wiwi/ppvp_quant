@@ -1,0 +1,8 @@
+snapshot keys ['baseline_commit', 'method', 'files'] files 4930
+tree files 4930 snapshot files 4930
+in tree not snapshot []
+in snapshot not tree []
+nonlfs checked 4672 mismatch 0 []
+lfs pointers 258 oid/size mismatch 0 []
+total snapshot bytes 20413969282
+pack members 3651 index objects 3651 bad 0 []

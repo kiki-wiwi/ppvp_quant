@@ -1,0 +1,38 @@
+webb sha 14cb463a7185a41de6130a620852dbb7230bfdaea0f21ea3c6b4d5d755af69a0
+month sha 379945597f32ac43fb34e5f7f5e30a5f97fd16b554055e0e06c3d5a6c8a696db
+archived npy equal to regenerated: True True
+T: mean=6.5049bp se=3.2295bp t=2.0142 p_raw=0.02276
+D: mean=0.9085bp se=2.0535bp t=0.4424 p_raw=0.32984
+Holm T: 0.04552
+Holm D: 0.32984
+T_mean: [6.51831e-05, 0.00129408] archived [6.51831e-05, 0.00129408]
+P_mean: [-0.000203709, 0.00137398] archived [-0.000203709, 0.00137398]
+D_mean: [-0.00029445, 0.000499451] archived [-0.00029445, 0.000499451]
+T_sharpe: [0.140327, 2.34919] archived [0.140327, 2.34919]
+P_sharpe: [-0.301632, 1.99974] archived [-0.301632, 1.99974]
+V1 state counts [(420, 251), (329, 401)]
+V4 halves T 0.000975447873291122 0.00035179083683706274 D 2.7169962148311886e-05 0.00014937465034382415
+V5 removed ['2022-06', '2020-03', '2023-08'] remaining days 1309 T 0.0007102271914348927 D -0.00015171974862969765
+V6 harsh T cum 1.276346050130889 harsh D mean 8.365559008606929e-05
+
+--- diagnostics (post hoc, exploratory) ---
+MDE T alpha=0.025: 9.05 bp/day = 33.0% simple annual
+MDE T alpha=0.05: 8.03 bp/day = 29.3% simple annual
+MDE D alpha=0.025: 5.75 bp/day = 21.0% simple annual
+MDE D alpha=0.05: 5.11 bp/day = 18.6% simple annual
+D monthly sums top5 (bp-sum): {'2022-06': 1314.8, '2020-03': 980.3, '2023-08': 963.6, '2022-01': 766.2, '2021-05': 645.2}
+D total sum 1272.7453935250894 bp; share of top1/top3: 1.0330812228330224 2.560415397821349
+remove top 0: D mean 0.908bp
+remove top 1: D mean -0.031bp
+remove top 2: D mean -0.763bp
+remove top 3: D mean -1.517bp
+remove top 4: D mean -2.154bp
+remove top 5: D mean -2.724bp
+T NW t by lag: {0: np.float64(2.511), 5: np.float64(2.251), 20: np.float64(1.989), 60: np.float64(1.858)}
+D NW t by lag: {0: np.float64(0.396), 5: np.float64(0.407), 20: np.float64(0.446), 60: np.float64(0.48)}
+Sharpe diff T-P point 0.45749844129753714 95% month-block interval [-0.20339423  1.11621261] frac<=0 0.0921
+exposure-scaled D: mean 3.417bp t 2.054
+2020 T cum 0.664 P cum 0.654  D mean -0.18bp  T on-days 191/306
+2021 T cum 0.115 P cum 0.079  D mean 0.65bp  T on-days 229/365
+2022 T cum -0.225 P cum -0.338  D mean 3.72bp  T on-days 74/365
+2023 T cum 0.620 P cum 0.646  D mean -0.73bp  T on-days 255/365

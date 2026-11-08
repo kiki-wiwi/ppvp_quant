@@ -1,0 +1,16 @@
+{
+ "asset": "ETH",
+ "window": [
+  "2024-01-01",
+  "2026-06-01"
+ ],
+ "load_start": "2023-11-01",
+ "signal_origin": "2024-01-01",
+ "um": "inputs_venue/86df32c37ddb356651594df0adab2931bdb4b8b891ff9cf4827e02b773e5758e",
+ "um_funding": "inputs_venue/4408267a0a982bb98fb82632f88d85369ead6485d7ac159b7d61a3c8f92464fd",
+ "spot": "inputs_venue/7f0fd926ca6f7ffc904d0c13840721855346d137e9339cf9110e239ff50f8793",
+ "cm": "inputs_venue/62611b46ac04050c8867f5362acb2bb95ebdffc0ca436a5b86b66023dfaf8bbd",
+ "cm_funding": "inputs_venue/b34f7bbf9d2910182de4586b87b21faac9a42a91bdf881cc38d8c292fed9080f",
+ "archived_dir": "audit/reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts",
+ "prefix": "ETH__Post-IS__UM__"
+}

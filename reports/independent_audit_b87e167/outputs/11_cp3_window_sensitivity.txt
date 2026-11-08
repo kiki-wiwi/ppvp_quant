@@ -1,0 +1,16 @@
+BTC truncated: minutes 1357920, missing/bad 0
+   Post-IS  months=29 T=  3.63bp D= -0.36bp pT=0.1707 pD=0.5659 cumT=+33.08% cumP=+33.25%
+   VAL      months=18 T=  6.12bp D= -2.88bp pT=0.1519 pD=0.8831 cumT=+36.50% cumP=+57.01%
+   OOS      months=11 T= -0.44bp D=  3.75bp pT=0.5584 pD=0.1950 cumT=-2.50% cumP=-15.13%
+BTC original_spec: minutes 1578240, missing/bad 0
+   Post-IS  months=34 T=  4.79bp D=  0.45bp pT=0.0960 pD=0.4282 cumT=+57.09% cumP=+44.48%
+   VAL      months=18 T=  6.12bp D= -2.88bp pT=0.1519 pD=0.8831 cumT=+36.50% cumP=+57.01%
+   OOS      months=16 T=  3.31bp D=  4.19bp pT=0.2969 pD=0.1915 cumT=+15.08% cumP=-7.98%
+ETH truncated: minutes 1357920, missing/bad 0
+   Post-IS  months=29 T=  4.15bp D=  1.92bp pT=0.1386 pD=0.2456 cumT=+39.68% cumP=+13.86%
+   VAL      months=18 T=  4.62bp D= -0.16bp pT=0.2044 pD=0.5141 cumT=+26.04% cumP=+24.30%
+   OOS      months=11 T=  3.38bp D=  5.30bp pT=0.2736 pD=0.1121 cumT=+10.83% cumP=-8.39%
+ETH original_spec: minutes 1578240, missing/bad 0
+   Post-IS  months=34 T=  5.84bp D=  2.45bp pT=0.0763 pD=0.1924 cumT=+74.35% cumP=+29.54%
+   VAL      months=18 T=  4.62bp D= -0.16bp pT=0.2044 pD=0.5141 cumT=+26.04% cumP=+24.30%
+   OOS      months=16 T=  7.21bp D=  5.38bp pT=0.1492 pD=0.1197 cumT=+38.34% cumP=+4.22%
