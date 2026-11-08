@@ -1,0 +1,16 @@
+{
+  "version": "V2_SPOT",
+  "cost": "harsh_34",
+  "asset": "ETH",
+  "window": "Post-IS",
+  "initial_capital": 100000.0,
+  "final_equity": 139159.19116784915,
+  "account_reconciliation_error": 3.989449720731155e-11,
+  "order_count": 101,
+  "adjustment_count": 101,
+  "cash_clip_count": 0,
+  "total_fees": 2487.14737061492,
+  "total_slippage_cost": 1727.4901133321716,
+  "total_funding": 0.0,
+  "liquidated": false
+}

@@ -1,0 +1,3 @@
+test,mean,se,t,p_raw,mcse,tail,bootstrap_replicates,finite_mc_denominator,tail_exceedances,zero_bootstrap_se_count,forced_p_one_reasons,hypothesis,rank,holm_threshold,p_holm,reject,mc_boundary_sensitive
+T,0.00028717188986609077,0.0003431287183705848,0.8369217570297928,0.22171,0.0013136072528119455,one_sided_positive,99999,100000,22170,0,[],mean(T)<=0,1,0.025,0.44342,False,False
+D,-1.2105268945802738e-05,0.00021294506385948213,-0.056846910308241495,0.52127,0.0015797154256410426,one_sided_positive,99999,100000,52126,0,[],mean(T-P)<=0,2,0.05,0.52127,False,False

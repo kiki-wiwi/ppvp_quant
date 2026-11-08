@@ -1,0 +1,181 @@
+{
+  "status": "passed",
+  "uuid": "d60bc8c8-11ef-4540-8d13-e2327feac6a1",
+  "required_free_GiB": 40,
+  "locations": {
+    "raw_and_cache": {
+      "path": "/home/ubuntu/.codex/worktrees/channel-vah-prereg/ppvp_quant/data",
+      "free_bytes": 43677736960,
+      "free_GiB": 40.678062438964844,
+      "device_id": 2065
+    },
+    "reports": {
+      "path": "/home/ubuntu/.codex/worktrees/channel-vah-prereg/ppvp_quant/reports",
+      "free_bytes": 43677736960,
+      "free_GiB": 40.678062438964844,
+      "device_id": 2065
+    },
+    "shared_input": {
+      "path": "/home/ubuntu/Documents/Codex/2026-11-06/github-ppvp-quant-agent-2-checkpoint/work/ppvp_quant/data",
+      "free_bytes": 43677736960,
+      "free_GiB": 40.678062438964844,
+      "device_id": 2065
+    },
+    "historical_reports": {
+      "path": "/home/ubuntu/Documents/Codex/2026-11-06/github-ppvp-quant-agent-2-checkpoint/work/ppvp_quant/reports",
+      "free_bytes": 43677736960,
+      "free_GiB": 40.678062438964844,
+      "device_id": 2065
+    },
+    "lfs_objects": {
+      "path": "/home/ubuntu/Documents/Codex/2026-11-06/github-ppvp-quant-agent-2-checkpoint/work/ppvp_quant/.git/lfs/objects",
+      "free_bytes": 43677736960,
+      "free_GiB": 40.678062438964844,
+      "device_id": 2065
+    },
+    "lfs_temp": {
+      "path": "/home/ubuntu/Documents/Codex/2026-11-06/github-ppvp-quant-agent-2-checkpoint/work/ppvp_quant/.git/lfs/tmp",
+      "free_bytes": 43677736960,
+      "free_GiB": 40.678062438964844,
+      "device_id": 2065
+    },
+    "scratch": {
+      "path": "/mnt/ppvp-backtests/scratch",
+      "free_bytes": 43677736960,
+      "free_GiB": 40.678062438964844,
+      "device_id": 2065
+    },
+    "temp": {
+      "path": "/mnt/ppvp-backtests/tmp",
+      "free_bytes": 43677736960,
+      "free_GiB": 40.678062438964844,
+      "device_id": 2065
+    },
+    "cache": {
+      "path": "/mnt/ppvp-backtests/cache",
+      "free_bytes": 43677736960,
+      "free_GiB": 40.678062438964844,
+      "device_id": 2065
+    }
+  }
+}
+verified frozen CP2 delivery files 100
+verified frozen CP2 delivery files 200
+verified frozen CP2 delivery files 300
+verified frozen CP2 delivery files 400
+account 1/87: BTC__Post-IS__UM__V1_USDM__gross_0
+account 2/87: BTC__Post-IS__UM__V1_USDM__main_17
+account 3/87: BTC__Post-IS__UM__V1_USDM__harsh_34
+account 4/87: BTC__Post-IS__UM__P_USDM__gross_0
+account 5/87: BTC__Post-IS__UM__P_USDM__main_17
+account 6/87: BTC__Post-IS__UM__P_USDM__harsh_34
+account 7/87: BTC__Post-IS__UM__V2_SPOT__gross_0
+account 8/87: BTC__Post-IS__UM__V2_SPOT__main_17
+account 9/87: BTC__Post-IS__UM__V2_SPOT__harsh_34
+account 10/87: BTC__Post-IS__UM__P_SPOT__gross_0
+account 11/87: BTC__Post-IS__UM__P_SPOT__main_17
+account 12/87: BTC__Post-IS__UM__P_SPOT__harsh_34
+account 13/87: BTC__Post-IS__UM__V3_CM_DeltaMatched__gross_0
+account 14/87: BTC__Post-IS__UM__V3_CM_DeltaMatched__main_17
+account 15/87: BTC__Post-IS__UM__V3_CM_DeltaMatched__harsh_34
+account 16/87: BTC__Post-IS__UM__P_CM_DeltaMatched__gross_0
+account 17/87: BTC__Post-IS__UM__P_CM_DeltaMatched__main_17
+account 18/87: BTC__Post-IS__UM__P_CM_DeltaMatched__harsh_34
+account 19/87: BTC__Post-IS__UM__V4_CM_CoinAccum__gross_0
+account 20/87: BTC__Post-IS__UM__V4_CM_CoinAccum__main_17
+account 21/87: BTC__Post-IS__UM__V4_CM_CoinAccum__harsh_34
+account 22/87: BTC__Post-IS__UM__HODL_1x_Coin__gross_0
+account 23/87: BTC__Post-IS__UM__HODL_1x_Coin__main_17
+account 24/87: BTC__Post-IS__UM__HODL_1x_Coin__harsh_34
+account 25/87: BTC__Post-IS__UM__V3_CM_DeltaMatched__main_17__whole_contracts
+account 26/87: BTC__Post-IS__UM__P_CM_DeltaMatched__main_17__whole_contracts
+account 27/87: BTC__Post-IS__UM__V4_CM_CoinAccum__main_17__whole_contracts
+account 28/87: BTC__Post-IS__CM__V3_CM_DeltaMatched__main_17
+account 29/87: BTC__Post-IS__CM__P_CM_DeltaMatched__main_17
+account 30/87: BTC__Post-IS__CM__V4_CM_CoinAccum__main_17
+account 31/87: ETH__IS-Common__UM__V1_USDM__gross_0
+account 32/87: ETH__IS-Common__UM__V1_USDM__main_17
+account 33/87: ETH__IS-Common__UM__V1_USDM__harsh_34
+account 34/87: ETH__IS-Common__UM__P_USDM__gross_0
+account 35/87: ETH__IS-Common__UM__P_USDM__main_17
+account 36/87: ETH__IS-Common__UM__P_USDM__harsh_34
+account 37/87: ETH__IS-Common__UM__V2_SPOT__gross_0
+account 38/87: ETH__IS-Common__UM__V2_SPOT__main_17
+account 39/87: ETH__IS-Common__UM__V2_SPOT__harsh_34
+account 40/87: ETH__IS-Common__UM__P_SPOT__gross_0
+account 41/87: ETH__IS-Common__UM__P_SPOT__main_17
+account 42/87: ETH__IS-Common__UM__P_SPOT__harsh_34
+account 43/87: ETH__IS-Common__UM__V3_CM_DeltaMatched__gross_0
+account 44/87: ETH__IS-Common__UM__V3_CM_DeltaMatched__main_17
+account 45/87: ETH__IS-Common__UM__V3_CM_DeltaMatched__harsh_34
+account 46/87: ETH__IS-Common__UM__P_CM_DeltaMatched__gross_0
+account 47/87: ETH__IS-Common__UM__P_CM_DeltaMatched__main_17
+account 48/87: ETH__IS-Common__UM__P_CM_DeltaMatched__harsh_34
+account 49/87: ETH__IS-Common__UM__V4_CM_CoinAccum__gross_0
+account 50/87: ETH__IS-Common__UM__V4_CM_CoinAccum__main_17
+account 51/87: ETH__IS-Common__UM__V4_CM_CoinAccum__harsh_34
+account 52/87: ETH__IS-Common__UM__HODL_1x_Coin__gross_0
+account 53/87: ETH__IS-Common__UM__HODL_1x_Coin__main_17
+account 54/87: ETH__IS-Common__UM__HODL_1x_Coin__harsh_34
+account 55/87: ETH__Post-IS__UM__V1_USDM__gross_0
+account 56/87: ETH__Post-IS__UM__V1_USDM__main_17
+account 57/87: ETH__Post-IS__UM__V1_USDM__harsh_34
+account 58/87: ETH__Post-IS__UM__P_USDM__gross_0
+account 59/87: ETH__Post-IS__UM__P_USDM__main_17
+account 60/87: ETH__Post-IS__UM__P_USDM__harsh_34
+account 61/87: ETH__Post-IS__UM__V2_SPOT__gross_0
+account 62/87: ETH__Post-IS__UM__V2_SPOT__main_17
+account 63/87: ETH__Post-IS__UM__V2_SPOT__harsh_34
+account 64/87: ETH__Post-IS__UM__P_SPOT__gross_0
+account 65/87: ETH__Post-IS__UM__P_SPOT__main_17
+account 66/87: ETH__Post-IS__UM__P_SPOT__harsh_34
+account 67/87: ETH__Post-IS__UM__V3_CM_DeltaMatched__gross_0
+account 68/87: ETH__Post-IS__UM__V3_CM_DeltaMatched__main_17
+account 69/87: ETH__Post-IS__UM__V3_CM_DeltaMatched__harsh_34
+account 70/87: ETH__Post-IS__UM__P_CM_DeltaMatched__gross_0
+account 71/87: ETH__Post-IS__UM__P_CM_DeltaMatched__main_17
+account 72/87: ETH__Post-IS__UM__P_CM_DeltaMatched__harsh_34
+account 73/87: ETH__Post-IS__UM__V4_CM_CoinAccum__gross_0
+account 74/87: ETH__Post-IS__UM__V4_CM_CoinAccum__main_17
+account 75/87: ETH__Post-IS__UM__V4_CM_CoinAccum__harsh_34
+account 76/87: ETH__Post-IS__UM__HODL_1x_Coin__gross_0
+account 77/87: ETH__Post-IS__UM__HODL_1x_Coin__main_17
+account 78/87: ETH__Post-IS__UM__HODL_1x_Coin__harsh_34
+account 79/87: ETH__IS-CM-SelfSignal__CM__V3_CM_DeltaMatched__main_17
+account 80/87: ETH__IS-CM-SelfSignal__CM__P_CM_DeltaMatched__main_17
+account 81/87: ETH__IS-CM-SelfSignal__CM__V4_CM_CoinAccum__main_17
+account 82/87: ETH__Post-IS__CM__V3_CM_DeltaMatched__main_17
+account 83/87: ETH__Post-IS__CM__P_CM_DeltaMatched__main_17
+account 84/87: ETH__Post-IS__CM__V4_CM_CoinAccum__main_17
+account 85/87: ETH__Post-IS__UM__V3_CM_DeltaMatched__main_17__whole_contracts
+account 86/87: ETH__Post-IS__UM__P_CM_DeltaMatched__main_17__whole_contracts
+account 87/87: ETH__Post-IS__UM__V4_CM_CoinAccum__main_17__whole_contracts
+paired inference BTC__Post-IS__UM: fixed 99999 Webb / 10000 paired month draws
+paired inference BTC__Post-IS__SPOT: fixed 99999 Webb / 10000 paired month draws
+paired inference BTC__Post-IS__CM_DeltaMatched: fixed 99999 Webb / 10000 paired month draws
+paired inference BTC__VAL__UM: fixed 99999 Webb / 10000 paired month draws
+paired inference BTC__VAL__SPOT: fixed 99999 Webb / 10000 paired month draws
+paired inference BTC__VAL__CM_DeltaMatched: fixed 99999 Webb / 10000 paired month draws
+paired inference BTC__OOS__UM: fixed 99999 Webb / 10000 paired month draws
+paired inference BTC__OOS__SPOT: fixed 99999 Webb / 10000 paired month draws
+paired inference BTC__OOS__CM_DeltaMatched: fixed 99999 Webb / 10000 paired month draws
+paired inference ETH__IS-Common__UM: fixed 99999 Webb / 10000 paired month draws
+paired inference ETH__IS-Common__SPOT: fixed 99999 Webb / 10000 paired month draws
+paired inference ETH__IS-Common__CM_DeltaMatched: fixed 99999 Webb / 10000 paired month draws
+paired inference ETH__Post-IS__UM: fixed 99999 Webb / 10000 paired month draws
+paired inference ETH__Post-IS__SPOT: fixed 99999 Webb / 10000 paired month draws
+paired inference ETH__Post-IS__CM_DeltaMatched: fixed 99999 Webb / 10000 paired month draws
+paired inference ETH__VAL__UM: fixed 99999 Webb / 10000 paired month draws
+paired inference ETH__VAL__SPOT: fixed 99999 Webb / 10000 paired month draws
+paired inference ETH__VAL__CM_DeltaMatched: fixed 99999 Webb / 10000 paired month draws
+paired inference ETH__OOS__UM: fixed 99999 Webb / 10000 paired month draws
+paired inference ETH__OOS__SPOT: fixed 99999 Webb / 10000 paired month draws
+paired inference ETH__OOS__CM_DeltaMatched: fixed 99999 Webb / 10000 paired month draws
+/home/ubuntu/.codex/worktrees/channel-vah-prereg/ppvp_quant/trend_hold_venue_study/cp3_plotting.py:256: UserWarning: AutoDateLocator was unable to pick an appropriate interval for this date range. It may be necessary to add an interval value to the AutoDateLocator's intervald dictionary. Defaulting to 6.
+  fig.tight_layout(rect=(.025, .075, .99, .945), h_pad=3., w_pad=3.)
+/home/ubuntu/.codex/worktrees/channel-vah-prereg/ppvp_quant/trend_hold_venue_study/cp3_plotting.py:256: UserWarning: AutoDateLocator was unable to pick an appropriate interval for this date range. It may be necessary to add an interval value to the AutoDateLocator's intervald dictionary. Defaulting to 6.
+  fig.tight_layout(rect=(.025, .075, .99, .945), h_pad=3., w_pad=3.)
+/home/ubuntu/.codex/worktrees/channel-vah-prereg/ppvp_quant/trend_hold_venue_study/cp3_plotting.py:471: UserWarning: AutoDateLocator was unable to pick an appropriate interval for this date range. It may be necessary to add an interval value to the AutoDateLocator's intervald dictionary. Defaulting to 6.
+  figure.savefig(handle, format='png', dpi=160,
+completed 87 accounts and 21 paired inference families; STOP at CP3
+{"status": "completed", "accounts": 87, "figures": ["fig_1.png", "fig_2.png", "fig_3.png", "fig_4.png"], "stop_at": "CP3"}

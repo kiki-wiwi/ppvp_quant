@@ -1,0 +1,14 @@
+{
+  "time_utc": "2026-11-08T15:32:08.778388+00:00",
+  "status": "remote_LFS_objects_verified",
+  "objects": 174,
+  "unique_bytes": 12439041986,
+  "retry_count": 0,
+  "redirect_count": 0,
+  "publisher_sha256": "4fe8ebd19e9d551297fa099f5f156c8cdb8ca7db8efff63f352b8f5252ee6008",
+  "lfs_manifest_sha256": "e81b2fa20d3f48e4c4a238f08b4fc7a62b8596905822dc5958e43c6db2a1a17f",
+  "verified_statuses": [
+    "uploaded_verified"
+  ],
+  "external_log_directory": "/mnt/ppvp-backtests/operations/cp3_publication_20261108/lfs_publish_once_run_cp3"
+}

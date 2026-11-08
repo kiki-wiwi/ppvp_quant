@@ -1,0 +1,29 @@
+{
+  "asset": "ETH",
+  "window": "Post-IS",
+  "days": 882,
+  "concordance_pct": 99.88662131519274,
+  "budget_difference_mean": -0.0010283774378032865,
+  "budget_difference_max_abs": 0.007325567590590332,
+  "account_differences": [
+    {
+      "version": "V3_CM_DeltaMatched",
+      "equity_difference_usd": -2690.9592089729267,
+      "coin_growth_difference": -0.030646912748378274,
+      "equal_initial_state": true
+    },
+    {
+      "version": "P_CM_DeltaMatched",
+      "equity_difference_usd": -138.55114885214425,
+      "coin_growth_difference": -0.0015779373228329563,
+      "equal_initial_state": true
+    },
+    {
+      "version": "V4_CM_CoinAccum",
+      "equity_difference_usd": -1637.2558968736994,
+      "coin_growth_difference": -0.018646450845833287,
+      "equal_initial_state": true
+    }
+  ],
+  "limitation": "IS native-CM account begins November 1 independently; no equal-initial-state UM reference account is added. Post accounts share January 1 start."
+}

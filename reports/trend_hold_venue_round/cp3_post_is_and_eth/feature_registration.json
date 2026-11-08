@@ -1,0 +1,803 @@
+{
+  "source": "real",
+  "sha256": {
+    "BTC__Post-IS__UM": "65a8cd7d37669d1e031f6319e1972b2407fb1b685d3f3001fbab5f41736a3f66",
+    "BTC__Post-IS__CM": "b389220abe201e295f2d4e519e732d493e792f55c8c287a05eac6709043841ef",
+    "ETH__Post-IS__UM": "e315774bb8cfe7de4bacbaf47abb056a522936e65089fcaad7f950dcb952e95d",
+    "ETH__Post-IS__CM": "61af84618d8e531361913d43b29823cf2beed4394cfd39ed3e1ae938d0d680dd",
+    "ETH__IS-Common__UM": "47a58820cd6f8212dd67a2ad953ba673c0f5281aeae122229cc07905b228edf3",
+    "ETH__IS-CM-SelfSignal__CM": "b04b0f917d32424a5e28f8c516a9c716c438c9aacd1d841391c870f761c64afa"
+  },
+  "generated_before_first_account": true,
+  "job_order": [
+    {
+      "asset": "BTC",
+      "window": "Post-IS",
+      "signal_source": "UM",
+      "version": "V1_USDM",
+      "cost": "gross_0",
+      "whole_contracts": false,
+      "job_id": "BTC__Post-IS__UM__V1_USDM__gross_0"
+    },
+    {
+      "asset": "BTC",
+      "window": "Post-IS",
+      "signal_source": "UM",
+      "version": "V1_USDM",
+      "cost": "main_17",
+      "whole_contracts": false,
+      "job_id": "BTC__Post-IS__UM__V1_USDM__main_17"
+    },
+    {
+      "asset": "BTC",
+      "window": "Post-IS",
+      "signal_source": "UM",
+      "version": "V1_USDM",
+      "cost": "harsh_34",
+      "whole_contracts": false,
+      "job_id": "BTC__Post-IS__UM__V1_USDM__harsh_34"
+    },
+    {
+      "asset": "BTC",
+      "window": "Post-IS",
+      "signal_source": "UM",
+      "version": "P_USDM",
+      "cost": "gross_0",
+      "whole_contracts": false,
+      "job_id": "BTC__Post-IS__UM__P_USDM__gross_0"
+    },
+    {
+      "asset": "BTC",
+      "window": "Post-IS",
+      "signal_source": "UM",
+      "version": "P_USDM",
+      "cost": "main_17",
+      "whole_contracts": false,
+      "job_id": "BTC__Post-IS__UM__P_USDM__main_17"
+    },
+    {
+      "asset": "BTC",
+      "window": "Post-IS",
+      "signal_source": "UM",
+      "version": "P_USDM",
+      "cost": "harsh_34",
+      "whole_contracts": false,
+      "job_id": "BTC__Post-IS__UM__P_USDM__harsh_34"
+    },
+    {
+      "asset": "BTC",
+      "window": "Post-IS",
+      "signal_source": "UM",
+      "version": "V2_SPOT",
+      "cost": "gross_0",
+      "whole_contracts": false,
+      "job_id": "BTC__Post-IS__UM__V2_SPOT__gross_0"
+    },
+    {
+      "asset": "BTC",
+      "window": "Post-IS",
+      "signal_source": "UM",
+      "version": "V2_SPOT",
+      "cost": "main_17",
+      "whole_contracts": false,
+      "job_id": "BTC__Post-IS__UM__V2_SPOT__main_17"
+    },
+    {
+      "asset": "BTC",
+      "window": "Post-IS",
+      "signal_source": "UM",
+      "version": "V2_SPOT",
+      "cost": "harsh_34",
+      "whole_contracts": false,
+      "job_id": "BTC__Post-IS__UM__V2_SPOT__harsh_34"
+    },
+    {
+      "asset": "BTC",
+      "window": "Post-IS",
+      "signal_source": "UM",
+      "version": "P_SPOT",
+      "cost": "gross_0",
+      "whole_contracts": false,
+      "job_id": "BTC__Post-IS__UM__P_SPOT__gross_0"
+    },
+    {
+      "asset": "BTC",
+      "window": "Post-IS",
+      "signal_source": "UM",
+      "version": "P_SPOT",
+      "cost": "main_17",
+      "whole_contracts": false,
+      "job_id": "BTC__Post-IS__UM__P_SPOT__main_17"
+    },
+    {
+      "asset": "BTC",
+      "window": "Post-IS",
+      "signal_source": "UM",
+      "version": "P_SPOT",
+      "cost": "harsh_34",
+      "whole_contracts": false,
+      "job_id": "BTC__Post-IS__UM__P_SPOT__harsh_34"
+    },
+    {
+      "asset": "BTC",
+      "window": "Post-IS",
+      "signal_source": "UM",
+      "version": "V3_CM_DeltaMatched",
+      "cost": "gross_0",
+      "whole_contracts": false,
+      "job_id": "BTC__Post-IS__UM__V3_CM_DeltaMatched__gross_0"
+    },
+    {
+      "asset": "BTC",
+      "window": "Post-IS",
+      "signal_source": "UM",
+      "version": "V3_CM_DeltaMatched",
+      "cost": "main_17",
+      "whole_contracts": false,
+      "job_id": "BTC__Post-IS__UM__V3_CM_DeltaMatched__main_17"
+    },
+    {
+      "asset": "BTC",
+      "window": "Post-IS",
+      "signal_source": "UM",
+      "version": "V3_CM_DeltaMatched",
+      "cost": "harsh_34",
+      "whole_contracts": false,
+      "job_id": "BTC__Post-IS__UM__V3_CM_DeltaMatched__harsh_34"
+    },
+    {
+      "asset": "BTC",
+      "window": "Post-IS",
+      "signal_source": "UM",
+      "version": "P_CM_DeltaMatched",
+      "cost": "gross_0",
+      "whole_contracts": false,
+      "job_id": "BTC__Post-IS__UM__P_CM_DeltaMatched__gross_0"
+    },
+    {
+      "asset": "BTC",
+      "window": "Post-IS",
+      "signal_source": "UM",
+      "version": "P_CM_DeltaMatched",
+      "cost": "main_17",
+      "whole_contracts": false,
+      "job_id": "BTC__Post-IS__UM__P_CM_DeltaMatched__main_17"
+    },
+    {
+      "asset": "BTC",
+      "window": "Post-IS",
+      "signal_source": "UM",
+      "version": "P_CM_DeltaMatched",
+      "cost": "harsh_34",
+      "whole_contracts": false,
+      "job_id": "BTC__Post-IS__UM__P_CM_DeltaMatched__harsh_34"
+    },
+    {
+      "asset": "BTC",
+      "window": "Post-IS",
+      "signal_source": "UM",
+      "version": "V4_CM_CoinAccum",
+      "cost": "gross_0",
+      "whole_contracts": false,
+      "job_id": "BTC__Post-IS__UM__V4_CM_CoinAccum__gross_0"
+    },
+    {
+      "asset": "BTC",
+      "window": "Post-IS",
+      "signal_source": "UM",
+      "version": "V4_CM_CoinAccum",
+      "cost": "main_17",
+      "whole_contracts": false,
+      "job_id": "BTC__Post-IS__UM__V4_CM_CoinAccum__main_17"
+    },
+    {
+      "asset": "BTC",
+      "window": "Post-IS",
+      "signal_source": "UM",
+      "version": "V4_CM_CoinAccum",
+      "cost": "harsh_34",
+      "whole_contracts": false,
+      "job_id": "BTC__Post-IS__UM__V4_CM_CoinAccum__harsh_34"
+    },
+    {
+      "asset": "BTC",
+      "window": "Post-IS",
+      "signal_source": "UM",
+      "version": "HODL_1x_Coin",
+      "cost": "gross_0",
+      "whole_contracts": false,
+      "job_id": "BTC__Post-IS__UM__HODL_1x_Coin__gross_0"
+    },
+    {
+      "asset": "BTC",
+      "window": "Post-IS",
+      "signal_source": "UM",
+      "version": "HODL_1x_Coin",
+      "cost": "main_17",
+      "whole_contracts": false,
+      "job_id": "BTC__Post-IS__UM__HODL_1x_Coin__main_17"
+    },
+    {
+      "asset": "BTC",
+      "window": "Post-IS",
+      "signal_source": "UM",
+      "version": "HODL_1x_Coin",
+      "cost": "harsh_34",
+      "whole_contracts": false,
+      "job_id": "BTC__Post-IS__UM__HODL_1x_Coin__harsh_34"
+    },
+    {
+      "asset": "BTC",
+      "window": "Post-IS",
+      "signal_source": "UM",
+      "version": "V3_CM_DeltaMatched",
+      "cost": "main_17",
+      "whole_contracts": true,
+      "job_id": "BTC__Post-IS__UM__V3_CM_DeltaMatched__main_17__whole_contracts"
+    },
+    {
+      "asset": "BTC",
+      "window": "Post-IS",
+      "signal_source": "UM",
+      "version": "P_CM_DeltaMatched",
+      "cost": "main_17",
+      "whole_contracts": true,
+      "job_id": "BTC__Post-IS__UM__P_CM_DeltaMatched__main_17__whole_contracts"
+    },
+    {
+      "asset": "BTC",
+      "window": "Post-IS",
+      "signal_source": "UM",
+      "version": "V4_CM_CoinAccum",
+      "cost": "main_17",
+      "whole_contracts": true,
+      "job_id": "BTC__Post-IS__UM__V4_CM_CoinAccum__main_17__whole_contracts"
+    },
+    {
+      "asset": "BTC",
+      "window": "Post-IS",
+      "signal_source": "CM",
+      "version": "V3_CM_DeltaMatched",
+      "cost": "main_17",
+      "whole_contracts": false,
+      "job_id": "BTC__Post-IS__CM__V3_CM_DeltaMatched__main_17"
+    },
+    {
+      "asset": "BTC",
+      "window": "Post-IS",
+      "signal_source": "CM",
+      "version": "P_CM_DeltaMatched",
+      "cost": "main_17",
+      "whole_contracts": false,
+      "job_id": "BTC__Post-IS__CM__P_CM_DeltaMatched__main_17"
+    },
+    {
+      "asset": "BTC",
+      "window": "Post-IS",
+      "signal_source": "CM",
+      "version": "V4_CM_CoinAccum",
+      "cost": "main_17",
+      "whole_contracts": false,
+      "job_id": "BTC__Post-IS__CM__V4_CM_CoinAccum__main_17"
+    },
+    {
+      "asset": "ETH",
+      "window": "IS-Common",
+      "signal_source": "UM",
+      "version": "V1_USDM",
+      "cost": "gross_0",
+      "whole_contracts": false,
+      "job_id": "ETH__IS-Common__UM__V1_USDM__gross_0"
+    },
+    {
+      "asset": "ETH",
+      "window": "IS-Common",
+      "signal_source": "UM",
+      "version": "V1_USDM",
+      "cost": "main_17",
+      "whole_contracts": false,
+      "job_id": "ETH__IS-Common__UM__V1_USDM__main_17"
+    },
+    {
+      "asset": "ETH",
+      "window": "IS-Common",
+      "signal_source": "UM",
+      "version": "V1_USDM",
+      "cost": "harsh_34",
+      "whole_contracts": false,
+      "job_id": "ETH__IS-Common__UM__V1_USDM__harsh_34"
+    },
+    {
+      "asset": "ETH",
+      "window": "IS-Common",
+      "signal_source": "UM",
+      "version": "P_USDM",
+      "cost": "gross_0",
+      "whole_contracts": false,
+      "job_id": "ETH__IS-Common__UM__P_USDM__gross_0"
+    },
+    {
+      "asset": "ETH",
+      "window": "IS-Common",
+      "signal_source": "UM",
+      "version": "P_USDM",
+      "cost": "main_17",
+      "whole_contracts": false,
+      "job_id": "ETH__IS-Common__UM__P_USDM__main_17"
+    },
+    {
+      "asset": "ETH",
+      "window": "IS-Common",
+      "signal_source": "UM",
+      "version": "P_USDM",
+      "cost": "harsh_34",
+      "whole_contracts": false,
+      "job_id": "ETH__IS-Common__UM__P_USDM__harsh_34"
+    },
+    {
+      "asset": "ETH",
+      "window": "IS-Common",
+      "signal_source": "UM",
+      "version": "V2_SPOT",
+      "cost": "gross_0",
+      "whole_contracts": false,
+      "job_id": "ETH__IS-Common__UM__V2_SPOT__gross_0"
+    },
+    {
+      "asset": "ETH",
+      "window": "IS-Common",
+      "signal_source": "UM",
+      "version": "V2_SPOT",
+      "cost": "main_17",
+      "whole_contracts": false,
+      "job_id": "ETH__IS-Common__UM__V2_SPOT__main_17"
+    },
+    {
+      "asset": "ETH",
+      "window": "IS-Common",
+      "signal_source": "UM",
+      "version": "V2_SPOT",
+      "cost": "harsh_34",
+      "whole_contracts": false,
+      "job_id": "ETH__IS-Common__UM__V2_SPOT__harsh_34"
+    },
+    {
+      "asset": "ETH",
+      "window": "IS-Common",
+      "signal_source": "UM",
+      "version": "P_SPOT",
+      "cost": "gross_0",
+      "whole_contracts": false,
+      "job_id": "ETH__IS-Common__UM__P_SPOT__gross_0"
+    },
+    {
+      "asset": "ETH",
+      "window": "IS-Common",
+      "signal_source": "UM",
+      "version": "P_SPOT",
+      "cost": "main_17",
+      "whole_contracts": false,
+      "job_id": "ETH__IS-Common__UM__P_SPOT__main_17"
+    },
+    {
+      "asset": "ETH",
+      "window": "IS-Common",
+      "signal_source": "UM",
+      "version": "P_SPOT",
+      "cost": "harsh_34",
+      "whole_contracts": false,
+      "job_id": "ETH__IS-Common__UM__P_SPOT__harsh_34"
+    },
+    {
+      "asset": "ETH",
+      "window": "IS-Common",
+      "signal_source": "UM",
+      "version": "V3_CM_DeltaMatched",
+      "cost": "gross_0",
+      "whole_contracts": false,
+      "job_id": "ETH__IS-Common__UM__V3_CM_DeltaMatched__gross_0"
+    },
+    {
+      "asset": "ETH",
+      "window": "IS-Common",
+      "signal_source": "UM",
+      "version": "V3_CM_DeltaMatched",
+      "cost": "main_17",
+      "whole_contracts": false,
+      "job_id": "ETH__IS-Common__UM__V3_CM_DeltaMatched__main_17"
+    },
+    {
+      "asset": "ETH",
+      "window": "IS-Common",
+      "signal_source": "UM",
+      "version": "V3_CM_DeltaMatched",
+      "cost": "harsh_34",
+      "whole_contracts": false,
+      "job_id": "ETH__IS-Common__UM__V3_CM_DeltaMatched__harsh_34"
+    },
+    {
+      "asset": "ETH",
+      "window": "IS-Common",
+      "signal_source": "UM",
+      "version": "P_CM_DeltaMatched",
+      "cost": "gross_0",
+      "whole_contracts": false,
+      "job_id": "ETH__IS-Common__UM__P_CM_DeltaMatched__gross_0"
+    },
+    {
+      "asset": "ETH",
+      "window": "IS-Common",
+      "signal_source": "UM",
+      "version": "P_CM_DeltaMatched",
+      "cost": "main_17",
+      "whole_contracts": false,
+      "job_id": "ETH__IS-Common__UM__P_CM_DeltaMatched__main_17"
+    },
+    {
+      "asset": "ETH",
+      "window": "IS-Common",
+      "signal_source": "UM",
+      "version": "P_CM_DeltaMatched",
+      "cost": "harsh_34",
+      "whole_contracts": false,
+      "job_id": "ETH__IS-Common__UM__P_CM_DeltaMatched__harsh_34"
+    },
+    {
+      "asset": "ETH",
+      "window": "IS-Common",
+      "signal_source": "UM",
+      "version": "V4_CM_CoinAccum",
+      "cost": "gross_0",
+      "whole_contracts": false,
+      "job_id": "ETH__IS-Common__UM__V4_CM_CoinAccum__gross_0"
+    },
+    {
+      "asset": "ETH",
+      "window": "IS-Common",
+      "signal_source": "UM",
+      "version": "V4_CM_CoinAccum",
+      "cost": "main_17",
+      "whole_contracts": false,
+      "job_id": "ETH__IS-Common__UM__V4_CM_CoinAccum__main_17"
+    },
+    {
+      "asset": "ETH",
+      "window": "IS-Common",
+      "signal_source": "UM",
+      "version": "V4_CM_CoinAccum",
+      "cost": "harsh_34",
+      "whole_contracts": false,
+      "job_id": "ETH__IS-Common__UM__V4_CM_CoinAccum__harsh_34"
+    },
+    {
+      "asset": "ETH",
+      "window": "IS-Common",
+      "signal_source": "UM",
+      "version": "HODL_1x_Coin",
+      "cost": "gross_0",
+      "whole_contracts": false,
+      "job_id": "ETH__IS-Common__UM__HODL_1x_Coin__gross_0"
+    },
+    {
+      "asset": "ETH",
+      "window": "IS-Common",
+      "signal_source": "UM",
+      "version": "HODL_1x_Coin",
+      "cost": "main_17",
+      "whole_contracts": false,
+      "job_id": "ETH__IS-Common__UM__HODL_1x_Coin__main_17"
+    },
+    {
+      "asset": "ETH",
+      "window": "IS-Common",
+      "signal_source": "UM",
+      "version": "HODL_1x_Coin",
+      "cost": "harsh_34",
+      "whole_contracts": false,
+      "job_id": "ETH__IS-Common__UM__HODL_1x_Coin__harsh_34"
+    },
+    {
+      "asset": "ETH",
+      "window": "Post-IS",
+      "signal_source": "UM",
+      "version": "V1_USDM",
+      "cost": "gross_0",
+      "whole_contracts": false,
+      "job_id": "ETH__Post-IS__UM__V1_USDM__gross_0"
+    },
+    {
+      "asset": "ETH",
+      "window": "Post-IS",
+      "signal_source": "UM",
+      "version": "V1_USDM",
+      "cost": "main_17",
+      "whole_contracts": false,
+      "job_id": "ETH__Post-IS__UM__V1_USDM__main_17"
+    },
+    {
+      "asset": "ETH",
+      "window": "Post-IS",
+      "signal_source": "UM",
+      "version": "V1_USDM",
+      "cost": "harsh_34",
+      "whole_contracts": false,
+      "job_id": "ETH__Post-IS__UM__V1_USDM__harsh_34"
+    },
+    {
+      "asset": "ETH",
+      "window": "Post-IS",
+      "signal_source": "UM",
+      "version": "P_USDM",
+      "cost": "gross_0",
+      "whole_contracts": false,
+      "job_id": "ETH__Post-IS__UM__P_USDM__gross_0"
+    },
+    {
+      "asset": "ETH",
+      "window": "Post-IS",
+      "signal_source": "UM",
+      "version": "P_USDM",
+      "cost": "main_17",
+      "whole_contracts": false,
+      "job_id": "ETH__Post-IS__UM__P_USDM__main_17"
+    },
+    {
+      "asset": "ETH",
+      "window": "Post-IS",
+      "signal_source": "UM",
+      "version": "P_USDM",
+      "cost": "harsh_34",
+      "whole_contracts": false,
+      "job_id": "ETH__Post-IS__UM__P_USDM__harsh_34"
+    },
+    {
+      "asset": "ETH",
+      "window": "Post-IS",
+      "signal_source": "UM",
+      "version": "V2_SPOT",
+      "cost": "gross_0",
+      "whole_contracts": false,
+      "job_id": "ETH__Post-IS__UM__V2_SPOT__gross_0"
+    },
+    {
+      "asset": "ETH",
+      "window": "Post-IS",
+      "signal_source": "UM",
+      "version": "V2_SPOT",
+      "cost": "main_17",
+      "whole_contracts": false,
+      "job_id": "ETH__Post-IS__UM__V2_SPOT__main_17"
+    },
+    {
+      "asset": "ETH",
+      "window": "Post-IS",
+      "signal_source": "UM",
+      "version": "V2_SPOT",
+      "cost": "harsh_34",
+      "whole_contracts": false,
+      "job_id": "ETH__Post-IS__UM__V2_SPOT__harsh_34"
+    },
+    {
+      "asset": "ETH",
+      "window": "Post-IS",
+      "signal_source": "UM",
+      "version": "P_SPOT",
+      "cost": "gross_0",
+      "whole_contracts": false,
+      "job_id": "ETH__Post-IS__UM__P_SPOT__gross_0"
+    },
+    {
+      "asset": "ETH",
+      "window": "Post-IS",
+      "signal_source": "UM",
+      "version": "P_SPOT",
+      "cost": "main_17",
+      "whole_contracts": false,
+      "job_id": "ETH__Post-IS__UM__P_SPOT__main_17"
+    },
+    {
+      "asset": "ETH",
+      "window": "Post-IS",
+      "signal_source": "UM",
+      "version": "P_SPOT",
+      "cost": "harsh_34",
+      "whole_contracts": false,
+      "job_id": "ETH__Post-IS__UM__P_SPOT__harsh_34"
+    },
+    {
+      "asset": "ETH",
+      "window": "Post-IS",
+      "signal_source": "UM",
+      "version": "V3_CM_DeltaMatched",
+      "cost": "gross_0",
+      "whole_contracts": false,
+      "job_id": "ETH__Post-IS__UM__V3_CM_DeltaMatched__gross_0"
+    },
+    {
+      "asset": "ETH",
+      "window": "Post-IS",
+      "signal_source": "UM",
+      "version": "V3_CM_DeltaMatched",
+      "cost": "main_17",
+      "whole_contracts": false,
+      "job_id": "ETH__Post-IS__UM__V3_CM_DeltaMatched__main_17"
+    },
+    {
+      "asset": "ETH",
+      "window": "Post-IS",
+      "signal_source": "UM",
+      "version": "V3_CM_DeltaMatched",
+      "cost": "harsh_34",
+      "whole_contracts": false,
+      "job_id": "ETH__Post-IS__UM__V3_CM_DeltaMatched__harsh_34"
+    },
+    {
+      "asset": "ETH",
+      "window": "Post-IS",
+      "signal_source": "UM",
+      "version": "P_CM_DeltaMatched",
+      "cost": "gross_0",
+      "whole_contracts": false,
+      "job_id": "ETH__Post-IS__UM__P_CM_DeltaMatched__gross_0"
+    },
+    {
+      "asset": "ETH",
+      "window": "Post-IS",
+      "signal_source": "UM",
+      "version": "P_CM_DeltaMatched",
+      "cost": "main_17",
+      "whole_contracts": false,
+      "job_id": "ETH__Post-IS__UM__P_CM_DeltaMatched__main_17"
+    },
+    {
+      "asset": "ETH",
+      "window": "Post-IS",
+      "signal_source": "UM",
+      "version": "P_CM_DeltaMatched",
+      "cost": "harsh_34",
+      "whole_contracts": false,
+      "job_id": "ETH__Post-IS__UM__P_CM_DeltaMatched__harsh_34"
+    },
+    {
+      "asset": "ETH",
+      "window": "Post-IS",
+      "signal_source": "UM",
+      "version": "V4_CM_CoinAccum",
+      "cost": "gross_0",
+      "whole_contracts": false,
+      "job_id": "ETH__Post-IS__UM__V4_CM_CoinAccum__gross_0"
+    },
+    {
+      "asset": "ETH",
+      "window": "Post-IS",
+      "signal_source": "UM",
+      "version": "V4_CM_CoinAccum",
+      "cost": "main_17",
+      "whole_contracts": false,
+      "job_id": "ETH__Post-IS__UM__V4_CM_CoinAccum__main_17"
+    },
+    {
+      "asset": "ETH",
+      "window": "Post-IS",
+      "signal_source": "UM",
+      "version": "V4_CM_CoinAccum",
+      "cost": "harsh_34",
+      "whole_contracts": false,
+      "job_id": "ETH__Post-IS__UM__V4_CM_CoinAccum__harsh_34"
+    },
+    {
+      "asset": "ETH",
+      "window": "Post-IS",
+      "signal_source": "UM",
+      "version": "HODL_1x_Coin",
+      "cost": "gross_0",
+      "whole_contracts": false,
+      "job_id": "ETH__Post-IS__UM__HODL_1x_Coin__gross_0"
+    },
+    {
+      "asset": "ETH",
+      "window": "Post-IS",
+      "signal_source": "UM",
+      "version": "HODL_1x_Coin",
+      "cost": "main_17",
+      "whole_contracts": false,
+      "job_id": "ETH__Post-IS__UM__HODL_1x_Coin__main_17"
+    },
+    {
+      "asset": "ETH",
+      "window": "Post-IS",
+      "signal_source": "UM",
+      "version": "HODL_1x_Coin",
+      "cost": "harsh_34",
+      "whole_contracts": false,
+      "job_id": "ETH__Post-IS__UM__HODL_1x_Coin__harsh_34"
+    },
+    {
+      "asset": "ETH",
+      "window": "IS-CM-SelfSignal",
+      "signal_source": "CM",
+      "version": "V3_CM_DeltaMatched",
+      "cost": "main_17",
+      "whole_contracts": false,
+      "job_id": "ETH__IS-CM-SelfSignal__CM__V3_CM_DeltaMatched__main_17"
+    },
+    {
+      "asset": "ETH",
+      "window": "IS-CM-SelfSignal",
+      "signal_source": "CM",
+      "version": "P_CM_DeltaMatched",
+      "cost": "main_17",
+      "whole_contracts": false,
+      "job_id": "ETH__IS-CM-SelfSignal__CM__P_CM_DeltaMatched__main_17"
+    },
+    {
+      "asset": "ETH",
+      "window": "IS-CM-SelfSignal",
+      "signal_source": "CM",
+      "version": "V4_CM_CoinAccum",
+      "cost": "main_17",
+      "whole_contracts": false,
+      "job_id": "ETH__IS-CM-SelfSignal__CM__V4_CM_CoinAccum__main_17"
+    },
+    {
+      "asset": "ETH",
+      "window": "Post-IS",
+      "signal_source": "CM",
+      "version": "V3_CM_DeltaMatched",
+      "cost": "main_17",
+      "whole_contracts": false,
+      "job_id": "ETH__Post-IS__CM__V3_CM_DeltaMatched__main_17"
+    },
+    {
+      "asset": "ETH",
+      "window": "Post-IS",
+      "signal_source": "CM",
+      "version": "P_CM_DeltaMatched",
+      "cost": "main_17",
+      "whole_contracts": false,
+      "job_id": "ETH__Post-IS__CM__P_CM_DeltaMatched__main_17"
+    },
+    {
+      "asset": "ETH",
+      "window": "Post-IS",
+      "signal_source": "CM",
+      "version": "V4_CM_CoinAccum",
+      "cost": "main_17",
+      "whole_contracts": false,
+      "job_id": "ETH__Post-IS__CM__V4_CM_CoinAccum__main_17"
+    },
+    {
+      "asset": "ETH",
+      "window": "Post-IS",
+      "signal_source": "UM",
+      "version": "V3_CM_DeltaMatched",
+      "cost": "main_17",
+      "whole_contracts": true,
+      "job_id": "ETH__Post-IS__UM__V3_CM_DeltaMatched__main_17__whole_contracts"
+    },
+    {
+      "asset": "ETH",
+      "window": "Post-IS",
+      "signal_source": "UM",
+      "version": "P_CM_DeltaMatched",
+      "cost": "main_17",
+      "whole_contracts": true,
+      "job_id": "ETH__Post-IS__UM__P_CM_DeltaMatched__main_17__whole_contracts"
+    },
+    {
+      "asset": "ETH",
+      "window": "Post-IS",
+      "signal_source": "UM",
+      "version": "V4_CM_CoinAccum",
+      "cost": "main_17",
+      "whole_contracts": true,
+      "job_id": "ETH__Post-IS__UM__V4_CM_CoinAccum__main_17__whole_contracts"
+    }
+  ],
+  "frozen_at": "2026-11-08T11:51:07.679787+00:00",
+  "post_warmup": "[2023-11-01,2024-01-01), fresh immutable source contexts for each asset",
+  "post_split": "continuous through July 1 2025; output slices only",
+  "post_end_exclusive": "2026-06-01",
+  "post_last_month": "2026-05",
+  "post_engine_window_source": "cp3_windows.window; frozen config.window remains unchanged"
+}

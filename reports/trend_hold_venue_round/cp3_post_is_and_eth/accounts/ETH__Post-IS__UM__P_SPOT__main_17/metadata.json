@@ -1,0 +1,16 @@
+{
+  "version": "P_SPOT",
+  "cost": "main_17",
+  "asset": "ETH",
+  "window": "Post-IS",
+  "initial_capital": 100000.0,
+  "final_equity": 113739.27861544518,
+  "account_reconciliation_error": 8.22434647419214e-11,
+  "order_count": 127,
+  "adjustment_count": 126,
+  "cash_clip_count": 0,
+  "total_fees": 577.0823920725146,
+  "total_slippage_cost": 401.6911847493928,
+  "total_funding": 0.0,
+  "liquidated": false
+}

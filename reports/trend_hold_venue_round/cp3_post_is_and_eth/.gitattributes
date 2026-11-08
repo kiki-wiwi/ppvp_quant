@@ -1,0 +1,2 @@
+**/minute.parquet filter=lfs diff=lfs merge=lfs -text
+**/attribution.csv.gz filter=lfs diff=lfs merge=lfs -text

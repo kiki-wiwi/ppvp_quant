@@ -1,0 +1,109 @@
+2026-11-08T11:51:07.680865+00:00 account 1/87: BTC__Post-IS__UM__V1_USDM__gross_0
+2026-11-08T11:51:08.932420+00:00 account 2/87: BTC__Post-IS__UM__V1_USDM__main_17
+2026-11-08T11:51:10.291734+00:00 account 3/87: BTC__Post-IS__UM__V1_USDM__harsh_34
+2026-11-08T11:51:11.601124+00:00 account 4/87: BTC__Post-IS__UM__P_USDM__gross_0
+2026-11-08T11:51:12.895768+00:00 account 5/87: BTC__Post-IS__UM__P_USDM__main_17
+2026-11-08T11:51:14.289252+00:00 account 6/87: BTC__Post-IS__UM__P_USDM__harsh_34
+2026-11-08T11:51:15.648847+00:00 account 7/87: BTC__Post-IS__UM__V2_SPOT__gross_0
+2026-11-08T11:51:58.789852+00:00 account 8/87: BTC__Post-IS__UM__V2_SPOT__main_17
+2026-11-08T11:52:41.846735+00:00 account 9/87: BTC__Post-IS__UM__V2_SPOT__harsh_34
+2026-11-08T11:53:24.855027+00:00 account 10/87: BTC__Post-IS__UM__P_SPOT__gross_0
+2026-11-08T11:54:10.865961+00:00 account 11/87: BTC__Post-IS__UM__P_SPOT__main_17
+2026-11-08T11:54:57.098562+00:00 account 12/87: BTC__Post-IS__UM__P_SPOT__harsh_34
+2026-11-08T11:55:43.167732+00:00 account 13/87: BTC__Post-IS__UM__V3_CM_DeltaMatched__gross_0
+2026-11-08T11:58:52.415140+00:00 account 14/87: BTC__Post-IS__UM__V3_CM_DeltaMatched__main_17
+2026-11-08T12:02:03.068987+00:00 account 15/87: BTC__Post-IS__UM__V3_CM_DeltaMatched__harsh_34
+2026-11-08T12:05:11.403247+00:00 account 16/87: BTC__Post-IS__UM__P_CM_DeltaMatched__gross_0
+2026-11-08T12:08:19.386528+00:00 account 17/87: BTC__Post-IS__UM__P_CM_DeltaMatched__main_17
+2026-11-08T12:11:27.780194+00:00 account 18/87: BTC__Post-IS__UM__P_CM_DeltaMatched__harsh_34
+2026-11-08T12:14:36.654166+00:00 account 19/87: BTC__Post-IS__UM__V4_CM_CoinAccum__gross_0
+2026-11-08T12:17:32.990773+00:00 account 20/87: BTC__Post-IS__UM__V4_CM_CoinAccum__main_17
+2026-11-08T12:20:30.189508+00:00 account 21/87: BTC__Post-IS__UM__V4_CM_CoinAccum__harsh_34
+2026-11-08T12:23:27.087017+00:00 account 22/87: BTC__Post-IS__UM__HODL_1x_Coin__gross_0
+2026-11-08T12:26:09.603904+00:00 account 23/87: BTC__Post-IS__UM__HODL_1x_Coin__main_17
+2026-11-08T12:28:52.605489+00:00 account 24/87: BTC__Post-IS__UM__HODL_1x_Coin__harsh_34
+2026-11-08T12:31:35.986726+00:00 account 25/87: BTC__Post-IS__UM__V3_CM_DeltaMatched__main_17__whole_contracts
+2026-11-08T12:34:44.604481+00:00 account 26/87: BTC__Post-IS__UM__P_CM_DeltaMatched__main_17__whole_contracts
+2026-11-08T12:37:53.133729+00:00 account 27/87: BTC__Post-IS__UM__V4_CM_CoinAccum__main_17__whole_contracts
+2026-11-08T12:40:50.336169+00:00 account 28/87: BTC__Post-IS__CM__V3_CM_DeltaMatched__main_17
+2026-11-08T12:43:59.342535+00:00 account 29/87: BTC__Post-IS__CM__P_CM_DeltaMatched__main_17
+2026-11-08T12:47:07.864803+00:00 account 30/87: BTC__Post-IS__CM__V4_CM_CoinAccum__main_17
+2026-11-08T12:50:04.862937+00:00 account 31/87: ETH__IS-Common__UM__V1_USDM__gross_0
+2026-11-08T12:50:06.339303+00:00 account 32/87: ETH__IS-Common__UM__V1_USDM__main_17
+2026-11-08T12:50:07.886512+00:00 account 33/87: ETH__IS-Common__UM__V1_USDM__harsh_34
+2026-11-08T12:50:09.396103+00:00 account 34/87: ETH__IS-Common__UM__P_USDM__gross_0
+2026-11-08T12:50:10.851848+00:00 account 35/87: ETH__IS-Common__UM__P_USDM__main_17
+2026-11-08T12:50:12.372928+00:00 account 36/87: ETH__IS-Common__UM__P_USDM__harsh_34
+2026-11-08T12:50:13.927247+00:00 account 37/87: ETH__IS-Common__UM__V2_SPOT__gross_0
+2026-11-08T12:51:11.537110+00:00 account 38/87: ETH__IS-Common__UM__V2_SPOT__main_17
+2026-11-08T12:52:09.965892+00:00 account 39/87: ETH__IS-Common__UM__V2_SPOT__harsh_34
+2026-11-08T12:53:07.730790+00:00 account 40/87: ETH__IS-Common__UM__P_SPOT__gross_0
+2026-11-08T12:54:07.603570+00:00 account 41/87: ETH__IS-Common__UM__P_SPOT__main_17
+2026-11-08T12:55:07.901646+00:00 account 42/87: ETH__IS-Common__UM__P_SPOT__harsh_34
+2026-11-08T12:56:07.924227+00:00 account 43/87: ETH__IS-Common__UM__V3_CM_DeltaMatched__gross_0
+2026-11-08T13:00:16.699615+00:00 account 44/87: ETH__IS-Common__UM__V3_CM_DeltaMatched__main_17
+2026-11-08T13:04:24.415816+00:00 account 45/87: ETH__IS-Common__UM__V3_CM_DeltaMatched__harsh_34
+2026-11-08T13:08:32.336771+00:00 account 46/87: ETH__IS-Common__UM__P_CM_DeltaMatched__gross_0
+2026-11-08T13:12:39.347050+00:00 account 47/87: ETH__IS-Common__UM__P_CM_DeltaMatched__main_17
+2026-11-08T13:16:46.215172+00:00 account 48/87: ETH__IS-Common__UM__P_CM_DeltaMatched__harsh_34
+2026-11-08T13:20:53.894278+00:00 account 49/87: ETH__IS-Common__UM__V4_CM_CoinAccum__gross_0
+2026-11-08T13:24:50.092466+00:00 account 50/87: ETH__IS-Common__UM__V4_CM_CoinAccum__main_17
+2026-11-08T13:28:46.795868+00:00 account 51/87: ETH__IS-Common__UM__V4_CM_CoinAccum__harsh_34
+2026-11-08T13:32:43.329772+00:00 account 52/87: ETH__IS-Common__UM__HODL_1x_Coin__gross_0
+2026-11-08T13:36:21.839840+00:00 account 53/87: ETH__IS-Common__UM__HODL_1x_Coin__main_17
+2026-11-08T13:40:01.219089+00:00 account 54/87: ETH__IS-Common__UM__HODL_1x_Coin__harsh_34
+2026-11-08T13:43:39.993168+00:00 account 55/87: ETH__Post-IS__UM__V1_USDM__gross_0
+2026-11-08T13:43:41.264967+00:00 account 56/87: ETH__Post-IS__UM__V1_USDM__main_17
+2026-11-08T13:43:42.624981+00:00 account 57/87: ETH__Post-IS__UM__V1_USDM__harsh_34
+2026-11-08T13:43:43.941003+00:00 account 58/87: ETH__Post-IS__UM__P_USDM__gross_0
+2026-11-08T13:43:45.241725+00:00 account 59/87: ETH__Post-IS__UM__P_USDM__main_17
+2026-11-08T13:43:46.649915+00:00 account 60/87: ETH__Post-IS__UM__P_USDM__harsh_34
+2026-11-08T13:43:48.006098+00:00 account 61/87: ETH__Post-IS__UM__V2_SPOT__gross_0
+2026-11-08T13:44:30.176817+00:00 account 62/87: ETH__Post-IS__UM__V2_SPOT__main_17
+2026-11-08T13:45:12.393971+00:00 account 63/87: ETH__Post-IS__UM__V2_SPOT__harsh_34
+2026-11-08T13:45:54.677718+00:00 account 64/87: ETH__Post-IS__UM__P_SPOT__gross_0
+2026-11-08T13:46:39.351891+00:00 account 65/87: ETH__Post-IS__UM__P_SPOT__main_17
+2026-11-08T13:47:24.100020+00:00 account 66/87: ETH__Post-IS__UM__P_SPOT__harsh_34
+2026-11-08T13:48:08.837838+00:00 account 67/87: ETH__Post-IS__UM__V3_CM_DeltaMatched__gross_0
+2026-11-08T13:51:12.922889+00:00 account 68/87: ETH__Post-IS__UM__V3_CM_DeltaMatched__main_17
+2026-11-08T13:54:17.630075+00:00 account 69/87: ETH__Post-IS__UM__V3_CM_DeltaMatched__harsh_34
+2026-11-08T13:57:21.991853+00:00 account 70/87: ETH__Post-IS__UM__P_CM_DeltaMatched__gross_0
+2026-11-08T14:00:26.230796+00:00 account 71/87: ETH__Post-IS__UM__P_CM_DeltaMatched__main_17
+2026-11-08T14:03:31.424590+00:00 account 72/87: ETH__Post-IS__UM__P_CM_DeltaMatched__harsh_34
+2026-11-08T14:06:37.160516+00:00 account 73/87: ETH__Post-IS__UM__V4_CM_CoinAccum__gross_0
+2026-11-08T14:09:30.430586+00:00 account 74/87: ETH__Post-IS__UM__V4_CM_CoinAccum__main_17
+2026-11-08T14:12:23.802607+00:00 account 75/87: ETH__Post-IS__UM__V4_CM_CoinAccum__harsh_34
+2026-11-08T14:15:16.889673+00:00 account 76/87: ETH__Post-IS__UM__HODL_1x_Coin__gross_0
+2026-11-08T14:17:59.160007+00:00 account 77/87: ETH__Post-IS__UM__HODL_1x_Coin__main_17
+2026-11-08T14:20:41.701687+00:00 account 78/87: ETH__Post-IS__UM__HODL_1x_Coin__harsh_34
+2026-11-08T14:23:24.015449+00:00 account 79/87: ETH__IS-CM-SelfSignal__CM__V3_CM_DeltaMatched__main_17
+2026-11-08T14:27:21.474395+00:00 account 80/87: ETH__IS-CM-SelfSignal__CM__P_CM_DeltaMatched__main_17
+2026-11-08T14:31:18.525982+00:00 account 81/87: ETH__IS-CM-SelfSignal__CM__V4_CM_CoinAccum__main_17
+2026-11-08T14:35:04.971519+00:00 account 82/87: ETH__Post-IS__CM__V3_CM_DeltaMatched__main_17
+2026-11-08T14:38:09.734105+00:00 account 83/87: ETH__Post-IS__CM__P_CM_DeltaMatched__main_17
+2026-11-08T14:41:15.117608+00:00 account 84/87: ETH__Post-IS__CM__V4_CM_CoinAccum__main_17
+2026-11-08T14:44:08.800007+00:00 account 85/87: ETH__Post-IS__UM__V3_CM_DeltaMatched__main_17__whole_contracts
+2026-11-08T14:47:13.849260+00:00 account 86/87: ETH__Post-IS__UM__P_CM_DeltaMatched__main_17__whole_contracts
+2026-11-08T14:50:20.301716+00:00 account 87/87: ETH__Post-IS__UM__V4_CM_CoinAccum__main_17__whole_contracts
+2026-11-08T14:53:52.036189+00:00 paired inference BTC__Post-IS__UM: fixed 99999 Webb / 10000 paired month draws
+2026-11-08T14:53:52.694712+00:00 paired inference BTC__Post-IS__SPOT: fixed 99999 Webb / 10000 paired month draws
+2026-11-08T14:53:53.321478+00:00 paired inference BTC__Post-IS__CM_DeltaMatched: fixed 99999 Webb / 10000 paired month draws
+2026-11-08T14:53:53.946233+00:00 paired inference BTC__VAL__UM: fixed 99999 Webb / 10000 paired month draws
+2026-11-08T14:53:54.489630+00:00 paired inference BTC__VAL__SPOT: fixed 99999 Webb / 10000 paired month draws
+2026-11-08T14:53:55.030711+00:00 paired inference BTC__VAL__CM_DeltaMatched: fixed 99999 Webb / 10000 paired month draws
+2026-11-08T14:53:55.571820+00:00 paired inference BTC__OOS__UM: fixed 99999 Webb / 10000 paired month draws
+2026-11-08T14:53:56.059705+00:00 paired inference BTC__OOS__SPOT: fixed 99999 Webb / 10000 paired month draws
+2026-11-08T14:53:56.547947+00:00 paired inference BTC__OOS__CM_DeltaMatched: fixed 99999 Webb / 10000 paired month draws
+2026-11-08T14:53:57.036753+00:00 paired inference ETH__IS-Common__UM: fixed 99999 Webb / 10000 paired month draws
+2026-11-08T14:53:57.760751+00:00 paired inference ETH__IS-Common__SPOT: fixed 99999 Webb / 10000 paired month draws
+2026-11-08T14:53:58.477573+00:00 paired inference ETH__IS-Common__CM_DeltaMatched: fixed 99999 Webb / 10000 paired month draws
+2026-11-08T14:53:59.197469+00:00 paired inference ETH__Post-IS__UM: fixed 99999 Webb / 10000 paired month draws
+2026-11-08T14:53:59.827023+00:00 paired inference ETH__Post-IS__SPOT: fixed 99999 Webb / 10000 paired month draws
+2026-11-08T14:54:00.453472+00:00 paired inference ETH__Post-IS__CM_DeltaMatched: fixed 99999 Webb / 10000 paired month draws
+2026-11-08T14:54:01.083153+00:00 paired inference ETH__VAL__UM: fixed 99999 Webb / 10000 paired month draws
+2026-11-08T14:54:01.627386+00:00 paired inference ETH__VAL__SPOT: fixed 99999 Webb / 10000 paired month draws
+2026-11-08T14:54:02.168619+00:00 paired inference ETH__VAL__CM_DeltaMatched: fixed 99999 Webb / 10000 paired month draws
+2026-11-08T14:54:02.709557+00:00 paired inference ETH__OOS__UM: fixed 99999 Webb / 10000 paired month draws
+2026-11-08T14:54:03.198313+00:00 paired inference ETH__OOS__SPOT: fixed 99999 Webb / 10000 paired month draws
+2026-11-08T14:54:03.687367+00:00 paired inference ETH__OOS__CM_DeltaMatched: fixed 99999 Webb / 10000 paired month draws
+2026-11-08T14:54:09.504360+00:00 completed 87 accounts and 21 paired inference families; STOP at CP3

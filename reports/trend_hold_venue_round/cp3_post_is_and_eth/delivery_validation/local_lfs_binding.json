@@ -1,0 +1,1049 @@
+{
+  "files": [
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/BTC__Post-IS__CM__P_CM_DeltaMatched__main_17/attribution.csv.gz",
+      "oid": "9d5e7fcf89040b062fa47e74d2673f6b92a8e8a2441d2cc9da0aea6939f3a6c9",
+      "same_inode": true,
+      "size": 134504532
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/BTC__Post-IS__CM__P_CM_DeltaMatched__main_17/minute.parquet",
+      "oid": "ed7c8d0254b2bfe7b7b53519338949a6cdcff19541d5aa2e666dea87ae208212",
+      "same_inode": true,
+      "size": 105160834
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/BTC__Post-IS__CM__V3_CM_DeltaMatched__main_17/attribution.csv.gz",
+      "oid": "cdd6e1da1ee349d138dd3d09b1df7bf08caf9186c384a54f0fee01815ab5dedf",
+      "same_inode": true,
+      "size": 134805878
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/BTC__Post-IS__CM__V3_CM_DeltaMatched__main_17/minute.parquet",
+      "oid": "231551698c16451cd420a0ad9c538403eb34613aac09b8a879f1b7929cf98407",
+      "same_inode": true,
+      "size": 102407274
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/BTC__Post-IS__CM__V4_CM_CoinAccum__main_17/attribution.csv.gz",
+      "oid": "6842f8a290f2ad15f4b0583bfe359b36c75eb8fc0659309e24e82f4ba2589465",
+      "same_inode": true,
+      "size": 102983868
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/BTC__Post-IS__CM__V4_CM_CoinAccum__main_17/minute.parquet",
+      "oid": "42020d8a30bec77ce1564c1e5f78d2713a851af682dcb2249dc8746a8b015144",
+      "same_inode": true,
+      "size": 83185831
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/BTC__Post-IS__UM__HODL_1x_Coin__gross_0/attribution.csv.gz",
+      "oid": "9eedff3eff8c82295441d354771b7ab1ba81d960862bc501f917d7dbe1cf3060",
+      "same_inode": true,
+      "size": 62995230
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/BTC__Post-IS__UM__HODL_1x_Coin__gross_0/minute.parquet",
+      "oid": "2fd928db0cf82d2337ef4405d05b27f52e1f627ddf9e02d444d8c1fef04c1b89",
+      "same_inode": true,
+      "size": 51517870
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/BTC__Post-IS__UM__HODL_1x_Coin__harsh_34/attribution.csv.gz",
+      "oid": "c850281e16af67b5a9ee5eb1c59ec1cf1104a4e22806aa220a6bf066406d9887",
+      "same_inode": true,
+      "size": 62926300
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/BTC__Post-IS__UM__HODL_1x_Coin__harsh_34/minute.parquet",
+      "oid": "a2ebf3776afa0d2eadf47211d264a6583eeaceacd99c831acac85f898b30081d",
+      "same_inode": true,
+      "size": 51547659
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/BTC__Post-IS__UM__HODL_1x_Coin__main_17/attribution.csv.gz",
+      "oid": "f059daa31131ec60f2e802eea7612c78937972ae59d7dccd32bf43b6a75f6bce",
+      "same_inode": true,
+      "size": 63050653
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/BTC__Post-IS__UM__HODL_1x_Coin__main_17/minute.parquet",
+      "oid": "f5d21c1ac298042aeaa41a4db5e9e67205beb4c009f172422f09320a07a5f178",
+      "same_inode": true,
+      "size": 51507666
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/BTC__Post-IS__UM__P_CM_DeltaMatched__gross_0/attribution.csv.gz",
+      "oid": "0e80add666874e1a4a2f9e3f042d65d8961be94e854d08abc0cf95ea83beaa1b",
+      "same_inode": true,
+      "size": 134318317
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/BTC__Post-IS__UM__P_CM_DeltaMatched__gross_0/minute.parquet",
+      "oid": "5ce8ccec047f9b1f66caa0ec99d41447c927c68ce53fbffd8f0c302f410599be",
+      "same_inode": true,
+      "size": 103385795
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/BTC__Post-IS__UM__P_CM_DeltaMatched__harsh_34/attribution.csv.gz",
+      "oid": "642f10ac72db84b2b9b56c596e15c10c8fa1b6b496023400046c5fb96ed9b730",
+      "same_inode": true,
+      "size": 134497923
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/BTC__Post-IS__UM__P_CM_DeltaMatched__harsh_34/minute.parquet",
+      "oid": "183896c7230004c020aebfc19903899daedc24c6870c2a871dad70b7df270f60",
+      "same_inode": true,
+      "size": 105139638
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/BTC__Post-IS__UM__P_CM_DeltaMatched__main_17/attribution.csv.gz",
+      "oid": "7cf2ba5dcc0f7bd35150f5969b457953c40e6a7e8b016322eeec5e96c6bd26d6",
+      "same_inode": true,
+      "size": 134501437
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/BTC__Post-IS__UM__P_CM_DeltaMatched__main_17/minute.parquet",
+      "oid": "2d38da539e7947867b783fa95df0346021dc716e65ba097efec909b1a943c222",
+      "same_inode": true,
+      "size": 105166062
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/BTC__Post-IS__UM__P_CM_DeltaMatched__main_17__whole_contracts/attribution.csv.gz",
+      "oid": "c6e4533a7b2906e1a4dd5644fb14199797f47e92f0161df2bbd91b0046d20df4",
+      "same_inode": true,
+      "size": 134480419
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/BTC__Post-IS__UM__P_CM_DeltaMatched__main_17__whole_contracts/minute.parquet",
+      "oid": "626b024bca68fef59cf053997c3f25f30087941b3de749f7d7ec34e4d66ee6e5",
+      "same_inode": true,
+      "size": 105165919
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/BTC__Post-IS__UM__P_SPOT__gross_0/attribution.csv.gz",
+      "oid": "f3009a45d5159fdc1d111fa56e88231883e932fe0bb7fe645ffb941c41a3d44b",
+      "same_inode": true,
+      "size": 20389038
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/BTC__Post-IS__UM__P_SPOT__gross_0/minute.parquet",
+      "oid": "947bf1196384672229074bb692c28570b3b74448d65f606df47d968636d877f9",
+      "same_inode": true,
+      "size": 36768993
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/BTC__Post-IS__UM__P_SPOT__harsh_34/attribution.csv.gz",
+      "oid": "82b28e47da3f3f95b243bc2c5c4bcfdc0e1b9e2958eb3f1aab40b5eb1ca95794",
+      "same_inode": true,
+      "size": 20389989
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/BTC__Post-IS__UM__P_SPOT__harsh_34/minute.parquet",
+      "oid": "3d27a3554bc2cbe2f77a36696fe7aca0f09d99d6bc681a0f424d3c60c73f0103",
+      "same_inode": true,
+      "size": 36773775
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/BTC__Post-IS__UM__P_SPOT__main_17/attribution.csv.gz",
+      "oid": "caf7189990652b66baf8154762c383811368d99bb4195dec2a607bf86112d1e5",
+      "same_inode": true,
+      "size": 20390916
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/BTC__Post-IS__UM__P_SPOT__main_17/minute.parquet",
+      "oid": "284c07692920f985b16502b5e5d35892f319ef22e700552a55dfed64136542cd",
+      "same_inode": true,
+      "size": 36781564
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/BTC__Post-IS__UM__P_USDM__gross_0/attribution.csv.gz",
+      "oid": "c65174d2a11e09388dc1e7bccff327b8e71bb5486fc9e629dc795b072f9a854c",
+      "same_inode": true,
+      "size": 43
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/BTC__Post-IS__UM__P_USDM__gross_0/minute.parquet",
+      "oid": "cf841489c420787ea49ad03d5d51e191167c77260928b324e64463cb55363f61",
+      "same_inode": true,
+      "size": 35847585
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/BTC__Post-IS__UM__P_USDM__harsh_34/attribution.csv.gz",
+      "oid": "bf0418366f5e366136d2b99483f9c507a27e0f0ae0199a0cba803ff16dcb9f06",
+      "same_inode": true,
+      "size": 43
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/BTC__Post-IS__UM__P_USDM__harsh_34/minute.parquet",
+      "oid": "2f26cf46857cb70fe791ba22214f4362fc7fa31f6f312f3bb57cbdf1763be382",
+      "same_inode": true,
+      "size": 36434447
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/BTC__Post-IS__UM__P_USDM__main_17/attribution.csv.gz",
+      "oid": "880dfca51e2f6389e9402cf145d47e1ba91bd2f251bd217548054505bc543fbe",
+      "same_inode": true,
+      "size": 43
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/BTC__Post-IS__UM__P_USDM__main_17/minute.parquet",
+      "oid": "68ce0d7f8107a77d21c070f81d287616d6cf06c3cec9d7ed0feb95c4bc5aa17c",
+      "same_inode": true,
+      "size": 36430049
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/BTC__Post-IS__UM__V1_USDM__gross_0/attribution.csv.gz",
+      "oid": "faee2f4b07d1907ba47e3a47401380d7a4d8d8353083e9d0702087e293e8fe2e",
+      "same_inode": true,
+      "size": 43
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/BTC__Post-IS__UM__V1_USDM__gross_0/minute.parquet",
+      "oid": "9f28492ff289da09e2af700a936196736dd3fde7e082715507f8f34e72c624fd",
+      "same_inode": true,
+      "size": 27069370
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/BTC__Post-IS__UM__V1_USDM__harsh_34/attribution.csv.gz",
+      "oid": "30c4829fa7318ed8618ec40ba8c7d2d4db6e245c1c33e89efa7ac47f3a5b24be",
+      "same_inode": true,
+      "size": 43
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/BTC__Post-IS__UM__V1_USDM__harsh_34/minute.parquet",
+      "oid": "682c4d0e435791a376216db42b5d9d68bd155bc386d1ad307bcbb5c72684f147",
+      "same_inode": true,
+      "size": 27597366
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/BTC__Post-IS__UM__V1_USDM__main_17/attribution.csv.gz",
+      "oid": "d8799de28eff4ea15de0c981b5efefe8e059f2d42bc8cc8f0fa44b83aec812c3",
+      "same_inode": true,
+      "size": 43
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/BTC__Post-IS__UM__V1_USDM__main_17/minute.parquet",
+      "oid": "da54357300af57ff657a988501cdd0fd140cf40f4a10a34ddee856f1f8a0063e",
+      "same_inode": true,
+      "size": 27600739
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/BTC__Post-IS__UM__V2_SPOT__gross_0/attribution.csv.gz",
+      "oid": "7a00b999e6fcb20421efc488289a4475b78f36f0d26dbe81afb07e64c97d76de",
+      "same_inode": true,
+      "size": 12939013
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/BTC__Post-IS__UM__V2_SPOT__gross_0/minute.parquet",
+      "oid": "38c08f0452032a30891b5d060c9f17dac2e3a3ff9cc1e3e6f42e9b9581429bb9",
+      "same_inode": true,
+      "size": 28042115
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/BTC__Post-IS__UM__V2_SPOT__harsh_34/attribution.csv.gz",
+      "oid": "fc4ede0c98d3921807cc4d8321b14fcee0ec5725305f84662191d986bfed26e3",
+      "same_inode": true,
+      "size": 12940178
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/BTC__Post-IS__UM__V2_SPOT__harsh_34/minute.parquet",
+      "oid": "aaf03bb083512869dc2d8ca4a2099dae927c72063e38825397908caac2428051",
+      "same_inode": true,
+      "size": 28046192
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/BTC__Post-IS__UM__V2_SPOT__main_17/attribution.csv.gz",
+      "oid": "a52653664a58b013a6f4891f5ff1c892474aa4e002ab5e7acec6287cc2ca4675",
+      "same_inode": true,
+      "size": 12943072
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/BTC__Post-IS__UM__V2_SPOT__main_17/minute.parquet",
+      "oid": "6a533a9ca2eeb3f4cc730713b0a9cf191ac628241caa59bad4bf0653b1e8ece7",
+      "same_inode": true,
+      "size": 28034428
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/BTC__Post-IS__UM__V3_CM_DeltaMatched__gross_0/attribution.csv.gz",
+      "oid": "a9735e115ae24fbf4a90005484ceb838725c7656a19dae2b67f7c7323eb9d220",
+      "same_inode": true,
+      "size": 131988843
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/BTC__Post-IS__UM__V3_CM_DeltaMatched__gross_0/minute.parquet",
+      "oid": "e17b019e3c2e40307665e0ddc8472d69d77014da81feccd11f8c94759352c0ae",
+      "same_inode": true,
+      "size": 87562505
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/BTC__Post-IS__UM__V3_CM_DeltaMatched__harsh_34/attribution.csv.gz",
+      "oid": "c994bea4beff578055738cbc077c57378f99418e7972ee1e10f3f36d88fed3fe",
+      "same_inode": true,
+      "size": 134805983
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/BTC__Post-IS__UM__V3_CM_DeltaMatched__harsh_34/minute.parquet",
+      "oid": "f6f4c3e8d94b4253b88c2f6cc22bd014984e6c9a3b231ed11647bc0d72eafda0",
+      "same_inode": true,
+      "size": 102461840
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/BTC__Post-IS__UM__V3_CM_DeltaMatched__main_17/attribution.csv.gz",
+      "oid": "76e411b185136725e48d040d5ddec50f79e97a345176632221f2bdccbf25d8e9",
+      "same_inode": true,
+      "size": 134804603
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/BTC__Post-IS__UM__V3_CM_DeltaMatched__main_17/minute.parquet",
+      "oid": "969bf68c5e4af5b19632383867f9e8406f57ae66f21a89407388b6f64340ee36",
+      "same_inode": true,
+      "size": 102452558
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/BTC__Post-IS__UM__V3_CM_DeltaMatched__main_17__whole_contracts/attribution.csv.gz",
+      "oid": "db81ec6a7dfc3a01caea7fce92c8ddad1d27d29358abeefeb2f688198312fac5",
+      "same_inode": true,
+      "size": 134790896
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/BTC__Post-IS__UM__V3_CM_DeltaMatched__main_17__whole_contracts/minute.parquet",
+      "oid": "b859f0b7c9f2209bacbaefeb6f421c30301901762a37e74f5719a50e97163630",
+      "same_inode": true,
+      "size": 102570689
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/BTC__Post-IS__UM__V4_CM_CoinAccum__gross_0/attribution.csv.gz",
+      "oid": "d4f666404f6988de5142dcae9d2c09f371a5ecebe01f39a9b1e9a50872cf6c1c",
+      "same_inode": true,
+      "size": 102880118
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/BTC__Post-IS__UM__V4_CM_CoinAccum__gross_0/minute.parquet",
+      "oid": "6875768aef8179ff5d6ea6a1b5e701a0460af5c7ebb8979194e799a8c41a7855",
+      "same_inode": true,
+      "size": 81690558
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/BTC__Post-IS__UM__V4_CM_CoinAccum__harsh_34/attribution.csv.gz",
+      "oid": "61fb688b1cdefaf9d4e5d627d3a12f3289279f3362dee4fd309710a6de4fc851",
+      "same_inode": true,
+      "size": 102980094
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/BTC__Post-IS__UM__V4_CM_CoinAccum__harsh_34/minute.parquet",
+      "oid": "32bc468569107f0a87d276ef9967d299662b91ae402a5a2f51010f86973dcafe",
+      "same_inode": true,
+      "size": 83186468
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/BTC__Post-IS__UM__V4_CM_CoinAccum__main_17/attribution.csv.gz",
+      "oid": "464aa1b5560f9e789875657a20a2c56c67433b5c193172a8d4ec0fdad4377065",
+      "same_inode": true,
+      "size": 102958411
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/BTC__Post-IS__UM__V4_CM_CoinAccum__main_17/minute.parquet",
+      "oid": "314a6683eaefc2abcda107cc7006be05a4f97a7f1fc7949e412d9fd83794e315",
+      "same_inode": true,
+      "size": 83181995
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/BTC__Post-IS__UM__V4_CM_CoinAccum__main_17__whole_contracts/attribution.csv.gz",
+      "oid": "6a34399fba5e0566ef22803d4bf3100239d6c000443e42b941c685d7f581dfe5",
+      "same_inode": true,
+      "size": 102963918
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/BTC__Post-IS__UM__V4_CM_CoinAccum__main_17__whole_contracts/minute.parquet",
+      "oid": "075ab4c561ac87bcc34eaaaba2e4f274d902b20a9efc999d5618da55c30dfaa2",
+      "same_inode": true,
+      "size": 83193440
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__IS-CM-SelfSignal__CM__P_CM_DeltaMatched__main_17/attribution.csv.gz",
+      "oid": "d364d4c7eb1291badaf540172e5efbdc441d1788d9cd5ac906ec98c8a50d9c21",
+      "same_inode": true,
+      "size": 171053251
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__IS-CM-SelfSignal__CM__P_CM_DeltaMatched__main_17/minute.parquet",
+      "oid": "7ae9ba6327b169fd3663ce52b8e04235a3c0d757c7a53271a25e0560a8d1d72f",
+      "same_inode": true,
+      "size": 130332079
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__IS-CM-SelfSignal__CM__V3_CM_DeltaMatched__main_17/attribution.csv.gz",
+      "oid": "dca3c88351e5cd131805c7b0ab0e71ae8106ad0d1ed46dd94e722fe057f0129f",
+      "same_inode": true,
+      "size": 171688180
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__IS-CM-SelfSignal__CM__V3_CM_DeltaMatched__main_17/minute.parquet",
+      "oid": "48fa6a000b50496e3c30998ad1f75c407ba429244a8120f6cf39c10524357dea",
+      "same_inode": true,
+      "size": 126774773
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__IS-CM-SelfSignal__CM__V4_CM_CoinAccum__main_17/attribution.csv.gz",
+      "oid": "55e5328adf0e83adae8781984f0d8c15ee43f786cd77c02825fa99da3826d751",
+      "same_inode": true,
+      "size": 129788210
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__IS-CM-SelfSignal__CM__V4_CM_CoinAccum__main_17/minute.parquet",
+      "oid": "73e9320e9fdd5bca20c42510bae7f82a506b03ae0ae5225bec7c6ad2fe02b8a8",
+      "same_inode": true,
+      "size": 102952833
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__IS-Common__UM__HODL_1x_Coin__gross_0/attribution.csv.gz",
+      "oid": "1aa194d501badbbb50d8bbfe4c980ebc02cf75d5e2b58569fc976a80d2114857",
+      "same_inode": true,
+      "size": 73194533
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__IS-Common__UM__HODL_1x_Coin__gross_0/minute.parquet",
+      "oid": "71fc2bf821bc2f13ba37db23cca6896f2d6504f16be1aced37cc013c2129816f",
+      "same_inode": true,
+      "size": 53490178
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__IS-Common__UM__HODL_1x_Coin__harsh_34/attribution.csv.gz",
+      "oid": "e969cb843caf781dea83eb079c06b04749a8a62caf6f516c0d160a89c3006194",
+      "same_inode": true,
+      "size": 74573360
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__IS-Common__UM__HODL_1x_Coin__harsh_34/minute.parquet",
+      "oid": "428590a722935ca59000e15a07b738764d368a1bb18ecb3af3ba230ab8f4d1b0",
+      "same_inode": true,
+      "size": 54002342
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__IS-Common__UM__HODL_1x_Coin__main_17/attribution.csv.gz",
+      "oid": "5aba00fa671fdb4c391774f09cfb3f6a19990c29d91bdfa0890278ad9e66efe8",
+      "same_inode": true,
+      "size": 74687736
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__IS-Common__UM__HODL_1x_Coin__main_17/minute.parquet",
+      "oid": "8be91f5dad0ac849ab1309b4016089c1c73b95c5dced99168cad4ef0c0a59355",
+      "same_inode": true,
+      "size": 54000188
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__IS-Common__UM__P_CM_DeltaMatched__gross_0/attribution.csv.gz",
+      "oid": "8c31a94ef7c36fb86b438e0a40a287cf701996db64d1aec74ec7bb15ff0865e7",
+      "same_inode": true,
+      "size": 179450440
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__IS-Common__UM__P_CM_DeltaMatched__gross_0/minute.parquet",
+      "oid": "7c2b04894bb8c3a7743f1c61675da22c6c3c17d06eb11896fd8a566b8a31035d",
+      "same_inode": true,
+      "size": 129645097
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__IS-Common__UM__P_CM_DeltaMatched__harsh_34/attribution.csv.gz",
+      "oid": "e5b2cd5793bc73abe3ce2398499f7f5dc6e491c89385ffb224ba4227109a7c96",
+      "same_inode": true,
+      "size": 179641955
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__IS-Common__UM__P_CM_DeltaMatched__harsh_34/minute.parquet",
+      "oid": "bfd01149d0c13970317f0fe831b0e86d6e8340e4a2326dfa11b544f58528599d",
+      "same_inode": true,
+      "size": 135904309
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__IS-Common__UM__P_CM_DeltaMatched__main_17/attribution.csv.gz",
+      "oid": "592963448e1a210637149082b68fd7c42d0ff020ecb79a9a290d378e0bb8d935",
+      "same_inode": true,
+      "size": 179636577
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__IS-Common__UM__P_CM_DeltaMatched__main_17/minute.parquet",
+      "oid": "8dc86a53c87209a18e5baef3b54700eb75c8eeb24e94d54cb2602f08be33d367",
+      "same_inode": true,
+      "size": 135872275
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__IS-Common__UM__P_SPOT__gross_0/attribution.csv.gz",
+      "oid": "70fbc63d5146fbbc68cb10444208d44f4b6a0f3bdd0314d99ce16dfb09a0cd22",
+      "same_inode": true,
+      "size": 19925867
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__IS-Common__UM__P_SPOT__gross_0/minute.parquet",
+      "oid": "c06b928a59221dfd307e0efde12dee41d6d27560fdc08d58fda2e69517f86a80",
+      "same_inode": true,
+      "size": 44414434
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__IS-Common__UM__P_SPOT__harsh_34/attribution.csv.gz",
+      "oid": "d7dfc1d4b8dc76fbb2b604c30c982e196832b47f391a73fc5edea340b40ef7af",
+      "same_inode": true,
+      "size": 19922892
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__IS-Common__UM__P_SPOT__harsh_34/minute.parquet",
+      "oid": "3e855f6274e244256f0c3ca6a90f7367c7dc1618b79284f5f62a15f68c6d9880",
+      "same_inode": true,
+      "size": 44447200
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__IS-Common__UM__P_SPOT__main_17/attribution.csv.gz",
+      "oid": "f0ab4a6c2b9d895c031abc45f6cd79ef7dc803d7fb219f9e8a844d03ce356344",
+      "same_inode": true,
+      "size": 19934156
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__IS-Common__UM__P_SPOT__main_17/minute.parquet",
+      "oid": "9947f824ecc5faaafbe36f084f60450f650d8c735ca77ba111224a8ba6519094",
+      "same_inode": true,
+      "size": 44433879
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__IS-Common__UM__P_USDM__gross_0/attribution.csv.gz",
+      "oid": "851f70efc5aebefdfd42cf0ec49739d8c24aeeca7e83f18dd8f87ff87e6edc43",
+      "same_inode": true,
+      "size": 43
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__IS-Common__UM__P_USDM__gross_0/minute.parquet",
+      "oid": "1f1f24e74ec744d349f69626a13574358892d7b916a73b1a58a6f0904563c0a1",
+      "same_inode": true,
+      "size": 44641872
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__IS-Common__UM__P_USDM__harsh_34/attribution.csv.gz",
+      "oid": "473e6333d736e7e3a4d73eaa5e0c3a3ef94db9c619df7c17f1238d37411a1272",
+      "same_inode": true,
+      "size": 43
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__IS-Common__UM__P_USDM__harsh_34/minute.parquet",
+      "oid": "daf1bf611ae99dd3fce9c38c6af3721d504fd3e01f3fc21014b406848a8c9b00",
+      "same_inode": true,
+      "size": 46958646
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__IS-Common__UM__P_USDM__main_17/attribution.csv.gz",
+      "oid": "454a881b58dc3051b397a4e792ffc21ec9e212ac89e43d94dcdfeb7a482dac36",
+      "same_inode": true,
+      "size": 43
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__IS-Common__UM__P_USDM__main_17/minute.parquet",
+      "oid": "0b6b321964fd7132efa61a90544e07275e8c0d26b7133020f3d11de9d870248d",
+      "same_inode": true,
+      "size": 46967256
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__IS-Common__UM__V1_USDM__gross_0/attribution.csv.gz",
+      "oid": "7d4a4e561802ea018bf2fe277331dc11b2c13547d3bf5630843e452e56bedae6",
+      "same_inode": true,
+      "size": 43
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__IS-Common__UM__V1_USDM__gross_0/minute.parquet",
+      "oid": "1fb18ddb4fe9f53bf8365245ddf3c6350c9dfabb8b77241e0d9c3cc2cd1eb196",
+      "same_inode": true,
+      "size": 34372348
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__IS-Common__UM__V1_USDM__harsh_34/attribution.csv.gz",
+      "oid": "68df0dc593c274e07ddd8db0999e1f6d1015df16422126cf4f9a5378e18c2a6b",
+      "same_inode": true,
+      "size": 43
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__IS-Common__UM__V1_USDM__harsh_34/minute.parquet",
+      "oid": "1ab965184d540fa07084f74845112f13e69d89f59c125c7b3c1859cbae0b93bf",
+      "same_inode": true,
+      "size": 35856342
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__IS-Common__UM__V1_USDM__main_17/attribution.csv.gz",
+      "oid": "a65dc0f9010dd02bd468a4568143cdb1636d93dfa22c12cf060a622eb5be0fbd",
+      "same_inode": true,
+      "size": 43
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__IS-Common__UM__V1_USDM__main_17/minute.parquet",
+      "oid": "6731a7ed998d74ee8e948313c51f5b13e1b2566e55ec2dc282df6a41da905f91",
+      "same_inode": true,
+      "size": 35838031
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__IS-Common__UM__V2_SPOT__gross_0/attribution.csv.gz",
+      "oid": "5c2cf4c6012e9d010050053eb85510fd61db524ee1bf4f98ba002aa875827640",
+      "same_inode": true,
+      "size": 13883141
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__IS-Common__UM__V2_SPOT__gross_0/minute.parquet",
+      "oid": "3273e5126d08da8bba3d7c2b89faec6b8bbbd9db37302683c81423b33f0949ae",
+      "same_inode": true,
+      "size": 34301990
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__IS-Common__UM__V2_SPOT__harsh_34/attribution.csv.gz",
+      "oid": "b57aa37da6ba4df4ce83588ca2eea86acf228af7191fc3ac88a4f8f1b994b485",
+      "same_inode": true,
+      "size": 13885894
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__IS-Common__UM__V2_SPOT__harsh_34/minute.parquet",
+      "oid": "8447bcd97925b1956a8d8dc709e9dc587b3479d6480371c5d16a0638e93fd892",
+      "same_inode": true,
+      "size": 34289418
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__IS-Common__UM__V2_SPOT__main_17/attribution.csv.gz",
+      "oid": "cbca9dde4262dfa7b49c752f0a70919183ff92435ddc5b2aa8e4622254cc2714",
+      "same_inode": true,
+      "size": 13889085
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__IS-Common__UM__V2_SPOT__main_17/minute.parquet",
+      "oid": "d95b5776741ec0edf1e444a872fc3b3f85619a2b388bdee8d24d76146e6a0f15",
+      "same_inode": true,
+      "size": 34283990
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__IS-Common__UM__V3_CM_DeltaMatched__gross_0/attribution.csv.gz",
+      "oid": "f49e9885a350acc309721d00ce2e4a634e926a9ff0006714379465956bc2e64d",
+      "same_inode": true,
+      "size": 177080120
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__IS-Common__UM__V3_CM_DeltaMatched__gross_0/minute.parquet",
+      "oid": "f250f4d26816c4a7afabce90ccdd1e00d8b004b9688d31abaee5f3d04b45da1e",
+      "same_inode": true,
+      "size": 113296931
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__IS-Common__UM__V3_CM_DeltaMatched__harsh_34/attribution.csv.gz",
+      "oid": "483f5e65d07b9d4ce99251669985aa57786388b521d60967ea98889485f3ff6f",
+      "same_inode": true,
+      "size": 180177418
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__IS-Common__UM__V3_CM_DeltaMatched__harsh_34/minute.parquet",
+      "oid": "87cfbe908c0e72d9a5388efefdc2931a84aa903a3d1581985cadf06f685759df",
+      "same_inode": true,
+      "size": 132514847
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__IS-Common__UM__V3_CM_DeltaMatched__main_17/attribution.csv.gz",
+      "oid": "6626d0207f22b64b31d893a19f71a7641fc06d6ac4988087d2093765b3c7b87f",
+      "same_inode": true,
+      "size": 180174432
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__IS-Common__UM__V3_CM_DeltaMatched__main_17/minute.parquet",
+      "oid": "c4823671f43fe83ffd4db05e6eaab621607ff158e0577a341d5dbb62e13a1ee2",
+      "same_inode": true,
+      "size": 132411445
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__IS-Common__UM__V4_CM_CoinAccum__gross_0/attribution.csv.gz",
+      "oid": "abab723f6626a39f4453c1fcde4cdddbeec01de858182182da51c900b2859e5b",
+      "same_inode": true,
+      "size": 135673144
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__IS-Common__UM__V4_CM_CoinAccum__gross_0/minute.parquet",
+      "oid": "4827289c2f5d9471230aebba489f28a9dc9106fd3cc7bae14a982034e90866fc",
+      "same_inode": true,
+      "size": 102518271
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__IS-Common__UM__V4_CM_CoinAccum__harsh_34/attribution.csv.gz",
+      "oid": "430fa0335590f2ddb55ff6474ff367c0f3b1b3f4bbb977b10cf511312a117f28",
+      "same_inode": true,
+      "size": 135804020
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__IS-Common__UM__V4_CM_CoinAccum__harsh_34/minute.parquet",
+      "oid": "a817023f5bd378ca760306e80177d8669a19cee575109299953ac958260e9909",
+      "same_inode": true,
+      "size": 106194543
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__IS-Common__UM__V4_CM_CoinAccum__main_17/attribution.csv.gz",
+      "oid": "eef82b5a2be98d123c5f909c72465a4a8fbfcb15c45561a1cbf618c92703732a",
+      "same_inode": true,
+      "size": 135795305
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__IS-Common__UM__V4_CM_CoinAccum__main_17/minute.parquet",
+      "oid": "0128edc747e4695357230d4906b9dafa2dc4f4caab44bb9e31511487a59142f6",
+      "same_inode": true,
+      "size": 106170332
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__Post-IS__CM__P_CM_DeltaMatched__main_17/attribution.csv.gz",
+      "oid": "66fc08c1fe6146f14b7a7d28bf681b919a7dd3ec5ad5ab436504c8fb80a27939",
+      "same_inode": true,
+      "size": 135595820
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__Post-IS__CM__P_CM_DeltaMatched__main_17/minute.parquet",
+      "oid": "aaf557db247a0fec7686845362c6167c31d3587c4afa3ac826681a83302c3f90",
+      "same_inode": true,
+      "size": 103211191
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__Post-IS__CM__V3_CM_DeltaMatched__main_17/attribution.csv.gz",
+      "oid": "458f6ee3f809973338fb7b357780bf23df57a04dfed48f7c07dfc7b588e8d626",
+      "same_inode": true,
+      "size": 135392954
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__Post-IS__CM__V3_CM_DeltaMatched__main_17/minute.parquet",
+      "oid": "c7cf007c8812f5d11e862210f8224a48e9cd719d09aafd889cf5fd9f7f8efb9d",
+      "same_inode": true,
+      "size": 99745339
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__Post-IS__CM__V4_CM_CoinAccum__main_17/attribution.csv.gz",
+      "oid": "f947ccd356b2011dee6092e8505ff3274626763d275d059a45c790e0c907be4d",
+      "same_inode": true,
+      "size": 95037205
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__Post-IS__CM__V4_CM_CoinAccum__main_17/minute.parquet",
+      "oid": "b9292ee64a6daf9e9d582bbe018364b849099739dd524c6948adc73ba08efa79",
+      "same_inode": true,
+      "size": 76258171
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__Post-IS__UM__HODL_1x_Coin__gross_0/attribution.csv.gz",
+      "oid": "af1b124b95a4c078446a7456749ac950924f1b79f5c23a5faeccb84764af2f24",
+      "same_inode": true,
+      "size": 57729205
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__Post-IS__UM__HODL_1x_Coin__gross_0/minute.parquet",
+      "oid": "03eba0bd44240f23449d11d4b4fdfef34fa6b06b021e46915c14fdbe2fddc4f9",
+      "same_inode": true,
+      "size": 44626264
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__Post-IS__UM__HODL_1x_Coin__harsh_34/attribution.csv.gz",
+      "oid": "9000165e9e23d6d39a44d78dfc07172fbf16c647495b961997992ba9da6da417",
+      "same_inode": true,
+      "size": 57739558
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__Post-IS__UM__HODL_1x_Coin__harsh_34/minute.parquet",
+      "oid": "99750ad8831f5b2451d3944a385c566c74ffcb56b076e347d1bac4232cb6ab0d",
+      "same_inode": true,
+      "size": 44593966
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__Post-IS__UM__HODL_1x_Coin__main_17/attribution.csv.gz",
+      "oid": "aaabe9de93d3ea884e3da491578d7465be0a180a8440a624e41f2cea82b722c4",
+      "same_inode": true,
+      "size": 57690964
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__Post-IS__UM__HODL_1x_Coin__main_17/minute.parquet",
+      "oid": "51f4420c2f144f70fa49ca6d97f0cc873b6788d5fe91d64324eed2203e52f0ce",
+      "same_inode": true,
+      "size": 44632175
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__Post-IS__UM__P_CM_DeltaMatched__gross_0/attribution.csv.gz",
+      "oid": "42ce8ea12704f3ffd9adb9f40ff1fe45c3e98a78e078e3a9741e69d497b56245",
+      "same_inode": true,
+      "size": 135342786
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__Post-IS__UM__P_CM_DeltaMatched__gross_0/minute.parquet",
+      "oid": "eebb6c02c9c17e6ad319362b71f5e021ebe7da40482cce79b9a2754db4595a7a",
+      "same_inode": true,
+      "size": 99946543
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__Post-IS__UM__P_CM_DeltaMatched__harsh_34/attribution.csv.gz",
+      "oid": "789f47c547f8271e030a20d0123ac6f9375f4532b369a378a8747112be5dbe88",
+      "same_inode": true,
+      "size": 135598979
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__Post-IS__UM__P_CM_DeltaMatched__harsh_34/minute.parquet",
+      "oid": "ab64f1713ef99a32b3025007234ede379e093a39dc460b9e5aae04320b881239",
+      "same_inode": true,
+      "size": 103197811
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__Post-IS__UM__P_CM_DeltaMatched__main_17/attribution.csv.gz",
+      "oid": "35af408fa6e08282249b54ae5fe360c652ada782005bd092a967aaf12cf6e0b9",
+      "same_inode": true,
+      "size": 135597589
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__Post-IS__UM__P_CM_DeltaMatched__main_17/minute.parquet",
+      "oid": "6977e3985b5d69bb352595eb72e1eae475f83e449223ce0640e1f1528c349367",
+      "same_inode": true,
+      "size": 103227870
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__Post-IS__UM__P_CM_DeltaMatched__main_17__whole_contracts/attribution.csv.gz",
+      "oid": "6b1b96b9a0a1a3cfa016989cfc947a07a9a54adbef9392b36fa0802bdc14d3fb",
+      "same_inode": true,
+      "size": 135578057
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__Post-IS__UM__P_CM_DeltaMatched__main_17__whole_contracts/minute.parquet",
+      "oid": "19603c22fd353bd063b6b24171e8e13e2d2d552180d4f8fa6c8c90b95b55f90c",
+      "same_inode": true,
+      "size": 103212559
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__Post-IS__UM__P_SPOT__gross_0/attribution.csv.gz",
+      "oid": "05a7ae3418d416c2a4808af6b4af60ecde07ce136213edd34da944da4327abe5",
+      "same_inode": true,
+      "size": 15846532
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__Post-IS__UM__P_SPOT__gross_0/minute.parquet",
+      "oid": "82f293cfa252071345cba687d33f658064dd62a5e07547f584e397a4e90b37ce",
+      "same_inode": true,
+      "size": 34450821
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__Post-IS__UM__P_SPOT__harsh_34/attribution.csv.gz",
+      "oid": "ffe36022a9181225fa2fb6abf6fd1b04797879daaeab66a4d7995699bccec67c",
+      "same_inode": true,
+      "size": 15850100
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__Post-IS__UM__P_SPOT__harsh_34/minute.parquet",
+      "oid": "1d0543c98eb83c67049e2277baa273d9ceec35d4611f3dfab0ccb3bcc90ae607",
+      "same_inode": true,
+      "size": 34459829
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__Post-IS__UM__P_SPOT__main_17/attribution.csv.gz",
+      "oid": "08a40ba22dd5b11d15d9b09310df5ba09a54bccb2100af18c72e085bb159b7c2",
+      "same_inode": true,
+      "size": 15846403
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__Post-IS__UM__P_SPOT__main_17/minute.parquet",
+      "oid": "2cafef5fca131b2986a25636eea0d2c3df583c89e369a94c67cb16a26bd6ddb1",
+      "same_inode": true,
+      "size": 34419609
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__Post-IS__UM__P_USDM__gross_0/attribution.csv.gz",
+      "oid": "94f65a08d7d5b4c4ae9d08edc3b0c8db41d689e979db96846017b72e00466dd2",
+      "same_inode": true,
+      "size": 43
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__Post-IS__UM__P_USDM__gross_0/minute.parquet",
+      "oid": "eed4818e969112d670d600f647fa9e195cc28697fd00dccad053185a947cb101",
+      "same_inode": true,
+      "size": 34682822
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__Post-IS__UM__P_USDM__harsh_34/attribution.csv.gz",
+      "oid": "15e438e2aa3b49c3f7605aba3206f66a126f0f3022310874aeeb4e1faf9bbd47",
+      "same_inode": true,
+      "size": 43
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__Post-IS__UM__P_USDM__harsh_34/minute.parquet",
+      "oid": "a3a59779c6cc6a385836eddc821f4e508e29f109a66baab1fc2608d02179816e",
+      "same_inode": true,
+      "size": 35702019
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__Post-IS__UM__P_USDM__main_17/attribution.csv.gz",
+      "oid": "8ca7e9aa9255ab2e5fa36e327548d20e7c94b2f60f96b3f3ac2d7f79fbd8892d",
+      "same_inode": true,
+      "size": 43
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__Post-IS__UM__P_USDM__main_17/minute.parquet",
+      "oid": "2bc131e9ac2e38968d108a71aa9f30b58f7662987ba01ab07af0f794d0e6d7ba",
+      "same_inode": true,
+      "size": 35704040
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__Post-IS__UM__V1_USDM__gross_0/attribution.csv.gz",
+      "oid": "082fca105194d796f9fa5aea841c9f231301ef72c6f58b8110f3396ad1671749",
+      "same_inode": true,
+      "size": 43
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__Post-IS__UM__V1_USDM__gross_0/minute.parquet",
+      "oid": "589885bf3165ed7626180cf7bf091bf63936d0c95e14a2c49b587883794d2910",
+      "same_inode": true,
+      "size": 24599248
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__Post-IS__UM__V1_USDM__harsh_34/attribution.csv.gz",
+      "oid": "280da7ed9649db99619ce6cfa5881cd491bb14229af6235c3a587b0cf78110fa",
+      "same_inode": true,
+      "size": 43
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__Post-IS__UM__V1_USDM__harsh_34/minute.parquet",
+      "oid": "e984cadfc4fa59168bac6fcd84a5eaf3286b6d8465d10a6dd5e529ce58f00dbb",
+      "same_inode": true,
+      "size": 25351744
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__Post-IS__UM__V1_USDM__main_17/attribution.csv.gz",
+      "oid": "1570c7b78fc0d968e5563d97cc60af557d63ebc1ce2d48d3ac6c3adf1dc8e5f1",
+      "same_inode": true,
+      "size": 43
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__Post-IS__UM__V1_USDM__main_17/minute.parquet",
+      "oid": "14c97f7aa0019b52992b0bd1d162949d7580c3a11e18850902fdc622ac7546b9",
+      "same_inode": true,
+      "size": 25354402
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__Post-IS__UM__V2_SPOT__gross_0/attribution.csv.gz",
+      "oid": "c737f09e55de7d75ed954b46c87becc6e75c8f0ae20251df06db4f1973349505",
+      "same_inode": true,
+      "size": 9641236
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__Post-IS__UM__V2_SPOT__gross_0/minute.parquet",
+      "oid": "bcbc733153ff392de809fb545da26a025f5c99fda2f5047a6674c5d18497c526",
+      "same_inode": true,
+      "size": 24418126
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__Post-IS__UM__V2_SPOT__harsh_34/attribution.csv.gz",
+      "oid": "bbc741df0d198c4dbc791b2f067a26fc367328bc15503c7ef6425ba21a433099",
+      "same_inode": true,
+      "size": 9645594
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__Post-IS__UM__V2_SPOT__harsh_34/minute.parquet",
+      "oid": "eca906759af5044fd08eea6247094e1706dfdd9005fb42458ae945d7c3af4d0f",
+      "same_inode": true,
+      "size": 24447689
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__Post-IS__UM__V2_SPOT__main_17/attribution.csv.gz",
+      "oid": "0f8d722609fbde0a8b84fc8b62841592efdca9c0b5e07c089a27f6c3e5f85efa",
+      "same_inode": true,
+      "size": 9647937
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__Post-IS__UM__V2_SPOT__main_17/minute.parquet",
+      "oid": "c5602b0df51a8e583e646eca7e327a31a1c67c3e0372cd2e3713d759f7d9a586",
+      "same_inode": true,
+      "size": 24425897
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__Post-IS__UM__V3_CM_DeltaMatched__gross_0/attribution.csv.gz",
+      "oid": "2c979ba2d08d0fda987d095ee0fcd9a81101eab59a62b44607f44ffe3e9efd9d",
+      "same_inode": true,
+      "size": 131899595
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__Post-IS__UM__V3_CM_DeltaMatched__gross_0/minute.parquet",
+      "oid": "6e8eaf081b6c6e524d5d0d2895bcd7ae372ef8c043bc7d0f81cf9ca67aff1453",
+      "same_inode": true,
+      "size": 81148287
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__Post-IS__UM__V3_CM_DeltaMatched__harsh_34/attribution.csv.gz",
+      "oid": "2937b51e175232ac9b1242609a94b13e313cf2db5a7a5c98df4078e98cfdb646",
+      "same_inode": true,
+      "size": 135391059
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__Post-IS__UM__V3_CM_DeltaMatched__harsh_34/minute.parquet",
+      "oid": "8d56d3ff1e37068ee08aee7266ea3a9ba504e30a4685eccf5f08d5ee50b7f679",
+      "same_inode": true,
+      "size": 99763886
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__Post-IS__UM__V3_CM_DeltaMatched__main_17/attribution.csv.gz",
+      "oid": "c13858688873ebd42a302bd69c14ae194ca8d0b66d79126c953fb3b3b8abe232",
+      "same_inode": true,
+      "size": 135389218
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__Post-IS__UM__V3_CM_DeltaMatched__main_17/minute.parquet",
+      "oid": "3ac617097a95a799bfec2bea388790dce9b28e5d6f258724101a7aa777ce8b4d",
+      "same_inode": true,
+      "size": 99675012
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__Post-IS__UM__V3_CM_DeltaMatched__main_17__whole_contracts/attribution.csv.gz",
+      "oid": "e1e7d5d2d1c86fd43e471e4731c6b6087b7637d5162ebaca38785b985e63b78d",
+      "same_inode": true,
+      "size": 135376712
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__Post-IS__UM__V3_CM_DeltaMatched__main_17__whole_contracts/minute.parquet",
+      "oid": "bcbc62ecba5e6f5d3c7b836a8f6bc1591647fde78686c291ff3fc9db56640be0",
+      "same_inode": true,
+      "size": 99776969
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__Post-IS__UM__V4_CM_CoinAccum__gross_0/attribution.csv.gz",
+      "oid": "3947ddda4c6bf44041a29902843be2cb3bcc796f967a1acedf90afaece8a5977",
+      "same_inode": true,
+      "size": 94848992
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__Post-IS__UM__V4_CM_CoinAccum__gross_0/minute.parquet",
+      "oid": "a286500c2ff43e73fdab533b6c406854773fc72c6427c5fa1a43b6ba33e3e4d0",
+      "same_inode": true,
+      "size": 73895065
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__Post-IS__UM__V4_CM_CoinAccum__harsh_34/attribution.csv.gz",
+      "oid": "92f1c1b9e9f811c9dd9bad14f102df84242dd56c0d66adba14b125ffb02cfc1d",
+      "same_inode": true,
+      "size": 94907226
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__Post-IS__UM__V4_CM_CoinAccum__harsh_34/minute.parquet",
+      "oid": "ba51d5d377b65a05b9f9df6b7c828e767df0c1d5039bf292531a15830583e53f",
+      "same_inode": true,
+      "size": 76245826
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__Post-IS__UM__V4_CM_CoinAccum__main_17/attribution.csv.gz",
+      "oid": "9ee155d78c10be269fcd28075d03a55230ca9f1e920dd4cd484436967eddd122",
+      "same_inode": true,
+      "size": 94951774
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__Post-IS__UM__V4_CM_CoinAccum__main_17/minute.parquet",
+      "oid": "b5246b8b8084ed0edbbcecffb59446157bf8150b5413f2c11614bffd1e4b031c",
+      "same_inode": true,
+      "size": 76255513
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__Post-IS__UM__V4_CM_CoinAccum__main_17__whole_contracts/attribution.csv.gz",
+      "oid": "f73f9e181faf75da3444ae3c98751cfa0f58a20ec2132571766235408685d86d",
+      "same_inode": true,
+      "size": 94924657
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__Post-IS__UM__V4_CM_CoinAccum__main_17__whole_contracts/minute.parquet",
+      "oid": "234346b629b02f41bd6b2522d440a320446d0556a8e2dc4048aa560b83471793",
+      "same_inode": true,
+      "size": 76255949
+    }
+  ],
+  "materialized_bytes_unchanged": true
+}

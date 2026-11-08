@@ -1,0 +1,23 @@
+{
+  "baseline_commit": "f0c21acdd9320d87272d3c8cd46fe95b8d72ec5d",
+  "cp1_files": 32,
+  "historical_files": 142,
+  "cp2_registration_files": 133,
+  "cp2_delivery_files": 407,
+  "cp2_deliveries_verified": true,
+  "cp2_delivery_manifest_sha256": "c6f1762f3add25eae7788c997c84bdb7bba00080ddc9b40b1a0a88c34f540084",
+  "environment": {
+    "python": "3.14.4",
+    "pandas": "3.0.5",
+    "numpy": "2.5.4",
+    "pyarrow": "26.0.1",
+    "numba": "0.68.1",
+    "scipy": "1.18.1",
+    "matplotlib": "3.11.2",
+    "pytest": "9.2.0"
+  },
+  "locks": {
+    "BTC_IS_UNLOCKED": true,
+    "POST_IS_AND_ETH_UNLOCKED": true
+  }
+}

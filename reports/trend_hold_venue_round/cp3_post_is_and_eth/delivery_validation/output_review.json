@@ -1,0 +1,16 @@
+{
+  "account_count": 87,
+  "cash_clip_count_across_all_distinct_accounts": 10,
+  "max_account_cash_clip_count": 1,
+  "max_abs_stored_daily_reconciliation_error_usd": 2.1189244611633097e-10,
+  "max_error_account": "ETH__IS-CM-SelfSignal__CM__V4_CM_CoinAccum__main_17",
+  "pressure_event_count": 0,
+  "figures_visually_checked": [
+    "fig_1.png",
+    "fig_2.png",
+    "fig_3.png",
+    "fig_4.png"
+  ],
+  "oos_continuous_slice_descriptors": 60,
+  "calculations": "Only aggregation of existing output fields; no account or inference reruns."
+}

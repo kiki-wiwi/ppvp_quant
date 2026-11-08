@@ -1,0 +1,16 @@
+{
+  "version": "P_SPOT",
+  "cost": "harsh_34",
+  "asset": "BTC",
+  "window": "Post-IS",
+  "initial_capital": 100000.0,
+  "final_equity": 131727.71446233103,
+  "account_reconciliation_error": 1.3998396112219362e-10,
+  "order_count": 127,
+  "adjustment_count": 126,
+  "cash_clip_count": 1,
+  "total_fees": 1613.7724945480745,
+  "total_slippage_cost": 1118.9806958659947,
+  "total_funding": 0.0,
+  "liquidated": false
+}

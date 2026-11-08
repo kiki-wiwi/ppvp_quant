@@ -1,0 +1,117 @@
+{
+  "declaration": "User-authorized one-shot descriptive OOS and cross-venue evaluation; R5 failed V3/V5; no automatic promotion.",
+  "automatic_promotion": false,
+  "calendar": {
+    "start": "2024-01-01T00:00:00+00:00",
+    "end_exclusive": "2025-07-01T00:00:00+00:00",
+    "half_split": null,
+    "days": 547,
+    "months": 18,
+    "month_order": [
+      "2024-01",
+      "2024-02",
+      "2024-03",
+      "2024-04",
+      "2024-05",
+      "2024-06",
+      "2024-07",
+      "2024-08",
+      "2024-09",
+      "2024-10",
+      "2024-11",
+      "2024-12",
+      "2025-01",
+      "2025-02",
+      "2025-03",
+      "2025-04",
+      "2025-05",
+      "2025-06"
+    ]
+  },
+  "family": [
+    "T",
+    "D"
+  ],
+  "family_size": 2,
+  "alpha": 0.05,
+  "cumulative_returns": {
+    "main": {
+      "T": 0.22551763566398253,
+      "P": 0.17449519270811664
+    },
+    "harsh": {
+      "T": 0.2112432255109935,
+      "P": 0.16891695902487158
+    }
+  },
+  "t_order_count": 66,
+  "matrices": {
+    "webb_weights": {
+      "shape": [
+        99999,
+        18
+      ],
+      "dtype": "float64",
+      "order": "C",
+      "byte_order": "little",
+      "seed": 2026111001,
+      "sha256": "64d32322efeedd7e1d8a25c909dcdd10c458ade3c54143eb8bc05450d03828f1"
+    },
+    "month_indices": {
+      "shape": [
+        10000,
+        18
+      ],
+      "dtype": "int64",
+      "order": "C",
+      "byte_order": "little",
+      "seed": 2026111002,
+      "sha256": "ba78fbd729467f74b5170580bc72353c7ae931827750f37c91446516ab8df38a"
+    }
+  },
+  "generator": "NumPy Generator(PCG64)",
+  "mc_boundary_sensitive_tests": [],
+  "interval_p_disagreements": [
+    {
+      "hypothesis": "T",
+      "interval_supports_positive_mean": false,
+      "holm_rejects": false,
+      "disagrees": false
+    },
+    {
+      "hypothesis": "D",
+      "interval_supports_positive_mean": false,
+      "holm_rejects": false,
+      "disagrees": false
+    }
+  ],
+  "zero_equity_rule": "positive-to-zero return -1; subsequent zero-to-zero return 0; no resurrection",
+  "cluster_limitation": "Month clustering permits within-month dependence; cross-month dependence and 18 months limit inference.",
+  "multiplicity_limitation": "Holm is a two-test descriptive reference within one venue/window; it does not control a global cross-venue/window family. Prior IS selection remains.",
+  "asset": "ETH",
+  "period": "VAL",
+  "venue": "UM",
+  "actual_continuous_wealth_ratios": {
+    "main_T": {
+      "start_equity": 100000.0,
+      "final_equity": 122551.763566398,
+      "total_return": 0.2255176356639801
+    },
+    "main_P": {
+      "start_equity": 100000.0,
+      "final_equity": 117449.51927081146,
+      "total_return": 0.17449519270811464
+    },
+    "harsh_T": {
+      "start_equity": 100000.0,
+      "final_equity": 121124.3225510996,
+      "total_return": 0.21124322551099595
+    },
+    "harsh_P": {
+      "start_equity": 100000.0,
+      "final_equity": 116891.69590248683,
+      "total_return": 0.16891695902486825
+    }
+  },
+  "inference_wealth_convention": "Frozen analyze compounds stored returns from its conventional unit initial wealth. Actual slice ratios above stay NA when actual preceding equity is zero; they are not replaced by inference compounding."
+}

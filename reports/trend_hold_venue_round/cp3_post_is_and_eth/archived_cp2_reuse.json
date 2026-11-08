@@ -1,0 +1,110 @@
+[
+  {
+    "job_id": "BTC__IS-Common__UM__V1_USDM__main_17",
+    "source_stage": "frozen_CP2",
+    "verified_sources": {
+      "daily.csv": {
+        "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V1_USDM__main_17/daily.csv",
+        "sha256": "a5245b6b7e413a5d3cc71677fe939895e7d97918d30051e3ff14abcef1fd5840"
+      },
+      "metadata.json": {
+        "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V1_USDM__main_17/metadata.json",
+        "sha256": "96b8eba676a019e0ddcedf6de9f844b0aa4c764cff1ec561baa998e7525aee8f"
+      },
+      "minute.parquet": {
+        "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V1_USDM__main_17/minute.parquet",
+        "sha256": "cf9467cf8ddbe263edbf631654264329cd4970fa882e4fdd7ff555161f2ff20c"
+      },
+      "funding.csv.gz": {
+        "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V1_USDM__main_17/funding.csv.gz",
+        "sha256": "59fa7fb47570f842e2db847a7b8951e7e6ef2515e25d2aa9774f23667de3dde1"
+      },
+      "pressure_events.csv.gz": {
+        "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V1_USDM__main_17/pressure_events.csv.gz",
+        "sha256": "83d7ab0107bbfa52e34b639d0ad4a71e2ebddde3aeceaf9b0bea8b9d2d5199ca"
+      }
+    },
+    "no_account_or_feature_recomputation": true
+  },
+  {
+    "job_id": "BTC__IS-Common__UM__V3_CM_DeltaMatched__main_17",
+    "source_stage": "frozen_CP2",
+    "verified_sources": {
+      "daily.csv": {
+        "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V3_CM_DeltaMatched__main_17/daily.csv",
+        "sha256": "060d5364a3ae0842108f4212b94e95190369175cd9d4c0506ae1967aaf427644"
+      },
+      "metadata.json": {
+        "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V3_CM_DeltaMatched__main_17/metadata.json",
+        "sha256": "580bbc8de8e5c14890367098afc6c2715142bded9dd1ea3caf71911ef1b261ba"
+      },
+      "minute.parquet": {
+        "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V3_CM_DeltaMatched__main_17/minute.parquet",
+        "sha256": "e74e0232ad80193dde3e50dd55b05a4588dbcaab712d7d150a02426e3a202019"
+      },
+      "attribution.csv.gz": {
+        "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V3_CM_DeltaMatched__main_17/attribution.csv.gz",
+        "sha256": "c1bb0172b668c3da8949ab778c8cbfce2e18bd20b0570b561fcd6b9b74053119"
+      },
+      "pressure_events.csv.gz": {
+        "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V3_CM_DeltaMatched__main_17/pressure_events.csv.gz",
+        "sha256": "ca88923dde49ba7e45a4e939a35fbe35812e8989647f548412adb06d6c1f3325"
+      }
+    },
+    "no_account_or_feature_recomputation": true
+  },
+  {
+    "job_id": "BTC__IS-Common__UM__V4_CM_CoinAccum__main_17",
+    "source_stage": "frozen_CP2",
+    "verified_sources": {
+      "daily.csv": {
+        "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V4_CM_CoinAccum__main_17/daily.csv",
+        "sha256": "d9771aaa32ba5293f6589f71ce7b9fabb27c0e6267ffab7e469f670f209fc2df"
+      },
+      "metadata.json": {
+        "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V4_CM_CoinAccum__main_17/metadata.json",
+        "sha256": "b6f8f7fd3e2748d14df4bab80fa20998662ab53dd9bea8fe25cdab736d18e6e9"
+      },
+      "minute.parquet": {
+        "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V4_CM_CoinAccum__main_17/minute.parquet",
+        "sha256": "8596b40bf20c55f7791079320bb3d9cb89724abb4ce944cabce23a54b75c8943"
+      },
+      "attribution.csv.gz": {
+        "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V4_CM_CoinAccum__main_17/attribution.csv.gz",
+        "sha256": "c1f696e4ef3e9e456fab697efcc3470d342b07e06d7f0d4897b894252698277a"
+      },
+      "pressure_events.csv.gz": {
+        "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__V4_CM_CoinAccum__main_17/pressure_events.csv.gz",
+        "sha256": "f5765b6b7f48ccb6400d94eab65e3c3348728a40480b5cb561c5bc5f9595e80d"
+      }
+    },
+    "no_account_or_feature_recomputation": true
+  },
+  {
+    "job_id": "BTC__IS-Common__UM__HODL_1x_Coin__main_17",
+    "source_stage": "frozen_CP2",
+    "verified_sources": {
+      "daily.csv": {
+        "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__HODL_1x_Coin__main_17/daily.csv",
+        "sha256": "1d4ecbf6f4af0bebecba7a5c0a0b4c2f61488fedc47a134d722b6d9f3b8315ea"
+      },
+      "metadata.json": {
+        "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__HODL_1x_Coin__main_17/metadata.json",
+        "sha256": "2404f3ee86726bf45e00aec23753e9f7fdebe3792d71a427554e03db68fc8bd3"
+      },
+      "minute.parquet": {
+        "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__HODL_1x_Coin__main_17/minute.parquet",
+        "sha256": "6cd54d3548c47b7d4c9ede139159bdb74605aabbdfb8ceaa12e5c7968ccee528"
+      },
+      "attribution.csv.gz": {
+        "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__HODL_1x_Coin__main_17/attribution.csv.gz",
+        "sha256": "e2deef412cacf93518b95e16a975a83bb54b424d1090c58ec47b8070bed93a83"
+      },
+      "pressure_events.csv.gz": {
+        "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__HODL_1x_Coin__main_17/pressure_events.csv.gz",
+        "sha256": "95bdfa645818d45c7bdca08e4be8eae3261c0ff40abf246e5fc35afc365c294b"
+      }
+    },
+    "no_account_or_feature_recomputation": true
+  }
+]

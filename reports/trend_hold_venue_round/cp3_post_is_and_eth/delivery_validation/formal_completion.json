@@ -1,0 +1,17 @@
+{
+  "started_at_utc": "2026-11-08T11:50:57.425562+00:00",
+  "command": [
+    "/home/ubuntu/Documents/Codex/2026-11-06/github-ppvp-quant-agent-2-checkpoint/work/diag_env/pandas3.0.5_py314/bin/python",
+    "/mnt/ppvp-backtests/operations/bin/storage_preflight.py",
+    "--run",
+    "/home/ubuntu/Documents/Codex/2026-11-06/github-ppvp-quant-agent-2-checkpoint/work/diag_env/pandas3.0.5_py314/bin/python",
+    "tools/run_trend_hold_venue_cp3.py",
+    "--real"
+  ],
+  "working_directory": "/home/ubuntu/.codex/worktrees/channel-vah-prereg/ppvp_quant",
+  "starting_commit": "05fe6f1a46dbd99fad92b07dba973ac7c44f19ab",
+  "starting_git_status": "",
+  "automatic_retry": false,
+  "ended_at_utc": "2026-11-08T14:54:09.892469+00:00",
+  "exit_code": 0
+}
