@@ -1,0 +1,53 @@
+Explicit approved historical node exclusions:
+tests/test_trend_hold_engine.py::test_rejects_missing_or_invalid_daily_inputs_and_real_context_before_access — Historical R5 unlocked baseline conflicts with the old pre-unlock assertion.
+tests/test_trend_venue_scope_features.py::test_two_real_locks_and_provenance — Historical CP1 assertion requires BTC_IS_UNLOCKED=False; approved current baseline is True.
+tests/test_trend_venue_cp2_runtime.py::test_runtime_rejects_post_is_eth_and_real_locked_before_feature_work — Historical CP2 pre-unlock entry assertion conflicts with BTC_IS_UNLOCKED=True.
+
+........................................................................ [ 22%]
+......................................................................F
+=================================== FAILURES ===================================
+__ test_authorized_archive_reuse_authenticates_and_hardlinks_without_network ___
+
+tmp_path = PosixPath('/mnt/ppvp-backtests/tmp/pytest-of-ubuntu/pytest-3/test_authorized_archive_reuse_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0xe9a5dd82f930>
+
+    def test_authorized_archive_reuse_authenticates_and_hardlinks_without_network(tmp_path, monkeypatch):
+        spec = archives.archive_specs()[0]
+        source, checksum = inventory_fixture(tmp_path, spec)
+        def forbidden(*args, **kwargs):
+            raise AssertionError('verified saved source caused a network request')
+        monkeypatch.setattr(archives, '_get', forbidden)
+        record = {'archives': [], 'availability_listings': [], 'source_registrations': []}
+        acquisition = archives.Acquisition(tmp_path, record, lambda: None)
+        assert acquisition.available(spec)
+>       entry, raw = acquisition.obtain(spec)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_trend_venue_cp3_archives.py:99: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+trend_hold_venue_study/cp3_archives.py:234: in obtain
+    hardlink_new(source['path'], path)
+trend_hold_venue_study/cp3_reuse.py:92: in hardlink_new
+    if not destination.samefile(source) or _sha256_file(destination) != expected:
+                                           ^^^^^^^^^^^^^^^^^^^^^^^^^
+trend_hold_venue_study/cp3_reuse.py:72: in _sha256_file
+    with Path(path).open('rb') as stream:
+         ^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.14/pathlib/__init__.py:772: in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+event = 'open'
+args = ('/mnt/ppvp-backtests/tmp/pytest-of-ubuntu/pytest-3/test_authorized_archive_reuse_0/data/raw/venue_cp3_revision_1/BTC/UM/klines/venue_cp3_BTCUSDT-1m-2024-01.zip', 'r', 524288)
+
+    def audit(event,args):
+        if event=='open' and args and _market_path(args[0]):
+>           raise PermissionError('CP1 guard: market file access prohibited')
+E           PermissionError: CP1 guard: market file access prohibited
+
+trend_hold_venue_study/testing_guard.py:14: PermissionError
+=========================== short test summary info ============================
+FAILED tests/test_trend_venue_cp3_archives.py::test_authorized_archive_reuse_authenticates_and_hardlinks_without_network
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+1 failed, 142 passed, 3 deselected in 6.68s

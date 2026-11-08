@@ -1,0 +1,31 @@
+{
+  "resumed_at_utc": "2026-11-08T09:17:55.021820+00:00",
+  "authorization": "User approved fixed registered Python editor, archive previous stop, exact3 historical deselections, unchanged parameters/seeds/frozen files, CP3 three commits; stop on any new error.",
+  "fixed_python": "/home/ubuntu/Documents/Codex/2026-11-06/github-ppvp-quant-agent-2-checkpoint/work/diag_env/pandas3.0.5_py314/bin/python",
+  "archived_stop": "reports/trend_hold_venue_round/cp3_registration/validation_history/edit_helper_stop_20261108/STOPPED_unfrozen_edit.json",
+  "archived_stop_sha256": "4827a4bd35c1be9ce61cc31fb133809d069a5688579a6a4849720fc3fc04ea6e",
+  "frozen_before": {
+    "cp1_commit": "deadf01a4570386e14bbbec41d6e8eadd3345cac",
+    "cp1_files": 32,
+    "historical_files": 142,
+    "locks": {
+      "BTC_IS_UNLOCKED": true,
+      "POST_IS_AND_ETH_UNLOCKED": false
+    },
+    "environment": {
+      "python": "3.14.4",
+      "pandas": "3.0.5",
+      "numpy": "2.5.4",
+      "pyarrow": "26.0.1",
+      "numba": "0.68.1",
+      "scipy": "1.18.1",
+      "matplotlib": "3.11.2",
+      "pytest": "9.2.0"
+    }
+  },
+  "cp2_effective_registration_entries": 132,
+  "storage_record": "/mnt/ppvp-backtests/operations/archive/storage_migration_sndylcvd/COMPLETE.json",
+  "actual_data_device": 2065,
+  "actual_reports_device": 2065,
+  "volume_free_bytes": 44650668032
+}

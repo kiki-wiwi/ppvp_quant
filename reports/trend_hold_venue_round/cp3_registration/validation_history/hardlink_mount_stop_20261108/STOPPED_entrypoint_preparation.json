@@ -1,0 +1,76 @@
+{
+  "status": "STOPPED",
+  "stage": "locked_input_preparation",
+  "time_utc": "2026-11-08T10:54:01.965880+00:00",
+  "error_type": "OSError",
+  "error": "[Errno 18] Invalid cross-device link: '/mnt/ppvp-backtests/diagnostics/cp3_availability_20261108/funding/0003_archive.zip' -> '/home/ubuntu/.codex/worktrees/channel-vah-prereg/ppvp_quant/data/raw/venue_cp3_revision_1/BTC/UM/fundingRate/venue_cp3_BTCUSDT-fundingRate-2024-01.zip'",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/ubuntu/.codex/worktrees/channel-vah-prereg/ppvp_quant/tools/run_trend_hold_venue_cp3.py\", line 49, in main\n    result=prepare_inputs(ROOT)\n  File \"/home/ubuntu/.codex/worktrees/channel-vah-prereg/ppvp_quant/trend_hold_venue_study/cp3_data.py\", line 446, in prepare_inputs\n    _prepare(root, record, persist)\n    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.codex/worktrees/channel-vah-prereg/ppvp_quant/trend_hold_venue_study/cp3_data.py\", line 382, in _prepare\n    entry, raw = acquisition.obtain(spec)\n                 ~~~~~~~~~~~~~~~~~~^^^^^^\n  File \"/home/ubuntu/.codex/worktrees/channel-vah-prereg/ppvp_quant/trend_hold_venue_study/cp3_archives.py\", line 234, in obtain\n    hardlink_new(source['path'], path)\n    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/.codex/worktrees/channel-vah-prereg/ppvp_quant/trend_hold_venue_study/cp3_reuse.py\", line 32, in hardlink_new\n    os.link(source, destination)\n    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^\nOSError: [Errno 18] Invalid cross-device link: '/mnt/ppvp-backtests/diagnostics/cp3_availability_20261108/funding/0003_archive.zip' -> '/home/ubuntu/.codex/worktrees/channel-vah-prereg/ppvp_quant/data/raw/venue_cp3_revision_1/BTC/UM/fundingRate/venue_cp3_BTCUSDT-fundingRate-2024-01.zip'\n",
+  "starting_state": {
+    "storage": {
+      "status": "passed",
+      "uuid": "d60bc8c8-11ef-4540-8d13-e2327feac6a1",
+      "required_free_bytes": 42949672960,
+      "locations": {
+        "data": {
+          "path": "/home/ubuntu/.codex/worktrees/channel-vah-prereg/ppvp_quant/data",
+          "device_id": 2065,
+          "free_bytes": 43994378240
+        },
+        "reports": {
+          "path": "/home/ubuntu/.codex/worktrees/channel-vah-prereg/ppvp_quant/reports",
+          "device_id": 2065,
+          "free_bytes": 43994378240
+        },
+        "lfs_objects": {
+          "path": "/home/ubuntu/Documents/Codex/2026-11-06/github-ppvp-quant-agent-2-checkpoint/work/ppvp_quant/.git/lfs/objects",
+          "device_id": 2065,
+          "free_bytes": 43994378240
+        },
+        "lfs_temp": {
+          "path": "/home/ubuntu/Documents/Codex/2026-11-06/github-ppvp-quant-agent-2-checkpoint/work/ppvp_quant/.git/lfs/tmp",
+          "device_id": 2065,
+          "free_bytes": 43994378240
+        },
+        "scratch": {
+          "path": "/mnt/ppvp-backtests/scratch",
+          "device_id": 2065,
+          "free_bytes": 43994378240
+        },
+        "temp": {
+          "path": "/mnt/ppvp-backtests/tmp",
+          "device_id": 2065,
+          "free_bytes": 43994378240
+        },
+        "cache": {
+          "path": "/mnt/ppvp-backtests/cache",
+          "device_id": 2065,
+          "free_bytes": 43994378240
+        }
+      }
+    },
+    "frozen": {
+      "baseline_commit": "f0c21acdd9320d87272d3c8cd46fe95b8d72ec5d",
+      "cp1_files": 32,
+      "historical_files": 142,
+      "cp2_registration_files": 133,
+      "cp2_delivery_files": 407,
+      "cp2_deliveries_verified": true,
+      "cp2_delivery_manifest_sha256": "c6f1762f3add25eae7788c997c84bdb7bba00080ddc9b40b1a0a88c34f540084",
+      "environment": {
+        "python": "3.14.4",
+        "pandas": "3.0.5",
+        "numpy": "2.5.4",
+        "pyarrow": "26.0.1",
+        "numba": "0.68.1",
+        "scipy": "1.18.1",
+        "matplotlib": "3.11.2",
+        "pytest": "9.2.0"
+      },
+      "locks": {
+        "BTC_IS_UNLOCKED": true,
+        "POST_IS_AND_ETH_UNLOCKED": false
+      }
+    }
+  },
+  "automatic_retry": false
+}

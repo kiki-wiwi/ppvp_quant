@@ -1,0 +1,591 @@
+{
+  "scope": "User-authorized read-only archive and time-grid diagnosis; no strategy features, signals, account returns or formal run. All times UTC.",
+  "coverage": [
+    {
+      "asset": "BTC",
+      "venue": "UM",
+      "start_month": "2024-01",
+      "end_month": "2026-10",
+      "verified_months": 34,
+      "whole_missing_in_monthly": [
+        "2026-10-28"
+      ],
+      "whole_missing_after_daily": [
+        "2026-10-28"
+      ],
+      "partial_missing_minutes": 0,
+      "duplicates": 0,
+      "offgrid": 0,
+      "out_of_bounds": 0,
+      "daily_supplement_dates": []
+    },
+    {
+      "asset": "BTC",
+      "venue": "SPOT",
+      "start_month": "2024-01",
+      "end_month": "2026-10",
+      "verified_months": 34,
+      "whole_missing_in_monthly": [],
+      "whole_missing_after_daily": [],
+      "partial_missing_minutes": 0,
+      "duplicates": 0,
+      "offgrid": 0,
+      "out_of_bounds": 0,
+      "daily_supplement_dates": []
+    },
+    {
+      "asset": "BTC",
+      "venue": "CM",
+      "start_month": "2024-01",
+      "end_month": "2026-10",
+      "verified_months": 34,
+      "whole_missing_in_monthly": [
+        "2026-10-28"
+      ],
+      "whole_missing_after_daily": [
+        "2026-10-28"
+      ],
+      "partial_missing_minutes": 0,
+      "launch_prefix_minutes": 0,
+      "launch_first_native_utc": null,
+      "duplicates": 0,
+      "offgrid": 0,
+      "out_of_bounds": 0,
+      "daily_supplement_dates": []
+    },
+    {
+      "asset": "ETH",
+      "venue": "UM",
+      "start_month": "2020-07",
+      "end_month": "2026-10",
+      "verified_months": 76,
+      "whole_missing_in_monthly": [
+        "2026-10-28"
+      ],
+      "whole_missing_after_daily": [
+        "2026-10-28"
+      ],
+      "partial_missing_minutes": 0,
+      "duplicates": 0,
+      "offgrid": 0,
+      "out_of_bounds": 0,
+      "daily_supplement_dates": []
+    },
+    {
+      "asset": "ETH",
+      "venue": "SPOT",
+      "start_month": "2020-07",
+      "end_month": "2026-10",
+      "verified_months": 76,
+      "whole_missing_in_monthly": [],
+      "whole_missing_after_daily": [],
+      "partial_missing_minutes": 1424,
+      "duplicates": 0,
+      "offgrid": 0,
+      "out_of_bounds": 0,
+      "daily_supplement_dates": []
+    },
+    {
+      "asset": "ETH",
+      "venue": "CM",
+      "start_month": "2020-08",
+      "end_month": "2026-10",
+      "verified_months": 75,
+      "whole_missing_in_monthly": [
+        "2023-08-28",
+        "2023-08-29",
+        "2023-08-30",
+        "2023-08-31",
+        "2026-10-28"
+      ],
+      "whole_missing_after_daily": [
+        "2026-10-28"
+      ],
+      "partial_missing_minutes": 0,
+      "launch_prefix_minutes": 421,
+      "launch_first_native_utc": "2020-08-18T07:01:00Z",
+      "duplicates": 0,
+      "offgrid": 0,
+      "out_of_bounds": 0,
+      "daily_supplement_dates": [
+        "2023-08-28",
+        "2023-08-29",
+        "2023-08-30",
+        "2023-08-31"
+      ]
+    }
+  ],
+  "funding": [
+    {
+      "asset": "BTC",
+      "venue": "UM",
+      "expected_after_native_start": 3105,
+      "vision_records": 3105,
+      "vision_missing_after_native_start": 0,
+      "dapi_records": null,
+      "diagnostic_union_records": 3105,
+      "remaining_missing_times": [],
+      "prelaunch_excluded_from_expected": [],
+      "overlap_count": null,
+      "exact_decimal_match_count": null,
+      "max_abs_decimal_diff": null,
+      "candidate_supplements": 0,
+      "early_candidates": 0,
+      "later_candidates": 0,
+      "missing_monthly_archives": [],
+      "repository_input_not_modified": true
+    },
+    {
+      "asset": "BTC",
+      "venue": "CM",
+      "expected_after_native_start": 3105,
+      "vision_records": 2676,
+      "vision_missing_after_native_start": 429,
+      "dapi_records": 3104,
+      "diagnostic_union_records": 3104,
+      "remaining_missing_times": [
+        "2026-06-30T08:00:00+00:00"
+      ],
+      "prelaunch_excluded_from_expected": [],
+      "overlap_count": 2676,
+      "exact_decimal_match_count": 2676,
+      "max_abs_decimal_diff": "0E-8",
+      "candidate_supplements": 428,
+      "early_candidates": 0,
+      "later_candidates": 428,
+      "missing_monthly_archives": [
+        "2026-07",
+        "2026-08",
+        "2026-09",
+        "2026-10"
+      ],
+      "repository_input_not_modified": true
+    },
+    {
+      "asset": "ETH",
+      "venue": "UM",
+      "expected_after_native_start": 6942,
+      "vision_records": 6942,
+      "vision_missing_after_native_start": 0,
+      "dapi_records": null,
+      "diagnostic_union_records": 6942,
+      "remaining_missing_times": [],
+      "prelaunch_excluded_from_expected": [],
+      "overlap_count": null,
+      "exact_decimal_match_count": null,
+      "max_abs_decimal_diff": null,
+      "candidate_supplements": 0,
+      "early_candidates": 0,
+      "later_candidates": 0,
+      "missing_monthly_archives": [],
+      "repository_input_not_modified": true
+    },
+    {
+      "asset": "ETH",
+      "venue": "CM",
+      "expected_after_native_start": 6797,
+      "vision_records": 4269,
+      "vision_missing_after_native_start": 2528,
+      "dapi_records": 6796,
+      "diagnostic_union_records": 6796,
+      "remaining_missing_times": [
+        "2026-06-30T08:00:00+00:00"
+      ],
+      "prelaunch_excluded_from_expected": [
+        "2020-08-18T00:00:00+00:00"
+      ],
+      "overlap_count": 4269,
+      "exact_decimal_match_count": 4269,
+      "max_abs_decimal_diff": "0E-8",
+      "candidate_supplements": 2527,
+      "early_candidates": 2045,
+      "later_candidates": 482,
+      "missing_monthly_archives": [
+        "2020-08",
+        "2020-09",
+        "2020-10",
+        "2020-11",
+        "2020-12",
+        "2021-01",
+        "2021-02",
+        "2021-03",
+        "2021-04",
+        "2021-05",
+        "2021-06",
+        "2021-07",
+        "2021-08",
+        "2021-09",
+        "2021-10",
+        "2021-11",
+        "2021-12",
+        "2022-01",
+        "2022-02",
+        "2022-03",
+        "2022-04",
+        "2022-05",
+        "2022-06",
+        "2026-07",
+        "2026-08",
+        "2026-09",
+        "2026-10"
+      ],
+      "repository_input_not_modified": true
+    }
+  ],
+  "eth_spot_partial_gaps": [
+    {
+      "day": "2020-11-30",
+      "monthly_missing_minutes": 60,
+      "after_daily_missing_minutes": 60,
+      "daily_missing_minutes": 60,
+      "rest_missing_minutes": 60
+    },
+    {
+      "day": "2020-12-21",
+      "monthly_missing_minutes": 231,
+      "after_daily_missing_minutes": 231,
+      "daily_missing_minutes": 252,
+      "rest_missing_minutes": 252
+    },
+    {
+      "day": "2020-12-25",
+      "monthly_missing_minutes": 60,
+      "after_daily_missing_minutes": 60,
+      "daily_missing_minutes": 60,
+      "rest_missing_minutes": 60
+    },
+    {
+      "day": "2021-02-11",
+      "monthly_missing_minutes": 79,
+      "after_daily_missing_minutes": 79,
+      "daily_missing_minutes": 79,
+      "rest_missing_minutes": 79
+    },
+    {
+      "day": "2021-03-06",
+      "monthly_missing_minutes": 90,
+      "after_daily_missing_minutes": 90,
+      "daily_missing_minutes": 90,
+      "rest_missing_minutes": 90
+    },
+    {
+      "day": "2021-04-20",
+      "monthly_missing_minutes": 150,
+      "after_daily_missing_minutes": 150,
+      "daily_missing_minutes": 150,
+      "rest_missing_minutes": 150
+    },
+    {
+      "day": "2021-04-25",
+      "monthly_missing_minutes": 284,
+      "after_daily_missing_minutes": 284,
+      "daily_missing_minutes": 284,
+      "rest_missing_minutes": 284
+    },
+    {
+      "day": "2021-08-13",
+      "monthly_missing_minutes": 270,
+      "after_daily_missing_minutes": 270,
+      "daily_missing_minutes": 270,
+      "rest_missing_minutes": 270
+    },
+    {
+      "day": "2021-09-29",
+      "monthly_missing_minutes": 120,
+      "after_daily_missing_minutes": 120,
+      "daily_missing_minutes": 120,
+      "rest_missing_minutes": 120
+    },
+    {
+      "day": "2023-03-24",
+      "monthly_missing_minutes": 80,
+      "after_daily_missing_minutes": 80,
+      "daily_missing_minutes": 80,
+      "rest_missing_minutes": 80
+    }
+  ],
+  "source_equality_checks": [
+    {
+      "asset": "BTC",
+      "venue": "UM",
+      "day": "2026-10-27",
+      "vision_minutes": 1440,
+      "rest_minutes": 1440,
+      "common_minutes": 1440,
+      "exact_ohlcv_minutes": 1440,
+      "mismatch_count": 0,
+      "mismatch_timestamps_and_columns": [],
+      "same_timestamp_set": true,
+      "all_exact": true
+    },
+    {
+      "asset": "BTC",
+      "venue": "SPOT",
+      "day": "2026-10-27",
+      "vision_minutes": 1440,
+      "rest_minutes": 1440,
+      "common_minutes": 1440,
+      "exact_ohlcv_minutes": 1440,
+      "mismatch_count": 0,
+      "mismatch_timestamps_and_columns": [],
+      "same_timestamp_set": true,
+      "all_exact": true
+    },
+    {
+      "asset": "BTC",
+      "venue": "CM",
+      "day": "2026-10-27",
+      "vision_minutes": 1440,
+      "rest_minutes": 1440,
+      "common_minutes": 1440,
+      "exact_ohlcv_minutes": 1440,
+      "mismatch_count": 0,
+      "mismatch_timestamps_and_columns": [],
+      "same_timestamp_set": true,
+      "all_exact": true
+    },
+    {
+      "asset": "ETH",
+      "venue": "UM",
+      "day": "2026-10-27",
+      "vision_minutes": 1440,
+      "rest_minutes": 1440,
+      "common_minutes": 1440,
+      "exact_ohlcv_minutes": 1440,
+      "mismatch_count": 0,
+      "mismatch_timestamps_and_columns": [],
+      "same_timestamp_set": true,
+      "all_exact": true
+    },
+    {
+      "asset": "ETH",
+      "venue": "SPOT",
+      "day": "2020-11-29",
+      "vision_minutes": 1440,
+      "rest_minutes": 1440,
+      "common_minutes": 1440,
+      "exact_ohlcv_minutes": 1440,
+      "mismatch_count": 0,
+      "mismatch_timestamps_and_columns": [],
+      "same_timestamp_set": true,
+      "all_exact": true
+    },
+    {
+      "asset": "ETH",
+      "venue": "SPOT",
+      "day": "2020-12-20",
+      "vision_minutes": 1440,
+      "rest_minutes": 1440,
+      "common_minutes": 1440,
+      "exact_ohlcv_minutes": 1440,
+      "mismatch_count": 0,
+      "mismatch_timestamps_and_columns": [],
+      "same_timestamp_set": true,
+      "all_exact": true
+    },
+    {
+      "asset": "ETH",
+      "venue": "SPOT",
+      "day": "2020-12-24",
+      "vision_minutes": 1440,
+      "rest_minutes": 1440,
+      "common_minutes": 1440,
+      "exact_ohlcv_minutes": 1440,
+      "mismatch_count": 0,
+      "mismatch_timestamps_and_columns": [],
+      "same_timestamp_set": true,
+      "all_exact": true
+    },
+    {
+      "asset": "ETH",
+      "venue": "SPOT",
+      "day": "2021-02-10",
+      "vision_minutes": 1440,
+      "rest_minutes": 1440,
+      "common_minutes": 1440,
+      "exact_ohlcv_minutes": 1440,
+      "mismatch_count": 0,
+      "mismatch_timestamps_and_columns": [],
+      "same_timestamp_set": true,
+      "all_exact": true
+    },
+    {
+      "asset": "ETH",
+      "venue": "SPOT",
+      "day": "2021-03-05",
+      "vision_minutes": 1440,
+      "rest_minutes": 1440,
+      "common_minutes": 1440,
+      "exact_ohlcv_minutes": 1440,
+      "mismatch_count": 0,
+      "mismatch_timestamps_and_columns": [],
+      "same_timestamp_set": true,
+      "all_exact": true
+    },
+    {
+      "asset": "ETH",
+      "venue": "SPOT",
+      "day": "2021-04-19",
+      "vision_minutes": 1440,
+      "rest_minutes": 1440,
+      "common_minutes": 1440,
+      "exact_ohlcv_minutes": 1440,
+      "mismatch_count": 0,
+      "mismatch_timestamps_and_columns": [],
+      "same_timestamp_set": true,
+      "all_exact": true
+    },
+    {
+      "asset": "ETH",
+      "venue": "SPOT",
+      "day": "2021-04-24",
+      "vision_minutes": 1440,
+      "rest_minutes": 1440,
+      "common_minutes": 1440,
+      "exact_ohlcv_minutes": 1440,
+      "mismatch_count": 0,
+      "mismatch_timestamps_and_columns": [],
+      "same_timestamp_set": true,
+      "all_exact": true
+    },
+    {
+      "asset": "ETH",
+      "venue": "SPOT",
+      "day": "2021-08-12",
+      "vision_minutes": 1440,
+      "rest_minutes": 1440,
+      "common_minutes": 1440,
+      "exact_ohlcv_minutes": 1440,
+      "mismatch_count": 0,
+      "mismatch_timestamps_and_columns": [],
+      "same_timestamp_set": true,
+      "all_exact": true
+    },
+    {
+      "asset": "ETH",
+      "venue": "SPOT",
+      "day": "2021-09-28",
+      "vision_minutes": 1440,
+      "rest_minutes": 1440,
+      "common_minutes": 1440,
+      "exact_ohlcv_minutes": 1440,
+      "mismatch_count": 0,
+      "mismatch_timestamps_and_columns": [],
+      "same_timestamp_set": true,
+      "all_exact": true
+    },
+    {
+      "asset": "ETH",
+      "venue": "SPOT",
+      "day": "2023-03-23",
+      "vision_minutes": 1440,
+      "rest_minutes": 1440,
+      "common_minutes": 1440,
+      "exact_ohlcv_minutes": 1440,
+      "mismatch_count": 0,
+      "mismatch_timestamps_and_columns": [],
+      "same_timestamp_set": true,
+      "all_exact": true
+    },
+    {
+      "asset": "ETH",
+      "venue": "CM",
+      "day": "2023-08-27",
+      "vision_minutes": 1440,
+      "rest_minutes": 1440,
+      "common_minutes": 1440,
+      "exact_ohlcv_minutes": 1440,
+      "mismatch_count": 0,
+      "mismatch_timestamps_and_columns": [],
+      "same_timestamp_set": true,
+      "all_exact": true
+    },
+    {
+      "asset": "ETH",
+      "venue": "CM",
+      "day": "2023-08-28",
+      "vision_minutes": 1440,
+      "rest_minutes": 1440,
+      "common_minutes": 1440,
+      "exact_ohlcv_minutes": 1440,
+      "mismatch_count": 0,
+      "mismatch_timestamps_and_columns": [],
+      "same_timestamp_set": true,
+      "all_exact": true
+    },
+    {
+      "asset": "ETH",
+      "venue": "CM",
+      "day": "2023-08-29",
+      "vision_minutes": 1440,
+      "rest_minutes": 1440,
+      "common_minutes": 1440,
+      "exact_ohlcv_minutes": 1440,
+      "mismatch_count": 0,
+      "mismatch_timestamps_and_columns": [],
+      "same_timestamp_set": true,
+      "all_exact": true
+    },
+    {
+      "asset": "ETH",
+      "venue": "CM",
+      "day": "2023-08-30",
+      "vision_minutes": 1440,
+      "rest_minutes": 1440,
+      "common_minutes": 1440,
+      "exact_ohlcv_minutes": 1440,
+      "mismatch_count": 0,
+      "mismatch_timestamps_and_columns": [],
+      "same_timestamp_set": true,
+      "all_exact": true
+    },
+    {
+      "asset": "ETH",
+      "venue": "CM",
+      "day": "2026-10-27",
+      "vision_minutes": 1440,
+      "rest_minutes": 1440,
+      "common_minutes": 1440,
+      "exact_ohlcv_minutes": 1440,
+      "mismatch_count": 0,
+      "mismatch_timestamps_and_columns": [],
+      "same_timestamp_set": true,
+      "all_exact": true
+    }
+  ],
+  "source_equality_scope": "Specific sampled complete adjacent days only; not a claim of universal archive/REST equivalence. ETH Spot 2020-12-21 monthly has21 extra minutes absent in daily/REST.",
+  "latest_cm_funding_actual_probes": "funding_targeted/summary.json",
+  "eth_oct27_spot_probe": "spot_klines/ETHUSDT_oct27_probe/summary.json",
+  "lock_state": {
+    "BTC_IS_UNLOCKED": true,
+    "POST_IS_AND_ETH_UNLOCKED": false
+  },
+  "proposed_single_run_scope": {
+    "end_exclusive": "2026-06-01T00:00:00Z",
+    "post_is_months": 29,
+    "post_is_days": 882,
+    "VAL_months": 18,
+    "OOS_months": 11,
+    "OOS_days": 335,
+    "reason": "Both official CM funding sources lack2026-06-30 08:00. Preserve complete-month inference and common comparison periods; no imputation.",
+    "not_applied": true
+  },
+  "rest_kline_supplement_draft": {
+    "applicable_streams": [
+      "BTC UM",
+      "ETH UM",
+      "BTC CM",
+      "ETH CM"
+    ],
+    "day": "2026-10-28",
+    "minutes_each": 1440,
+    "raw_responses_saved": true,
+    "neighbor_check_day": "2026-10-27",
+    "exact_ohlcv_each": 1440,
+    "usage": "Technically supported if original end is later retained, but does not cure missing June funding. Not merged."
+  },
+  "operational_notes": [
+    "Initial non-escalated skill read was blocked by sandbox bwrap; subsequent reads used approved escalation.",
+    "One summary-print attempt used a nonmatching JSON field and raised KeyError before any write; corrected schema was read afterward. No data acquisition or strategy execution was retried."
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "status": "STOPPED_UNFROZEN_IMPLEMENTATION_EDIT_COMMAND",
+  "recorded_at": "2026-11-08T09:14:46.168541+00:00",
+  "baseline": "f0c21acdd9320d87272d3c8cd46fe95b8d72ec5d",
+  "error": {
+    "command_prefix": "python - <<'PY'",
+    "stderr": "/bin/bash: line 1: python: command not found",
+    "exit_code": 127,
+    "stage": "text-edit helper, before code validation or real-data preparation"
+  },
+  "agent_events": [
+    {
+      "agent": "cp3_input_implementation",
+      "reported": "Same unavailable python alias occurred in a text-editor command; agent reported it and then completed that text edit with python3. No test/parser/preparation ran."
+    },
+    {
+      "agent": "cp3_runtime_implementation",
+      "reported": "Stopped before pending CP2 archived-chart adapter edit was applied; no retry, test, parse, or account run."
+    }
+  ],
+  "response": "All implementation agents stopped; no further source fixes or validation. Await approval before continuing implementation.",
+  "locks": {
+    "BTC_IS_UNLOCKED": true,
+    "POST_IS_AND_ETH_UNLOCKED": false
+  },
+  "tracked_diff": "",
+  "uncommitted_new_files_sha256": {
+    "reports/trend_hold_venue_round/cp3_registration/implementation_plan.md": "9ded918a9b5eb2529efad31ea889b2426424e1b86b50d1914c623b4f8056e2f9",
+    "tests/test_trend_venue_cp3_analysis.py": "dae927a06971d8f787873f0e5197d3a909e48ff18c51c62c1a963e7e9d6e1d88",
+    "tests/test_trend_venue_cp3_archives.py": "ecb11646bf188d41a0c539e2289ac2a803dbacb49031c7e3c7c42846cec2ab5d",
+    "tests/test_trend_venue_cp3_control.py": "56761e3b53d0053920485c3c9c608ab0280081ecc1d521162af8a506f384df0d",
+    "tests/test_trend_venue_cp3_data.py": "ad498fe3e6e32dec94acf12a0a40f29411c551baa7cee81f598ff383252d9d6c",
+    "tests/test_trend_venue_cp3_funding.py": "a04678603f1af84c3db9848e0f32603efa28feca51d6d56ba78f04ff34193f44",
+    "tests/test_trend_venue_cp3_plotting.py": "f4b181cc75af54e5cea491965f3b94a586d1d0608e7d5825d39befc494367525",
+    "tests/test_trend_venue_cp3_runtime.py": "95e5a3b533acf56fed3339cf895ca47013beee550e825dbe24c553e3868b6cc9",
+    "tests/test_trend_venue_cp3_storage.py": "7a2decbe1d0faf7a904939c6ec9ce56e4e76e2ce16c0d7c3a260e6d394d65ed6",
+    "trend_hold_venue_study/cp3_analysis.py": "4d709eebea53e60fbd9dbdacd2826eb5f66d9a2c1d1d4b31f2840842a06f6b5c",
+    "trend_hold_venue_study/cp3_archives.py": "dfe2dec115778d0647b27c658d9b55b865f9c637d588e2f6759a961594e0e906",
+    "trend_hold_venue_study/cp3_control.py": "f3fd707d4ea78319f5c2ea4e4ffeea2aa9130a5c6eb31f41baf003b9bff7aff9",
+    "trend_hold_venue_study/cp3_data.py": "62835dcdcf652a47033dc3543be102ee197627058d1ec6fd165e2c4c684a0db5",
+    "trend_hold_venue_study/cp3_funding.py": "6a51d72b0777596e45bc2203b44940ad7431d79cbe0f32f9290ac93148fd2bb2",
+    "trend_hold_venue_study/cp3_plotting.py": "76ba648fd3486384d0e7f6ac82ca005bc79462a781a0d10c6fa3e96206f7cba9",
+    "trend_hold_venue_study/cp3_runtime.py": "1ac501dac035a94a1c7849d88273eae55b277db00e1f8d0f6d4d69f1721ba650",
+    "trend_hold_venue_study/cp3_storage.py": "0cd905899cab234971fe526aaac48e2535271e613d21d2ab381109ef5d80b65c"
+  },
+  "new_market_downloaded_or_parsed": false,
+  "synthetic_tests_run": false,
+  "real_features_or_accounts_run": false,
+  "commits_created": false,
+  "pending": "CP2 archived chart adapter, entrypoint/integration, synthetic verification, input preparation, three commits and formal87-account run remain incomplete.",
+  "storage_migration": {
+    "status": "complete",
+    "record": "/mnt/ppvp-backtests/operations/archive/storage_migration_sndylcvd/COMPLETE.json",
+    "volume_uuid": "d60bc8c8-11ef-4540-8d13-e2327feac6a1",
+    "new_volume_free_GiB": 41.584190368652344,
+    "root_free_GiB": 47.52288818359375
+  }
+}

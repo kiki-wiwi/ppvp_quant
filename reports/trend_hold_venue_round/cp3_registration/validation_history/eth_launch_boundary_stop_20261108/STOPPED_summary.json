@@ -1,0 +1,26 @@
+{
+  "status": "STOPPED_AUTHORIZATION_EVIDENCE_CONFLICT",
+  "recorded_at_utc": "2026-11-08T10:28:15.652723+00:00",
+  "requested_record": "ETHUSD_PERP 2020-08-18T00:00:00Z funding record retained; one pre-native Context exclusion",
+  "observed_raw_records": 41,
+  "first_raw_timestamp_ms": 1597737600000,
+  "first_raw_time_utc": "2020-08-18T08:00:00+00:00",
+  "midnight_record_present": false,
+  "native_first_kline": "2020-08-18T07:01:00Z",
+  "actual_pre_native_funding_records_in_saved_response": 0,
+  "source_sha256": "11f573582930be817fa97a1694955fb98221e519c73e1d323e4c305004d105de",
+  "source_path": "/mnt/ppvp-backtests/diagnostics/cp3_availability_20261108/funding/0319_dapi_funding.json",
+  "source_metadata_path": "/mnt/ppvp-backtests/diagnostics/cp3_availability_20261108/funding/0319_dapi_funding.json.metadata.json",
+  "proposed_clarification": "Preserve raw source exactly; register 00:00 as prelaunch/no source record, first settlement08:00, Context exclusion count0. Do not invent a funding record or rate.",
+  "head": "f0c21acdd9320d87272d3c8cd46fe95b8d72ec5d",
+  "tracked_diff": "",
+  "locks": {
+    "BTC_IS_UNLOCKED": true,
+    "POST_IS_AND_ETH_UNLOCKED": false
+  },
+  "implementation_changes": false,
+  "new_market_requests": false,
+  "features_signals_accounts_computed": false,
+  "new_commits": false,
+  "free_GiB": 40.978572845458984
+}

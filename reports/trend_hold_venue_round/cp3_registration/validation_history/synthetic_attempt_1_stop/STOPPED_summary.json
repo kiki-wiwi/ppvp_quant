@@ -1,0 +1,29 @@
+{
+  "status": "STOPPED",
+  "recorded_at_utc": "2026-11-08T09:25:10.640913+00:00",
+  "stage": "preunlock_synthetic_validation",
+  "failed_node": "tests/test_trend_venue_cp3_plotting.py::test_exact_intraday_dd_extreme_and_continuous_post_path_are_visible",
+  "result": {
+    "passed": 179,
+    "failed": 1,
+    "deselected": 3,
+    "warnings": 3
+  },
+  "cause": "The new chart places its title at loc=left, but the synthetic assertion calls get_title() which reads the default center title. Numeric extreme/time assertions before it passed.",
+  "proposed_handling": "After user approval, align title assertions with the registered left-aligned title location; inspect identical newly added title assertions for the same mismatch. Preserve plotting calculations, strategy formulas, parameters, random seeds, historical tests and frozen files. Rerun the required full guarded synthetic validation only after approval.",
+  "additional_observation": "Matplotlib emitted 3 AutoDateLocator interval warnings for sparse synthetic chart dates; no true market data were read.",
+  "source_unchanged_during_test": true,
+  "locks": {
+    "BTC_IS_UNLOCKED": true,
+    "POST_IS_AND_ETH_UNLOCKED": false
+  },
+  "real_data_download_or_parse": false,
+  "formal_run": false,
+  "implementation_commit_created": false,
+  "evidence": {
+    "synthetic_validation.json": "d18628e90a239d47a518cb5537da7ce1e06618a35da98d2242e091ab3251875c",
+    "synthetic_pytest.txt": "9ab7691140a44c6b038c15202885e3c2adc39fcff5c868eb7998df9b8d913cff",
+    "synthetic_junit.xml": "2872f3d25b3e74109ceb65e0071161e0b1b2c6c59052508d9d0f84689cc4213d",
+    "STOPPED_synthetic_validation.json": "d18628e90a239d47a518cb5537da7ce1e06618a35da98d2242e091ab3251875c"
+  }
+}

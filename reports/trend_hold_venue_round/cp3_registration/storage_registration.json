@@ -1,0 +1,27 @@
+{
+  "volume_uuid": "d60bc8c8-11ef-4540-8d13-e2327feac6a1",
+  "mount": "/mnt/ppvp-backtests",
+  "required_free_GiB": 40,
+  "artifacts": [
+    {
+      "path": "/mnt/ppvp-backtests/operations/archive/storage_migration_sndylcvd/COMPLETE.json",
+      "sha256": "a3ac7c75827bbefe7f74d8df0b7218146bdf5a702942d29f26ef764b5fdccdc0"
+    },
+    {
+      "path": "/mnt/ppvp-backtests/operations/archive/storage_migration_sndylcvd/evidence_hashes.json",
+      "sha256": "62df9028c17e371c0fe347db309ce1c2e4c0a22daec604f7d64cb1c56369c620"
+    },
+    {
+      "path": "/mnt/ppvp-backtests/operations/archive/preflight_archives.json",
+      "sha256": "071ea942d684fbf36d6af22385cae8cca56751f972f5759be5c755514f0edc50"
+    },
+    {
+      "path": "/mnt/ppvp-backtests/operations/storage_layout.json",
+      "sha256": "04a6a79d6846098ef5108bf7f6a3e212d593c52c0b43d504ecb4e3634c9ab163"
+    },
+    {
+      "path": "/mnt/ppvp-backtests/operations/bin/storage_preflight.py",
+      "sha256": "173d049111de551ed76ba87c393c9e69c135f64a7cf1fa908fdb7233ab842994"
+    }
+  ]
+}

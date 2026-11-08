@@ -1,0 +1,17 @@
+{
+  "approved_change": "Only two new test fixtures monkeypatch RAW to synthetic_raw; matching path assertion updated.",
+  "recorded_at_utc": "2026-11-08T11:41:34.997223+00:00",
+  "production_and_frozen_guard_sha256": {
+    "trend_hold_venue_study/cp3_reuse.py": "5e43674f49583bedb78dca8ea01c03a5206ada97d05757fe063dbe8817b050b5",
+    "trend_hold_venue_study/testing_guard.py": "6798d2f11cb210c90b229d78901f48f077ebb4e386bf8cd2e6d25dabeca2c659"
+  },
+  "production_and_guard_unchanged": true,
+  "old_stop_sha256": {
+    "STOPPED_summary.json": "f5663826ba9e01a5c49e8799b3529594511fa1cb2b1981ad3765c7f6b622d19a",
+    "STOPPED_synthetic_validation.json": "d3ade5c9713175e09adf68804a42d74f32811a25b7533cf2cfc8273b460acb81",
+    "synthetic_validation.json": "d3ade5c9713175e09adf68804a42d74f32811a25b7533cf2cfc8273b460acb81",
+    "synthetic_pytest.txt": "eeda4443f9fe5c59fd25a02e1ed2af9bb41de11e9e138e034d5ec03850f54a13",
+    "synthetic_junit.xml": "81c6fbeb2b2fab054f7976c30b6ed7019d6ae9cf6549daa978c16492a1ffbed7"
+  },
+  "three_approved_deselections_unchanged": true
+}

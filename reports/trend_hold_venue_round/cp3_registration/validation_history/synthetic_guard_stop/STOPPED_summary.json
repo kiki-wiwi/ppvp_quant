@@ -1,0 +1,21 @@
+{
+  "status": "STOPPED_SYNTHETIC_GUARD_COLLISION",
+  "recorded_at_utc": "2026-11-08T11:35:21.360757+00:00",
+  "failing_node": "tests/test_trend_venue_cp3_archives.py::test_authorized_archive_reuse_authenticates_and_hardlinks_without_network",
+  "passed": 142,
+  "failed": 1,
+  "deselected": 3,
+  "reason": "New post-link SHA256 read hits frozen testing_guard because a synthetic ZIP destination is named under data/raw. Actual fixture bytes are synthetic; no real market data was read.",
+  "frozen_guard_changed": false,
+  "source_unchanged_during_test": true,
+  "locks": {
+    "BTC_IS_UNLOCKED": true,
+    "POST_IS_AND_ETH_UNLOCKED": false
+  },
+  "input_preflight_restarted": false,
+  "formal_run_started": false,
+  "new_commits": false,
+  "head": "f0c21acdd9320d87272d3c8cd46fe95b8d72ec5d",
+  "tracked_diff": "",
+  "proposed_minimal_change": "In new CP3 archive tests only, monkeypatch the archive RAW destination to an explicitly synthetic directory before constructing specs; retain production SHA256/inode checks and frozen testing_guard. Review related synthetic hardlink fixtures for the same collision, then rerun only after approval."
+}

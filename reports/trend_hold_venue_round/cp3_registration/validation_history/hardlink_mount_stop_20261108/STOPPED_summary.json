@@ -1,0 +1,31 @@
+{
+  "status": "STOPPED",
+  "stage": "locked_input_preparation",
+  "recorded_at_utc": "2026-11-08T10:54:39.462305+00:00",
+  "error": "[Errno 18] Invalid cross-device link: '/mnt/ppvp-backtests/diagnostics/cp3_availability_20261108/funding/0003_archive.zip' -> '/home/ubuntu/.codex/worktrees/channel-vah-prereg/ppvp_quant/data/raw/venue_cp3_revision_1/BTC/UM/fundingRate/venue_cp3_BTCUSDT-fundingRate-2024-01.zip'",
+  "source": "/mnt/ppvp-backtests/diagnostics/cp3_availability_20261108/funding/0003_archive.zip",
+  "destination": "/home/ubuntu/.codex/worktrees/channel-vah-prereg/ppvp_quant/data/raw/venue_cp3_revision_1/BTC/UM/fundingRate/venue_cp3_BTCUSDT-fundingRate-2024-01.zip",
+  "source_device_id": 2065,
+  "destination_parent_device_id": 2065,
+  "source_mount": "/mnt/ppvp-backtests /dev/sdb1 ext4   8:17  1049",
+  "destination_mount": "/home/ubuntu/.codex/worktrees/channel-vah-prereg/ppvp_quant/data /dev/sdb1[/data/worktree] ext4   8:17  923",
+  "physical_destination_mount": "/mnt/ppvp-backtests /dev/sdb1 ext4   8:17  1049",
+  "physical_alias_same_directory": true,
+  "source_sha256": "3e0d30870672aa8f0f937881056e3cfd55913ae5c780cd50b33f2763aa0ba58e",
+  "destination_created": false,
+  "completed_archives": 29,
+  "api_pages": 0,
+  "completed_cache_assets": {
+    "BTC": {}
+  },
+  "head": "f0c21acdd9320d87272d3c8cd46fe95b8d72ec5d",
+  "tracked_diff": "",
+  "locks": {
+    "BTC_IS_UNLOCKED": true,
+    "POST_IS_AND_ETH_UNLOCKED": false
+  },
+  "synthetic_validation": "321 passed,3deselected",
+  "features_signals_accounts_computed": false,
+  "automatic_retry": false,
+  "proposal": "Normalize authenticated hardlink source/destination to the same approved /mnt/ppvp-backtests filesystem mount using storage_layout mapping, verify inode/device/UUID containment, then link. Preserve all frozen files, source bytes and failed attempt; rerun only after user approval."
+}

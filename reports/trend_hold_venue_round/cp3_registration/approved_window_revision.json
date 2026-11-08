@@ -1,0 +1,41 @@
+{
+  "approved_by": "user",
+  "timestamp_utc": "2026-11-08T10:46:26.516633+00:00",
+  "post_is": [
+    "2024-01-01T00:00:00Z",
+    "2026-06-01T00:00:00Z"
+  ],
+  "post_days": 882,
+  "post_months": 29,
+  "VAL_months": 18,
+  "OOS_months": 11,
+  "OOS_first_denominator": "2025-06-30T23:59:00Z",
+  "accounts": 87,
+  "CP1_config_unchanged": true,
+  "ETH_CM_native_start": "2020-08-18T07:01:00Z",
+  "ETH_CM_first_funding": "2020-08-18T08:00:00Z",
+  "ETH_CM_pre_native_funding_exclusions": 0,
+  "ETH_CM_midnight_prelaunch_slot": "absent; no invented record",
+  "ETH_CM_daily_supplements": [
+    "2023-08-28",
+    "2023-08-29",
+    "2023-08-30",
+    "2023-08-31"
+  ],
+  "ETH_SPOT_gap_minutes": 1424,
+  "gap_ranges_sha256": "8af0e5eafba5261d126762380fe7cce7ce12ada35ebfd51691e652882040d1f3",
+  "keep_monthly_extra_21_minutes": true,
+  "October_REST_supplement_enabled": false,
+  "July_October_full_funding_replacement_enabled": false,
+  "prior_registration_history_sha256": {
+    "synthetic_validation.json": "e7c5f95e193279cef92ef6dcc2a65722e484e95f369745193f60b9406f5d2b78",
+    "synthetic_pytest.txt": "168745793e3abf16cdda35d0302c47bf3b2f7eac06eab42204f9c22decf7774e",
+    "synthetic_junit.xml": "6012533f30eec1832ee28f5942a1d346029c92d33873d5b02902e131a79a2ae7",
+    "venue_cp3_input_progress.json": "09522df7cc267faf6d8e743efe81bafc38d0c8697f70b6f0d07a81847ae5ad89",
+    "STOPPED_venue_cp3_inputs.json": "09522df7cc267faf6d8e743efe81bafc38d0c8697f70b6f0d07a81847ae5ad89",
+    "STOPPED_entrypoint_preparation.json": "c3ea487e733f4b8ccd9082d548d49637ddb4c07093fa0296ad1f055a4811471f",
+    "STOPPED_summary.json": "6b3b54c687c69d4b486b7138b63d7b5bf726e7c835ff11780410010db4dc09c7",
+    "venue_cp3_listing_89eef3f91bd9f885_01.xml": "4c0c33bc7cfef073475ee5d6d56ff78bd88cf39e7ba2fa093cd862f657363812",
+    "venue_cp3_listing_59e9cf525af65bd3_01.xml": "2e82540db212e01cfc4c80b147ad1d8b3d8b716ec1c09baee14d8649f181c329"
+  }
+}

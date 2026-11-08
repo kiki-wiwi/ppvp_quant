@@ -1,0 +1,15 @@
+{
+  "time_utc": "2026-11-08T10:51:20.756868+00:00",
+  "authorizations": "Latest user correction confirms ETH first funding08:00; zero excludedrecords. All other cutoff and three-commit approvals retained.",
+  "head": "f0c21acdd9320d87272d3c8cd46fe95b8d72ec5d",
+  "remote_head_verified": "f0c21acdd9320d87272d3c8cd46fe95b8d72ec5d",
+  "git_lfs_client_sha256": "b0868f6ccb42243da6eeaa7550acb3af2f3d5041bf79fdb9bea23c3e660e3ff4",
+  "protected_bytes": {
+    "trend_hold_venue_study/config.py": "dcdcaee012d01f3e4280d2df04e97e8cda4aa0f34cebd7392e517520fda5ca22",
+    "trend_hold_venue_study/scope.py": "0afdf4ae17438ef8719625d800bdcb6aa32dd5304fcc873132d6d8c6c85f6c9a"
+  },
+  "pure_implementation_operational_note": "A read-only inspection queried the not-yet-created cp3_reuse.py and reported no such file; this was an in-progress file, not a test/input/runtime failure. No program was retried or fixed in response.",
+  "synthetic_validation": "pending unified run after all writes complete",
+  "input_preparation": "not started",
+  "formal_run": "not started"
+}

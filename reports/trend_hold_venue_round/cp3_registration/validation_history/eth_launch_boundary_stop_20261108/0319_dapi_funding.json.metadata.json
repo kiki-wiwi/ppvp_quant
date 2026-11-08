@@ -1,0 +1,33 @@
+{
+  "url": "https://dapi.binance.com/dapi/v1/fundingRate?symbol=ETHUSD_PERP&startTime=1597708800000&endTime=1598918399999&limit=1000",
+  "requested_at_utc": "2026-11-08T09:55:46.653445+00:00",
+  "path": "/mnt/ppvp-backtests/diagnostics/cp3_availability_20261108/funding/0319_dapi_funding.json",
+  "automatic_retry": false,
+  "status": 200,
+  "headers": {
+    "Date": "Sun, 08 Nov 2026 09:55:46 GMT",
+    "Content-Type": "application/json",
+    "Content-Length": "4759",
+    "Connection": "close",
+    "Server": "nginx",
+    "Vary": "Accept-Encoding",
+    "x-mbx-used-weight-1m": "34",
+    "x-request-id": "c8bff0b6-ab15-4130-ab39-693107980d27",
+    "x-response-time": "10ms",
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+    "Access-Control-Allow-Credentials": "true",
+    "Access-Control-Allow-Headers": "*,clienttype,Content-Type,lang,x-ui-request-trace",
+    "Content-Security-Policy": "default-src 'self'",
+    "cache-control": "no-cache, no-store, must-revalidate",
+    "expires": "0",
+    "pragma": "no-cache",
+    "strict-transport-security": "max-age=31536000; includeSubdomains",
+    "x-content-type-options": "nosniff",
+    "x-frame-options": "SAMEORIGIN",
+    "x-xss-protection": "1; mode=block"
+  },
+  "sha256": "11f573582930be817fa97a1694955fb98221e519c73e1d323e4c305004d105de",
+  "bytes": 4759,
+  "completed_at_utc": "2026-11-08T09:55:46.993607+00:00"
+}

@@ -1,0 +1,11 @@
+verified frozen CP2 delivery files 100
+verified frozen CP2 delivery files 200
+verified frozen CP2 delivery files 300
+verified frozen CP2 delivery files 400
+CP3 input preflight BTC/UM: 1357920 minutes; raw structure only
+CP3 input preflight BTC/SPOT: 1357920 minutes; raw structure only
+CP3 input preflight BTC/CM: 1357920 minutes; raw structure only
+CP3 input preflight ETH/UM: 3111840 minutes; raw structure only
+CP3 input preflight ETH/SPOT: 3111840 minutes; raw structure only
+CP3 input preflight ETH/CM: 3042299 minutes; raw structure only
+{"status": "validated", "manifest": {"path": "reports/trend_hold_venue_round/cp3_registration/venue_cp3_inputs.json", "sha256": "68866ee3c47a03c65f5799b8e581337834fe994d30819427455e9f4eb36760d0"}, "source_and_cache_files_verified": 1077}

@@ -1,0 +1,17 @@
+{
+  "checked_at_utc": "2026-11-08T10:02:25Z",
+  "snapshot_file_count": 2958,
+  "changed_files": [],
+  "existing_registered_archives_verified": 34,
+  "changed_registered_raw_files": [],
+  "head": "f0c21acdd9320d87272d3c8cd46fe95b8d72ec5d",
+  "head_unchanged": true,
+  "git_status_unchanged": true,
+  "lock_lines": [
+    "BTC_IS_UNLOCKED = True",
+    "POST_IS_AND_ETH_UNLOCKED = False"
+  ],
+  "free_GiB": 40.97889709472656,
+  "no_new_commits": true,
+  "diagnostic_only": true
+}

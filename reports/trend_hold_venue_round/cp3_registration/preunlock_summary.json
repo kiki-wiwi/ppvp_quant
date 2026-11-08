@@ -1,0 +1,122 @@
+{
+  "status": "preunlock_validated",
+  "post_unlock": false,
+  "archive_count": 479,
+  "api_pages": 99,
+  "new_network_archive_requests": 0,
+  "new_network_api_requests": 0,
+  "close_time_exceptions": 6,
+  "structures": [
+    {
+      "asset": "BTC",
+      "venue": "UM",
+      "first_native_minute": "2024-01-01T00:00:00+00:00",
+      "context_start": "2023-11-01T00:00:00+00:00",
+      "context_end": "2026-06-01T00:00:00+00:00",
+      "rows": 1357920,
+      "bad_minutes": 126,
+      "archive_gap_minutes": 0,
+      "placeholder_minutes": 126
+    },
+    {
+      "asset": "BTC",
+      "venue": "SPOT",
+      "first_native_minute": "2024-01-01T00:00:00+00:00",
+      "context_start": "2023-11-01T00:00:00+00:00",
+      "context_end": "2026-06-01T00:00:00+00:00",
+      "rows": 1357920,
+      "bad_minutes": 0,
+      "archive_gap_minutes": 0,
+      "placeholder_minutes": 0
+    },
+    {
+      "asset": "BTC",
+      "venue": "CM",
+      "first_native_minute": "2024-01-01T00:00:00+00:00",
+      "context_start": "2023-11-01T00:00:00+00:00",
+      "context_end": "2026-06-01T00:00:00+00:00",
+      "rows": 1357920,
+      "bad_minutes": 3224,
+      "archive_gap_minutes": 0,
+      "placeholder_minutes": 3224
+    },
+    {
+      "asset": "ETH",
+      "venue": "UM",
+      "first_native_minute": "2020-07-01T00:00:00+00:00",
+      "context_start": "2020-07-01T00:00:00+00:00",
+      "context_end": "2026-06-01T00:00:00+00:00",
+      "rows": 3111840,
+      "bad_minutes": 276,
+      "archive_gap_minutes": 0,
+      "placeholder_minutes": 276
+    },
+    {
+      "asset": "ETH",
+      "venue": "SPOT",
+      "first_native_minute": "2020-07-01T00:00:00+00:00",
+      "context_start": "2020-07-01T00:00:00+00:00",
+      "context_end": "2026-06-01T00:00:00+00:00",
+      "rows": 3111840,
+      "bad_minutes": 1634,
+      "archive_gap_minutes": 1424,
+      "placeholder_minutes": 210
+    },
+    {
+      "asset": "ETH",
+      "venue": "CM",
+      "first_native_minute": "2020-08-18T07:01:00+00:00",
+      "context_start": "2020-08-18T07:01:00+00:00",
+      "context_end": "2026-06-01T00:00:00+00:00",
+      "rows": 3042299,
+      "bad_minutes": 9549,
+      "archive_gap_minutes": 0,
+      "placeholder_minutes": 9549
+    }
+  ],
+  "funding": [
+    {
+      "name": "BTC_UM",
+      "settlements": 2646,
+      "context_exclusions": 0,
+      "overlap": null,
+      "exact_decimal_matches": null,
+      "max_abs_decimal_diff": null,
+      "early_supplements": 0,
+      "month_end_supplements": 0
+    },
+    {
+      "name": "BTC_CM",
+      "settlements": 2646,
+      "context_exclusions": 0,
+      "overlap": 2588,
+      "exact_decimal_matches": 2588,
+      "max_abs_decimal_diff": "0E-8",
+      "early_supplements": 0,
+      "month_end_supplements": 58
+    },
+    {
+      "name": "ETH_UM",
+      "settlements": 6483,
+      "context_exclusions": 0,
+      "overlap": null,
+      "exact_decimal_matches": null,
+      "max_abs_decimal_diff": null,
+      "early_supplements": 0,
+      "month_end_supplements": 0
+    },
+    {
+      "name": "ETH_CM",
+      "settlements": 6338,
+      "context_exclusions": 0,
+      "overlap": 4181,
+      "exact_decimal_matches": 4181,
+      "max_abs_decimal_diff": "0E-8",
+      "early_supplements": 2045,
+      "month_end_supplements": 112
+    }
+  ],
+  "synthetic": "325 passed,3deselected,13date-locatorwarnings",
+  "new_real_features_signals_accounts_computed": false,
+  "free_GiB": 40.59224319458008
+}

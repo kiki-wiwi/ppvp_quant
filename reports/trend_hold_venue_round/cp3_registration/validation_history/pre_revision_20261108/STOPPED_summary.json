@@ -1,0 +1,61 @@
+{
+  "status": "STOPPED",
+  "recorded_at_utc": "2026-11-08T09:33:25.755087+00:00",
+  "stage": "locked_input_preparation",
+  "error": "official archive absent: futures/um/daily/klines/BTCUSDT/1m/BTCUSDT-1m-2026-10-28.zip",
+  "synthetic_validation": {
+    "passed": 305,
+    "deselected": 3,
+    "warnings": 19,
+    "status": "passed",
+    "only_approved_test_edits": "three get_title(loc=left) assertions"
+  },
+  "frozen_CP2_deliveries_verified_before_preparation": 407,
+  "archives_checksum_verified_before_stop": 34,
+  "affected_month": {
+    "asset": "BTC",
+    "venue": "UM",
+    "month": "2026-10",
+    "rows": 43200,
+    "expected_full_month_minutes": 44640,
+    "row_shortfall": 1440,
+    "first_time": "2026-10-01T00:00:00+00:00",
+    "last_time": "2026-10-31T23:59:00+00:00",
+    "archive_sha256": "580bbf821130c6516f0b15819292beae79fd3d08498a0965fe8529308babf16b"
+  },
+  "saved_directory_evidence": {
+    "prefix": "data/futures/um/daily/klines/BTCUSDT/1m/BTCUSDT-1m-2026-10",
+    "is_truncated": false,
+    "zip_keys": 30,
+    "checksum_keys": 30,
+    "absent_exact_keys": [
+      "data/futures/um/daily/klines/BTCUSDT/1m/BTCUSDT-1m-2026-10-28.zip",
+      "data/futures/um/daily/klines/BTCUSDT/1m/BTCUSDT-1m-2026-10-28.zip.CHECKSUM"
+    ],
+    "scope": "Evidence from saved official listing; not a claim of universal unavailability or its cause."
+  },
+  "locks": {
+    "BTC_IS_UNLOCKED": true,
+    "POST_IS_AND_ETH_UNLOCKED": false
+  },
+  "new_real_features_signals_accounts_computed": false,
+  "formal_87_account_run_started": false,
+  "commits_created": false,
+  "automatic_retry": false,
+  "raw_files_preserved_in_place_on_new_volume": true,
+  "proposed_next_action": "Request approval for bounded read-only official availability diagnosis for BTC UM 2026-10-28. Do not retry preparation, change source/window, invent data or resume accounts without approval.",
+  "post_stop_operational_note": "A non-study Python-version probe used a mistyped directory date and exited127 without executing Python. No study command was retried; subsequent commands only preserved/read existing stop evidence.",
+  "free_GiB": 41.520111083984375,
+  "head": "f0c21acdd9320d87272d3c8cd46fe95b8d72ec5d",
+  "tracked_diff": "",
+  "evidence_sha256": {
+    "synthetic_validation.json": "e7c5f95e193279cef92ef6dcc2a65722e484e95f369745193f60b9406f5d2b78",
+    "synthetic_pytest.txt": "168745793e3abf16cdda35d0302c47bf3b2f7eac06eab42204f9c22decf7774e",
+    "synthetic_junit.xml": "6012533f30eec1832ee28f5942a1d346029c92d33873d5b02902e131a79a2ae7",
+    "venue_cp3_input_progress.json": "09522df7cc267faf6d8e743efe81bafc38d0c8697f70b6f0d07a81847ae5ad89",
+    "STOPPED_venue_cp3_inputs.json": "09522df7cc267faf6d8e743efe81bafc38d0c8697f70b6f0d07a81847ae5ad89",
+    "STOPPED_entrypoint_preparation.json": "c3ea487e733f4b8ccd9082d548d49637ddb4c07093fa0296ad1f055a4811471f",
+    "venue_cp3_listing_89eef3f91bd9f885_01.xml": "4c0c33bc7cfef073475ee5d6d56ff78bd88cf39e7ba2fa093cd862f657363812",
+    "venue_cp3_listing_59e9cf525af65bd3_01.xml": "2e82540db212e01cfc4c80b147ad1d8b3d8b716ec1c09baee14d8649f181c329"
+  }
+}

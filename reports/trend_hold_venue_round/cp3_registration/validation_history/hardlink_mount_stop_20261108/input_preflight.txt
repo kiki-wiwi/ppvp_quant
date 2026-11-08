@@ -1,0 +1,5 @@
+verified frozen CP2 delivery files 100
+verified frozen CP2 delivery files 200
+verified frozen CP2 delivery files 300
+verified frozen CP2 delivery files 400
+OSError: [Errno 18] Invalid cross-device link: '/mnt/ppvp-backtests/diagnostics/cp3_availability_20261108/funding/0003_archive.zip' -> '/home/ubuntu/.codex/worktrees/channel-vah-prereg/ppvp_quant/data/raw/venue_cp3_revision_1/BTC/UM/fundingRate/venue_cp3_BTCUSDT-fundingRate-2024-01.zip'

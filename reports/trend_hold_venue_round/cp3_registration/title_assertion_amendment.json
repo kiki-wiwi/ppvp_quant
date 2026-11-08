@@ -1,0 +1,30 @@
+{
+  "authorized_at_utc": "2026-11-08T09:26:50.556940+00:00",
+  "authorization": "Only replace exactly three get_title() assertions in the new plotting test with get_title(loc=left); archive failure; fixed Python and exact three historical exclusions; rerun full guarded suite, then original CP3 workflow; stop new errors.",
+  "modified_file": "tests/test_trend_venue_cp3_plotting.py",
+  "before_sha256": "c779e74d4b4aa479240865c0cf5b6ac05d1fcdb13dc5915dec246c90820f7a7b",
+  "after_sha256": "753095e85895c9bad246d7eab861f9cf1b15912d0655202d6518606f6894655a",
+  "replacement_count": 3,
+  "archived_evidence": [
+    {
+      "path": "reports/trend_hold_venue_round/cp3_registration/validation_history/synthetic_attempt_1_stop/synthetic_validation.json",
+      "sha256": "d18628e90a239d47a518cb5537da7ce1e06618a35da98d2242e091ab3251875c"
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_registration/validation_history/synthetic_attempt_1_stop/synthetic_pytest.txt",
+      "sha256": "9ab7691140a44c6b038c15202885e3c2adc39fcff5c868eb7998df9b8d913cff"
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_registration/validation_history/synthetic_attempt_1_stop/synthetic_junit.xml",
+      "sha256": "2872f3d25b3e74109ceb65e0071161e0b1b2c6c59052508d9d0f84689cc4213d"
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_registration/validation_history/synthetic_attempt_1_stop/STOPPED_synthetic_validation.json",
+      "sha256": "d18628e90a239d47a518cb5537da7ce1e06618a35da98d2242e091ab3251875c"
+    },
+    {
+      "path": "reports/trend_hold_venue_round/cp3_registration/validation_history/synthetic_attempt_1_stop/STOPPED_summary.json",
+      "sha256": "96e12ac468f639ce7273bc6885be8956bb599c0c9d145f8cfa8f4a2118e15d0b"
+    }
+  ]
+}
