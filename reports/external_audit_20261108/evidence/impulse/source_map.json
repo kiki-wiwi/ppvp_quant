@@ -1,0 +1,35 @@
+{
+  "purpose": "Archive three existing Impulse CP3 pre-match stop records without changing bytes or rerunning research.",
+  "evidence_anchor_commit": "21eee8746452d5d46b78f5ef8c50c024ebd21779",
+  "original_hash_reference": "docs/phase_logs/IMPULSE_CP3_results.md",
+  "reference_sha256": "68ae72b6d13fd6c580b55f887b01f9169105850027179944c5ba5d213a534e44",
+  "copied_files": [
+    {
+      "source_path": "/home/ubuntu/Documents/Codex/2026-11-06/github-ppvp-quant-agent-2-checkpoint/work/cp3_pre_match_stop_logs_20261106T065250Z/STOPPED.json",
+      "archive_path": "reports/external_audit_20261108/evidence/impulse/STOPPED.json",
+      "size_bytes": 7209,
+      "sha256": "11305d1d81866915919147515ca9912d108af208483d1c78a898f4dc1c4a139e",
+      "expected_sha256": "11305d1d81866915919147515ca9912d108af208483d1c78a898f4dc1c4a139e",
+      "verification": "source and copied bytes match the original phase-log SHA256"
+    },
+    {
+      "source_path": "/home/ubuntu/Documents/Codex/2026-11-06/github-ppvp-quant-agent-2-checkpoint/work/cp3_pre_match_stop_logs_20261106T065250Z/run.txt",
+      "archive_path": "reports/external_audit_20261108/evidence/impulse/run.txt",
+      "size_bytes": 949,
+      "sha256": "6773957c9aabb1a14048f9eef2384a135170cda4eb98af64da69785e07297694",
+      "expected_sha256": "6773957c9aabb1a14048f9eef2384a135170cda4eb98af64da69785e07297694",
+      "verification": "source and copied bytes match the original phase-log SHA256"
+    },
+    {
+      "source_path": "/home/ubuntu/Documents/Codex/2026-11-06/github-ppvp-quant-agent-2-checkpoint/work/cp3_pre_match_stop_logs_20261106T065250Z/run_start.json",
+      "archive_path": "reports/external_audit_20261108/evidence/impulse/run_start.json",
+      "size_bytes": 6055,
+      "sha256": "89422feb13b5d9fe6cbd8f48814e8a251407aaa1be953db9506112648167af56",
+      "expected_sha256": "89422feb13b5d9fe6cbd8f48814e8a251407aaa1be953db9506112648167af56",
+      "verification": "source and copied bytes match the original phase-log SHA256"
+    }
+  ],
+  "all_source_and_destination_hashes_match": true,
+  "original_sources_modified": false,
+  "new_research_or_statistics_run": false
+}

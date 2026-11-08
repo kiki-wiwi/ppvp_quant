@@ -1,0 +1,16 @@
+{
+  "stopped_at_utc": "2026-11-07T07:06:48.104683+00:00",
+  "stage": "publish_unlock_tree",
+  "tool": "github_create_tree",
+  "tool_result": "aborted; no success confirmation returned",
+  "head": "cda559de7fe510a61f74dd5315eb25e1692d16ca",
+  "branch": "codex/daily-trend-hold-study",
+  "status": "M  trend_hold_study/scope.py",
+  "staged_diff": "diff --git a/trend_hold_study/scope.py b/trend_hold_study/scope.py\nindex 94d2cc2..4a07780 100644\n--- a/trend_hold_study/scope.py\n+++ b/trend_hold_study/scope.py\n@@ -4,7 +4,7 @@ import numpy as np\n import pandas as pd\n from .config import IS_START, IS_END\n \n-REAL_DATA_UNLOCKED = False\n+REAL_DATA_UNLOCKED = True\n MINUTE_NS = 60_000_000_000",
+  "unstaged_diff": "",
+  "formal_result_directory_exists": false,
+  "formal_run_started": false,
+  "matching_calls": 0,
+  "automatic_retry": false,
+  "remote_tree_creation": "unknown; no commit or update_ref call made"
+}

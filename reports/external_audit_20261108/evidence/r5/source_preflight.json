@@ -1,0 +1,18 @@
+{
+  "head": "cda559de7fe510a61f74dd5315eb25e1692d16ca",
+  "clean": true,
+  "environment": {
+    "python": "3.14.4",
+    "pandas": "3.0.5",
+    "numpy": "2.5.4",
+    "pyarrow": "26.0.1",
+    "numba": "0.68.1",
+    "scipy": "1.18.1",
+    "matplotlib": "3.11.2",
+    "pytest": "9.2.0"
+  },
+  "protected_sources_verified": 112,
+  "new_files_verified": 27,
+  "legacy_frozen_key": "fc0d37b9d198ff85",
+  "approved_plan_sha256": "1d7a2684a53bb64d8cc323f9eb2a1ffb652d1ff1ecb5f54ef38d51e460f8546f"
+}

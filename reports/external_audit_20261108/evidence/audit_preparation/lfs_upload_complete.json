@@ -1,0 +1,25 @@
+{
+  "manifest_sha256": "1949c0fe1b3639c51cc615e0f8b873e6251f123a97444eedeed329c695f0d090",
+  "object_count": 3,
+  "objects": [
+    {
+      "oid": "fb9d9543158937b1a100f17793b2260a61eb511d7b790d617a09a499d6b70294",
+      "size": 535275520,
+      "status": "uploaded_verified"
+    },
+    {
+      "oid": "2ac8c77acd8caff8c0c5269ca1ec80839d5eeffc3f2fe6cf6017af8605bdd266",
+      "size": 536545280,
+      "status": "uploaded_verified"
+    },
+    {
+      "oid": "a7e71f08e029ded0e17487a24f4b9fb0e10ad53dda1f8dd3636b12dc287c35e9",
+      "size": 488273920,
+      "status": "uploaded_verified"
+    }
+  ],
+  "redirect_count": 0,
+  "retry_count": 0,
+  "status": "COMPLETE",
+  "time_utc": "2026-11-08T16:19:47.662146+00:00"
+}

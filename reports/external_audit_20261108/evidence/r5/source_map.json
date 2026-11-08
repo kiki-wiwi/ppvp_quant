@@ -1,0 +1,75 @@
+{
+  "purpose": "Archive eight existing R5 provenance records without changing their bytes or rerunning research.",
+  "evidence_anchor_commit": "21eee8746452d5d46b78f5ef8c50c024ebd21779",
+  "original_hash_reference": "docs/phase_logs/TREND_HOLD_results.md",
+  "reference_sha256": "b4cc5019ef4097a4ba8a4dac7b864ac2cbdd2783ad9aba1ddb13e97ee8568bec",
+  "copied_files": [
+    {
+      "source_path": "/tmp/trend_hold_formal__ue3kg42/source_preflight.json",
+      "archive_path": "reports/external_audit_20261108/evidence/r5/source_preflight.json",
+      "size_bytes": 490,
+      "sha256": "f71b42e6b1119815d0ed05cb56d7febc04d8fcd2a5cd6278953c03c5006e3122",
+      "expected_sha256": "f71b42e6b1119815d0ed05cb56d7febc04d8fcd2a5cd6278953c03c5006e3122",
+      "verification": "source and copied bytes match the original phase-log SHA256"
+    },
+    {
+      "source_path": "/tmp/trend_hold_formal__ue3kg42/input_preflight.json",
+      "archive_path": "reports/external_audit_20261108/evidence/r5/input_preflight.json",
+      "size_bytes": 13377,
+      "sha256": "3fea4740637d19dcc9e4bcbc933c3d85f96fd5fc181c60d316d5f294dd8e7b20",
+      "expected_sha256": "3fea4740637d19dcc9e4bcbc933c3d85f96fd5fc181c60d316d5f294dd8e7b20",
+      "verification": "source and copied bytes match the original phase-log SHA256"
+    },
+    {
+      "source_path": "/tmp/trend_hold_formal__ue3kg42/clean_unlock.json",
+      "archive_path": "reports/external_audit_20261108/evidence/r5/clean_unlock.json",
+      "size_bytes": 548,
+      "sha256": "f205b55f08e4461a390984bd34cfd6ebf80d3519c28df2afe86674d3cdd7f56e",
+      "expected_sha256": "f205b55f08e4461a390984bd34cfd6ebf80d3519c28df2afe86674d3cdd7f56e",
+      "verification": "source and copied bytes match the original phase-log SHA256"
+    },
+    {
+      "source_path": "/tmp/trend_hold_formal__ue3kg42/formal_process.json",
+      "archive_path": "reports/external_audit_20261108/evidence/r5/formal_process.json",
+      "size_bytes": 445,
+      "sha256": "2908b79a335af78675307fd43354e4f3f4e2b1f6e6d80c2fe70cf4e2e84d2235",
+      "expected_sha256": "2908b79a335af78675307fd43354e4f3f4e2b1f6e6d80c2fe70cf4e2e84d2235",
+      "verification": "source and copied bytes match the original phase-log SHA256"
+    },
+    {
+      "source_path": "/tmp/trend_hold_formal__ue3kg42/STOPPED_unlock_publication.json",
+      "archive_path": "reports/external_audit_20261108/evidence/r5/STOPPED_unlock_publication.json",
+      "size_bytes": 919,
+      "sha256": "a16cb1ed249c77f44053b8c042804b4f87535a36fe0441b07ebe54b4cd3bdf1d",
+      "expected_sha256": "a16cb1ed249c77f44053b8c042804b4f87535a36fe0441b07ebe54b4cd3bdf1d",
+      "verification": "source and copied bytes match the original phase-log SHA256"
+    },
+    {
+      "source_path": "/tmp/trend_hold_formal__ue3kg42/STOPPED_delivery_preparation.json",
+      "archive_path": "reports/external_audit_20261108/evidence/r5/STOPPED_delivery_preparation.json",
+      "size_bytes": 4572,
+      "sha256": "741586fb9ca4a70f56329faa5d15b6958e150c624f4d0d510a474f97e448d7f6",
+      "expected_sha256": "741586fb9ca4a70f56329faa5d15b6958e150c624f4d0d510a474f97e448d7f6",
+      "verification": "source and copied bytes match the original phase-log SHA256"
+    },
+    {
+      "source_path": "/tmp/trend_hold_formal__ue3kg42/STOPPED_publication_frame_limit.json",
+      "archive_path": "reports/external_audit_20261108/evidence/r5/STOPPED_publication_frame_limit.json",
+      "size_bytes": 4477,
+      "sha256": "79b6568d26b9e355e26fb163ada4e558ecee761226b09f44cc3398b1a08c4227",
+      "expected_sha256": "79b6568d26b9e355e26fb163ada4e558ecee761226b09f44cc3398b1a08c4227",
+      "verification": "source and copied bytes match the original phase-log SHA256"
+    },
+    {
+      "source_path": "/tmp/trend_hold_formal__ue3kg42/STOPPED_native_git_authentication.json",
+      "archive_path": "reports/external_audit_20261108/evidence/r5/STOPPED_native_git_authentication.json",
+      "size_bytes": 596,
+      "sha256": "72f7a4aafe4198b58309863a382e38af4fb9cfa341cd041a144a9ed4868a084c",
+      "expected_sha256": "72f7a4aafe4198b58309863a382e38af4fb9cfa341cd041a144a9ed4868a084c",
+      "verification": "source and copied bytes match the original phase-log SHA256"
+    }
+  ],
+  "all_source_and_destination_hashes_match": true,
+  "original_sources_modified": false,
+  "new_research_or_statistics_run": false
+}

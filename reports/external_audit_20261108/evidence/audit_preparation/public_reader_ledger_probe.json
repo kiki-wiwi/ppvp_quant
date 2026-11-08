@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "scope": "Anonymous GitHub LFS reader probe for one existing nontrivial ledger object; all other objects checked separately by remote metadata",
+  "path": "reports/trend_hold_venue_round/cp3_post_is_and_eth/accounts/ETH__Post-IS__UM__V2_SPOT__gross_0/attribution.csv.gz",
+  "sha256": "c737f09e55de7d75ed954b46c87becc6e75c8f0ae20251df06db4f1973349505",
+  "bytes": 9641236,
+  "github_credentials_used": false,
+  "market_apis_called": false,
+  "retry_count": 0,
+  "time_utc": "2026-11-08T16:20:02.306901+00:00"
+}

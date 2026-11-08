@@ -1,0 +1,10 @@
+{
+  "started_at_utc": "2026-11-08T15:32:08.719068+00:00",
+  "command": [
+    "/home/ubuntu/Documents/Codex/2026-11-06/github-ppvp-quant-agent-2-checkpoint/work/diag_env/pandas3.0.5_py314/bin/python",
+    "/mnt/ppvp-backtests/scratch/cp3_finalize_results.py"
+  ],
+  "automatic_retry": false,
+  "ended_at_utc": "2026-11-08T15:36:28.094872+00:00",
+  "exit_code": 0
+}

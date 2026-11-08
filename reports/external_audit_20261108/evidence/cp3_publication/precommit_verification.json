@@ -1,0 +1,8 @@
+{
+  "status": "passed",
+  "added_files": 1826,
+  "lfs_pointers_verified": 174,
+  "delivery_manifest_sha256": "7db9af20431d300b0e327a69a030fd1c43c1e1607fc749c021a4b237c880a60f",
+  "original_materialized_outputs_unchanged": true,
+  "tracked_source_modifications": []
+}

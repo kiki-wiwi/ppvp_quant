@@ -1,0 +1,7 @@
+{
+  "issue": "Optional logical_path=None for external diagnostic records caused alias sorting TypeError in new audit packer",
+  "affected": "New audit archive preparation only; no strategy or historical input files changed",
+  "resolution": "Keep non-null string aliases; mandatory original path retained",
+  "fixture_rows_checked": 5908,
+  "partial_archive_preserved": "packaging_attempt_1"
+}

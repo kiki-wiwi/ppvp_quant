@@ -1,0 +1,13 @@
+{
+  "started_at_utc": "2026-11-08T15:37:07.962960+00:00",
+  "result_commit": "21eee8746452d5d46b78f5ef8c50c024ebd21779",
+  "remote_before": "05fe6f1a46dbd99fad92b07dba973ac7c44f19ab",
+  "lfs_objects_already_verified": 174,
+  "skip_duplicate_lfs_push": true,
+  "automatic_retry": false,
+  "exit_code": 0,
+  "ended_at_utc": "2026-11-08T15:37:24.893847+00:00",
+  "remote_after": "21eee8746452d5d46b78f5ef8c50c024ebd21779",
+  "git_status": "",
+  "status": "PUBLISHED_AND_ARCHIVED"
+}

@@ -1,0 +1,12 @@
+2026-11-06 06:52:51,343Z Input loading and frozen pre-match checks
+2026-11-06 06:53:34,386Z STOP: no repair, partial rerun, resume or further execution permitted
+Traceback (most recent call last):
+  File "/home/ubuntu/Documents/Codex/2026-11-06/github-ppvp-quant-agent-2-checkpoint/work/ppvp_quant/tools/run_impulse_cp3.py", line 125, in main
+    ctx, checks = R.load_real_context()
+                  ~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ubuntu/Documents/Codex/2026-11-06/github-ppvp-quant-agent-2-checkpoint/work/ppvp_quant/impulse_study/cp3_runtime.py", line 157, in load_real_context
+    _ensure_cp3_cache(key)
+    ~~~~~~~~~~~~~~~~~^^^^^
+  File "/home/ubuntu/Documents/Codex/2026-11-06/github-ppvp-quant-agent-2-checkpoint/work/ppvp_quant/impulse_study/cp3_runtime.py", line 133, in _ensure_cp3_cache
+    raise ValueError(f'pinned reconstructed cache content differs: {key}')
+ValueError: pinned reconstructed cache content differs: spot_1d_warmup

@@ -1,0 +1,16 @@
+{
+  "status": "PACKAGED_WITH_EXPLICIT_HISTORICAL_LIMITATIONS",
+  "objects": 3651,
+  "object_bytes": 1557065278,
+  "packs": 3,
+  "pack_bytes": 1560094720,
+  "resolved_references": 5068,
+  "missing_by_scope": {
+    "historical_cache": 3,
+    "historical_checksum_not_registered": 836
+  },
+  "container_variants": 1,
+  "recovered_old_zip_count": 673,
+  "strategy_replays": 0,
+  "new_market_datasets": 0
+}

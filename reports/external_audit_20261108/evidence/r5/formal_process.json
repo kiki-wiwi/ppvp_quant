@@ -1,0 +1,13 @@
+{
+  "command": [
+    "/home/ubuntu/Documents/Codex/2026-11-06/github-ppvp-quant-agent-2-checkpoint/work/diag_env/pandas3.0.5_py314/bin/python",
+    "tools/run_trend_hold_study.py",
+    "--real"
+  ],
+  "started_utc": "2026-11-07T07:11:38.721538+00:00",
+  "head": "fc04caaf7463555c87cf30ad032f07adf0d1b0c2",
+  "starting_worktree_status": "",
+  "formal_invocation_count": 1,
+  "exit_code": 0,
+  "finished_utc": "2026-11-07T07:11:53.216736+00:00"
+}

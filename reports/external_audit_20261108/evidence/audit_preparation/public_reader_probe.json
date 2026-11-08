@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "scope": "Anonymous GitHub LFS reader probe for one existing smallest object; all other objects checked separately by remote metadata",
+  "path": "reports/trend_hold_venue_round/cp2_btc_is/accounts/IS-Common__P_USDM__gross_0/attribution.csv.gz",
+  "sha256": "d873bb0bfedeb0b91c8ebded63ee0fd61eb581072a83270f55c06a30041c4760",
+  "bytes": 43,
+  "github_credentials_used": false,
+  "market_apis_called": false,
+  "retry_count": 0,
+  "time_utc": "2026-11-08T16:18:59.682632+00:00"
+}
